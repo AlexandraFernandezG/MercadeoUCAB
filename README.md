@@ -5,12 +5,12 @@ Repositorio Empresa 2
 Maquina con sistema operativo Windows, Linux o Mac
 NodeJs version 12.19.0 LTS o superior
 
-##### Iniciar el servidor Angular: 
+#### Iniciar el servidor Angular: 
 Dirigirse a la carpeta DSW_EmpresaB\MercadeoUCAB-frontend y ejecutar el siguiente comando:
 
      ng serve --o
 
-# Integrantes del grupo:
+#### Integrantes del grupo:
 
 - Emanuel Di Cristofaro  
 - Alexandra Fernández 
