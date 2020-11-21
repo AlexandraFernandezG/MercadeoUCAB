@@ -17,3 +17,4 @@ Dirigirse a la carpeta DSW_EmpresaB\MercadeoUCAB-frontend y ejecutar el siguient
 - Valentina Figueroa
 - Carlos Ortiz
 - Gregg Spinetti
+- Angel Hidalgo
