@@ -1,0 +1,31 @@
+<mat-card >
+    <mat-card-content>
+      <div class="header" id="imagen" >
+          <img src="../../../assets/img/MercadeoUCAB-logon.png" width="250" height="250" class="mx-out" >
+        </div>
+      <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
+        <div class="email-input">
+          <mat-form-field class="full-width" appaerance="outline">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput required />
+            <mat-error *ngIf="loginForm.get('email').errors?.required">
+              Falta llenar el correo electronico
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="password-input">
+          <mat-form-field class="full-width" appareance="outline">
+              <mat-label>Password</mat-label>
+              <input formControlName="password" matInput [type]= "'hide' ? 'password': 'text'" required/>
+               <mat-error *ngIf="loginForm.get('password').errors?.required">
+                  Introduzca la contraseña
+               </mat-error>
+          </mat-form-field>
+      </div>
+      <button mat-flat-button color="primary">Iniciar sesión</button>
+      <div class="aLink">
+      <span href="#">¿Olvidó la contraseña?</span>
+      </div>
+     </form>
+    </mat-card-content>
+  </mat-card>

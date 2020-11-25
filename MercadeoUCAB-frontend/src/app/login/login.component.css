@@ -1,0 +1,38 @@
+
+.mat-card{
+    max-width: 400px; 
+    margin: 2em auto;
+    text-align: center;
+    max-height: 500px; 
+
+}
+
+.header{
+    text-align:center;
+
+}
+
+.full-width{
+    width: 80%; 
+    
+}
+
+.forgot-password{
+    padding-left: 0px;
+    padding-top: 20px; 
+}
+
+.email-input{
+    padding-top: 10px;
+}
+
+.password-input{
+    padding-top: 20px;
+    padding-block-end: 30px;
+}
+
+.aLink{
+    float: center; 
+    padding-top: 30px;
+    text-decoration: none;
+}
