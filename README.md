@@ -1,5 +1,5 @@
 # DSW_Empresa2
-Repositorio Empresa 2
+Repositorio Empresa 2 :office:
 
 #### Requisitos para la instalación
 Maquina con sistema operativo Windows, Linux o Mac
@@ -10,7 +10,7 @@ Dirigirse a la carpeta DSW_EmpresaB\MercadeoUCAB-frontend y ejecutar el siguient
 
      ng serve --o
 
-#### Integrantes del grupo:
+#### Desarrolladores :computer::
 
 - Emanuel Di Cristofaro  
 - Alexandra Fernández 
