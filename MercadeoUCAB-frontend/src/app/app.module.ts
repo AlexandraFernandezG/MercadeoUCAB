@@ -13,12 +13,34 @@ import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MarcaComponent } from './marca/marca.component';
+import { EditMarcaComponent } from './marca/edit-marca/edit-marca.component';
+import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
+import { CategoriaComponent } from './categoria/categoria.component';
+import { UsuarioComponent } from './usuario/usuario.component';
+import { AddSubcategoriaComponent } from './subcategoria/add-subcategoria/add-subcategoria.component';
+import { EditSubcategoriaComponent } from './subcategoria/edit-subcategoria/edit-subcategoria.component';
+import { AddCategoriaComponent } from './categoria/add-categoria/add-categoria.component';
+import { EditCategoriaComponent } from './categoria/edit-categoria/edit-categoria.component';
+import { AddUsuarioComponent } from './usuario/add-usuario/add-usuario.component';
+import { EditUsuarioComponent } from './usuario/edit-usuario/edit-usuario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    MarcaComponent,
+    EditMarcaComponent,
+    SubcategoriaComponent,
+    CategoriaComponent,
+    UsuarioComponent,
+    AddSubcategoriaComponent,
+    EditSubcategoriaComponent,
+    AddCategoriaComponent,
+    EditCategoriaComponent,
+    AddUsuarioComponent,
+    EditUsuarioComponent
   ],
   imports: [
     BrowserModule,

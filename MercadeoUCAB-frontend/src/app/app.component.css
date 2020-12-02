@@ -6,7 +6,8 @@ footer {
     height: 60px;    
   }
 
-  
-  .dropdown-menu a:hover{
-    background-color: orange;
-  }
+ .letra{ 
+   color:white;
+   font-family: 'Kalam', cursive;
+   font-size: 100%;
+}
