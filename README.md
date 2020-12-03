@@ -1,5 +1,5 @@
-# DSW_Empresa2
-Repositorio Empresa 2 :office:
+# DSW_Empresa2  :office:
+![ScreenShot](https://raw.github.com/bismarckpm/DSW_EmpresaB/FASE1-000/MercadeoUCAB-frontend/src/assets/img/MercadeoUCAB-logon.png)
 
 #### Requisitos para la instalación
 Maquina con sistema operativo Windows, Linux o Mac
