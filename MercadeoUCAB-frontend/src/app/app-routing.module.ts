@@ -7,6 +7,7 @@ import { MarcaComponent } from './marca/marca.component';
 import { CategoriaComponent } from './categoria/categoria.component';
 import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { PreguntaComponent } from './pregunta/pregunta.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'dashboard/marcas', component: MarcaComponent},
   { path: 'dashboard/categorias', component: CategoriaComponent},
   { path: 'dashboard/subcategorias', component: SubcategoriaComponent},
-  { path: 'dashboard/usuarios', component: UsuarioComponent}
+  { path: 'dashboard/usuarios', component: UsuarioComponent},
+  { path: 'dashboard/preguntas', component: PreguntaComponent}
 
 ];
 

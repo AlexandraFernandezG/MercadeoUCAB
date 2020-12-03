@@ -24,6 +24,9 @@ import { AddCategoriaComponent } from './categoria/add-categoria/add-categoria.c
 import { EditCategoriaComponent } from './categoria/edit-categoria/edit-categoria.component';
 import { AddUsuarioComponent } from './usuario/add-usuario/add-usuario.component';
 import { EditUsuarioComponent } from './usuario/edit-usuario/edit-usuario.component';
+import { PreguntaComponent } from './pregunta/pregunta.component';
+import { AddPreguntaComponent } from './pregunta/add-pregunta/add-pregunta.component';
+import { EditPreguntaComponent } from './pregunta/edit-pregunta/edit-pregunta.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,10 @@ import { EditUsuarioComponent } from './usuario/edit-usuario/edit-usuario.compon
     AddCategoriaComponent,
     EditCategoriaComponent,
     AddUsuarioComponent,
-    EditUsuarioComponent
+    EditUsuarioComponent,
+    PreguntaComponent,
+    AddPreguntaComponent,
+    EditPreguntaComponent
   ],
   imports: [
     BrowserModule,
