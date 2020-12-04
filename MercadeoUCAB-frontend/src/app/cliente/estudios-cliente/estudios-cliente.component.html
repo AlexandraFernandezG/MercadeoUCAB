@@ -10,41 +10,30 @@
     <h1 class='contenidoEstudios'>
       <b>Estudios</b>
     </h1>
-    <table class="table table-striped">
-      <thead class="table-info">
+    <table class="table">
+      <thead class="thead-light">
         <tr>
- 
-          <th scope="col">Estudio</th>
-          <th scope="col">Estado</th>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
           <th scope="col">Handle</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-     
-          <td>Mark</td>
-          <td>Otto</td>
+        <tr *ngFor="let estudio of estudios">
+          <th scope="row">{{ estudio.id }}</th>
+          <td>{{ estudio.title }}</td>
           <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
- 
-          <td>Larry2</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
         </tr>
       </tbody>
     </table>
+    <div align="center" class="col-sm-4">
+      <button mat-raised-button type="submit" class="btn btn-success" (click)= "onCreate()">
+        <i class="far fa-folder-open">
+          Solicitar Estudio
+        </i>
+      </button>
+    </div>
   </body>
 </html>
 

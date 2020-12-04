@@ -9,6 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -57,7 +59,6 @@ import { DataEstudioComponent } from './analista/data-estudio/data-estudio.compo
     AdminComponent,
     ClienteComponent,
     EstudiosClienteComponent,
-    SolicitudEstudioComponent,
     EncuestadoComponent,
     EstudiosEncuestadoComponent,
     RespuestasEncuestaComponent,
@@ -78,9 +79,12 @@ import { DataEstudioComponent } from './analista/data-estudio/data-estudio.compo
     ReactiveFormsModule,
     NgbModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    MatFormFieldModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ SolicitudEstudioComponent ]
 })
 export class AppModule { }
