@@ -11,6 +11,7 @@ import { AdminComponent } from './admin/admin.component';
 import { EstudiosClienteComponent } from './cliente/estudios-cliente/estudios-cliente.component';
 import { SolicitudEstudioComponent } from './cliente/solicitud-estudio/solicitud-estudio.component';
 import { ClienteComponent } from './cliente/cliente.component';
+import { EstudiosEncuestadoComponent } from './encuestado/estudios-encuestado/estudios-encuestado.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'cliente', component: ClienteComponent },
   { path: 'cliente/estudios', component: EstudiosClienteComponent },
   { path: 'cliente/solicitar_estudio', component: SolicitudEstudioComponent },
+  { path: 'encuestado/estudios', component: EstudiosEncuestadoComponent },
 
   { path: '', redirectTo: 'categorias', pathMatch: 'full' }
 ];

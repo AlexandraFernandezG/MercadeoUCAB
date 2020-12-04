@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +30,13 @@ import { RouterModule } from '@angular/router';
 import { ClienteComponent } from './cliente/cliente.component';
 import { EstudiosClienteComponent } from './cliente/estudios-cliente/estudios-cliente.component';
 import { SolicitudEstudioComponent } from './cliente/solicitud-estudio/solicitud-estudio.component';
+import { EncuestadoComponent } from './encuestado/encuestado.component';
+import { EstudiosEncuestadoComponent } from './encuestado/estudios-encuestado/estudios-encuestado.component';
+import { RespuestasEncuestaComponent } from './encuestado/respuestas-encuesta/respuestas-encuesta.component';
+import { RegistroEncuestadoComponent } from './registro-encuestado/registro-encuestado.component';
+import { AnalistaComponent } from './analista/analista.component';
+import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios-analista.component';
+import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +57,14 @@ import { SolicitudEstudioComponent } from './cliente/solicitud-estudio/solicitud
     AdminComponent,
     ClienteComponent,
     EstudiosClienteComponent,
-    SolicitudEstudioComponent
+    SolicitudEstudioComponent,
+    EncuestadoComponent,
+    EstudiosEncuestadoComponent,
+    RespuestasEncuestaComponent,
+    RegistroEncuestadoComponent,
+    AnalistaComponent,
+    EstudiosAnalistaComponent,
+    DataEstudioComponent
   ],
   imports: [
     RouterModule,
@@ -62,7 +77,8 @@ import { SolicitudEstudioComponent } from './cliente/solicitud-estudio/solicitud
     MatInputModule,
     ReactiveFormsModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
