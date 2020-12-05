@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,25 +9,36 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MarcaComponent } from './marca/marca.component';
-import { EditMarcaComponent } from './marca/edit-marca/edit-marca.component';
-import { SubcategoriaComponent } from './subcategoria/subcategoria.component';
-import { CategoriaComponent } from './categoria/categoria.component';
-import { UsuarioComponent } from './usuario/usuario.component';
-import { AddSubcategoriaComponent } from './subcategoria/add-subcategoria/add-subcategoria.component';
-import { EditSubcategoriaComponent } from './subcategoria/edit-subcategoria/edit-subcategoria.component';
-import { AddCategoriaComponent } from './categoria/add-categoria/add-categoria.component';
-import { EditCategoriaComponent } from './categoria/edit-categoria/edit-categoria.component';
-import { AddUsuarioComponent } from './usuario/add-usuario/add-usuario.component';
-import { EditUsuarioComponent } from './usuario/edit-usuario/edit-usuario.component';
-import { PreguntaComponent } from './pregunta/pregunta.component';
-import { AddPreguntaComponent } from './pregunta/add-pregunta/add-pregunta.component';
-import { EditPreguntaComponent } from './pregunta/edit-pregunta/edit-pregunta.component';
+import { MarcaComponent } from './admin/marca/marca.component';
+import { EditMarcaComponent } from './admin/marca/edit-marca/edit-marca.component';
+import { SubcategoriaComponent } from './admin/subcategoria/subcategoria.component';
+import { CategoriaComponent } from './admin/categoria/categoria.component';
+import { UsuarioComponent } from './admin/usuario/usuario.component';
+import { AddSubcategoriaComponent } from './admin/subcategoria/add-subcategoria/add-subcategoria.component';
+import { EditSubcategoriaComponent } from './admin/subcategoria/edit-subcategoria/edit-subcategoria.component';
+import { AddCategoriaComponent } from './admin/categoria/add-categoria/add-categoria.component';
+import { EditCategoriaComponent } from './admin/categoria/edit-categoria/edit-categoria.component';
+import { AddUsuarioComponent } from './admin/usuario/add-usuario/add-usuario.component';
+import { EditUsuarioComponent } from './admin/usuario/edit-usuario/edit-usuario.component';
+import { AdminComponent } from './admin/admin.component';
+import { RouterModule } from '@angular/router';
+import { ClienteComponent } from './cliente/cliente.component';
+import { EstudiosClienteComponent } from './cliente/estudios-cliente/estudios-cliente.component';
+import { SolicitudEstudioComponent } from './cliente/solicitud-estudio/solicitud-estudio.component';
+import { EncuestadoComponent } from './encuestado/encuestado.component';
+import { EstudiosEncuestadoComponent } from './encuestado/estudios-encuestado/estudios-encuestado.component';
+import { RespuestasEncuestaComponent } from './encuestado/respuestas-encuesta/respuestas-encuesta.component';
+import { RegistroEncuestadoComponent } from './registro-encuestado/registro-encuestado.component';
+import { AnalistaComponent } from './analista/analista.component';
+import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios-analista.component';
+import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
 
 @NgModule({
   declarations: [
@@ -44,11 +56,19 @@ import { EditPreguntaComponent } from './pregunta/edit-pregunta/edit-pregunta.co
     EditCategoriaComponent,
     AddUsuarioComponent,
     EditUsuarioComponent,
-    PreguntaComponent,
-    AddPreguntaComponent,
-    EditPreguntaComponent
+    AdminComponent,
+    ClienteComponent,
+    EstudiosClienteComponent,
+    EncuestadoComponent,
+    EstudiosEncuestadoComponent,
+    RespuestasEncuestaComponent,
+    RegistroEncuestadoComponent,
+    AnalistaComponent,
+    EstudiosAnalistaComponent,
+    DataEstudioComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -58,9 +78,13 @@ import { EditPreguntaComponent } from './pregunta/edit-pregunta/edit-pregunta.co
     MatInputModule,
     ReactiveFormsModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HttpClientModule,
+    MatDialogModule,
+    MatFormFieldModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ SolicitudEstudioComponent ]
 })
 export class AppModule { }
