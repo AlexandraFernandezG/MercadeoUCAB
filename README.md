@@ -3,12 +3,12 @@ Repositorio Empresa 2
 
 #### Requisitos para la instalación
 Maquina con sistema operativo Windows, Linux o Mac
-NodeJs version 12.19.0 LTS o superior
+JDK instalando en su computador (Preferiblemente 1.8)
+Tener un IDE con Java EE y maven integrado.
+Base de datos MySql (Versiones 8.0.xx, la usada en este caso es 8.0.21)
 
-#### Iniciar el servidor Angular: 
-Dirigirse a la carpeta DSW_EmpresaB\MercadeoUCAB-frontend y ejecutar el siguiente comando:
-
-     ng serve --o
+#### Probar 
+Compilar el codigo, hacer las correcciones de maven si hacen falta y correr las pruebas unitarias.
 
 #### Integrantes del grupo:
 
