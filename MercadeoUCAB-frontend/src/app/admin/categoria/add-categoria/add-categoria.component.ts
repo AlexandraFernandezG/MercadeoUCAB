@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatInputModule} from '@angular/material/input';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-add-categoria',
@@ -7,9 +11,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddCategoriaComponent implements OnInit {
 
-  constructor() { }
+  categoriaForm: FormGroup;
 
-  ngOnInit(): void {
+
+  constructor(private fb: FormBuilder) {
+
+    this.categoriaForm = this.fb.group({
+      nombre: new FormControl('',[ Validators.required, Validators.maxLength(100)]),
+      descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(150)])
+    });
+   }
+
+  ngOnInit() {
+    
   }
+
+ onSubmit(){
+  console.log(this.categoriaForm.value);
+
+ }
 
 }

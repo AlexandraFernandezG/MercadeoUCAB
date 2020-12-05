@@ -85,6 +85,9 @@ import { DataEstudioComponent } from './analista/data-estudio/data-estudio.compo
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [ SolicitudEstudioComponent ]
+  entryComponents: [
+    SolicitudEstudioComponent,
+    CategoriaComponent
+    ]
 })
 export class AppModule { }
