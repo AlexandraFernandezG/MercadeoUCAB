@@ -27,6 +27,8 @@ import { EditUsuarioComponent } from './usuario/edit-usuario/edit-usuario.compon
 import { PreguntaComponent } from './pregunta/pregunta.component';
 import { AddPreguntaComponent } from './pregunta/add-pregunta/add-pregunta.component';
 import { EditPreguntaComponent } from './pregunta/edit-pregunta/edit-pregunta.component';
+import { EncuestaComponent } from './encuesta/encuesta.component';
+import { EstudioComponent } from './estudio/estudio.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { EditPreguntaComponent } from './pregunta/edit-pregunta/edit-pregunta.co
     EditUsuarioComponent,
     PreguntaComponent,
     AddPreguntaComponent,
-    EditPreguntaComponent
+    EditPreguntaComponent,
+    EncuestaComponent,
+    EstudioComponent
   ],
   imports: [
     BrowserModule,
