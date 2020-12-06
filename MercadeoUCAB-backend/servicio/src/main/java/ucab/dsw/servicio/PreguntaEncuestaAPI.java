@@ -7,8 +7,9 @@ import ucab.dsw.entidades.RespuestaPregunta;
 import ucab.dsw.entidades.Subcategoria;
 import ucab.dsw.entidades.Usuario;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -34,14 +35,14 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
     @GET
     @Path("/mostrarPreguntasActivas")
-    public List<PreguntaEncuesta> mostrarPreguntasActivas(){
+    public List<PreguntaEncuesta> preguntasActivas(){
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         List<PreguntaEncuesta> listaPreguntas = daoPreguntaEncuesta.findAll(PreguntaEncuesta.class);
-        List<PreguntaEncuesta> listaPreguntasActivas = null;
+        List<PreguntaEncuesta> listaPreguntasActivas = new ArrayList<PreguntaEncuesta>();
 
         for (PreguntaEncuesta preguntaEncuesta: listaPreguntas){
 
-            if(preguntaEncuesta.get_estatus() == "Activo"){
+            if(preguntaEncuesta.get_estatus().equals("Activo")){
                 listaPreguntasActivas.add(preguntaEncuesta);
             }
         }

@@ -1,19 +1,16 @@
 package ucab.dsw.servicio;
+import java.util.ArrayList;
 import java.util.List;
 
 import ucab.dsw.accesodatos.DaoSubcategoria;
 import ucab.dsw.dtos.SubcategoriaDto;
 import ucab.dsw.entidades.Categoria;
 import ucab.dsw.entidades.Subcategoria;
-import javax.ws.rs.core.Response;
 
+import javax.ws.rs.core.Response;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-/**
- *
- * @author Emanuel
- */
 
 @Path( "/subcategoria" )
 @Produces( MediaType.APPLICATION_JSON )
@@ -21,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 public class SubCategoriaAPI extends AplicacionBase{
 
     @GET
-    @Path("/allSubCategoria")
+    @Path("/allSubcategoria")
     public List<Subcategoria> listarSubCategorias(){
 
         DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
@@ -37,33 +34,16 @@ public class SubCategoriaAPI extends AplicacionBase{
     }
 
     @GET
-    @Path("/mostrarSubcategoriasCategoria/{id}")
-    public List<Subcategoria> listarSubcategoriasDeCategoria(@PathParam("id") long id){
-
-        DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
-        List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
-        List<Subcategoria> listaSubcategoriasCategoria = null;
-
-        for (Subcategoria subcategoria: listaSubcategorias){
-
-            if(subcategoria.getCategoria().get_id() == id){
-                listaSubcategoriasCategoria.add(subcategoria);
-            }
-        }
-        return listaSubcategoriasCategoria;
-    }
-
-    @GET
-    @Path ("/mostrarSubCategoriasActivas")
+    @Path("/mostrarSubCategoriasActivas")
     public List<Subcategoria> subcategoriasActivas(){
 
         DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
         List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
-        List<Subcategoria> listaSubCategoriasActivas = null;
+        List<Subcategoria> listaSubCategoriasActivas = new ArrayList<Subcategoria>();
 
         for (Subcategoria subcategoria: listaSubcategorias){
 
-            if (subcategoria.get_estatus() == "Activo"){
+            if (subcategoria.get_estatus().equals("Activo")){
                 listaSubCategoriasActivas.add(subcategoria);
             }
         }

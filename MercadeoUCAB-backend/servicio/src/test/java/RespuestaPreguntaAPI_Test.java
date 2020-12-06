@@ -14,7 +14,7 @@ public class RespuestaPreguntaAPI_Test {
 
         ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
         List<RespuestaPregunta> listaRespuesta = servicio.listarRespuestas();
-        List<RespuestaPregunta> listaRespuestaActivas = servicio.mostrarRespuestasActivas();
+        List<RespuestaPregunta> listaRespuestaActivas = servicio.respuestasActivas();
         Assert.assertThat(listaRespuesta, IsNot.not(IsEqual.equalTo(listaRespuestaActivas)));
     }
 

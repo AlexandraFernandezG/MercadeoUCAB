@@ -16,7 +16,7 @@ public class PreguntaEncuestaAPI_Test {
 
         ucab.dsw.servicio.PreguntaEncuestaAPI servicio = new ucab.dsw.servicio.PreguntaEncuestaAPI();
         List<PreguntaEncuesta> listaPregunta = servicio.listarPreguntas();
-        List<PreguntaEncuesta> listaPreguntaActivas = servicio.mostrarPreguntasActivas();
+        List<PreguntaEncuesta> listaPreguntaActivas = servicio.preguntasActivas();
         Assert.assertThat(listaPregunta, IsNot.not(IsEqual.equalTo(listaPreguntaActivas)));
     }
 

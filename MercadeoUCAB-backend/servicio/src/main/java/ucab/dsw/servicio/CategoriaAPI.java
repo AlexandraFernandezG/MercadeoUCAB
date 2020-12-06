@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import java.util.ArrayList;
 import java.util.List;
 import ucab.dsw.accesodatos.DaoCategoria;
 import ucab.dsw.accesodatos.DaoSubcategoria;
@@ -8,14 +9,9 @@ import ucab.dsw.entidades.Categoria;
 import ucab.dsw.entidades.Subcategoria;
 
 import javax.ws.rs.core.Response;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-/**
- *
- * @author Emanuel
- */
 
 @Path( "/categoria" )
 @Produces( MediaType.APPLICATION_JSON )
@@ -45,15 +41,32 @@ public class CategoriaAPI extends AplicacionBase {
 
         DaoCategoria daoCategoria = new DaoCategoria();
         List<Categoria> listaCategorias = daoCategoria.findAll(Categoria.class);
-        List<Categoria> listaCategoriasActivas = null;
+        List<Categoria> listaCategoriasActivas = new ArrayList<Categoria>();
 
         for (Categoria categoria: listaCategorias){
 
-            if (categoria.get_estatus() == "Activo") {
+            if (categoria.get_estatus().equals("Activo")) {
                 listaCategoriasActivas.add(categoria);
             }
         }
         return listaCategoriasActivas;
+    }
+
+    @GET
+    @Path("/mostrarSubcategoriasCategoria/{id}")
+    public List<Subcategoria> listarSubcategoriasDeCategoria(@PathParam("id") long id){
+
+        DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
+        List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
+        List<Subcategoria> listaSubcategoriasCategoria = new ArrayList<Subcategoria>();
+
+        for (Subcategoria subcategoria: listaSubcategorias){
+
+            if(subcategoria.getCategoria().get_id() == id){
+                listaSubcategoriasCategoria.add(subcategoria);
+            }
+        }
+        return listaSubcategoriasCategoria;
     }
 
     @POST

@@ -4,9 +4,11 @@ import ucab.dsw.accesodatos.DaoRespuestaPregunta;
 import ucab.dsw.dtos.RespuestaPreguntaDto;
 import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.entidades.RespuestaPregunta;
+import ucab.dsw.entidades.Subcategoria;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,14 +34,14 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
 
     @GET
     @Path("/mostrarRespuestasActivas")
-    public List<RespuestaPregunta> mostrarRespuestasActivas(){
+    public List<RespuestaPregunta> respuestasActivas(){
         DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
         List<RespuestaPregunta> listaRespuesta = daoRespuestaPregunta.findAll(RespuestaPregunta.class);
-        List<RespuestaPregunta> listaRespuestaActivas = null;
+        List<RespuestaPregunta> listaRespuestaActivas = new ArrayList<RespuestaPregunta>();
 
         for (RespuestaPregunta respuestaPregunta: listaRespuesta){
 
-            if (respuestaPregunta.get_estatus() == "Activo"){
+            if (respuestaPregunta.get_estatus().equals("Activo")){
                 listaRespuestaActivas.add(respuestaPregunta);
             }
         }

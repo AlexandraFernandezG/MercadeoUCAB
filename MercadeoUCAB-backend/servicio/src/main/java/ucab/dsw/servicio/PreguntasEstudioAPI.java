@@ -8,6 +8,7 @@ import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.entidades.PreguntaEstudio;
 
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

@@ -1,12 +1,12 @@
 package ucab.dsw.servicio;
 import ucab.dsw.accesodatos.DaoEstudio;
+import ucab.dsw.accesodatos.DaoPreguntaEstudio;
 import ucab.dsw.dtos.EstudioDto;
-import ucab.dsw.entidades.Estudio;
-import ucab.dsw.entidades.SolicitudEstudio;
-import ucab.dsw.entidades.Usuario;
+import ucab.dsw.entidades.*;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -32,14 +32,14 @@ public class EstudioAPI extends AplicacionBase {
 
     @GET
     @Path("/mostrarEstudiosActivos")
-    public List<Estudio> mostrarEstudiosActivos(){
+    public List<Estudio> estudiosActivos(){
         DaoEstudio daoEstudio = new DaoEstudio();
         List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
-        List<Estudio> listaEstudiosActivos = null;
+        List<Estudio> listaEstudiosActivos = new ArrayList<Estudio>();
 
         for (Estudio estudio: listaEstudios){
 
-            if(estudio.get_estatus() == "Activo"){
+            if(estudio.get_estatus().equals("Activo")){
                 listaEstudiosActivos.add(estudio);
             }
         }
@@ -98,6 +98,17 @@ public class EstudioAPI extends AplicacionBase {
         Estudio estudio_eliminar = daoEstudio.find(id, Estudio.class);
 
         if(estudio_eliminar != null){
+
+            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+            List<PreguntaEstudio> listaPreguntaEstudio = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
+
+            for (PreguntaEstudio preguntaEstudio: listaPreguntaEstudio){
+
+                if(preguntaEstudio.getEstudio().get_id() == id){
+                    daoPreguntaEstudio.delete(preguntaEstudio);
+                }
+            }
+
             daoEstudio.delete(estudio_eliminar);
             return Response.ok().entity(estudio_eliminar).build();
 

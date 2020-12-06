@@ -21,7 +21,7 @@ public class EstudioAPI_Test {
 
         ucab.dsw.servicio.EstudioAPI servicio = new ucab.dsw.servicio.EstudioAPI();
         List<Estudio> listaEstudio = servicio.listarEstudios();
-        List<Estudio> listaEstudioActivos = servicio.mostrarEstudiosActivos();
+        List<Estudio> listaEstudioActivos = servicio.estudiosActivos();
         Assert.assertThat(listaEstudio, IsNot.not(IsEqual.equalTo(listaEstudioActivos)));
 
     }
