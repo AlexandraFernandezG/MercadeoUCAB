@@ -1,9 +1,6 @@
 package ucab.dsw.servicio;
 
-import ucab.dsw.accesodatos.DaoPresentacion;
-import ucab.dsw.accesodatos.DaoProducto;
-import ucab.dsw.accesodatos.DaoSolicitudEstudio;
-import ucab.dsw.accesodatos.DaoTipo;
+import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.ProductoDto;
 import ucab.dsw.entidades.*;
 
@@ -86,6 +83,53 @@ public class ProductoAPI extends AplicacionBase{
             producto_modificar.setDescripcion(productoDto.getDescripcion());
             producto_modificar.set_estatus(productoDto.get_estatus());
             daoProducto.update(producto_modificar);
+            DaoTipo daoTipo = new DaoTipo();
+            DaoPresentacion daoPresentacion = new DaoPresentacion();
+
+            if(producto_modificar.get_estatus() == "Inactivo"){
+
+                List<Tipo> listaTipo = daoTipo.findAll(Tipo.class);
+                List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
+
+                for(Tipo tipo: listaTipo){
+
+                    if(tipo.getProducto().get_id() == id) {
+                        tipo.set_estatus("Inactivo");
+                        daoTipo.update(tipo);
+                    }
+                }
+
+                for(Presentacion presentacion: listaPresentacion){
+
+                    if(presentacion.getProducto().get_id() == id){
+                        presentacion.set_estatus("Inactivo");
+                        daoPresentacion.update(presentacion);
+                    }
+                }
+
+            } else if(producto_modificar.get_estatus() == "Activo"){
+
+                List<Tipo> listaTipo = daoTipo.findAll(Tipo.class);
+                List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
+
+                for(Tipo tipo: listaTipo){
+
+                    if(tipo.getProducto().get_id() == id) {
+                        tipo.set_estatus("Activo");
+                        daoTipo.update(tipo);
+                    }
+                }
+
+                for(Presentacion presentacion: listaPresentacion){
+
+                    if(presentacion.getProducto().get_id() == id){
+                        presentacion.set_estatus("Activo");
+                        daoPresentacion.update(presentacion);
+                    }
+                }
+
+            }
+
             return Response.ok().entity(producto_modificar).build();
 
         } else {
