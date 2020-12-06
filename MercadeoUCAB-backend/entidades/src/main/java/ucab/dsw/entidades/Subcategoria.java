@@ -17,6 +17,7 @@ public class Subcategoria extends EntidadBase{
     private String _descripcion;
     
     //Relaciones
+
     @ManyToOne
     @JoinColumn(name="fk_categoria")
     private Categoria _categoria;

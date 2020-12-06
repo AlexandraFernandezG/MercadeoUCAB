@@ -2,11 +2,14 @@ package ucab.dsw.servicio;
 
 import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.accesodatos.DaoPreguntaEstudio;
+import ucab.dsw.accesodatos.DaoRespuesta;
 import ucab.dsw.dtos.PreguntaEstudioDto;
 import ucab.dsw.entidades.Estudio;
 import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.entidades.PreguntaEstudio;
+import ucab.dsw.entidades.Respuesta;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
@@ -27,7 +30,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
         DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
         List<PreguntaEstudio> listaEstudioPregunta = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-        List<PreguntaEncuesta> listaPreguntasEstudio = null;
+        List<PreguntaEncuesta> listaPreguntasEstudio = new ArrayList<PreguntaEncuesta>();
 
         for(PreguntaEstudio preguntaEstudio: listaEstudioPregunta){
 
@@ -70,11 +73,22 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
         if (preguntaEstudio_eliminar != null){
 
+            DaoRespuesta daoRespuesta = new DaoRespuesta();
+            List<Respuesta> listaRespuesta = daoRespuesta.findAll(Respuesta.class);
+
+            for (Respuesta respuesta: listaRespuesta){
+
+                if(respuesta.getPreguntasEstudio().get_id() == id){
+                    daoRespuesta.delete(respuesta);
+                }
+            }
+
             daoPreguntaEstudio.delete(preguntaEstudio_eliminar);
+            return Response.ok().entity(preguntaEstudio_eliminar).build();
+
         } else {
 
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok().entity(preguntaEstudio_eliminar).build();
     }
 }

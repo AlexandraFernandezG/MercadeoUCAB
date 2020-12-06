@@ -9,25 +9,40 @@ import java.util.List;
 public class SolicitudEstudio extends EntidadBase{
     
     //Columnas
-    
-    @Column( name = "descripcionSolicitud" )
-    private String _descripcionSolicitud;
-    
-    @Column( name = "generoSolicitud" )
-    private String _generoSolicitud;
-    
-    @Column( name = "fechaSolicitud" )
-    private Date _fechaSolicitud;
-    
-    @Column( name = "regionSolicitud" )
-    private String _regionSolicitud;
-    
-    @Column( name = "edadMinimaPoblacion" )
-    private String _edadMinimaPoblacion;
-    
-    @Column( name = "edadMaximaPoblacion" )
-    private String _edadMaximaPoblacion;
-    
+
+    @Column ( name = "descripcion")
+    private String _descripcion;
+
+    @Column ( name = "genero")
+    private String _genero;
+
+    @Column ( name = "edadMinima")
+    private int _edadMinima;
+
+    @Column ( name = "edadMaxima")
+    private int _edadMaxima;
+
+    @Column ( name = "estadoCivil")
+    private String _estadoCivil;
+
+    @Column ( name = "disponibilidadEnLinea")
+    private String _disponibilidadEnLinea;
+
+    @Column ( name = "cantidadPersonas")
+    private int _cantidadPersonas;
+
+    @Column ( name = "cantidadHijos")
+    private int _cantidadHijos;
+
+    @Column ( name = "generoHijos")
+    private String _generoHijos;
+
+    @Column ( name = "edadMinimaHijos")
+    private int _edadMinimaHijos;
+
+    @Column ( name = "edadMaximaHijos")
+    private int _edadMaximaHijos;
+
     //Relaciones
     
     @ManyToOne
@@ -41,81 +56,146 @@ public class SolicitudEstudio extends EntidadBase{
     @ManyToOne
     @JoinColumn( name = "fk_producto" )
     private Producto _producto;
+
+    @ManyToOne
+    @JoinColumn ( name ="fk_ocupacion")
+    private Ocupacion _ocupacion;
+
+    @ManyToOne
+    @JoinColumn (name ="fk_nivelAcademico")
+    private NivelAcademico _nivelAcademico;
     
     //Getters, Setters, y otros metodos.
 
-    public String getDescripcionSolicitud() {
-        return _descripcionSolicitud;
+
+    public String get_descripcion() {
+        return _descripcion;
     }
 
-    public String getGeneroSolicitud() {
-        return _generoSolicitud;
+    public void set_descripcion(String _descripcion) {
+        this._descripcion = _descripcion;
     }
 
-    public Date getFechaSolicitud() {
-        return _fechaSolicitud;
+    public String get_genero() {
+        return _genero;
     }
 
-    public String getRegionSolicitud() {
-        return _regionSolicitud;
+    public void set_genero(String _genero) {
+        this._genero = _genero;
     }
 
-    public String getEdadMinimaPoblacion() {
-        return _edadMinimaPoblacion;
+    public int get_edadMinima() {
+        return _edadMinima;
     }
 
-    public String getEdadMaximaPoblacion() {
-        return _edadMaximaPoblacion;
+    public void set_edadMinima(int _edadMinima) {
+        this._edadMinima = _edadMinima;
     }
 
-    public Usuario getUsuario() {
+    public int get_edadMaxima() {
+        return _edadMaxima;
+    }
+
+    public void set_edadMaxima(int _edadMaxima) {
+        this._edadMaxima = _edadMaxima;
+    }
+
+    public String get_estadoCivil() {
+        return _estadoCivil;
+    }
+
+    public void set_estadoCivil(String _estadoCivil) {
+        this._estadoCivil = _estadoCivil;
+    }
+
+    public String get_disponibilidadEnLinea() {
+        return _disponibilidadEnLinea;
+    }
+
+    public void set_disponibilidadEnLinea(String _disponibilidadEnLinea) {
+        this._disponibilidadEnLinea = _disponibilidadEnLinea;
+    }
+
+    public int get_cantidadPersonas() {
+        return _cantidadPersonas;
+    }
+
+    public void set_cantidadPersonas(int _cantidadPersonas) {
+        this._cantidadPersonas = _cantidadPersonas;
+    }
+
+    public int get_cantidadHijos() {
+        return _cantidadHijos;
+    }
+
+    public void set_cantidadHijos(int _cantidadHijos) {
+        this._cantidadHijos = _cantidadHijos;
+    }
+
+    public String get_generoHijos() {
+        return _generoHijos;
+    }
+
+    public void set_generoHijos(String _generoHijos) {
+        this._generoHijos = _generoHijos;
+    }
+
+    public int get_edadMinimaHijos() {
+        return _edadMinimaHijos;
+    }
+
+    public void set_edadMinimaHijos(int _edadMinimaHijos) {
+        this._edadMinimaHijos = _edadMinimaHijos;
+    }
+
+    public int get_edadMaximaHijos() {
+        return _edadMaximaHijos;
+    }
+
+    public void set_edadMaximaHijos(int _edadMaximaHijos) {
+        this._edadMaximaHijos = _edadMaximaHijos;
+    }
+
+    public Usuario get_usuario() {
         return _usuario;
     }
 
-    public NivelEconomico getNivelEconomico() {
-        return _nivelEconomico;
-    }
-
-    public Producto getProducto() {
-        return _producto;
-    }
-
-    public void setDescripcionSolicitud(String _descripcionSolicitud) {
-        this._descripcionSolicitud = _descripcionSolicitud;
-    }
-
-    public void setGeneroSolicitud(String _generoSolicitud) {
-        this._generoSolicitud = _generoSolicitud;
-    }
-
-    public void setFechaSolicitud(Date _fechaSolicitud) {
-        this._fechaSolicitud = _fechaSolicitud;
-    }
-
-    public void setRegionSolicitud(String _regionSolicitud) {
-        this._regionSolicitud = _regionSolicitud;
-    }
-
-    public void setEdadMinimaPoblacion(String _edadMinimaPoblacion) {
-        this._edadMinimaPoblacion = _edadMinimaPoblacion;
-    }
-
-    public void setEdadMaximaPoblacion(String _edadMaximaPoblacion) {
-        this._edadMaximaPoblacion = _edadMaximaPoblacion;
-    }
-
-    public void setUsuario(Usuario _usuario) {
+    public void set_usuario(Usuario _usuario) {
         this._usuario = _usuario;
     }
 
-    public void setNivelEconomico(NivelEconomico _nivelEconomico) {
+    public NivelEconomico get_nivelEconomico() {
+        return _nivelEconomico;
+    }
+
+    public void set_nivelEconomico(NivelEconomico _nivelEconomico) {
         this._nivelEconomico = _nivelEconomico;
     }
 
-    public void setProducto(Producto _producto) {
+    public Producto get_producto() {
+        return _producto;
+    }
+
+    public void set_producto(Producto _producto) {
         this._producto = _producto;
     }
-    
+
+    public Ocupacion get_ocupacion() {
+        return _ocupacion;
+    }
+
+    public void set_ocupacion(Ocupacion _ocupacion) {
+        this._ocupacion = _ocupacion;
+    }
+
+    public NivelAcademico get_nivelAcademico() {
+        return _nivelAcademico;
+    }
+
+    public void set_nivelAcademico(NivelAcademico _nivelAcademico) {
+        this._nivelAcademico = _nivelAcademico;
+    }
+
     public SolicitudEstudio(long id){
         super (id);
     }
@@ -131,15 +211,22 @@ public class SolicitudEstudio extends EntidadBase{
     @Override
     public String toString() {
         return "SolicitudEstudio{" +
-                "_descripcionSolicitud='" + _descripcionSolicitud + '\'' +
-                ", _generoSolicitud='" + _generoSolicitud + '\'' +
-                ", _fechaSolicitud=" + _fechaSolicitud +
-                ", _regionSolicitud='" + _regionSolicitud + '\'' +
-                ", _edadMinimaPoblacion='" + _edadMinimaPoblacion + '\'' +
-                ", _edadMaximaPoblacion='" + _edadMaximaPoblacion + '\'' +
+                "_descripcion='" + _descripcion + '\'' +
+                ", _genero='" + _genero + '\'' +
+                ", _edadMinima=" + _edadMinima +
+                ", _edadMaxima=" + _edadMaxima +
+                ", _estadoCivil='" + _estadoCivil + '\'' +
+                ", _disponibilidadEnLinea='" + _disponibilidadEnLinea + '\'' +
+                ", _cantidadPersonas=" + _cantidadPersonas +
+                ", _cantidadHijos=" + _cantidadHijos +
+                ", _generoHijos='" + _generoHijos + '\'' +
+                ", _edadMinimaHijos=" + _edadMinimaHijos +
+                ", _edadMaximaHijos=" + _edadMaximaHijos +
                 ", _usuario=" + _usuario +
                 ", _nivelEconomico=" + _nivelEconomico +
                 ", _producto=" + _producto +
+                ", _ocupacion=" + _ocupacion +
+                ", _nivelAcademico=" + _nivelAcademico +
                 '}';
     }
 }

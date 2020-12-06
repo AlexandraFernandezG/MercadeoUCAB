@@ -5,11 +5,6 @@
  */
 package ucab.dsw.entidades;
 
-/**
- *
- * @author Emanuel
- */
-
 import java.util.Date;
 import javax.persistence.*;
 import java.util.List;
