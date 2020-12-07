@@ -1,8 +1,9 @@
+package ucab.dsw.directorioactivo;
+
 import ucab.dsw.dtos.UsuarioDto;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
-import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
@@ -18,12 +19,11 @@ import java.util.Hashtable;
 
 public class DirectorioActivo
 {
-    /*
 
     private DirContext _ldapContext;
     private String _url = "ldap://127.0.0.1:10389";
     private String _connType =  "simple";
-    private String _directory =  "ou=users,o=pruebaucab";
+    private String _directory =  "ou=users,dc=mercadeoucab,dc=com";
     private String _userDirectory =  "cn=%s";
     private String _user =  "admin";
     private String _password =  "secret";
@@ -42,10 +42,9 @@ public class DirectorioActivo
             environment.put( Context.SECURITY_PRINCIPAL, String.format( "uid=%s,ou=system", user ) );
             environment.put( Context.SECURITY_CREDENTIALS, password );
             _ldapContext = new InitialDirContext( environment );
-        }
-        catch ( Exception e )
-        {
 
+        }
+        catch ( Exception e ) {
         }
     }
 
@@ -73,11 +72,12 @@ public class DirectorioActivo
             SimpleDateFormat format = new SimpleDateFormat( "yyyyMMddHHmm" );
             BasicAttributes entry = new BasicAttributes();
             entry.put( oc );
-            entry.put( new BasicAttribute( "cn", user.getCorreoelectronico() ) );
-            entry.put( new BasicAttribute( "sn", user.getCorreoelectronico() ) );
-            entry.put( new BasicAttribute( "userpassword", user.getContrasena() ) );
+            entry.put( new BasicAttribute( "cn", user.getCorreo()) );
+            entry.put( new BasicAttribute( "sn", user.getCorreo() ) );
+            entry.put( new BasicAttribute( "userPassword", user.getContrasena()) );
             entry.put( new BasicAttribute( "pwdLastSuccess", format.format( new Date() ) + "Z" ) );
-            _ldapContext.createSubcontext( String.format( _userDirectory + "," + _directory, user.getCorreoelectronico()), entry );
+            entry.put( new BasicAttribute( "description", user.getNombreRol()));
+            _ldapContext.createSubcontext( String.format( _userDirectory + "," + _directory, user.getCorreo()), entry );
 
         }
         catch(Exception exception)
@@ -91,7 +91,7 @@ public class DirectorioActivo
         try
         {
             connectLDAP( _user, _password );
-            _ldapContext.destroySubcontext( String.format(_userDirectory + "," + _directory, user.getCorreoelectronico()));
+            _ldapContext.destroySubcontext( String.format(_userDirectory + "," + _directory, user.getCorreo()));
         }
         catch ( Exception exception )
         {
@@ -111,7 +111,7 @@ public class DirectorioActivo
             SearchControls searcCon = new SearchControls();
             searcCon.setSearchScope( SearchControls.SUBTREE_SCOPE );
             NamingEnumeration results =
-                    _ldapContext.search( _directory, String.format(_userDirectory, user.getCorreoelectronico()), searcCon );
+                    _ldapContext.search( _directory, String.format(_userDirectory, user.getCorreo()), searcCon );
             if ( results != null )
             {
                 while ( results.hasMore() )
@@ -137,43 +137,17 @@ public class DirectorioActivo
         }
     }
 
-    public void updateEntry(UsuarioDto user)
-    {
-        try
-        {
-            connectLDAP( _user, _password );
-            Attributes atbs = new BasicAttributes();
-            Attribute atb = new BasicAttribute("mail","java2db@mai.com");
-            atbs.put(atb);
-
-            _ldapContext.modifyAttributes( String.format(_userDirectory + "," + _directory, user.getCorreoelectronico())
-                    , DirContext.REPLACE_ATTRIBUTE,atbs );
-        }
-        catch(Exception exception)
-        {
-            exception.printStackTrace();
-        }
-        finally
-        {
-            disconnectLDAP();
-        }
-    }
-
 
     public void changePassword(UsuarioDto user)
     {
         try
         {
             connectLDAP( _user, _password );
-            ModificationItem[] modificationItems = new ModificationItem[ 2 ];
-            modificationItems[ 0 ] = new ModificationItem( DirContext.REPLACE_ATTRIBUTE,
-                                                           new BasicAttribute( "userpassword", user.getContrasena()
-                                                           ) );
-            modificationItems[ 1 ] = new ModificationItem( DirContext.REPLACE_ATTRIBUTE,
-                                                           new BasicAttribute( "description", "NUEVO"
-                                                           ) );
-            _ldapContext.modifyAttributes(String.format(_userDirectory + "," + _directory, user.getCorreoelectronico
-                    ()), modificationItems );
+            ModificationItem[] modificationItems = new ModificationItem[ 1 ];
+            modificationItems[0] = new ModificationItem( DirContext.REPLACE_ATTRIBUTE,
+                    new BasicAttribute( "userPassword", user.getContrasena()
+                    ) );
+            _ldapContext.modifyAttributes(String.format(_userDirectory + "," + _directory, user.getCorreo()), modificationItems );
         }
         catch(Exception exception)
         {
@@ -185,18 +159,86 @@ public class DirectorioActivo
         }
     }
 
-    public void userAuthentication(UsuarioDto user)
+    public long userAuthentication(UsuarioDto user)
     {
-        try
-        {
-            connectLDAP( user.getCorreoelectronico(), user.getContrasena() );
-            SimpleDateFormat format = new SimpleDateFormat( "yyyyMMddHHmm" );
-            ModificationItem[] modificationItems = new ModificationItem[ 1 ];
-            modificationItems[ 0 ] = new ModificationItem( DirContext.REPLACE_ATTRIBUTE, new BasicAttribute(
-                    "pwdLastSuccess", format.format( new Date() ) + "Z" ) );
-            _ldapContext.modifyAttributes(String.format(_userDirectory + "," + _directory, user.getCorreoelectronico()), modificationItems );
+        try {
+            if (this.userLogin(user) == true) {
+                connectLDAP(_user, _password);
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+                ModificationItem[] modificationItems = new ModificationItem[1];
+                modificationItems[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, new BasicAttribute(
+                        "pwdLastSuccess", format.format(new Date()) + "Z"));
+                _ldapContext.modifyAttributes(String.format(_userDirectory + "," + _directory, user.getCorreo()), modificationItems);
+                return 1;
+            } else {
+                return 0;
+            }
         }
         catch(Exception exception)
+        {
+            exception.printStackTrace();
+            return 0;
+        }
+        finally
+        {
+            disconnectLDAP();
+        }
+    }
+
+    public boolean userLogin(UsuarioDto user){
+        try
+        {
+            Hashtable<String, String> environment = new Hashtable<String, String>();
+            environment.put( Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory" );
+            environment.put( Context.PROVIDER_URL, _url );
+            environment.put( Context.SECURITY_AUTHENTICATION, _connType );
+            environment.put( Context.SECURITY_PRINCIPAL, String.format( "cn=%s," + _directory, user.getCorreo() ) );
+            environment.put( Context.SECURITY_CREDENTIALS, user.getContrasena() );
+            _ldapContext = new InitialDirContext( environment );
+
+        }
+        catch ( Exception e ) {
+        }
+        finally{
+            if (_ldapContext != null){
+                System.out.println("Login success!");
+                return true;
+
+            }
+            else {
+                System.out.println("Login failed!");
+                return false;
+            }
+        }
+    }
+
+    public String getEntryRole(UsuarioDto user)
+    {
+        String role="";
+        try
+        {
+            connectLDAP( _user, _password );
+            SearchControls searcCon = new SearchControls();
+            searcCon.setSearchScope( SearchControls.SUBTREE_SCOPE );
+            NamingEnumeration results =
+                    _ldapContext.search( _directory, String.format(_userDirectory, user.getCorreo()), searcCon );
+
+            if ( results != null )
+            {
+                while ( results.hasMore() )
+                {
+                    SearchResult res = ( SearchResult ) results.next();
+                    Attributes atbs = res.getAttributes();
+                    Attribute atb = atbs.get( "description" );
+                    role = ( String ) atb.get();
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch ( Exception exception )
         {
             exception.printStackTrace();
         }
@@ -204,5 +246,8 @@ public class DirectorioActivo
         {
             disconnectLDAP();
         }
-    } */
+        System.out.println(role);
+        return role;
+    }
 }
+

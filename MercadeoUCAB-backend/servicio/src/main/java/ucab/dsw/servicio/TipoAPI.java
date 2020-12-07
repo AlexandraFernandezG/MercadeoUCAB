@@ -4,7 +4,6 @@ import ucab.dsw.accesodatos.DaoTipo;
 import ucab.dsw.dtos.TipoDto;
 import ucab.dsw.entidades.Producto;
 import ucab.dsw.entidades.Tipo;
-
 import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
