@@ -1,17 +1,16 @@
 package ucab.dsw.servicio;
 
-import java.util.ArrayList;
-import java.util.List;
 import ucab.dsw.accesodatos.DaoCategoria;
 import ucab.dsw.accesodatos.DaoSubcategoria;
 import ucab.dsw.dtos.CategoriaDto;
 import ucab.dsw.entidades.Categoria;
 import ucab.dsw.entidades.Subcategoria;
 
-import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path( "/categoria" )
 @Produces( MediaType.APPLICATION_JSON )

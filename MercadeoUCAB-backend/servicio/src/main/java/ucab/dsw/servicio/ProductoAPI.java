@@ -170,7 +170,7 @@ public class ProductoAPI extends AplicacionBase{
 
             for (SolicitudEstudio solicitudEstudio: listaSolicitudEstudio){
 
-                if(solicitudEstudio.getProducto().get_id() == id){
+                if(solicitudEstudio.get_producto().get_id() == id){
                     daoSolicitudEstudio.delete(solicitudEstudio);
                 }
             }

@@ -1,4 +1,4 @@
-/*import ucab.dsw.dtos.UsuarioDto;
+import ucab.dsw.dtos.UsuarioDto;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
@@ -18,6 +18,7 @@ import java.util.Hashtable;
 
 public class DirectorioActivo
 {
+    /*
 
     private DirContext _ldapContext;
     private String _url = "ldap://127.0.0.1:10389";
@@ -203,5 +204,5 @@ public class DirectorioActivo
         {
             disconnectLDAP();
         }
-    }
-}*/
+    } */
+}
