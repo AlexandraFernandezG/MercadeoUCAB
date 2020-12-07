@@ -4,7 +4,8 @@ public class UsuarioDto extends DtoBase{
     private String nombreUsuario;
     private String correo;
     private String codigoRecuperacion;
-    private RolDto _rol;
+    private RolDto rol;
+    private String contrasena;
 
     public String getCodigoRecuperacion() {
         return codigoRecuperacion;
@@ -31,11 +32,11 @@ public class UsuarioDto extends DtoBase{
     }
 
     public RolDto get_rol() {
-        return _rol;
+        return rol;
     }
 
     public void set_rol(RolDto _rol) {
-        this._rol = _rol;
+        this.rol = _rol;
     }
 
     public UsuarioDto (long id) throws Exception{
@@ -46,7 +47,30 @@ public class UsuarioDto extends DtoBase{
         super(estatus);
     }
 
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public RolDto getRol() {
+        return rol;
+    }
+
+    public void setRol(RolDto rol) {
+        this.rol = rol;
+    }
+
+    public String getNombreRol() {
+        return this.rol.get_nombre();
+    }
+
     public UsuarioDto (){
         super();
     }
+
+
 }
+
