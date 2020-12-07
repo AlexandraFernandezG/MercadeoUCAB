@@ -3,11 +3,11 @@ package ucab.dsw.servicio;
 import ucab.dsw.accesodatos.DaoMarca;
 import ucab.dsw.dtos.MarcaDto;
 import ucab.dsw.entidades.Marca;
-import ucab.dsw.excepciones.PruebaExcepcion;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +20,9 @@ import java.util.List;
 @Consumes(value = MediaType.APPLICATION_JSON)
 public class MarcaAPI extends AplicacionBase{
 	
-//	private DaoMarca daoMarca = new DaoMarca();
-	
 	@GET
 	@Path("/allMarcas")
-	public List<Marca> listarMarcas() {
+	public List<Marca> listarMarcas() throws NullPointerException  {
 		/* Obtiene TODAS las marcas existentes en la base de datos
 		* y las guarda en una lista.
 		* */
@@ -34,7 +32,7 @@ public class MarcaAPI extends AplicacionBase{
 	
 	@GET
 	@Path("/consultarMarcas/{id}")
-	public Marca consultarMarca(@PathParam("id") long id) {
+	public Marca consultarMarca(@PathParam("id") long id) throws NullPointerException  {
 		DaoMarca daoMarca = new DaoMarca();
 		return daoMarca.find(id, Marca.class);
 	}
@@ -76,4 +74,42 @@ public class MarcaAPI extends AplicacionBase{
 			throw e;
 		}
 	}*/
+	
+	@PUT
+	@Path("/updateMarca/{id}")
+	public Response modificarMarca(@PathParam("id") long id, MarcaDto marcaDto) throws NullPointerException {
+		DaoMarca daoMarca = new DaoMarca();
+		Marca marcaParaModificar = daoMarca.find(id, Marca.class);
+		
+		marcaParaModificar.set_nombre(marcaDto.getNombre());
+		marcaParaModificar.set_descripcion(marcaDto.getDescripcion());
+		marcaParaModificar.set_estatus(marcaDto.get_estatus());
+		
+		try {
+			daoMarca.update(marcaParaModificar);
+		} catch (Exception e) {
+			return Response.status(Response.Status.EXPECTATION_FAILED).build();
+		}
+		
+		return Response.ok().entity(marcaParaModificar).build();
+	}
+	
+	@DELETE
+	@Path("/deleteMarca/{id}")
+	public Response eliminarMarca(@PathParam("id") long id) {
+		DaoMarca daoMarca = new DaoMarca();
+		Marca marcaParaEliminar = daoMarca.find(id, Marca.class);
+		
+		if (marcaParaEliminar == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+		
+		try {
+			daoMarca.delete(marcaParaEliminar);
+		} catch (Exception e) {
+			return Response.status(Response.Status.EXPECTATION_FAILED).build();
+		}
+		
+		return Response.ok().entity(marcaParaEliminar).build();
+	}
 }
