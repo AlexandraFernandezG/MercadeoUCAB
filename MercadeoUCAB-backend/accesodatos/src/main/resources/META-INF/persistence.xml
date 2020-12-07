@@ -3,6 +3,7 @@
   <persistence-unit name="mercadeoUcabPU">
     <class>ucab.dsw.entidades.Categoria</class>
     <class>ucab.dsw.entidades.Estudio</class>
+    <class>ucab.dsw.entidades.EstudioLugar</class>
     <class>ucab.dsw.entidades.Hijo</class>
     <class>ucab.dsw.entidades.HistoricoEstado</class>
     <class>ucab.dsw.entidades.Informacion</class>
