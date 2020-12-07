@@ -35,6 +35,15 @@ class MarcaAPITest {
 		}
 	}
 	
+	@Test
+	void listarMarcasActivas() {
+		try {
+			Assertions.assertNotNull(new MarcaAPI().listarMarcasActivas());
+		} catch (Exception e) {
+			Assertions.fail(e.getMessage(), e.getCause());
+		}
+	}
+	
 /*	@Test
 	void testAgregarMarca() throws PruebaExcepcion {
 		MarcaDto marcaDto = new MarcaDto();

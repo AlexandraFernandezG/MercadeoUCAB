@@ -8,6 +8,7 @@ import ucab.dsw.excepciones.PruebaExcepcion;
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**@author valen
@@ -22,7 +23,7 @@ public class MarcaAPI extends AplicacionBase{
 //	private DaoMarca daoMarca = new DaoMarca();
 	
 	@GET
-	@Path("/all")
+	@Path("/allMarcas")
 	public List<Marca> listarMarcas() {
 		/* Obtiene TODAS las marcas existentes en la base de datos
 		* y las guarda en una lista.
@@ -32,10 +33,28 @@ public class MarcaAPI extends AplicacionBase{
 	}
 	
 	@GET
-	@Path("/consultar/{id}")
+	@Path("/consultarMarcas/{id}")
 	public Marca consultarMarca(@PathParam("id") long id) {
 		DaoMarca daoMarca = new DaoMarca();
 		return daoMarca.find(id, Marca.class);
+	}
+	
+	@GET
+	@Path("/allMarcasActivas")
+	public List<Marca> listarMarcasActivas() throws NullPointerException{
+		DaoMarca daoMarca = new DaoMarca();
+		List<Marca> listaMarcas = daoMarca.findAll(Marca.class);
+		List<Marca> listaMarcasActivas = new ArrayList<>();
+		
+		if (listaMarcas != null) {
+			for (Marca marca : listaMarcas) {
+				if ("Activo".equals(marca.get_estatus())) {
+					listaMarcasActivas.add(marca);
+				}
+			}
+		}
+		
+		return listaMarcasActivas;
 	}
 	
 /*	@POST
