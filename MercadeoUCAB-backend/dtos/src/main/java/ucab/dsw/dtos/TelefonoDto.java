@@ -1,18 +1,27 @@
-package ucab.dws.dtos;
+package ucab.dsw.dtos;
 
 import ucab.dsw.dtos.DtoBase;
 import ucab.dsw.dtos.InformacionDto;
 
 public class TelefonoDto extends DtoBase {
 
-    private String _numero;
+    private int _numero;
+    private InformacionDto _informacion;
 
-    public String get_numero() {
+    public int get_numero() {
         return _numero;
     }
 
-    public void set_numero(String _numero) {
+    public void set_numero(int _numero) {
         this._numero = _numero;
+    }
+
+    public InformacionDto get_informacion() {
+        return _informacion;
+    }
+
+    public void set_informacion(InformacionDto _informacion) {
+        this._informacion = _informacion;
     }
 
     public TelefonoDto (long id) throws Exception{

@@ -4,6 +4,7 @@ public class UsuarioDto extends DtoBase{
     private String nombreUsuario;
     private String correo;
     private String codigoRecuperacion;
+    private RolDto _rol;
 
     public String getCodigoRecuperacion() {
         return codigoRecuperacion;
@@ -27,6 +28,14 @@ public class UsuarioDto extends DtoBase{
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    public RolDto get_rol() {
+        return _rol;
+    }
+
+    public void set_rol(RolDto _rol) {
+        this._rol = _rol;
     }
 
     public UsuarioDto (long id) throws Exception{
