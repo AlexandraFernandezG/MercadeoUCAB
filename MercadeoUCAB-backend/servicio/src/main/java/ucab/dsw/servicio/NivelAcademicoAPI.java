@@ -59,7 +59,7 @@ public class NivelAcademicoAPI extends AplicacionBase{
                 nivelAcademico_modificar.setDescripcion(nivelAcademicoDto.get_descripcion());
                 nivelAcademico_modificar.set_estatus(nivelAcademicoDto.get_estatus());
                 daoNivelAcademico.update(nivelAcademico_modificar);
-                return Response.ok().entity(nivelAcademicoDto).build();
+                return Response.ok().entity(nivelAcademico_modificar).build();
 
         } else {
 
