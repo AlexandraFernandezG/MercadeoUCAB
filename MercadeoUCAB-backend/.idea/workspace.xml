@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="servicio:war" />
+      <artifact name="servicio:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3f7b76fe-4587-4747-8787-e8e40ffccd6a" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1l2EWoGOUr6lX1KvXqEsMEkvjcO" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.applicationServers" />
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="JUnit" />
+      </set>
+    </option>
+    <option name="excludedTypes">
+      <set>
+        <option value="GlassfishConfiguration" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.CategoriaAPI_Test.pruebaModificarEstatusCategoria">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GlassFish 5.0.0" type="GlassfishConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="GlassFish 5.0.0" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/servicio/" />
+      <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="servicio:war exploded">
+          <settings />
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="DOMAIN" value="domain1" />
+        <option name="PRESERVE" value="false" />
+        <option name="COMPATIBILITY" value="false" />
+        <option name="VIRTUAL_SERVER" />
+        <option name="USERNAME" value="" />
+        <option name="CREDENTIAL_ALIAS" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="GlassFish" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="9009" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JBoss 21.0.1" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss 21.0.1.Final" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="C:\Program Files\Java\jdk1.8.0_261\jre">
+      <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="servicio:war exploded">
+          <settings />
+        </artifact>
+        <artifact name="servicio:war">
+          <settings />
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="SERVER" />
+        <option name="BINDING_SET_NAME" value="" />
+        <option name="DOMAIN" value="false" />
+        <option name="SERVER_GROUP" />
+        <option name="USERNAME" value="" />
+        <option name="CREDENTIAL_ALIAS" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="JBoss" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="57509" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="servicio:war exploded" />
+          <artifact name="servicio:war" />
+        </option>
+      </method>
+    </configuration>
+    <configuration name="CategoriaAPI_Test.pruebaModificarEstatusCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="servicio" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CategoriaAPI_Test" />
+      <option name="METHOD_NAME" value="pruebaModificarEstatusCategoria" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OcupacionAPI_Test.pruebaEliminarOcupacion" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="servicio" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="OcupacionAPI_Test" />
+      <option name="METHOD_NAME" value="pruebaEliminarOcupacion" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OcupacionAPI_Test.pruebaInsertarOcupacion" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="servicio" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="OcupacionAPI_Test" />
+      <option name="METHOD_NAME" value="pruebaInsertarOcupacion" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolicitudEstudioAPI_Test.pruebaInsertarSolicitud" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="servicio" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SolicitudEstudioAPI_Test" />
+      <option name="METHOD_NAME" value="pruebaInsertarSolicitud" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SubCategoriaAPI_Test.pruebaInsertarSubCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="servicio" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SubCategoriaAPI_Test" />
+      <option name="METHOD_NAME" value="pruebaInsertarSubCategoria" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="GlassFish Server.GlassFish 5.0.0" />
+      <item itemvalue="JBoss Server.JBoss 21.0.1" />
+      <item itemvalue="JUnit.OcupacionAPI_Test.pruebaInsertarOcupacion" />
+      <item itemvalue="JUnit.OcupacionAPI_Test.pruebaEliminarOcupacion" />
+      <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaInsertarSubCategoria" />
+      <item itemvalue="JUnit.SolicitudEstudioAPI_Test.pruebaInsertarSolicitud" />
+      <item itemvalue="JUnit.CategoriaAPI_Test.pruebaModificarEstatusCategoria" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CategoriaAPI_Test.pruebaModificarEstatusCategoria" />
+        <item itemvalue="JUnit.SolicitudEstudioAPI_Test.pruebaInsertarSolicitud" />
+        <item itemvalue="JUnit.OcupacionAPI_Test.pruebaInsertarOcupacion" />
+        <item itemvalue="JUnit.OcupacionAPI_Test.pruebaEliminarOcupacion" />
+        <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaInsertarSubCategoria" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3f7b76fe-4587-4747-8787-e8e40ffccd6a" name="Default Changelist" comment="" />
+      <created>1606786823730</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606786823730</updated>
+      <workItem from="1606786825632" duration="879000" />
+      <workItem from="1606850624216" duration="2701000" />
+      <workItem from="1606927611884" duration="29257000" />
+      <workItem from="1606965529375" duration="5945000" />
+      <workItem from="1607014368066" duration="6968000" />
+      <workItem from="1607022407545" duration="114000" />
+      <workItem from="1607099365999" duration="27852000" />
+      <workItem from="1607196352942" duration="28642000" />
+      <workItem from="1607232906517" duration="1147000" />
+      <workItem from="1607274006501" duration="10721000" />
+      <workItem from="1607294667711" duration="16665000" />
+      <workItem from="1607365803263" duration="25666000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="579" y="255" width="583" height="217" key="#Assign_Data_Sources" timestamp="1607388209656">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="579" y="255" width="583" height="217" key="#Assign_Data_Sources/0.0.1360.728@0.0.1360.728" timestamp="1607388209656" />
+    <state x="502" y="169" key="#BuildArtifactsBeforeRunChooser" timestamp="1606858733285">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="502" y="169" key="#BuildArtifactsBeforeRunChooser/0.0.1360.728@0.0.1360.728" timestamp="1606858733284" />
+    <state x="272" y="22" key="#Deployment" timestamp="1606857683927">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="272" y="22" key="#Deployment/0.0.1360.728@0.0.1360.728" timestamp="1606857683927" />
+    <state x="454" y="270" key="#Glassfish_Server" timestamp="1606857924468">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="454" y="270" key="#Glassfish_Server/0.0.1360.728@0.0.1360.728" timestamp="1606857924468" />
+    <state x="506" y="255" key="#JBoss_Server" timestamp="1607205709513">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="506" y="255" key="#JBoss_Server/0.0.1360.728@0.0.1360.728" timestamp="1607205709513" />
+    <state x="160" y="0" key="#Project_Structure" timestamp="1606857613994">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="160" y="0" key="#Project_Structure/0.0.1360.728@0.0.1360.728" timestamp="1606857613994" />
+    <state x="388" y="100" key="#Servers" timestamp="1606857795756">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="388" y="100" key="#Servers/0.0.1360.728@0.0.1360.728" timestamp="1606857795756" />
+    <state x="176" y="0" width="1092" height="728" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607388192149">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="176" y="0" width="1092" height="728" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1360.728@0.0.1360.728" timestamp="1607388192149" />
+    <state x="442" y="65" key="#com.intellij.ide.util.MemberChooser" timestamp="1607302088322">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="442" y="65" key="#com.intellij.ide.util.MemberChooser/0.0.1360.728@0.0.1360.728" timestamp="1607302088322" />
+    <state x="298" y="0" key="#com.intellij.j2ee.appServerIntegrations.ApplicationServersConfigurable" timestamp="1607274859676">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="298" y="0" key="#com.intellij.j2ee.appServerIntegrations.ApplicationServersConfigurable/0.0.1360.728@0.0.1360.728" timestamp="1607274859676" />
+    <state x="539" y="286" key="#com.intellij.ws.actions.ShowDeployedWebSevicesDialog" timestamp="1606857814066">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="539" y="286" key="#com.intellij.ws.actions.ShowDeployedWebSevicesDialog/0.0.1360.728@0.0.1360.728" timestamp="1606857814066" />
+    <state x="459" y="105" key="FileChooserDialogImpl" timestamp="1607209313745">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="459" y="105" key="FileChooserDialogImpl/0.0.1360.728@0.0.1360.728" timestamp="1607209313745" />
+    <state width="1079" height="175" key="GridCell.Tab.0.bottom" timestamp="1607393336235">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state width="1079" height="175" key="GridCell.Tab.0.bottom/0.0.1360.728@0.0.1360.728" timestamp="1607393336235" />
+    <state width="1079" height="175" key="GridCell.Tab.0.center" timestamp="1607393336235">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state width="1079" height="175" key="GridCell.Tab.0.center/0.0.1360.728@0.0.1360.728" timestamp="1607393336235" />
+    <state width="1079" height="175" key="GridCell.Tab.0.left" timestamp="1607393336235">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state width="1079" height="175" key="GridCell.Tab.0.left/0.0.1360.728@0.0.1360.728" timestamp="1607393336235" />
+    <state width="1079" height="175" key="GridCell.Tab.0.right" timestamp="1607393336235">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state width="1079" height="175" key="GridCell.Tab.0.right/0.0.1360.728@0.0.1360.728" timestamp="1607393336235" />
+    <state width="1317" height="200" key="GridCell.Tab.1.bottom" timestamp="1607207716496">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state width="1317" height="200" key="GridCell.Tab.1.bottom/0.0.1360.728@0.0.1360.728" timestamp="1607207716496" />
+    <state width="1317" height="200" key="GridCell.Tab.1.center" timestamp="1607207716496">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state width="1317" height="200" key="GridCell.Tab.1.center/0.0.1360.728@0.0.1360.728" timestamp="1607207716496" />
+    <state width="1317" height="200" key="GridCell.Tab.1.left" timestamp="1607207716495">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state width="1317" height="200" key="GridCell.Tab.1.left/0.0.1360.728@0.0.1360.728" timestamp="1607207716495" />
+    <state width="1317" height="200" key="GridCell.Tab.1.right" timestamp="1607207716496">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state width="1317" height="200" key="GridCell.Tab.1.right/0.0.1360.728@0.0.1360.728" timestamp="1607207716496" />
+    <state x="188" y="38" key="Maven.ArtifactSearchDialog" timestamp="1607299414128">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="188" y="38" key="Maven.ArtifactSearchDialog/0.0.1360.728@0.0.1360.728" timestamp="1607299414128" />
+    <state x="181" y="9" key="SettingsEditor" timestamp="1606858004969">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="181" y="9" key="SettingsEditor/0.0.1360.728@0.0.1360.728" timestamp="1606858004969" />
+    <state x="250" y="9" key="com.intellij.javaee.view.ServerArtifactsDialog" timestamp="1606858687791">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="250" y="9" key="com.intellij.javaee.view.ServerArtifactsDialog/0.0.1360.728@0.0.1360.728" timestamp="1606858687791" />
+    <state x="410" y="125" key="extract.method.dialog" timestamp="1607391613200">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="410" y="125" key="extract.method.dialog/0.0.1360.728@0.0.1360.728" timestamp="1607391613200" />
+    <state x="343" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1607280097600">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="343" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1360.728@0.0.1360.728" timestamp="1607280097600" />
+  </component>
+</project>
