@@ -23,30 +23,18 @@
             <tr class="text-center">
                 <th scope="col">id</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Estatus</th>
                 <th scope="col">Descripción</th>
+                <th scope="col">Estatus</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody >
             <tbody class="tbody">
              <tr *ngFor="let categoria of categorias">
-                <th class="text-center" scope="row">{{categoria.id}}</th>
+                <th class="text-center" scope="row">{{categoria._id}}</th>
                 <td class="text-center">{{categoria.nombre}}</td>
-                <td class="text-center">{{categoria.descripcion}}</td>
-                <td class="text-center">{{categoria.status}}</td>
-             </tr>
-             <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
+                <td class="text-center">{{categoria._descripcion}}</td>
+                <td class="text-center">{{categoria._estatus}}</td>
             <td>
                 <div class="row">
                     <div align="center" class="col-sm-4">
@@ -65,7 +53,6 @@
 
                 </div>
             </td>
-        </tr>
          </tbody>
     </table>
 </div>

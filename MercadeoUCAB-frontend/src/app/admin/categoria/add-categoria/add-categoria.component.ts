@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatInputModule} from '@angular/material/input';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CategoriasService } from 'src/app/servicios/categorias.service';
 
 
 
@@ -14,7 +16,7 @@ export class AddCategoriaComponent implements OnInit {
   categoriaForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private route: Router, private service: CategoriasService) {
 
     this.categoriaForm = this.fb.group({
       nombre: new FormControl('',[ Validators.required, Validators.maxLength(100)]),

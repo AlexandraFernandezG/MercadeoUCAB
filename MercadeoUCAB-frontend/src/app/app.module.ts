@@ -40,6 +40,7 @@ import { RegistroEncuestadoComponent } from './registro-encuestado/registro-encu
 import { AnalistaComponent } from './analista/analista.component';
 import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios-analista.component';
 import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
+import { CategoriasService } from './servicios/categorias.service';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,7 @@ import { DataEstudioComponent } from './analista/data-estudio/data-estudio.compo
     MatFormFieldModule,
     MatSelectModule
   ],
-  providers: [],
+  providers: [CategoriasService],
   bootstrap: [AppComponent],
   entryComponents: [
     SolicitudEstudioComponent,

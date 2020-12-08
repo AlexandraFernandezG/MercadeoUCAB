@@ -3,6 +3,7 @@ import { CategoriasService } from 'src/app/servicios/categorias.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddCategoriaComponent } from './add-categoria/add-categoria.component';
 import { Categoria } from 'src/app/modelos/categoria';
+import { Router } from '@angular/router';
 
 
 
@@ -13,13 +14,17 @@ import { Categoria } from 'src/app/modelos/categoria';
 })
 export class CategoriaComponent implements OnInit {
 
+  categorias: Categoria[];
   constructor(
     private service: CategoriasService,
     public dialog: MatDialog,
+    private router: Router
   ) { }
 
-  ngOnInit(): void {
-
+  ngOnInit() {
+    this.service.getCategorias()
+    .subscribe(data => {this.categorias = data;
+    } );
   }
 
 
