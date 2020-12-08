@@ -3,6 +3,7 @@ package ucab.dsw.servicio;
 import ucab.dsw.accesodatos.DaoMarca;
 import ucab.dsw.dtos.MarcaDto;
 import ucab.dsw.entidades.Marca;
+import ucab.dsw.excepciones.PruebaExcepcion;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
@@ -34,7 +35,12 @@ public class MarcaAPI extends AplicacionBase{
 	@Path("/consultarMarcas/{id}")
 	public Marca consultarMarca(@PathParam("id") long id) throws NullPointerException  {
 		DaoMarca daoMarca = new DaoMarca();
-		return daoMarca.find(id, Marca.class);
+		
+		try {
+			return daoMarca.find(id, Marca.class);
+		} catch (NullPointerException e) {
+			return null;
+		}
 	}
 	
 	@GET
@@ -55,25 +61,21 @@ public class MarcaAPI extends AplicacionBase{
 		return listaMarcasActivas;
 	}
 	
-/*	@POST
+	@POST
 	@Path("/add")
-	public Marca agregarMarca(MarcaDto marcaDto) throws PruebaExcepcion {
-		try {
-			DaoMarca daoMarca = new DaoMarca();
-			Marca marca = new Marca(marcaDto.getId());
-//			marca.se
-			marca.set_nombre(marcaDto.getNombre());
-			marca.set_descripcion(marcaDto.getDescripcion());
-			marca.set_estatus(marcaDto.get_estatus());
-			System.out.println("ID: " + marca.get_id());
-			daoMarca.insert(marca);
-			return marca;
-//			return null;
-		} catch (Exception e) {
-//			String error = e.getMessage();
-			throw e;
-		}
-	}*/
+	public Marca agregarMarca(MarcaDto marcaDto) {
+		DaoMarca daoMarca = new DaoMarca();
+		Marca marcaNueva = new Marca(marcaDto.getId());
+		
+		marcaNueva.set_nombre(marcaDto.getNombre());
+		marcaNueva.set_descripcion(marcaDto.getDescripcion());
+		marcaNueva.set_estatus(marcaDto.get_estatus());
+		System.out.println("ID: " + marcaNueva.get_id());
+		
+		daoMarca.insert(marcaNueva);
+		
+		return marcaNueva;
+	}
 	
 	@PUT
 	@Path("/updateMarca/{id}")

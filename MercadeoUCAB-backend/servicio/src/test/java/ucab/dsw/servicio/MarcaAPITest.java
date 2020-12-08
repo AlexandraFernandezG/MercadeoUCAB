@@ -174,20 +174,28 @@ class MarcaAPITest {
 		}
 	}
 	
-/*	@Test
-	void testAgregarMarca() throws PruebaExcepcion {
+	@Test
+	void testAgregarMarca(){
 		MarcaDto marcaDto = new MarcaDto();
-		ucab.dsw.servicio.MarcaAPI marcaAPI = new ucab.dsw.servicio.MarcaAPI();
+		MarcaAPI servicio = new MarcaAPI();
+		Marca marcaNueva = null;
 		
-//		marcaDto.setId();
 		marcaDto.setNombre("Kub - Koss");
 		marcaDto.setDescripcion("Sunt nesciunt ratione vel doloremque placeat.");
 		marcaDto.set_estatus("Activo");
 		
 		try {
-			Marca obtainedMarca = marcaAPI.agregarMarca(marcaDto);
+			marcaNueva = servicio.agregarMarca(marcaDto);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}*/
+		
+		if (marcaNueva != null) {
+			Marca marcaEncontrada = servicio.consultarMarca(
+				marcaNueva.get_id());
+			Assertions.assertNotNull(marcaEncontrada);
+		} else {
+			Assertions.fail();
+		}
+	}
 }
