@@ -28,13 +28,13 @@
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody >
             <tbody class="tbody">
-             <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+             <tr *ngFor="let categoria of categorias">
+                <th class="text-center" scope="row">{{categoria.id}}</th>
+                <td class="text-center">{{categoria.nombre}}</td>
+                <td class="text-center">{{categoria.descripcion}}</td>
+                <td class="text-center">{{categoria.status}}</td>
              </tr>
              <tr>
               <th scope="row">2</th>

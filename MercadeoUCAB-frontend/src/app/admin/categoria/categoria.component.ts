@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { CategoriasService } from 'src/app/servicios/categorias.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddCategoriaComponent } from './add-categoria/add-categoria.component';
+import { Categoria } from 'src/app/modelos/categoria';
+
 
 
 @Component({
@@ -17,6 +19,7 @@ export class CategoriaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
   }
 
 

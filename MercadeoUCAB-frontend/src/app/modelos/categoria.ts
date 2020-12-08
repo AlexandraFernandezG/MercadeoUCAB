@@ -2,6 +2,7 @@ export class Categoria {
  constructor(
     public id: number,
     public nombre: string,
-    public descripcion: string
+    public descripcion: string,
+    public status: string
   ){}
 }
