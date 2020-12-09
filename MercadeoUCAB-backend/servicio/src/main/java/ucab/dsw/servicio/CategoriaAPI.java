@@ -165,16 +165,6 @@ public class CategoriaAPI extends AplicacionBase {
 
         if (categoria_eliminar != null){
 
-            DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
-            List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
-
-            for (Subcategoria subcategoria : listaSubcategorias) {
-
-                if (subcategoria.getCategoria().get_id() == id) {
-                    daoSubcategoria.delete(subcategoria);
-                }
-            }
-
             dao.delete(categoria_eliminar);
             return Response.ok().entity(categoria_eliminar).build();
 

@@ -65,7 +65,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CategoriaAPI_Test.pruebaModificarEstatusCategoria">
+  <component name="RunManager" selected="JUnit.CategoriaAPI_Test.pruebaEliminarCategoria">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -223,41 +223,40 @@
         </option>
       </method>
     </configuration>
-    <configuration name="CategoriaAPI_Test.pruebaModificarEstatusCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CategoriaAPI_Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="servicio" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="CategoriaAPI_Test" />
-      <option name="METHOD_NAME" value="pruebaModificarEstatusCategoria" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CategoriaAPI_Test.pruebaEliminarCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="servicio" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CategoriaAPI_Test" />
+      <option name="METHOD_NAME" value="pruebaEliminarCategoria" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OcupacionAPI_Test.pruebaEliminarOcupacion" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CategoriaAPI_Test.pruebaInsertarCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="servicio" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="OcupacionAPI_Test" />
-      <option name="METHOD_NAME" value="pruebaEliminarOcupacion" />
+      <option name="MAIN_CLASS_NAME" value="CategoriaAPI_Test" />
+      <option name="METHOD_NAME" value="pruebaInsertarCategoria" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OcupacionAPI_Test.pruebaInsertarOcupacion" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SubCategoriaAPI_Test.pruebaEliminarSubCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="servicio" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="OcupacionAPI_Test" />
-      <option name="METHOD_NAME" value="pruebaInsertarOcupacion" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SolicitudEstudioAPI_Test.pruebaInsertarSolicitud" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="servicio" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="SolicitudEstudioAPI_Test" />
-      <option name="METHOD_NAME" value="pruebaInsertarSolicitud" />
+      <option name="MAIN_CLASS_NAME" value="SubCategoriaAPI_Test" />
+      <option name="METHOD_NAME" value="pruebaEliminarSubCategoria" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -276,19 +275,19 @@
     <list>
       <item itemvalue="GlassFish Server.GlassFish 5.0.0" />
       <item itemvalue="JBoss Server.JBoss 21.0.1" />
-      <item itemvalue="JUnit.OcupacionAPI_Test.pruebaInsertarOcupacion" />
-      <item itemvalue="JUnit.OcupacionAPI_Test.pruebaEliminarOcupacion" />
+      <item itemvalue="JUnit.CategoriaAPI_Test" />
+      <item itemvalue="JUnit.CategoriaAPI_Test.pruebaEliminarCategoria" />
+      <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaEliminarSubCategoria" />
+      <item itemvalue="JUnit.CategoriaAPI_Test.pruebaInsertarCategoria" />
       <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaInsertarSubCategoria" />
-      <item itemvalue="JUnit.SolicitudEstudioAPI_Test.pruebaInsertarSolicitud" />
-      <item itemvalue="JUnit.CategoriaAPI_Test.pruebaModificarEstatusCategoria" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CategoriaAPI_Test.pruebaModificarEstatusCategoria" />
-        <item itemvalue="JUnit.SolicitudEstudioAPI_Test.pruebaInsertarSolicitud" />
-        <item itemvalue="JUnit.OcupacionAPI_Test.pruebaInsertarOcupacion" />
-        <item itemvalue="JUnit.OcupacionAPI_Test.pruebaEliminarOcupacion" />
+        <item itemvalue="JUnit.CategoriaAPI_Test.pruebaEliminarCategoria" />
         <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaInsertarSubCategoria" />
+        <item itemvalue="JUnit.CategoriaAPI_Test.pruebaInsertarCategoria" />
+        <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaEliminarSubCategoria" />
+        <item itemvalue="JUnit.CategoriaAPI_Test" />
       </list>
     </recent_temporary>
   </component>
@@ -311,7 +310,10 @@
       <workItem from="1607232906517" duration="1147000" />
       <workItem from="1607274006501" duration="10721000" />
       <workItem from="1607294667711" duration="16665000" />
-      <workItem from="1607365803263" duration="25666000" />
+      <workItem from="1607365803263" duration="29877000" />
+      <workItem from="1607404146225" duration="709000" />
+      <workItem from="1607453586403" duration="82000" />
+      <workItem from="1607535451745" duration="5796000" />
     </task>
     <servers />
   </component>
@@ -319,10 +321,10 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="579" y="255" width="583" height="217" key="#Assign_Data_Sources" timestamp="1607388209656">
+    <state x="579" y="255" width="583" height="217" key="#Assign_Data_Sources" timestamp="1607541021774">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state x="579" y="255" width="583" height="217" key="#Assign_Data_Sources/0.0.1360.728@0.0.1360.728" timestamp="1607388209656" />
+    <state x="579" y="255" width="583" height="217" key="#Assign_Data_Sources/0.0.1360.728@0.0.1360.728" timestamp="1607541021774" />
     <state x="502" y="169" key="#BuildArtifactsBeforeRunChooser" timestamp="1606858733285">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
@@ -347,18 +349,18 @@
       <screen x="0" y="0" width="1360" height="728" />
     </state>
     <state x="388" y="100" key="#Servers/0.0.1360.728@0.0.1360.728" timestamp="1606857795756" />
-    <state x="176" y="0" width="1092" height="728" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607388192149">
+    <state x="89" y="0" width="1092" height="728" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607540943142">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state x="176" y="0" width="1092" height="728" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1360.728@0.0.1360.728" timestamp="1607388192149" />
+    <state x="89" y="0" width="1092" height="728" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1360.728@0.0.1360.728" timestamp="1607540943142" />
     <state x="442" y="65" key="#com.intellij.ide.util.MemberChooser" timestamp="1607302088322">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
     <state x="442" y="65" key="#com.intellij.ide.util.MemberChooser/0.0.1360.728@0.0.1360.728" timestamp="1607302088322" />
-    <state x="298" y="0" key="#com.intellij.j2ee.appServerIntegrations.ApplicationServersConfigurable" timestamp="1607274859676">
+    <state x="298" y="0" key="#com.intellij.j2ee.appServerIntegrations.ApplicationServersConfigurable" timestamp="1607402880996">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state x="298" y="0" key="#com.intellij.j2ee.appServerIntegrations.ApplicationServersConfigurable/0.0.1360.728@0.0.1360.728" timestamp="1607274859676" />
+    <state x="298" y="0" key="#com.intellij.j2ee.appServerIntegrations.ApplicationServersConfigurable/0.0.1360.728@0.0.1360.728" timestamp="1607402880996" />
     <state x="539" y="286" key="#com.intellij.ws.actions.ShowDeployedWebSevicesDialog" timestamp="1606857814066">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
@@ -367,22 +369,22 @@
       <screen x="0" y="0" width="1360" height="728" />
     </state>
     <state x="459" y="105" key="FileChooserDialogImpl/0.0.1360.728@0.0.1360.728" timestamp="1607209313745" />
-    <state width="1079" height="175" key="GridCell.Tab.0.bottom" timestamp="1607393336235">
+    <state width="1079" height="175" key="GridCell.Tab.0.bottom" timestamp="1607541208301">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.bottom/0.0.1360.728@0.0.1360.728" timestamp="1607393336235" />
-    <state width="1079" height="175" key="GridCell.Tab.0.center" timestamp="1607393336235">
+    <state width="1079" height="175" key="GridCell.Tab.0.bottom/0.0.1360.728@0.0.1360.728" timestamp="1607541208301" />
+    <state width="1079" height="175" key="GridCell.Tab.0.center" timestamp="1607541208300">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.center/0.0.1360.728@0.0.1360.728" timestamp="1607393336235" />
-    <state width="1079" height="175" key="GridCell.Tab.0.left" timestamp="1607393336235">
+    <state width="1079" height="175" key="GridCell.Tab.0.center/0.0.1360.728@0.0.1360.728" timestamp="1607541208300" />
+    <state width="1079" height="175" key="GridCell.Tab.0.left" timestamp="1607541208300">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.left/0.0.1360.728@0.0.1360.728" timestamp="1607393336235" />
-    <state width="1079" height="175" key="GridCell.Tab.0.right" timestamp="1607393336235">
+    <state width="1079" height="175" key="GridCell.Tab.0.left/0.0.1360.728@0.0.1360.728" timestamp="1607541208300" />
+    <state width="1079" height="175" key="GridCell.Tab.0.right" timestamp="1607541208300">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.right/0.0.1360.728@0.0.1360.728" timestamp="1607393336235" />
+    <state width="1079" height="175" key="GridCell.Tab.0.right/0.0.1360.728@0.0.1360.728" timestamp="1607541208300" />
     <state width="1317" height="200" key="GridCell.Tab.1.bottom" timestamp="1607207716496">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
@@ -407,6 +409,10 @@
       <screen x="0" y="0" width="1360" height="728" />
     </state>
     <state x="181" y="9" key="SettingsEditor/0.0.1360.728@0.0.1360.728" timestamp="1606858004969" />
+    <state x="522" y="251" width="316" height="244" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1607539026917">
+      <screen x="0" y="0" width="1360" height="728" />
+    </state>
+    <state x="522" y="251" width="316" height="244" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1360.728@0.0.1360.728" timestamp="1607539026917" />
     <state x="250" y="9" key="com.intellij.javaee.view.ServerArtifactsDialog" timestamp="1606858687791">
       <screen x="0" y="0" width="1360" height="728" />
     </state>

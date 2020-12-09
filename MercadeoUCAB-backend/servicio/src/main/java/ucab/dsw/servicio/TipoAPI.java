@@ -124,6 +124,7 @@ public class TipoAPI extends AplicacionBase{
             daoTipo.delete(tipo_eliminar);
             return Response.ok().entity(tipo_eliminar).build();
         }
+
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 

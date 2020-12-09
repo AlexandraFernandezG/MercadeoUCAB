@@ -173,34 +173,6 @@ public class ProductoAPI extends AplicacionBase{
 
         if(producto_eliminar != null){
 
-            DaoTipo daoTipo = new DaoTipo();
-            DaoPresentacion daoPresentacion = new DaoPresentacion();
-            DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
-            List<Tipo> listaTipo = daoTipo.findAll(Tipo.class);
-            List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
-            List<SolicitudEstudio> listaSolicitudEstudio = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
-
-            for (Tipo tipo: listaTipo){
-
-                if(tipo.getProducto().get_id() == id){
-                    daoTipo.delete(tipo);
-                }
-            }
-
-            for (Presentacion presentacion: listaPresentacion){
-
-                if(presentacion.getProducto().get_id() == id){
-                    daoPresentacion.delete(presentacion);
-                }
-            }
-
-            for (SolicitudEstudio solicitudEstudio: listaSolicitudEstudio){
-
-                if(solicitudEstudio.get_producto().get_id() == id){
-                    daoSolicitudEstudio.delete(solicitudEstudio);
-                }
-            }
-
             daoProducto.delete(producto_eliminar);
             return Response.ok().entity(producto_eliminar).build();
         } else {

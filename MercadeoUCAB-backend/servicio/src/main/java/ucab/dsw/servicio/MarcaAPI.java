@@ -123,12 +123,11 @@ public class MarcaAPI extends AplicacionBase{
 
         if(marca_eliminar != null){
 
-            ucab.dsw.servicio.ProductoAPI servicio = new ucab.dsw.servicio.ProductoAPI();
-            servicio.deleteProducto(id);
             daoMarca.delete(marca_eliminar);
             return Response.ok().entity(marca_eliminar).build();
 
         }
+
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

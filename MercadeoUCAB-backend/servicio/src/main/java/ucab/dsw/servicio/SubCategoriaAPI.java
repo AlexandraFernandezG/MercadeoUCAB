@@ -128,17 +128,16 @@ public class SubCategoriaAPI extends AplicacionBase{
 
         if (subcategoria_eliminar != null){
 
-                ucab.dsw.servicio.ProductoAPI servicio_1 = new ucab.dsw.servicio.ProductoAPI();
-                ucab.dsw.servicio.PreguntaEncuestaAPI servicio_2 = new ucab.dsw.servicio.PreguntaEncuestaAPI();
-                servicio_1.deleteProducto(id);
-                servicio_2.eliminarPreguntaEncuesta(id);
                 dao.delete(subcategoria_eliminar);
+                return Response.ok().entity(subcategoria_eliminar).build();
         }
+
         else {
 
             return Response.status(Response.Status.NOT_FOUND).build();
+
         }
-        return Response.ok().entity(subcategoria_eliminar).build();
+
     }
 }
 

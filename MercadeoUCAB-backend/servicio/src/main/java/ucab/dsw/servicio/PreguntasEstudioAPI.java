@@ -74,16 +74,6 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
         if (preguntaEstudio_eliminar != null){
 
-            DaoRespuesta daoRespuesta = new DaoRespuesta();
-            List<Respuesta> listaRespuesta = daoRespuesta.findAll(Respuesta.class);
-
-            for (Respuesta respuesta: listaRespuesta){
-
-                if(respuesta.getPreguntasEstudio().get_id() == id){
-                    daoRespuesta.delete(respuesta);
-                }
-            }
-
             daoPreguntaEstudio.delete(preguntaEstudio_eliminar);
             return Response.ok().entity(preguntaEstudio_eliminar).build();
 

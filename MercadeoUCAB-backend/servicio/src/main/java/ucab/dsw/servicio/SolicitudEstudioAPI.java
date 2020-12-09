@@ -175,29 +175,10 @@ public class SolicitudEstudioAPI extends AplicacionBase{
 
         if(solicitudEstudio != null){
 
-            DaoEstudio daoEstudio = new DaoEstudio();
-            DaoMedioComunicacion daoMedioComunicacion = new DaoMedioComunicacion();
-            List<Estudio> listaEstudio = daoEstudio.findAll(Estudio.class);
-            List<MedioComunicacion> listaMedioComunicacion = daoMedioComunicacion.findAll(MedioComunicacion.class);
-
-            for(Estudio estudio: listaEstudio){
-
-                if(estudio.getSolicitudEstudio().get_id() == id){
-                    daoEstudio.delete(estudio);
-
-                }
-            }
-
-            for(MedioComunicacion medioComunicacion: listaMedioComunicacion){
-
-                if(medioComunicacion.getSolicitudEstudio().get_id() == id){
-                    daoMedioComunicacion.delete(medioComunicacion);
-                }
-            }
-
             daoSolicitudEstudio.delete(solicitudEstudio);
             return Response.ok().entity(solicitudEstudio).build();
         }
+
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

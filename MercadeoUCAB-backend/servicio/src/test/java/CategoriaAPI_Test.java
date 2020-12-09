@@ -29,7 +29,7 @@ public class CategoriaAPI_Test {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
         CategoriaDto categoriaDto = new CategoriaDto();
-        categoriaDto.set_estatus("Inactivo");
+        categoriaDto.set_estatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarEstatusCategoria(1L,categoriaDto);
     }
@@ -43,7 +43,7 @@ public class CategoriaAPI_Test {
         categoriaDto.setNombre("Comida");
         categoriaDto.set_descripcion("Perros calientes de arandanos");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarCategoria(5L,categoriaDto);
+        servicio.modificarCategoria(1L,categoriaDto);
 
     }
 
@@ -53,6 +53,6 @@ public class CategoriaAPI_Test {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarCategoria(3L);
+        servicio.eliminarCategoria(1L);
     }
 }

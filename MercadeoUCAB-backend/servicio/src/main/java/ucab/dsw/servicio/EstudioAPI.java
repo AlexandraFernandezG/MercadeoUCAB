@@ -127,26 +127,6 @@ public class EstudioAPI extends AplicacionBase {
 
         if(estudio_eliminar != null){
 
-            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-            DaoEstudioLugar daoEstudioLugar = new DaoEstudioLugar();
-            List<PreguntaEstudio> listaPreguntaEstudio = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-            List<EstudioLugar> listaEstudioLugar = daoEstudioLugar.findAll(EstudioLugar.class);
-
-            for (PreguntaEstudio preguntaEstudio: listaPreguntaEstudio){
-
-                if(preguntaEstudio.getEstudio().get_id() == id){
-                    daoPreguntaEstudio.delete(preguntaEstudio);
-                }
-            }
-
-            for (EstudioLugar estudioLugar: listaEstudioLugar){
-
-                if(estudioLugar.get_estudio().get_id() == id){
-                    daoEstudioLugar.delete(estudioLugar);
-                }
-
-            }
-
             daoEstudio.delete(estudio_eliminar);
             return Response.ok().entity(estudio_eliminar).build();
 

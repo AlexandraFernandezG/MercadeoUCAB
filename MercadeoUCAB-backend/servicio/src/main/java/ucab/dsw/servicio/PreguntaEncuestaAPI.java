@@ -149,16 +149,6 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
         if (preguntaEncuesta_eliminar != null){
 
-            DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
-            List<RespuestaPregunta> listaRespuesta = daoRespuestaPregunta.findAll(RespuestaPregunta.class);
-
-            for(RespuestaPregunta respuestaPregunta: listaRespuesta) {
-
-                if (respuestaPregunta.getPreguntaEncuesta().get_id() == id) {
-                    daoRespuestaPregunta.delete(respuestaPregunta);
-                }
-            }
-
             daoPreguntaEncuesta.delete(preguntaEncuesta_eliminar);
             return Response.ok().entity(preguntaEncuesta_eliminar).build();
 

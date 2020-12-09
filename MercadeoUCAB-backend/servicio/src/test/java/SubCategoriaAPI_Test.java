@@ -41,7 +41,7 @@ public class SubCategoriaAPI_Test {
 
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarSubCategoria(3l);
+        servicio.eliminarSubCategoria(1L);
 
     }
 }
