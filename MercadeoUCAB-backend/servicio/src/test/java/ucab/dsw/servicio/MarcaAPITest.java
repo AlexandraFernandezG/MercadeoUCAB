@@ -11,7 +11,7 @@ class MarcaAPITest {
 		MarcaAPI listar = new MarcaAPI();
 		
 		try {
-			Assertions.assertNotNull(listar.listarMarcas());
+			Assertions.assertTrue(listar.listarMarcas().size() > 0);
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage());
 		}

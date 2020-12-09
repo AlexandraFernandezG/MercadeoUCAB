@@ -29,7 +29,7 @@ public class Usuario extends EntidadBase {
     //Relaciones
    
     @ManyToOne
-    @JoinColumn( name = "fk_rol" )
+    @JoinColumn( name = "fk_usuario" )
     private Rol _rol;
     
     ////Getters, Setters, y otros metodos.

@@ -3,7 +3,6 @@ package ucab.dsw.servicio;
 import ucab.dsw.accesodatos.DaoMarca;
 import ucab.dsw.dtos.MarcaDto;
 import ucab.dsw.entidades.Marca;
-import ucab.dsw.excepciones.PruebaExcepcion;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
@@ -62,7 +61,7 @@ public class MarcaAPI extends AplicacionBase{
 	}
 	
 	@POST
-	@Path("/add")
+	@Path("/addMarca")
 	public Marca agregarMarca(MarcaDto marcaDto) {
 		DaoMarca daoMarca = new DaoMarca();
 		Marca marcaNueva = new Marca(marcaDto.getId());
@@ -70,7 +69,6 @@ public class MarcaAPI extends AplicacionBase{
 		marcaNueva.set_nombre(marcaDto.getNombre());
 		marcaNueva.set_descripcion(marcaDto.getDescripcion());
 		marcaNueva.set_estatus(marcaDto.get_estatus());
-		System.out.println("ID: " + marcaNueva.get_id());
 		
 		daoMarca.insert(marcaNueva);
 		

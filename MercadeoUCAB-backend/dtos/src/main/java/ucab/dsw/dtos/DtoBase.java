@@ -12,13 +12,10 @@ public class DtoBase
     }
 
     public DtoBase(String estatus) throws Exception{
-
         set_estatus( estatus );
     }
 
-    public DtoBase()
-    {
-    }
+    public DtoBase(){}
 
     public long getId()
     {

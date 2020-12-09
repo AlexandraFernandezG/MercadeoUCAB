@@ -3,25 +3,35 @@ package ucab.dsw.dtos;
 public class MarcaDto extends DtoBase {
     
     private String _nombre;
-
+    private String _descripcion;
+    
+    public MarcaDto (){
+        super();
+    }
+    
+    public MarcaDto (long id) throws Exception{
+        super(id);
+    }
+    
+    public MarcaDto (String estatus) throws Exception {
+        super(estatus);
+    }
+    
+    // Nombre
     public String getNombre() {
         return _nombre;
     }
-
 
     public void setNombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public MarcaDto (long id) throws Exception{
-        super(id);
+    // Descripcion
+    public String getDescripcion() {
+        return _descripcion;
     }
-
-    public MarcaDto (String estatus) throws Exception {
-        super(estatus);
-    }
-
-    public MarcaDto (){
-        super();
+    
+    public void setDescripcion(String _descripcion) {
+        this._descripcion = _descripcion;
     }
 }

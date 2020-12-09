@@ -17,6 +17,11 @@ public class Marca extends EntidadBase{
     @Column( name = "descripcion")
     private String _descripcion;
     
+//    @Override
+//    @Column(name = "estatus")
+//    @Enumerated(value = EnumType.STRING)
+//    private String _descripcion;
+    
     //Getters, Setters, y otros metodos.
 
     public String get_nombre() {
