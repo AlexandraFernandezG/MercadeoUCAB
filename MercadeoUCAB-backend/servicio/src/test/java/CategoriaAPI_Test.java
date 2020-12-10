@@ -29,12 +29,12 @@ public class CategoriaAPI_Test {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
         CategoriaDto categoriaDto = new CategoriaDto();
-        
-        categoriaDto.setNombre("Cosmeticos");
-        categoriaDto.set_descripcion("Pintura labial redfashion");
-        categoriaDto.set_estatus("Activo");
-        Categoria resultado = servicio.addCategoria(categoriaDto);
-        Assert.assertNotEquals( resultado.get_id(), 0 );
+
+        categoriaDto.setNombre("Comida rapida");
+        categoriaDto.setDescripcion("Alimentos poco nutritivos");
+        categoriaDto.setEstatus("Activo");
+        CategoriaDto resultado = servicio.addCategoria(categoriaDto);
+        Assert.assertNotEquals( resultado.getId(), 0 );
     }
 
     // Este prueba permite modificar los campos de un registro
@@ -44,8 +44,8 @@ public class CategoriaAPI_Test {
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
         CategoriaDto categoriaDto = new CategoriaDto();
         categoriaDto.setNombre("Comida");
-        categoriaDto.set_descripcion("Perros calientes de arandanos");
-        categoriaDto.set_estatus("Inactivo");
+        categoriaDto.setDescripcion("Perros calientes de arandanos");
+        categoriaDto.setEstatus("Inactivo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarCategoria(5L,categoriaDto);
 

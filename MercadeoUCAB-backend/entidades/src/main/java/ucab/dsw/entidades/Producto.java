@@ -32,43 +32,43 @@ public class Producto extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
+    public String get_nombre() {
         return _nombre;
     }
 
-    public String getDescripcion() {
+    public String get_descripcion() {
         return _descripcion;
     }
 
-    public Usuario getUsuario() {
+    public Usuario get_usuario() {
         return _usuario;
     }
 
-    public Subcategoria getSubcategoria() {
+    public Subcategoria get_subcategoria() {
         return _subcategoria;
     }
 
-    public Marca getMarca() {
+    public Marca get_marca() {
         return _marca;
     }
 
-    public void setNombre(String _nombre) {
+    public void set_nombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public void setDescripcion(String _descripcion) {
+    public void set_descripcion(String _descripcion) {
         this._descripcion = _descripcion;
     }
 
-    public void setUsuario(Usuario _usuario) {
+    public void set_usuario(Usuario _usuario) {
         this._usuario = _usuario;
     }
 
-    public void setSubcategoria(Subcategoria _subcategoria) {
+    public void set_subcategoria(Subcategoria _subcategoria) {
         this._subcategoria = _subcategoria;
     }
 
-    public void setMarca(Marca _marca) {
+    public void set_marca(Marca _marca) {
         this._marca = _marca;
     }
     

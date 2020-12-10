@@ -37,59 +37,59 @@ public class Respuesta extends EntidadBase {
     
     //Getters, Setters, y otros metodos.
 
-    public String getRespuestaAbierta() {
+    public String get_respuestaAbierta() {
         return _respuestaAbierta;
     }
 
-    public String getEscala() {
+    public String get_escala() {
         return _escala;
     }
 
-    public String getVerdaderoFalso() {
+    public String get_verdaderoFalso() {
         return _verdaderoFalso;
     }
 
-    public String getRespuestaSimple() {
+    public String get_respuestaSimple() {
         return _respuestaSimple;
     }
 
-    public String getRespuestaMultiple() {
+    public String get_respuestaMultiple() {
         return _respuestaMultiple;
     }
 
-    public Usuario getUsuario() {
+    public Usuario get_usuario() {
         return _usuario;
     }
 
-    public PreguntaEstudio getPreguntasEstudio() {
+    public PreguntaEstudio get_preguntasEstudio() {
         return _preguntaEstudio;
     }
 
-    public void setRespuestaAbierta(String _respuestaAbierta) {
+    public void set_respuestaAbierta(String _respuestaAbierta) {
         this._respuestaAbierta = _respuestaAbierta;
     }
 
-    public void setEscala(String _escala) {
+    public void set_escala(String _escala) {
         this._escala = _escala;
     }
 
-    public void setVerdaderoFalso(String _verdaderoFalso) {
+    public void set_verdaderoFalso(String _verdaderoFalso) {
         this._verdaderoFalso = _verdaderoFalso;
     }
 
-    public void setRespuestaSimple(String _respuestaSimple) {
+    public void set_respuestaSimple(String _respuestaSimple) {
         this._respuestaSimple = _respuestaSimple;
     }
 
-    public void setRespuestaMultiple(String _respuestaMultiple) {
+    public void set_respuestaMultiple(String _respuestaMultiple) {
         this._respuestaMultiple = _respuestaMultiple;
     }
 
-    public void setUsuario(Usuario _usuario) {
+    public void set_usuario(Usuario _usuario) {
         this._usuario = _usuario;
     }
 
-    public void setPreguntasEstudio(PreguntaEstudio _preguntasEstudio) {
+    public void set_preguntasEstudio(PreguntaEstudio _preguntasEstudio) {
         this._preguntaEstudio = _preguntasEstudio;
     }
     

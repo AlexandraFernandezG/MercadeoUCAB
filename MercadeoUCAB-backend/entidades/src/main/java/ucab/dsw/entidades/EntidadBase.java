@@ -12,16 +12,12 @@ public class EntidadBase implements Serializable
 {
 
     @Id
-    @Column( name = "Id" )
+    @Column( name = "id" )
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private long _id;
 
     @Column(name = "estatus")
     private String _estatus;
-
-    //endregion
-
-    //region Method
 
 
     public EntidadBase( long id )
@@ -33,10 +29,7 @@ public class EntidadBase implements Serializable
         _estatus = estatus;
     }
 
-    public EntidadBase()
-    {
-    }
-
+    public EntidadBase() { }
 
     public long get_id()
     {

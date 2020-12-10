@@ -5,10 +5,8 @@ import ucab.dsw.dtos.TelefonoDto;
 import ucab.dsw.entidades.Informacion;
 import ucab.dsw.entidades.Telefono;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -38,10 +36,10 @@ public class TelefonoAPI extends AplicacionBase{
         DaoTelefono daoTelefono = new DaoTelefono();
         Telefono telefono = new Telefono();
 
-            telefono.setNumero(telefonoDto.get_numero());
-            telefono.set_estatus(telefonoDto.get_estatus());
-            Informacion informacion = new Informacion(telefonoDto.get_informacion().getId());
-            telefono.setInformacion(informacion);
+            telefono.set_numero(telefonoDto.getNumero());
+            telefono.set_estatus(telefonoDto.getEstatus());
+            Informacion informacion = new Informacion(telefonoDto.getInformacion().getId());
+            telefono.set_informacion(informacion);
             daoTelefono.insert(telefono);
 
             return telefono;
@@ -56,8 +54,8 @@ public class TelefonoAPI extends AplicacionBase{
 
         if (telefono_modificar != null){
 
-            telefono_modificar.setNumero(telefonoDto.get_numero());
-            telefono_modificar.set_estatus(telefonoDto.get_estatus());
+            telefono_modificar.set_numero(telefonoDto.getNumero());
+            telefono_modificar.set_estatus(telefonoDto.getEstatus());
             daoTelefono.update(telefono_modificar);
             return Response.ok().entity(telefono_modificar).build();
 

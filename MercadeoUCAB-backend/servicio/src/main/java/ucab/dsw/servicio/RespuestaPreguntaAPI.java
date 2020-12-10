@@ -4,11 +4,9 @@ import ucab.dsw.accesodatos.DaoRespuestaPregunta;
 import ucab.dsw.dtos.RespuestaPreguntaDto;
 import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.entidades.RespuestaPregunta;
-import ucab.dsw.entidades.Subcategoria;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -55,10 +53,10 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
         DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
         RespuestaPregunta respuestaPregunta = new RespuestaPregunta();
 
-            respuestaPregunta.setNombre(respuestaPreguntaDto.get_nombre());
-            respuestaPregunta.set_estatus(respuestaPreguntaDto.get_estatus());
-            PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(respuestaPreguntaDto.get_preguntaEncuestaDto().getId());
-            respuestaPregunta.setPreguntaEncuesta(preguntaEncuesta);
+            respuestaPregunta.set_nombre(respuestaPreguntaDto.getNombre());
+            respuestaPregunta.set_estatus(respuestaPreguntaDto.getEstatus());
+            PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(respuestaPreguntaDto.getPreguntaEncuestaDto().getId());
+            respuestaPregunta.set_preguntaEncuesta(preguntaEncuesta);
             daoRespuestaPregunta.insert(respuestaPregunta);
 
             return respuestaPregunta;
@@ -73,8 +71,8 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
 
         if (respuestaPregunta_modificar != null) {
 
-            respuestaPregunta_modificar.setNombre(respuestaPreguntaDto.get_nombre());
-            respuestaPregunta_modificar.set_estatus(respuestaPreguntaDto.get_estatus());
+            respuestaPregunta_modificar.set_nombre(respuestaPreguntaDto.getNombre());
+            respuestaPregunta_modificar.set_estatus(respuestaPreguntaDto.getEstatus());
             daoRespuestaPregunta.update(respuestaPregunta_modificar);
             return Response.ok().entity(respuestaPregunta_modificar).build();
 

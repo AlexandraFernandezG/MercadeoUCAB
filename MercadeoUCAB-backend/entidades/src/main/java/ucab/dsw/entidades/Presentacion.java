@@ -23,27 +23,27 @@ public class Presentacion extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
+    public String get_nombre() {
         return _nombre;
     }
 
-    public String getCaracteristicas() {
+    public String get_caracteristicas() {
         return _caracteristicas;
     }
 
-    public Producto getProducto() {
+    public Producto get_producto() {
         return _producto;
     }
 
-    public void setNombre(String _nombre) {
+    public void set_nombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public void setCaracteristicas(String _caracteristicas) {
+    public void set_caracteristicas(String _caracteristicas) {
         this._caracteristicas = _caracteristicas;
     }
 
-    public void setProducto(Producto _producto) {
+    public void set_producto(Producto _producto) {
         this._producto = _producto;
     }
     

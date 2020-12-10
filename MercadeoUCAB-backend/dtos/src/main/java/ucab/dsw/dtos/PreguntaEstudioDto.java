@@ -4,19 +4,19 @@ public class PreguntaEstudioDto extends DtoBase{
     private PreguntaEncuestaDto _preguntaEncuestaDto;
     private EstudioDto _estudioDto;
 
-    public EstudioDto get_estudioDto() {
+    public EstudioDto getEstudioDto() {
         return _estudioDto;
     }
 
-    public PreguntaEncuestaDto get_preguntaEncuestaDto() {
+    public PreguntaEncuestaDto getPreguntaEncuestaDto() {
         return _preguntaEncuestaDto;
     }
 
-    public void set_preguntaEncuestaDto(PreguntaEncuestaDto _preguntaEncuestaDto) {
+    public void setPreguntaEncuestaDto(PreguntaEncuestaDto _preguntaEncuestaDto) {
         this._preguntaEncuestaDto = _preguntaEncuestaDto;
     }
 
-    public void set_estudioDto(EstudioDto _estudioDto) {
+    public void setEstudioDto(EstudioDto _estudioDto) {
         this._estudioDto = _estudioDto;
     }
 

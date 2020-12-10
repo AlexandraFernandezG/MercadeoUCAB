@@ -27,7 +27,7 @@ public class SubCategoriaAPI_Test {
 
         subcategoriaDto.setNombre("Limpieza");
         subcategoriaDto.setDescripcion("Para la limpieza del hogar");
-        subcategoriaDto.set_estatus("Inactivo");
+        subcategoriaDto.setEstatus("Inactivo");
         // Recuerden que deben ver los id de los registros en la BD
         CategoriaDto categoriaDto = new CategoriaDto(5L);
         subcategoriaDto.setCategoriaDto(categoriaDto);
@@ -43,7 +43,7 @@ public class SubCategoriaAPI_Test {
         SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
         subcategoriaDto.setNombre("Juguetes");
         subcategoriaDto.setDescripcion("Para diversion de los chicos");
-        subcategoriaDto.set_estatus("Inactivo");
+        subcategoriaDto.setEstatus("Inactivo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarSubCategoria(3L,subcategoriaDto);
 

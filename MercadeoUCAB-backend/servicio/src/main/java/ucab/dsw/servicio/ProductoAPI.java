@@ -7,7 +7,6 @@ import ucab.dsw.entidades.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -56,15 +55,15 @@ public class ProductoAPI extends AplicacionBase{
         DaoProducto daoProducto = new DaoProducto();
         Producto producto = new Producto();
 
-            producto.setNombre(productoDto.getNombre());
-            producto.setDescripcion(productoDto.getDescripcion());
-            producto.set_estatus(productoDto.get_estatus());
+            producto.set_nombre(productoDto.getNombre());
+            producto.set_descripcion(productoDto.getDescripcion());
+            producto.set_estatus(productoDto.getEstatus());
             Usuario usuario = new Usuario(productoDto.getUsuarioDto().getId());
             Subcategoria subcategoria = new Subcategoria(productoDto.getSubcategoriaDto().getId());
             Marca marca = new Marca(productoDto.getMarcaDto().getId());
-            producto.setUsuario(usuario);
-            producto.setSubcategoria(subcategoria);
-            producto.setMarca(marca);
+            producto.set_usuario(usuario);
+            producto.set_subcategoria(subcategoria);
+            producto.set_marca(marca);
             daoProducto.insert(producto);
 
             return producto;
@@ -79,9 +78,9 @@ public class ProductoAPI extends AplicacionBase{
 
         if (producto_modificar != null){
 
-            producto_modificar.setNombre(productoDto.getNombre());
-            producto_modificar.setDescripcion(productoDto.getDescripcion());
-            producto_modificar.set_estatus(productoDto.get_estatus());
+            producto_modificar.set_nombre(productoDto.getNombre());
+            producto_modificar.set_descripcion(productoDto.getDescripcion());
+            producto_modificar.set_estatus(productoDto.getEstatus());
             daoProducto.update(producto_modificar);
             DaoTipo daoTipo = new DaoTipo();
             DaoPresentacion daoPresentacion = new DaoPresentacion();
@@ -93,7 +92,7 @@ public class ProductoAPI extends AplicacionBase{
 
                 for(Tipo tipo: listaTipo){
 
-                    if(tipo.getProducto().get_id() == id) {
+                    if(tipo.get_producto().get_id() == id) {
                         tipo.set_estatus("Inactivo");
                         daoTipo.update(tipo);
                     }
@@ -101,7 +100,7 @@ public class ProductoAPI extends AplicacionBase{
 
                 for(Presentacion presentacion: listaPresentacion){
 
-                    if(presentacion.getProducto().get_id() == id){
+                    if(presentacion.get_producto().get_id() == id){
                         presentacion.set_estatus("Inactivo");
                         daoPresentacion.update(presentacion);
                     }
@@ -114,7 +113,7 @@ public class ProductoAPI extends AplicacionBase{
 
                 for(Tipo tipo: listaTipo){
 
-                    if(tipo.getProducto().get_id() == id) {
+                    if(tipo.get_producto().get_id() == id) {
                         tipo.set_estatus("Activo");
                         daoTipo.update(tipo);
                     }
@@ -122,7 +121,7 @@ public class ProductoAPI extends AplicacionBase{
 
                 for(Presentacion presentacion: listaPresentacion){
 
-                    if(presentacion.getProducto().get_id() == id){
+                    if(presentacion.get_producto().get_id() == id){
                         presentacion.set_estatus("Activo");
                         daoPresentacion.update(presentacion);
                     }
@@ -156,14 +155,14 @@ public class ProductoAPI extends AplicacionBase{
 
             for (Tipo tipo: listaTipo){
 
-                if(tipo.getProducto().get_id() == id){
+                if(tipo.get_producto().get_id() == id){
                     daoTipo.delete(tipo);
                 }
             }
 
             for (Presentacion presentacion: listaPresentacion){
 
-                if(presentacion.getProducto().get_id() == id){
+                if(presentacion.get_producto().get_id() == id){
                     daoPresentacion.delete(presentacion);
                 }
             }

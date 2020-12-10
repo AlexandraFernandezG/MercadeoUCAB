@@ -13,7 +13,7 @@ public class DtoBase
 
     public DtoBase(String estatus) throws Exception{
 
-        set_estatus( estatus );
+        setEstatus( estatus );
     }
 
     public DtoBase()
@@ -37,11 +37,11 @@ public class DtoBase
         }
     }
 
-    public String get_estatus() {
+    public String getEstatus() {
         return _estatus;
     }
 
-    public void set_estatus(String _estatus) {
+    public void setEstatus(String _estatus) {
         this._estatus = _estatus;
     }
 }

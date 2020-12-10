@@ -21,19 +21,19 @@ public class RespuestaPregunta extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
+    public String get_nombre() {
         return _nombre;
     }
 
-    public PreguntaEncuesta getPreguntaEncuesta() {
+    public PreguntaEncuesta get_preguntaEncuesta() {
         return _preguntaEncuesta;
     }
 
-    public void setNombre(String _nombre) {
+    public void set_nombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public void setPreguntaEncuesta(PreguntaEncuesta _preguntaEncuesta) {
+    public void set_preguntaEncuesta(PreguntaEncuesta _preguntaEncuesta) {
         this._preguntaEncuesta = _preguntaEncuesta;
     }
     

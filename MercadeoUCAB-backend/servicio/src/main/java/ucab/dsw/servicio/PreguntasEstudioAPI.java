@@ -34,9 +34,9 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
         for(PreguntaEstudio preguntaEstudio: listaEstudioPregunta){
 
-            if(preguntaEstudio.getEstudio().get_id() == id){
+            if(preguntaEstudio.get_estudio().get_id() == id){
 
-                long idFk = preguntaEstudio.getPreguntaEncuesta().get_id();
+                long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
                 DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
                 PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
                 listaPreguntasEstudio.add(preguntaEncuesta);
@@ -55,9 +55,9 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
             preguntaEstudio.set_estatus("Activo/Inactivo");
             Estudio estudio = new Estudio(id);
-            preguntaEstudio.setEstudio(estudio);
-            PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.get_preguntaEncuestaDto().getId());
-            preguntaEstudio.setPreguntaEncuesta(preguntaEncuesta);
+            preguntaEstudio.set_estudio(estudio);
+            PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.getPreguntaEncuestaDto().getId());
+            preguntaEstudio.set_preguntaEncuesta(preguntaEncuesta);
             daoPreguntaEstudio.insert(preguntaEstudio);
 
             return preguntaEstudio;
@@ -78,7 +78,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
             for (Respuesta respuesta: listaRespuesta){
 
-                if(respuesta.getPreguntasEstudio().get_id() == id){
+                if(respuesta.get_preguntasEstudio().get_id() == id){
                     daoRespuesta.delete(respuesta);
                 }
             }

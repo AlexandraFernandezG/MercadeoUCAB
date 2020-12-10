@@ -5,7 +5,6 @@ import ucab.dsw.dtos.TipoDto;
 import ucab.dsw.entidades.Producto;
 import ucab.dsw.entidades.Tipo;
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -55,11 +54,11 @@ public class TipoAPI extends AplicacionBase{
         DaoTipo daoTipo = new DaoTipo();
         Tipo tipo = new Tipo();
 
-            tipo.setNombre(tipoDto.get_nombre());
-            tipo.setDescripcion(tipoDto.get_descripcion());
-            tipo.set_estatus(tipoDto.get_estatus());
-            Producto producto = new Producto(tipoDto.get_productoDto().getId());
-            tipo.setProducto(producto);
+            tipo.set_nombre(tipoDto.getNombre());
+            tipo.set_descripcion(tipoDto.getDescripcion());
+            tipo.set_estatus(tipoDto.getEstatus());
+            Producto producto = new Producto(tipoDto.getProductoDto().getId());
+            tipo.set_producto(producto);
             daoTipo.insert(tipo);
 
             return tipo;
@@ -74,9 +73,9 @@ public class TipoAPI extends AplicacionBase{
 
         if(tipo_modificar != null){
 
-            tipo_modificar.setNombre(tipoDto.get_nombre());
-            tipo_modificar.setDescripcion(tipoDto.get_descripcion());
-            tipo_modificar.set_estatus(tipoDto.get_estatus());
+            tipo_modificar.set_nombre(tipoDto.getNombre());
+            tipo_modificar.set_descripcion(tipoDto.getDescripcion());
+            tipo_modificar.set_estatus(tipoDto.getEstatus());
             daoTipo.update(tipo_modificar);
             return Response.ok().entity(tipo_modificar).build();
 

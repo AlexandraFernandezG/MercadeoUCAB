@@ -61,26 +61,36 @@ public class CategoriaAPI extends AplicacionBase {
 
         for (Subcategoria subcategoria: listaSubcategorias){
 
-            if(subcategoria.getCategoria().get_id() == id){
+            if(subcategoria.get_categoria().get_id() == id){
                 listaSubcategoriasCategoria.add(subcategoria);
             }
         }
         return listaSubcategoriasCategoria;
     }
 
+    //Agregar una categoria
     @POST
     @Path("/addCategoria")
-    public Categoria addCategoria(CategoriaDto categoriaDto)
-    {      
-        DaoCategoria dao = new DaoCategoria();
-        Categoria categoria = new Categoria();
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public CategoriaDto addCategoria(CategoriaDto categoriaDto)
+    {
+        CategoriaDto resultado = new CategoriaDto();
+        try {
 
-            categoria.setNombre(categoriaDto.getNombre());
-            categoria.set_descripcion(categoriaDto.get_descripcion());
-            categoria.set_estatus(categoriaDto.get_estatus());
-            dao.insert(categoria);
+            DaoCategoria dao = new DaoCategoria();
+            Categoria categoria = new Categoria();
 
-        return  categoria;
+            categoria.set_nombre(categoriaDto.getNombre());
+            categoria.set_descripcion(categoriaDto.getDescripcion());
+            categoria.set_estatus(categoriaDto.getEstatus());
+            Categoria resul = dao.insert(categoria);
+            resultado.setId(resul.get_id());
+        }
+        catch (Exception ex) {
+            String problema = ex.getMessage();
+        }
+        return resultado;
     }
     
     @PUT
@@ -92,9 +102,9 @@ public class CategoriaAPI extends AplicacionBase {
         
         if (categoria_modificar != null){
 
-            categoria_modificar.setNombre(categoriaDto.getNombre());
-            categoria_modificar.set_descripcion(categoriaDto.get_descripcion());
-            categoria_modificar.set_estatus(categoriaDto.get_estatus());
+            categoria_modificar.set_nombre(categoriaDto.getNombre());
+            categoria_modificar.set_descripcion(categoriaDto.getDescripcion());
+            categoria_modificar.set_estatus(categoriaDto.getEstatus());
             dao.update(categoria_modificar);
             DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
 
@@ -104,7 +114,7 @@ public class CategoriaAPI extends AplicacionBase {
 
                 for (Subcategoria subcategoria : listaSubcategorias) {
 
-                    if (subcategoria.getCategoria().get_id() == id) {
+                    if (subcategoria.get_categoria().get_id() == id) {
                         subcategoria.set_estatus("Inactivo");
                         daoSubcategoria.update(subcategoria);
                     }
@@ -115,7 +125,7 @@ public class CategoriaAPI extends AplicacionBase {
 
                 for (Subcategoria subcategoria : listaSubcategorias) {
 
-                    if (subcategoria.getCategoria().get_id() == id) {
+                    if (subcategoria.get_categoria().get_id() == id) {
                         subcategoria.set_estatus("Activo");
                         daoSubcategoria.update(subcategoria);
                     }
@@ -144,7 +154,7 @@ public class CategoriaAPI extends AplicacionBase {
 
             for (Subcategoria subcategoria : listaSubcategorias) {
 
-                if (subcategoria.getCategoria().get_id() == id) {
+                if (subcategoria.get_categoria().get_id() == id) {
                     daoSubcategoria.delete(subcategoria);
                 }
             }

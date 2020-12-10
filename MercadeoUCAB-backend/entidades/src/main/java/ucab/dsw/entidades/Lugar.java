@@ -28,35 +28,35 @@ public class Lugar extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
+    public String get_nombre() {
         return _nombre;
     }
 
-    public String getTipo() {
+    public String get_tipo() {
         return _tipo;
     }
 
-    public String getCategoriaSocioEconomica() {
+    public String get_categoriaSocioEconomica() {
         return _categoriaSocioEconomica;
     }
 
-    public Lugar getLugar() {
+    public Lugar get_lugar() {
         return _lugar;
     }
 
-    public void setNombre(String _nombre) {
+    public void set_nombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public void setTipo(String _tipo) {
+    public void set_tipo(String _tipo) {
         this._tipo = _tipo;
     }
 
-    public void setCategoriaSocioEconomica(String _categoriaSocioEconomica) {
+    public void set_categoriaSocioEconomica(String _categoriaSocioEconomica) {
         this._categoriaSocioEconomica = _categoriaSocioEconomica;
     }
 
-    public void setLugar(Lugar _lugar) {
+    public void set_lugar(Lugar _lugar) {
         this._lugar = _lugar;
     }
     

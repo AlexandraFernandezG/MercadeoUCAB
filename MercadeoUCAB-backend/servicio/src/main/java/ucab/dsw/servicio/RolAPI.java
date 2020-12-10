@@ -36,7 +36,7 @@ public class RolAPI {
         DaoRol daoRol = new DaoRol();
         Rol rol = new Rol();
 
-        rol.setNombre(rolDto.get_nombre());
+        rol.set_nombre(rolDto.getNombre());
         rol.set_estatus("Activo");
 
         return rol;
@@ -51,8 +51,8 @@ public class RolAPI {
 
         if(rol_modificar != null){
 
-            rol_modificar.setNombre(rolDto.get_nombre());
-            rolDto.set_estatus(rolDto.get_estatus());
+            rol_modificar.set_nombre(rolDto.getNombre());
+            rolDto.setEstatus(rolDto.getEstatus());
             return Response.ok().entity(rol_modificar).build();
 
         } else {

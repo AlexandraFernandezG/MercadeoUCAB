@@ -40,11 +40,11 @@ public class HijoAPI extends AplicacionBase{
         DaoHijo daoHijo = new DaoHijo();
         Hijo hijo = new Hijo();
 
-            hijo.setFechaNacimiento(hijoDto.get_fechaNacimiento());
-            hijo.setGenero(hijoDto.get_genero());
+            hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
+            hijo.set_genero(hijoDto.getGenero());
             hijo.set_estatus("Activo");
             Informacion informacion = new Informacion(hijoDto.get_informacionDto().getId());
-            hijo.setInformacion(informacion);
+            hijo.set_informacion(informacion);
 
             return hijo;
     }
@@ -58,8 +58,8 @@ public class HijoAPI extends AplicacionBase{
 
         if(hijo_modificar != null){
 
-            hijo_modificar.setFechaNacimiento(hijoDto.get_fechaNacimiento());
-            hijo_modificar.setGenero(hijoDto.get_genero());
+            hijo_modificar.set_fechaNacimiento(hijoDto.getFechaNacimiento());
+            hijo_modificar.set_genero(hijoDto.getGenero());
             hijo_modificar.set_estatus("Activo");
             daoHijo.update(hijo_modificar);
             return Response.ok().entity(hijo_modificar).build();

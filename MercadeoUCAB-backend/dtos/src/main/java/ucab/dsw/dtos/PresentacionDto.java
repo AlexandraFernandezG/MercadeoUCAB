@@ -5,27 +5,27 @@ public class PresentacionDto extends DtoBase{
     private String _caracteristicas;
     private ProductoDto _productoDto;
 
-    public String get_caracteristicas() {
+    public String getCaracteristicas() {
         return _caracteristicas;
     }
 
-    public void set_caracteristicas(String _caracteristicas) {
+    public void setCaracteristicas(String _caracteristicas) {
         this._caracteristicas = _caracteristicas;
     }
 
-    public String get_nombre() {
+    public String getNombre() {
         return _nombre;
     }
 
-    public void set_nombre(String _nombre) {
+    public void setNombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public ProductoDto get_productoDto() {
+    public ProductoDto getProductoDto() {
         return _productoDto;
     }
 
-    public void set_productoDto(ProductoDto _productoDto) {
+    public void setProductoDto(ProductoDto _productoDto) {
         this._productoDto = _productoDto;
     }
 

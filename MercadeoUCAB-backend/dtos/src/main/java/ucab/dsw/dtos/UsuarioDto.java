@@ -31,11 +31,11 @@ public class UsuarioDto extends DtoBase{
         this.nombreUsuario = nombreUsuario;
     }
 
-    public RolDto get_rol() {
+    public RolDto getRol() {
         return rol;
     }
 
-    public void set_rol(RolDto _rol) {
+    public void setRol(RolDto _rol) {
         this.rol = _rol;
     }
 
@@ -55,16 +55,17 @@ public class UsuarioDto extends DtoBase{
         this.contrasena = contrasena;
     }
 
-    public RolDto getRol() {
+    public RolDto getRolDto() {
         return rol;
     }
 
-    public void setRol(RolDto rol) {
+    public void setRolDto(RolDto rol) {
         this.rol = rol;
     }
 
     public String getNombreRol() {
-        return this.rol.get_nombre();
+        RolDto rol = this.rol;
+        return rol.getNombre();
     }
 
     public UsuarioDto (){

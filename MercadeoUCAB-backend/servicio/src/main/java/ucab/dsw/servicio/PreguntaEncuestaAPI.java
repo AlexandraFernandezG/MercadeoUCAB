@@ -9,7 +9,6 @@ import ucab.dsw.entidades.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -56,13 +55,13 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta();
 
-            preguntaEncuesta.setDescripcion(preguntaEncuestaDto.get_descripcion());
-            preguntaEncuesta.setTipoPregunta(preguntaEncuestaDto.get_tipoPregunta());
-            preguntaEncuesta.set_estatus(preguntaEncuestaDto.get_estatus());
-            Usuario usuario = new Usuario(preguntaEncuestaDto.get_usuarioDto().getId());
-            preguntaEncuesta.setUsuario(usuario);
-            Subcategoria subcategoria = new Subcategoria(preguntaEncuestaDto.get_subcategoriaDto().getId());
-            preguntaEncuesta.setSubcategoria(subcategoria);
+            preguntaEncuesta.set_descripcion(preguntaEncuestaDto.getDescripcion());
+            preguntaEncuesta.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
+            preguntaEncuesta.set_estatus(preguntaEncuestaDto.getEstatus());
+            Usuario usuario = new Usuario(preguntaEncuestaDto.getUsuarioDto().getId());
+            preguntaEncuesta.set_usuario(usuario);
+            Subcategoria subcategoria = new Subcategoria(preguntaEncuestaDto.getSubcategoriaDto().getId());
+            preguntaEncuesta.set_subcategoria(subcategoria);
             daoPreguntaEncuesta.insert(preguntaEncuesta);
 
             return preguntaEncuesta;
@@ -77,9 +76,9 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
         if (preguntaEncuesta_modificar != null){
 
-            preguntaEncuesta_modificar.setDescripcion(preguntaEncuestaDto.get_descripcion());
-            preguntaEncuesta_modificar.setTipoPregunta(preguntaEncuestaDto.get_tipoPregunta());
-            preguntaEncuesta_modificar.set_estatus(preguntaEncuestaDto.get_estatus());
+            preguntaEncuesta_modificar.set_descripcion(preguntaEncuestaDto.getDescripcion());
+            preguntaEncuesta_modificar.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
+            preguntaEncuesta_modificar.set_estatus(preguntaEncuestaDto.getEstatus());
             daoPreguntaEncuesta.update(preguntaEncuesta_modificar);
             DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
 
@@ -89,7 +88,7 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
                 for(RespuestaPregunta respuestaPregunta: listaRespuesta){
 
-                    if(respuestaPregunta.getPreguntaEncuesta().get_id() == id){
+                    if(respuestaPregunta.get_preguntaEncuesta().get_id() == id){
                         respuestaPregunta.set_estatus("Inactivo");
                         daoRespuestaPregunta.update(respuestaPregunta);
                     }
@@ -100,7 +99,7 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
                 for(RespuestaPregunta respuestaPregunta: listaRespuesta){
 
-                    if(respuestaPregunta.getPreguntaEncuesta().get_id() == id){
+                    if(respuestaPregunta.get_preguntaEncuesta().get_id() == id){
                         respuestaPregunta.set_estatus("Activo");
                         daoRespuestaPregunta.update(respuestaPregunta);
                     }
@@ -126,7 +125,7 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
             for(RespuestaPregunta respuestaPregunta: listaRespuesta) {
 
-                if (respuestaPregunta.getPreguntaEncuesta().get_id() == id) {
+                if (respuestaPregunta.get_preguntaEncuesta().get_id() == id) {
                     daoRespuestaPregunta.delete(respuestaPregunta);
                 }
             }

@@ -1,18 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucab.dsw.entidades;
-
-/**
- *
- * @author Emanuel
- */
 
 import java.util.Date;
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table( name = "informacion" )
@@ -74,59 +63,59 @@ public class Informacion extends EntidadBase {
     
     //Getters, Setters, y otros metodos.
 
-    public int getCedula() {
+    public int get_cedula() {
         return _cedula;
     }
 
-    public String getPrimerNombre() {
+    public String get_primerNombre() {
         return _primerNombre;
     }
 
-    public String getSegundoNombre() {
+    public String get_segundoNombre() {
         return _segundoNombre;
     }
 
-    public String getPrimerApellido() {
+    public String get_primerApellido() {
         return _primerApellido;
     }
 
-    public String getSegundoApellido() {
+    public String get_segundoApellido() {
         return _segundoApellido;
     }
 
-    public String getGenero() {
+    public String get_genero() {
         return _genero;
     }
 
-    public Date getFechaNacimiento() {
+    public Date get_fechaNacimiento() {
         return _fechaNacimiento;
     }
 
-    public String getEstadoCivil() {
+    public String get_estadoCivil() {
         return _estadoCivil;
     }
 
-    public String getDisponibilidadEnLinea() {
+    public String get_disponibilidadEnLinea() {
         return _disponibilidadEnLinea;
     }
 
-    public int getCantidadPersonas() {
+    public int get_cantidadPersonas() {
         return _cantidadPersonas;
     }
 
-    public Lugar getLugar() {
+    public Lugar get_lugar() {
         return _lugar;
     }
 
-    public NivelAcademico getNivelAcademico() {
+    public NivelAcademico get_nivelAcademico() {
         return _nivelAcademico;
     }
 
-    public Ocupacion getOcupacion() {
+    public Ocupacion get_ocupacion() {
         return _ocupacion;
     }
 
-    public NivelEconomico getNivelEconomico() {
+    public NivelEconomico get_nivelEconomico() {
         return _nivelEconomico;
     }
 
@@ -134,59 +123,59 @@ public class Informacion extends EntidadBase {
         return _usuario;
     }
 
-    public void setCedula(int _cedula) {
+    public void set_cedula(int _cedula) {
         this._cedula = _cedula;
     }
 
-    public void setPrimerNombre(String _primerNombre) {
+    public void set_primerNombre(String _primerNombre) {
         this._primerNombre = _primerNombre;
     }
 
-    public void setSegundoNombre(String _segundoNombre) {
+    public void set_segundoNombre(String _segundoNombre) {
         this._segundoNombre = _segundoNombre;
     }
 
-    public void setPrimerApellido(String _primerApellido) {
+    public void set_primerApellido(String _primerApellido) {
         this._primerApellido = _primerApellido;
     }
 
-    public void setSegundoApellido(String _segundoApellido) {
+    public void set_segundoApellido(String _segundoApellido) {
         this._segundoApellido = _segundoApellido;
     }
 
-    public void setGenero(String _genero) {
+    public void set_genero(String _genero) {
         this._genero = _genero;
     }
 
-    public void setFechaNacimiento(Date _fechaNacimiento) {
+    public void set_fechaNacimiento(Date _fechaNacimiento) {
         this._fechaNacimiento = _fechaNacimiento;
     }
 
-    public void setEstadoCivil(String _estadoCivil) {
+    public void set_estadoCivil(String _estadoCivil) {
         this._estadoCivil = _estadoCivil;
     }
 
-    public void setDisponibilidadEnLinea(String _disponibilidadEnLinea) {
+    public void set_disponibilidadEnLinea(String _disponibilidadEnLinea) {
         this._disponibilidadEnLinea = _disponibilidadEnLinea;
     }
 
-    public void setCantidadPersonas(int _cantidadPersonas) {
+    public void set_cantidadPersonas(int _cantidadPersonas) {
         this._cantidadPersonas = _cantidadPersonas;
     }
 
-    public void setLugar(Lugar _lugar) {
+    public void set_lugar(Lugar _lugar) {
         this._lugar = _lugar;
     }
 
-    public void setNivelAcademico(NivelAcademico _nivelAcademico) {
+    public void set_nivelAcademico(NivelAcademico _nivelAcademico) {
         this._nivelAcademico = _nivelAcademico;
     }
 
-    public void setOcupacion(Ocupacion _ocupacion) {
+    public void set_ocupacion(Ocupacion _ocupacion) {
         this._ocupacion = _ocupacion;
     }
 
-    public void setNivelEconomico(NivelEconomico _nivelEconomico) {
+    public void set_nivelEconomico(NivelEconomico _nivelEconomico) {
         this._nivelEconomico = _nivelEconomico;
     }
 

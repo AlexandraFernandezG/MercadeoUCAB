@@ -1,6 +1,5 @@
 package ucab.dsw.servicio;
 
-import ucab.dsw.accesodatos.Dao;
 import ucab.dsw.accesodatos.DaoMarca;
 import ucab.dsw.accesodatos.DaoProducto;
 import ucab.dsw.dtos.MarcaDto;
@@ -8,7 +7,6 @@ import ucab.dsw.entidades.Marca;
 import ucab.dsw.entidades.Producto;
 
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -59,8 +57,8 @@ public class MarcaAPI extends AplicacionBase{
         Marca marca = new Marca();
 
             marca.set_nombre(marcaDto.getNombre());
-            marca.set_estatus(marcaDto.get_estatus());
-            marca.set_descripcion(marcaDto.get_descripcion());
+            marca.set_estatus(marcaDto.getEstatus());
+            marca.set_descripcion(marcaDto.getDescripcion());
             daoMarca.insert(marca);
 
             return marca;
@@ -76,8 +74,8 @@ public class MarcaAPI extends AplicacionBase{
         if (marca_modificar != null) {
 
             marca_modificar.set_nombre(marcaDto.getNombre());
-            marca_modificar.set_estatus(marcaDto.get_estatus());
-            marca_modificar.set_descripcion(marcaDto.get_descripcion());
+            marca_modificar.set_estatus(marcaDto.getEstatus());
+            marca_modificar.set_descripcion(marcaDto.getDescripcion());
             daoMarca.update(marca_modificar);
             return Response.ok().entity(marca_modificar).build();
 
@@ -101,7 +99,7 @@ public class MarcaAPI extends AplicacionBase{
 
             for(Producto producto: listaProducto){
 
-                if(producto.getMarca().get_id() == id){
+                if(producto.get_marca().get_id() == id){
                     daoProducto.delete(producto);
                 }
             }

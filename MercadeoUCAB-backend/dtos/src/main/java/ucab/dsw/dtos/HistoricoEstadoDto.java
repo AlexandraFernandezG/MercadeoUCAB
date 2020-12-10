@@ -6,27 +6,27 @@ public class HistoricoEstadoDto extends DtoBase {
     private Date _fechaFin;
     private UsuarioDto _usuarioDto;
 
-    public Date get_fechaFin() {
+    public Date getFechaFin() {
         return _fechaFin;
     }
 
-    public void set_fechaFin(Date _fechaFin) {
+    public void setFechaFin(Date _fechaFin) {
         this._fechaFin = _fechaFin;
     }
 
-    public Date get_fechaInicio() {
+    public Date getFechaInicio() {
         return _fechaInicio;
     }
 
-    public void set_fechaInicio(Date _fechaInicio) {
+    public void setFechaInicio(Date _fechaInicio) {
         this._fechaInicio = _fechaInicio;
     }
 
-    public UsuarioDto get_usuarioDto() {
+    public UsuarioDto getUsuarioDto() {
         return _usuarioDto;
     }
 
-    public void set_usuarioDto(UsuarioDto _usuarioDto) {
+    public void setUsuarioDto(UsuarioDto _usuarioDto) {
         this._usuarioDto = _usuarioDto;
     }
 

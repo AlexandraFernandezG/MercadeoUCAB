@@ -1,18 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ucab.dsw.entidades;
-
-/**
- *
- * @author Emanuel
- */
 
 import java.util.Date;
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table( name = "estudio" )
@@ -45,23 +34,23 @@ public class Estudio extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
+    public String get_nombre() {
         return _nombre;
     }
 
-    public String getTipoInstrumento() {
+    public String get_tipoInstrumento() {
         return _tipoInstrumento;
     }
 
-    public Date getFechaInicio() {
+    public Date get_fechaInicio() {
         return _fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public Date get_fechaFin() {
         return _fechaFin;
     }
 
-    public Usuario getUsuario() {
+    public Usuario get_usuario() {
         return _usuario;
     }
 
@@ -69,27 +58,27 @@ public class Estudio extends EntidadBase{
         return _solicitudEstudio;
     }
 
-    public void setNombre(String _nombre) {
+    public void set_nombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public void setTipoInstrumento(String _tipoInstrumento) {
+    public void set_tipoInstrumento(String _tipoInstrumento) {
         this._tipoInstrumento = _tipoInstrumento;
     }
 
-    public void setFechaInicio(Date _fechaInicio) {
+    public void set_fechaInicio(Date _fechaInicio) {
         this._fechaInicio = _fechaInicio;
     }
 
-    public void setFechaFin(Date _fechaFin) {
+    public void set_fechaFin(Date _fechaFin) {
         this._fechaFin = _fechaFin;
     }
 
-    public void setUsuario(Usuario _usuario) {
+    public void set_usuario(Usuario _usuario) {
         this._usuario = _usuario;
     }
 
-    public void setSolicitudEstudio(SolicitudEstudio _solicitudEstudio) {
+    public void set_solicitudEstudio(SolicitudEstudio _solicitudEstudio) {
         this._solicitudEstudio = _solicitudEstudio;
     }
     

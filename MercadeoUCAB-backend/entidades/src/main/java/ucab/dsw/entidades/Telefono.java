@@ -21,19 +21,19 @@ public class Telefono extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public int getNumero() {
+    public int get_numero() {
         return _numero;
     }
 
-    public Informacion getInformacion() {
+    public Informacion get_informacion() {
         return _informacion;
     }
 
-    public void setNumero(int _numero) {
+    public void set_numero(int _numero) {
         this._numero = _numero;
     }
 
-    public void setInformacion(Informacion _informacion) {
+    public void set_informacion(Informacion _informacion) {
         this._informacion = _informacion;
     }
     

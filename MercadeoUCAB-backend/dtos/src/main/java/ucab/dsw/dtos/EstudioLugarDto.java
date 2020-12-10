@@ -5,19 +5,19 @@ public class EstudioLugarDto extends DtoBase{
     private EstudioDto _estudioDto;
     private LugarDto _lugarDto;
 
-    public EstudioDto get_estudioDto() {
+    public EstudioDto getEstudioDto() {
         return _estudioDto;
     }
 
-    public void set_estudioDto(EstudioDto _estudioDto) {
+    public void setEstudioDto(EstudioDto _estudioDto) {
         this._estudioDto = _estudioDto;
     }
 
-    public LugarDto get_lugarDto() {
+    public LugarDto getLugarDto() {
         return _lugarDto;
     }
 
-    public void set_lugarDto(LugarDto _lugarDto) {
+    public void setLugarDto(LugarDto _lugarDto) {
         this._lugarDto = _lugarDto;
     }
 

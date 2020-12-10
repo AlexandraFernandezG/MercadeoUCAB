@@ -15,11 +15,11 @@ public class NivelEconomico extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getDescripcion() {
+    public String get_descripcion() {
         return _descripcion;
     }
 
-    public void setDescripcion(String _descripcion) {
+    public void set_descripcion(String _descripcion) {
         this._descripcion = _descripcion;
     }
 

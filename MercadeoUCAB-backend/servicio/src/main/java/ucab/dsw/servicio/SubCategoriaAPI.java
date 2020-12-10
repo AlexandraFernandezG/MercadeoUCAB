@@ -8,7 +8,6 @@ import ucab.dsw.entidades.Categoria;
 import ucab.dsw.entidades.Subcategoria;
 
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -59,11 +58,11 @@ public class SubCategoriaAPI extends AplicacionBase{
         DaoSubcategoria dao = new DaoSubcategoria();
         Subcategoria subcategoria = new Subcategoria();
 
-            subcategoria.setNombre(subcategoriaDto.getNombre());
-            subcategoria.setDescripcion(subcategoriaDto.getDescripcion());
-            subcategoria.set_estatus(subcategoriaDto.get_estatus());
+            subcategoria.set_nombre(subcategoriaDto.getNombre());
+            subcategoria.set_descripcion(subcategoriaDto.getDescripcion());
+            subcategoria.set_estatus(subcategoriaDto.getEstatus());
             Categoria categoria = new Categoria(subcategoriaDto.getCategoriaDto().getId());
-            subcategoria.setCategoria(categoria);
+            subcategoria.set_categoria(categoria);
             dao.insert(subcategoria);
 
         return  subcategoria;
@@ -78,9 +77,9 @@ public class SubCategoriaAPI extends AplicacionBase{
 
         if (subcategoria_modificar != null) {
 
-            subcategoria_modificar.setNombre(subcategoriaDto.getNombre());
-            subcategoria_modificar.setDescripcion(subcategoriaDto.getDescripcion());
-            subcategoria_modificar.set_estatus(subcategoriaDto.get_estatus());
+            subcategoria_modificar.set_nombre(subcategoriaDto.getNombre());
+            subcategoria_modificar.set_descripcion(subcategoriaDto.getDescripcion());
+            subcategoria_modificar.set_estatus(subcategoriaDto.getEstatus());
             dao.update(subcategoria_modificar);
             return Response.ok().entity(subcategoria_modificar).build();
 

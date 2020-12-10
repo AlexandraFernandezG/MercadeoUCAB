@@ -25,11 +25,11 @@ public class RespuestaPreguntaAPI_Test {
         ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
         RespuestaPreguntaDto respuestaPreguntaDto = new RespuestaPreguntaDto();
 
-        respuestaPreguntaDto.set_nombre("No muy buena la verdad");
-        respuestaPreguntaDto.set_estatus("Inactivo");
+        respuestaPreguntaDto.setNombre("No muy buena la verdad");
+        respuestaPreguntaDto.setEstatus("Inactivo");
         // Recuerden que deben ver los id de los registros en la BD
         PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1L);
-        respuestaPreguntaDto.set_preguntaEncuestaDto(preguntaEncuestaDto);
+        respuestaPreguntaDto.setPreguntaEncuestaDto(preguntaEncuestaDto);
         RespuestaPregunta resultado = servicio.addRespuestaPregunta(respuestaPreguntaDto);
         Assert.assertNotEquals(resultado.get_id(), 0);
     }
@@ -40,8 +40,8 @@ public class RespuestaPreguntaAPI_Test {
 
         ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
         RespuestaPreguntaDto respuestaPreguntaDto = new RespuestaPreguntaDto();
-        respuestaPreguntaDto.set_nombre("No muy buena la verdad");
-        respuestaPreguntaDto.set_estatus("Activo");
+        respuestaPreguntaDto.setNombre("No muy buena la verdad");
+        respuestaPreguntaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarRespuestaPregunta(1L, respuestaPreguntaDto);
     }

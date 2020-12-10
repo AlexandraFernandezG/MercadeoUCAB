@@ -6,7 +6,7 @@ public class CategoriaDto extends DtoBase{
 
     private String _descripcion;
 
-    public String get_descripcion() {
+    public String getDescripcion() {
         return _descripcion;
     }
 
@@ -18,7 +18,7 @@ public class CategoriaDto extends DtoBase{
         this._nombre = _nombre;
     }
 
-    public void set_descripcion(String _descripcion) {
+    public void setDescripcion(String _descripcion) {
         this._descripcion = _descripcion;
     }
 

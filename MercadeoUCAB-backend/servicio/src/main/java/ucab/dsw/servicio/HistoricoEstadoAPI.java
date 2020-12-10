@@ -8,7 +8,6 @@ import ucab.dsw.entidades.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -55,11 +54,11 @@ public class HistoricoEstadoAPI extends AplicacionBase{
         DaoHistoricoEstado daoHistoricoEstado = new DaoHistoricoEstado();
         HistoricoEstado historicoEstado = new HistoricoEstado();
 
-            historicoEstado.setFechaInicio(historicoEstadoDto.get_fechaInicio());
-            historicoEstado.setFechaFin(historicoEstado.getFechaFin());
-            historicoEstado.set_estatus(historicoEstadoDto.get_estatus());
-            Usuario usuario = new Usuario(historicoEstado.getUsuario().get_id());
-            historicoEstado.setUsuario(usuario);
+            historicoEstado.set_fechaInicio(historicoEstadoDto.getFechaInicio());
+            historicoEstado.set_fechaFin(historicoEstadoDto.getFechaFin());
+            historicoEstado.set_estatus(historicoEstadoDto.getEstatus());
+            Usuario usuario = new Usuario(historicoEstadoDto.getUsuarioDto().getId());
+            historicoEstado.set_usuario(usuario);
 
             return historicoEstado;
     }

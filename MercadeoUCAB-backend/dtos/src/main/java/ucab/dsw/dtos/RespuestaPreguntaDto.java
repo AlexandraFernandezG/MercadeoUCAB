@@ -4,19 +4,19 @@ public class RespuestaPreguntaDto extends DtoBase {
     private String _nombre;
     private PreguntaEncuestaDto _preguntaEncuestaDto;
 
-    public String get_nombre() {
+    public String getNombre() {
         return _nombre;
     }
 
-    public PreguntaEncuestaDto get_preguntaEncuestaDto() {
+    public PreguntaEncuestaDto getPreguntaEncuestaDto() {
         return _preguntaEncuestaDto;
     }
 
-    public void set_preguntaEncuestaDto(PreguntaEncuestaDto _preguntaEncuestaDto) {
+    public void setPreguntaEncuestaDto(PreguntaEncuestaDto _preguntaEncuestaDto) {
         this._preguntaEncuestaDto = _preguntaEncuestaDto;
     }
 
-    public void set_nombre(String _nombre) {
+    public void setNombre(String _nombre) {
         this._nombre = _nombre;
     }
 
