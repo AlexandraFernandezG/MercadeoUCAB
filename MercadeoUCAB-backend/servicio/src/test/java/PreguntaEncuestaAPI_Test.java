@@ -1,10 +1,54 @@
 import org.junit.*;
+import org.junit.jupiter.api.Assertions;
 import ucab.dsw.dtos.PreguntaEncuestaDto;
 import ucab.dsw.dtos.SubcategoriaDto;
 import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.PreguntaEncuesta;
+import ucab.dsw.entidades.Tipo;
 
 public class PreguntaEncuestaAPI_Test {
+
+    //Listar todos las preguntas (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarPreguntaEncuesta(){
+
+        ucab.dsw.servicio.PreguntaEncuestaAPI servicio = new ucab.dsw.servicio.PreguntaEncuestaAPI();
+
+        try {
+            Assertions.assertTrue(servicio.listarPreguntas().size() > 0);
+
+        } catch (Exception e) {
+
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Consultar una pregunta (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaConsultarPreguntaEncuesta(){
+
+        ucab.dsw.servicio.PreguntaEncuestaAPI servicio = new ucab.dsw.servicio.PreguntaEncuestaAPI();
+        PreguntaEncuesta preguntaEncuesta_buscar = servicio.encontrarPreguntaEncuesta(1L);
+
+        try {
+            Assertions.assertEquals(1, preguntaEncuesta_buscar.get_id());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Listar Preguntas activas (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarPreguntasEncuestaActivas(){
+
+        try {
+            Assertions.assertNotNull(new ucab.dsw.servicio.PreguntaEncuestaAPI().preguntasActivas());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
+    }
 
     // Esta prueba permite insertar una Pregunta a la BD
     @Test

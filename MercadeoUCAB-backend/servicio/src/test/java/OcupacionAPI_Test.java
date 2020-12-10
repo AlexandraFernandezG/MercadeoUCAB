@@ -1,8 +1,41 @@
 import org.junit.*;
+import org.junit.jupiter.api.Assertions;
 import ucab.dsw.dtos.OcupacionDto;
 import ucab.dsw.entidades.Ocupacion;
+import ucab.dsw.entidades.Tipo;
 
 public class OcupacionAPI_Test {
+
+    //Listar todos las ocupaciones (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarOcupaciones(){
+
+        ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
+
+        try {
+            Assertions.assertTrue(servicio.listarOcupacion().size() > 0);
+
+        } catch (Exception e) {
+
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Consultar una ocupacion (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaConsultarOcupacion(){
+
+        ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
+        Ocupacion ocupacion_buscar = servicio.consultarOcupacion(1L);
+
+        try {
+            Assertions.assertEquals(1, ocupacion_buscar.get_id());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage());
+        }
+
+    }
 
     //Prueba insertar una ocupacion
     @Test

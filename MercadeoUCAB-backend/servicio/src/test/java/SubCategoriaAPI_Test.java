@@ -1,9 +1,54 @@
 import org.junit.*;
+import org.junit.jupiter.api.Assertions;
 import ucab.dsw.dtos.CategoriaDto;
 import ucab.dsw.dtos.SubcategoriaDto;
 import ucab.dsw.entidades.Subcategoria;
+import ucab.dsw.entidades.Tipo;
+import ucab.dsw.servicio.SubCategoriaAPI;
 
 public class SubCategoriaAPI_Test {
+
+    //Listar todos las subcategorias (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarSubcategorias(){
+
+        ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
+
+        try {
+            Assertions.assertTrue(servicio.listarSubCategorias().size() > 0);
+
+        } catch (Exception e) {
+
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Consultar una subcategoria (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaConsultarSubcategoria(){
+
+        ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
+        Subcategoria subcategoria_buscar = servicio.consultarSubCategoria(1L);
+
+        try {
+            Assertions.assertEquals(1, subcategoria_buscar.get_id());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Listar subcategorias activas (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarSubcategoriasActivas(){
+
+        try {
+            Assertions.assertNotNull(new ucab.dsw.servicio.SubCategoriaAPI().subcategoriasActivas());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
+    }
 
     // Esta prueba permite insertar una subcategoria
     @Test

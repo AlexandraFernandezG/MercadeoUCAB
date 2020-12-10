@@ -1,6 +1,8 @@
 import org.junit.*;
+import org.junit.jupiter.api.Assertions;
 import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.SolicitudEstudio;
+import ucab.dsw.entidades.Tipo;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,6 +10,48 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SolicitudEstudioAPI_Test {
+
+    //Listar todas las solicitudes (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarSolicitudes(){
+
+        ucab.dsw.servicio.SolicitudEstudioAPI servicio = new ucab.dsw.servicio.SolicitudEstudioAPI();
+
+        try {
+            Assertions.assertTrue(servicio.listarSolicitudes().size() > 0);
+
+        } catch (Exception e) {
+
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Consultar una solicitud (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaConsultarSolicitud(){
+
+        ucab.dsw.servicio.SolicitudEstudioAPI servicio = new ucab.dsw.servicio.SolicitudEstudioAPI();
+        SolicitudEstudio solicitudEstudio_buscar = servicio.consultarSolicitud(1L);
+
+        try {
+            Assertions.assertEquals(1, solicitudEstudio_buscar.get_id());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Listar solicitudes activas (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarSolicitudesActivas(){
+
+        try {
+            Assertions.assertNotNull(new ucab.dsw.servicio.SolicitudEstudioAPI().mostrarSolicitudesActivas());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
+    }
 
     //Esta prueba nos permite insertar una solicitud
     @Test

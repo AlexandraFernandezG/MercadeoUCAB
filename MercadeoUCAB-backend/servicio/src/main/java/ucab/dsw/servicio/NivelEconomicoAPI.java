@@ -1,18 +1,12 @@
 package ucab.dsw.servicio;
 
-import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.accesodatos.DaoNivelEconomico;
-import ucab.dsw.accesodatos.DaoSolicitudEstudio;
 import ucab.dsw.dtos.NivelEconomicoDto;
-import ucab.dsw.entidades.Informacion;
-import ucab.dsw.entidades.NivelAcademico;
 import ucab.dsw.entidades.NivelEconomico;
-import ucab.dsw.entidades.SolicitudEstudio;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path( "/nivelEconomico" )

@@ -10,18 +10,98 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f7b76fe-4587-4747-8787-e8e40ffccd6a" name="Default Changelist" comment="" />
+    <list default="true" id="3f7b76fe-4587-4747-8787-e8e40ffccd6a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0c585588-8a03-440a-b4ed-52b110dfe9c1/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1e158342-1997-4d6a-9278-79de499463ff/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/32300752-e99c-4b3b-8891-0fff934027c1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/32300752-e99c-4b3b-8891-0fff934027c1/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7b93792a-9648-46f5-b69a-6bedba6d2225.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7b93792a-9648-46f5-b69a-6bedba6d2225/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accesodatos/accesodatos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/accesodatos/accesodatos.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accesodatos/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/accesodatos/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accesodatos/target/accesodatos-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/accesodatos/target/accesodatos-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accesodatos/target/classes/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/accesodatos/target/classes/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accesodatos/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/accesodatos/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtos/dtos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/dtos.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtos/target/dtos.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/target/dtos.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtos/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtos/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dtos/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/dtos/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entidades/entidades.iml" beforeDir="false" afterPath="$PROJECT_DIR$/entidades/entidades.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entidades/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/entidades/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entidades/target/entidades.jar" beforeDir="false" afterPath="$PROJECT_DIR$/entidades/target/entidades.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entidades/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/entidades/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entidades/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/entidades/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entidades/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/entidades/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/excepciones/excepciones.iml" beforeDir="false" afterPath="$PROJECT_DIR$/excepciones/excepciones.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/excepciones/target/excepciones-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/excepciones/target/excepciones-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/excepciones/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/excepciones/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/servicio.iml" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/servicio.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/src/main/java/ucab/dsw/servicio/CategoriaAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/src/main/java/ucab/dsw/servicio/CategoriaAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/src/main/java/ucab/dsw/servicio/NivelEconomicoAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/src/main/java/ucab/dsw/servicio/NivelEconomicoAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/src/test/java/CategoriaAPI_Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/src/test/java/CategoriaAPI_Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/src/test/java/ucab/dsw/servicio/NivelEconomicoAPITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/src/test/java/ucab/dsw/servicio/NivelEconomicoAPITest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/CategoriaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/CategoriaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/EstudioAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/EstudioAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/MarcaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/MarcaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/NivelEconomicoAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/NivelEconomicoAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/PreguntaEncuestaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/PreguntaEncuestaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/PreguntasEstudioAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/PreguntasEstudioAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/ProductoAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/ProductoAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/RespuestaPreguntaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/RespuestaPreguntaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/SolicitudEstudioAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/SolicitudEstudioAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/SubCategoriaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/SubCategoriaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/TipoAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/classes/ucab/dsw/servicio/TipoAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/pruebaORM-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/pruebaORM-1.0-SNAPSHOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/META-INF/jboss-deployment-structure.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/CategoriaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/CategoriaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/EstudioAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/EstudioAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/MarcaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/MarcaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/PreguntaEncuestaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/PreguntaEncuestaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/PreguntasEstudioAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/PreguntasEstudioAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/ProductoAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/ProductoAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/RespuestaPreguntaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/RespuestaPreguntaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/SolicitudEstudioAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/SolicitudEstudioAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/SubCategoriaAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/SubCategoriaAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/TipoAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/classes/ucab/dsw/servicio/TipoAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/lib/accesodatos-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/lib/accesodatos-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/lib/com.apetoi.api.logic-dtos-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/lib/entidades-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/lib/entidades-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/lib/excepciones-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/lib/excepciones-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/lib/jakarta.activation-1.2.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/servicio-1.0-SNAPSHOT/WEB-INF/lib/ucab.dsw-dtos-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/surefire-reports/TEST-CategoriaAPI_Test.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicio/target/test-classes/CategoriaAPI_Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/servicio/target/test-classes/CategoriaAPI_Test.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="module" />
+    </option>
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -33,11 +113,18 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\plugins\maven\lib\maven3" />
+        <option name="mavenHome" value="C:/Program Files/JetBrains/IntelliJ IDEA 2020.2.3/plugins/maven/lib/maven3" />
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
   <component name="ProjectId" id="1l2EWoGOUr6lX1KvXqEsMEkvjcO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -45,13 +132,30 @@
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.applicationServers" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="ucab.dsw.servicio" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
@@ -65,7 +169,8 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CategoriaAPI_Test.pruebaEliminarCategoria">
+<<<<<<< Updated upstream
+  <component name="RunManager" selected="JBoss Server.JBoss 21.0.1">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -77,6 +182,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+=======
+  <component name="RunManager" selected="JUnit.NivelEconomicoAPITest.testEliminarNivelEconomico">
+>>>>>>> Stashed changes
     <configuration name="GlassFish 5.0.0" type="GlassfishConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="GlassFish 5.0.0" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/servicio/" />
       <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
@@ -223,50 +331,81 @@
         </option>
       </method>
     </configuration>
-    <configuration name="CategoriaAPI_Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NivelEconomicoAPITest.testAddNivelEconomico" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="servicio" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CategoriaAPI_Test" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CategoriaAPI_Test.pruebaEliminarCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="servicio" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CategoriaAPI_Test" />
-      <option name="METHOD_NAME" value="pruebaEliminarCategoria" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ucab.dsw.servicio.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ucab.dsw.servicio" />
+      <option name="MAIN_CLASS_NAME" value="ucab.dsw.servicio.NivelEconomicoAPITest" />
+      <option name="METHOD_NAME" value="testAddNivelEconomico" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CategoriaAPI_Test.pruebaInsertarCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NivelEconomicoAPITest.testConsultarNivelEconomico" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="servicio" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CategoriaAPI_Test" />
-      <option name="METHOD_NAME" value="pruebaInsertarCategoria" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ucab.dsw.servicio.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ucab.dsw.servicio" />
+      <option name="MAIN_CLASS_NAME" value="ucab.dsw.servicio.NivelEconomicoAPITest" />
+      <option name="METHOD_NAME" value="testConsultarNivelEconomico" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SubCategoriaAPI_Test.pruebaEliminarSubCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NivelEconomicoAPITest.testEliminarNivelEconomico" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="servicio" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="SubCategoriaAPI_Test" />
-      <option name="METHOD_NAME" value="pruebaEliminarSubCategoria" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ucab.dsw.servicio.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ucab.dsw.servicio" />
+      <option name="MAIN_CLASS_NAME" value="ucab.dsw.servicio.NivelEconomicoAPITest" />
+      <option name="METHOD_NAME" value="testEliminarNivelEconomico" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SubCategoriaAPI_Test.pruebaInsertarSubCategoria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NivelEconomicoAPITest.testUpdateNivelEconomico_Estatus" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="servicio" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="SubCategoriaAPI_Test" />
-      <option name="METHOD_NAME" value="pruebaInsertarSubCategoria" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ucab.dsw.servicio.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ucab.dsw.servicio" />
+      <option name="MAIN_CLASS_NAME" value="ucab.dsw.servicio.NivelEconomicoAPITest" />
+      <option name="METHOD_NAME" value="testUpdateNivelEconomico_Estatus" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NivelEconomicoAPITest.testUpdateNivelEconomico_Todo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="servicio" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ucab.dsw.servicio.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ucab.dsw.servicio" />
+      <option name="MAIN_CLASS_NAME" value="ucab.dsw.servicio.NivelEconomicoAPITest" />
+      <option name="METHOD_NAME" value="testUpdateNivelEconomico_Todo" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -275,19 +414,19 @@
     <list>
       <item itemvalue="GlassFish Server.GlassFish 5.0.0" />
       <item itemvalue="JBoss Server.JBoss 21.0.1" />
-      <item itemvalue="JUnit.CategoriaAPI_Test" />
-      <item itemvalue="JUnit.CategoriaAPI_Test.pruebaEliminarCategoria" />
-      <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaEliminarSubCategoria" />
-      <item itemvalue="JUnit.CategoriaAPI_Test.pruebaInsertarCategoria" />
-      <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaInsertarSubCategoria" />
+      <item itemvalue="JUnit.NivelEconomicoAPITest.testConsultarNivelEconomico" />
+      <item itemvalue="JUnit.NivelEconomicoAPITest.testAddNivelEconomico" />
+      <item itemvalue="JUnit.NivelEconomicoAPITest.testUpdateNivelEconomico_Estatus" />
+      <item itemvalue="JUnit.NivelEconomicoAPITest.testUpdateNivelEconomico_Todo" />
+      <item itemvalue="JUnit.NivelEconomicoAPITest.testEliminarNivelEconomico" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CategoriaAPI_Test.pruebaEliminarCategoria" />
-        <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaInsertarSubCategoria" />
-        <item itemvalue="JUnit.CategoriaAPI_Test.pruebaInsertarCategoria" />
-        <item itemvalue="JUnit.SubCategoriaAPI_Test.pruebaEliminarSubCategoria" />
-        <item itemvalue="JUnit.CategoriaAPI_Test" />
+        <item itemvalue="JUnit.NivelEconomicoAPITest.testEliminarNivelEconomico" />
+        <item itemvalue="JUnit.NivelEconomicoAPITest.testUpdateNivelEconomico_Todo" />
+        <item itemvalue="JUnit.NivelEconomicoAPITest.testUpdateNivelEconomico_Estatus" />
+        <item itemvalue="JUnit.NivelEconomicoAPITest.testAddNivelEconomico" />
+        <item itemvalue="JUnit.NivelEconomicoAPITest.testConsultarNivelEconomico" />
       </list>
     </recent_temporary>
   </component>
@@ -314,12 +453,22 @@
       <workItem from="1607404146225" duration="709000" />
       <workItem from="1607453586403" duration="82000" />
       <workItem from="1607535451745" duration="5796000" />
+<<<<<<< Updated upstream
+      <workItem from="1607568554298" duration="887000" />
+      <workItem from="1607570342865" duration="4030000" />
+=======
+      <workItem from="1607550373353" duration="5968000" />
+      <workItem from="1607563659147" duration="7510000" />
+      <workItem from="1607603785351" duration="3020000" />
+      <workItem from="1607616157046" duration="530000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+<<<<<<< Updated upstream
   <component name="WindowStateProjectService">
     <state x="579" y="255" width="583" height="217" key="#Assign_Data_Sources" timestamp="1607541021774">
       <screen x="0" y="0" width="1360" height="728" />
@@ -369,22 +518,22 @@
       <screen x="0" y="0" width="1360" height="728" />
     </state>
     <state x="459" y="105" key="FileChooserDialogImpl/0.0.1360.728@0.0.1360.728" timestamp="1607209313745" />
-    <state width="1079" height="175" key="GridCell.Tab.0.bottom" timestamp="1607541208301">
+    <state width="1079" height="144" key="GridCell.Tab.0.bottom" timestamp="1607570032112">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.bottom/0.0.1360.728@0.0.1360.728" timestamp="1607541208301" />
-    <state width="1079" height="175" key="GridCell.Tab.0.center" timestamp="1607541208300">
+    <state width="1079" height="144" key="GridCell.Tab.0.bottom/0.0.1360.728@0.0.1360.728" timestamp="1607570032112" />
+    <state width="1079" height="144" key="GridCell.Tab.0.center" timestamp="1607570032111">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.center/0.0.1360.728@0.0.1360.728" timestamp="1607541208300" />
-    <state width="1079" height="175" key="GridCell.Tab.0.left" timestamp="1607541208300">
+    <state width="1079" height="144" key="GridCell.Tab.0.center/0.0.1360.728@0.0.1360.728" timestamp="1607570032111" />
+    <state width="1079" height="144" key="GridCell.Tab.0.left" timestamp="1607570032111">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.left/0.0.1360.728@0.0.1360.728" timestamp="1607541208300" />
-    <state width="1079" height="175" key="GridCell.Tab.0.right" timestamp="1607541208300">
+    <state width="1079" height="144" key="GridCell.Tab.0.left/0.0.1360.728@0.0.1360.728" timestamp="1607570032111" />
+    <state width="1079" height="144" key="GridCell.Tab.0.right" timestamp="1607570032111">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.right/0.0.1360.728@0.0.1360.728" timestamp="1607541208300" />
+    <state width="1079" height="144" key="GridCell.Tab.0.right/0.0.1360.728@0.0.1360.728" timestamp="1607570032111" />
     <state width="1317" height="200" key="GridCell.Tab.1.bottom" timestamp="1607207716496">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
@@ -425,5 +574,10 @@
       <screen x="0" y="0" width="1360" height="728" />
     </state>
     <state x="343" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1360.728@0.0.1360.728" timestamp="1607280097600" />
+=======
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+>>>>>>> Stashed changes
   </component>
 </project>
