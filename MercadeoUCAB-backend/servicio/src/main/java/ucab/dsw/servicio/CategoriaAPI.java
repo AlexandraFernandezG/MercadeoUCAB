@@ -71,6 +71,25 @@ public class CategoriaAPI extends AplicacionBase {
         return listaSubcategoriasCategoria;
     }
 
+    @GET
+    @Path("/verificarNombre")
+    public Boolean verificarNombreCategoria(CategoriaDto categoriaDto){
+
+        DaoCategoria daoCategoria = new DaoCategoria();
+        List<Categoria> listaCategoria = daoCategoria.findAll(Categoria.class);
+
+        for (Categoria categoria: listaCategoria){
+
+            if(categoria.getNombre().equals(categoriaDto.getNombre())){
+                System.out.println("No se puede insertar esta categoria");
+                return true;
+            }
+        }
+
+        addCategoria(categoriaDto);
+        return false;
+    }
+
     //Agregar una categoria
     @POST
     @Path("/addCategoria")

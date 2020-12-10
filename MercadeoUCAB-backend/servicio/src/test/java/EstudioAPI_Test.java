@@ -1,6 +1,8 @@
 import org.junit.*;
+import org.junit.jupiter.api.Assertions;
 import ucab.dsw.dtos.EstudioDto;
 import ucab.dsw.entidades.Estudio;
+import ucab.dsw.entidades.Tipo;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,6 +10,48 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class EstudioAPI_Test {
+
+    //Listar todos los estudios (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarEstudios(){
+
+        ucab.dsw.servicio.EstudioAPI servicio = new ucab.dsw.servicio.EstudioAPI();
+
+        try {
+            Assertions.assertTrue(servicio.listarEstudios().size() > 0);
+
+        } catch (Exception e) {
+
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Consultar un Estudio (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaConsultarEstudio(){
+
+        ucab.dsw.servicio.EstudioAPI servicio = new ucab.dsw.servicio.EstudioAPI();
+        Estudio estudio_buscar = servicio.consultarEstudio(1L);
+
+        try {
+            Assertions.assertEquals(1, estudio_buscar.get_id());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Listar estudios activos (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarEstudiosActivos(){
+
+        try {
+            Assertions.assertNotNull(new ucab.dsw.servicio.EstudioAPI().estudiosActivos());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
+    }
 
     // Esta prueba permite insertar un estudio a la BD
     @Test
@@ -28,9 +72,8 @@ public class EstudioAPI_Test {
         estudioDto.set_fechaFin(myDate2);
         estudioDto.set_estatus("Activo");
         Estudio resultado = servicio.addEstudios(estudioDto);
-
-
         Assert.assertNotEquals(resultado.get_id(), 0);
+
     }
 
     @Test

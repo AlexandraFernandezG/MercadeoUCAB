@@ -65,7 +65,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CategoriaAPI_Test.pruebaEliminarCategoria">
+  <component name="RunManager" selected="JBoss Server.JBoss 21.0.1">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -314,6 +314,8 @@
       <workItem from="1607404146225" duration="709000" />
       <workItem from="1607453586403" duration="82000" />
       <workItem from="1607535451745" duration="5796000" />
+      <workItem from="1607568554298" duration="887000" />
+      <workItem from="1607570342865" duration="4030000" />
     </task>
     <servers />
   </component>
@@ -369,22 +371,22 @@
       <screen x="0" y="0" width="1360" height="728" />
     </state>
     <state x="459" y="105" key="FileChooserDialogImpl/0.0.1360.728@0.0.1360.728" timestamp="1607209313745" />
-    <state width="1079" height="175" key="GridCell.Tab.0.bottom" timestamp="1607541208301">
+    <state width="1079" height="144" key="GridCell.Tab.0.bottom" timestamp="1607570032112">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.bottom/0.0.1360.728@0.0.1360.728" timestamp="1607541208301" />
-    <state width="1079" height="175" key="GridCell.Tab.0.center" timestamp="1607541208300">
+    <state width="1079" height="144" key="GridCell.Tab.0.bottom/0.0.1360.728@0.0.1360.728" timestamp="1607570032112" />
+    <state width="1079" height="144" key="GridCell.Tab.0.center" timestamp="1607570032111">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.center/0.0.1360.728@0.0.1360.728" timestamp="1607541208300" />
-    <state width="1079" height="175" key="GridCell.Tab.0.left" timestamp="1607541208300">
+    <state width="1079" height="144" key="GridCell.Tab.0.center/0.0.1360.728@0.0.1360.728" timestamp="1607570032111" />
+    <state width="1079" height="144" key="GridCell.Tab.0.left" timestamp="1607570032111">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.left/0.0.1360.728@0.0.1360.728" timestamp="1607541208300" />
-    <state width="1079" height="175" key="GridCell.Tab.0.right" timestamp="1607541208300">
+    <state width="1079" height="144" key="GridCell.Tab.0.left/0.0.1360.728@0.0.1360.728" timestamp="1607570032111" />
+    <state width="1079" height="144" key="GridCell.Tab.0.right" timestamp="1607570032111">
       <screen x="0" y="0" width="1360" height="728" />
     </state>
-    <state width="1079" height="175" key="GridCell.Tab.0.right/0.0.1360.728@0.0.1360.728" timestamp="1607541208300" />
+    <state width="1079" height="144" key="GridCell.Tab.0.right/0.0.1360.728@0.0.1360.728" timestamp="1607570032111" />
     <state width="1317" height="200" key="GridCell.Tab.1.bottom" timestamp="1607207716496">
       <screen x="0" y="0" width="1360" height="728" />
     </state>

@@ -1,9 +1,56 @@
 import org.junit.*;
+import org.junit.jupiter.api.Assertions;
 import ucab.dsw.dtos.PreguntaEncuestaDto;
 import ucab.dsw.dtos.RespuestaPreguntaDto;
 import ucab.dsw.entidades.RespuestaPregunta;
+import ucab.dsw.entidades.Tipo;
 
 public class RespuestaPreguntaAPI_Test {
+
+    //Listar todos los RespuestaPregunta (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarRespuestaPregunta(){
+
+        ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
+
+        try {
+            Assertions.assertTrue(servicio.listarRespuestas().size() > 0);
+
+        } catch (Exception e) {
+
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Consultar una Respuesta (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaConsultarTipo(){
+
+        ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
+        RespuestaPregunta respuestaPregunta_buscar = servicio.encontrarRespuestaPregunta(1L);
+
+        try {
+
+            Assertions.assertEquals(1, respuestaPregunta_buscar.get_id());
+
+        } catch (Exception e) {
+
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Listar Respuestas activas (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarRespuestaEncuestasActivas(){
+
+        try {
+            Assertions.assertNotNull(new ucab.dsw.servicio.RespuestaPreguntaAPI().respuestasActivas());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
+    }
 
 
     // Esta prueba permite insertar una Respuesta a la BD
