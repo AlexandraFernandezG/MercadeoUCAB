@@ -7,11 +7,7 @@ import org.junit.*;
 import org.junit.jupiter.api.Assertions;
 import ucab.dsw.dtos.CategoriaDto;
 import ucab.dsw.entidades.Categoria;
-<<<<<<< Updated upstream
 import ucab.dsw.entidades.Tipo;
-=======
-import ucab.dsw.servicio.CategoriaAPI;
->>>>>>> Stashed changes
 
 public class CategoriaAPI_Test {
 
