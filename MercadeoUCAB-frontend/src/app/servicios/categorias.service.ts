@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Categoria } from '../modelos/categoria';
+import { Categoria2 } from '../modelos/categoria';
+import { catchError, map, tap, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +11,41 @@ import { Categoria } from '../modelos/categoria';
 export class CategoriasService {
 
   categoria: Categoria[];
-  constructor(private http: HttpClient) {
+  constructor(public http: HttpClient) {
   }
   public url = '//localhost:8080/servicio-1.0-SNAPSHOT/api/';
 
-  getCategorias() {
+  // Http Options
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
+  getCategorias(){
     return this.http.get<Categoria[]>(this.url + 'categoria/allCategoria');
   }
 
+  createCategoria(categoria: Categoria2): Observable<Categoria2>{
+    console.log(categoria);
+    return this.http.post<Categoria2>(this.url + 'categoria/addCategoria', JSON.stringify(categoria), this.httpOptions)
+    .pipe(
+      tap((newCategoria: Categoria2) => console.log(`added categoria w/ id=${newCategoria.id}`)),
+      catchError(this.handleError)
+    );
+  }
+
+    /// Error HandleError
+    handleError(error): Observable<never> {
+      let errorMessage = '';
+      if (error.error instanceof ErrorEvent) {
+        errorMessage = error.error.message;
+      } else {
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      }
+      window.alert(errorMessage);
+      return throwError(errorMessage);
+   }
 
 }
-
 
