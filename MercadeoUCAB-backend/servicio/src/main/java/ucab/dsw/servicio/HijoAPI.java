@@ -1,9 +1,11 @@
 package ucab.dsw.servicio;
 
 import ucab.dsw.accesodatos.DaoHijo;
+import ucab.dsw.accesodatos.DaoOcupacion;
 import ucab.dsw.dtos.HijoDto;
 import ucab.dsw.entidades.Hijo;
 import ucab.dsw.entidades.Informacion;
+import ucab.dsw.entidades.Ocupacion;
 
 
 import javax.ws.rs.core.Response;
@@ -32,22 +34,31 @@ public class HijoAPI extends AplicacionBase{
         DaoHijo daoHijo = new DaoHijo();
         return daoHijo.find(id, Hijo.class);
     }
-    
+
+    //Agregar una ocupación
     @POST
     @Path("/addHijo")
-    public Hijo addHijo(HijoDto hijoDto){
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public HijoDto addHijo(HijoDto hijoDto)
+    {
+        HijoDto resultado = new HijoDto();
+        try {
 
-        DaoHijo daoHijo = new DaoHijo();
-        Hijo hijo = new Hijo();
-
+            DaoHijo dao = new DaoHijo();
+            Hijo hijo = new Hijo();
             hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
             hijo.set_genero(hijoDto.getGenero());
-            hijo.set_estatus("Activo");
-            Informacion informacion = new Informacion(hijoDto.get_informacionDto().getId());
-            hijo.set_informacion(informacion);
-
-            return hijo;
+            hijo.set_estatus(hijoDto.getEstatus());
+            Hijo resul = dao.insert(hijo);
+            resultado.setId(resul.get_id());
+        }
+        catch (Exception ex) {
+            String problema = ex.getMessage();
+        }
+        return resultado;
     }
+
 
     @PUT
     @Path("/updateHijo/{id}")

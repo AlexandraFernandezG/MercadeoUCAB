@@ -1,7 +1,10 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.accesodatos.DaoCategoria;
 import ucab.dsw.accesodatos.DaoRol;
+import ucab.dsw.dtos.CategoriaDto;
 import ucab.dsw.dtos.RolDto;
+import ucab.dsw.entidades.Categoria;
 import ucab.dsw.entidades.Rol;
 
 
@@ -31,15 +34,25 @@ public class RolAPI {
 
     @POST
     @Path("/addRol")
-    public Rol addRol(RolDto rolDto){
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public RolDto addCategoria(RolDto rolDto)
+    {
+        RolDto resultado = new RolDto();
+        try {
 
-        DaoRol daoRol = new DaoRol();
-        Rol rol = new Rol();
+            DaoRol dao = new DaoRol();
+            Rol rol = new Rol();
 
-        rol.set_nombre(rolDto.getNombre());
-        rol.set_estatus("Activo");
-
-        return rol;
+            rol.set_nombre(rolDto.getNombre());
+            rol.set_estatus(rol.get_estatus());
+            Rol resul = dao.insert(rol);
+            resultado.setId(resul.get_id());
+        }
+        catch (Exception ex) {
+            String problema = ex.getMessage();
+        }
+        return resultado;
     }
 
     @PUT
