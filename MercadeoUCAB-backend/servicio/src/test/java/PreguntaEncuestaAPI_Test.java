@@ -28,7 +28,7 @@ public class PreguntaEncuestaAPI_Test {
     public void pruebaConsultarPreguntaEncuesta(){
 
         ucab.dsw.servicio.PreguntaEncuestaAPI servicio = new ucab.dsw.servicio.PreguntaEncuestaAPI();
-        PreguntaEncuesta preguntaEncuesta_buscar = servicio.encontrarPreguntaEncuesta(1L);
+        PreguntaEncuesta preguntaEncuesta_buscar = servicio.encontrarPreguntaEncuesta(1);
 
         try {
             Assertions.assertEquals(1, preguntaEncuesta_buscar.get_id());
@@ -60,8 +60,8 @@ public class PreguntaEncuestaAPI_Test {
         preguntaEncuestaDto.set_tipoPregunta("Desarrollo");
         preguntaEncuestaDto.set_estatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
-        UsuarioDto usuarioDto = new UsuarioDto(1L);
-        SubcategoriaDto subcategoriaDto = new SubcategoriaDto(5L);
+        UsuarioDto usuarioDto = new UsuarioDto(1);
+        SubcategoriaDto subcategoriaDto = new SubcategoriaDto(5);
         preguntaEncuestaDto.set_usuarioDto(usuarioDto);
         preguntaEncuestaDto.set_subcategoriaDto(subcategoriaDto);
         PreguntaEncuestaDto resultado = servicio.addPreguntaEncuesta(preguntaEncuestaDto);
@@ -76,7 +76,7 @@ public class PreguntaEncuestaAPI_Test {
         PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto();
         preguntaEncuestaDto.set_estatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarPreguntaEncuesta(1L, preguntaEncuestaDto);
+        servicio.modificarPreguntaEncuesta(1, preguntaEncuestaDto);
     }
 
     // Esta prueba permite modificar una pregunta
@@ -88,7 +88,7 @@ public class PreguntaEncuestaAPI_Test {
         preguntaEncuestaDto.set_descripcion("Que te parece los perros calientes de arandanos?");
         preguntaEncuestaDto.set_tipoPregunta("Desarrollo");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarPreguntaEncuesta(1L, preguntaEncuestaDto);
+        servicio.modificarPreguntaEncuesta(1, preguntaEncuestaDto);
 
     }
 
@@ -98,6 +98,6 @@ public class PreguntaEncuestaAPI_Test {
 
         ucab.dsw.servicio.PreguntaEncuestaAPI servicio = new ucab.dsw.servicio.PreguntaEncuestaAPI();
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarPreguntaEncuesta(1L);
+        servicio.eliminarPreguntaEncuesta(1);
     }
 }

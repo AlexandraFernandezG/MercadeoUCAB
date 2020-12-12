@@ -1,6 +1,5 @@
 import org.junit.*;
 import org.junit.jupiter.api.Assertions;
-import ucab.dsw.dtos.ProductoDto;
 import ucab.dsw.dtos.TipoDto;
 import ucab.dsw.entidades.Tipo;
 
@@ -27,7 +26,7 @@ public class TipoAPI_Test {
     public void pruebaConsultarTipo(){
 
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
-        Tipo tipo_buscar = servicio.consultarTipo(1L);
+        Tipo tipo_buscar = servicio.consultarTipo(1);
 
         try {
             Assertions.assertEquals(1, tipo_buscar.get_id());
@@ -60,9 +59,6 @@ public class TipoAPI_Test {
         tipoDto.set_nombre("");
         tipoDto.set_descripcion("");
         tipoDto.set_estatus("Activo");
-        //Recordar revisar los registros de la BD
-        ProductoDto productoDto = new ProductoDto(1L);
-        tipoDto.set_productoDto(productoDto);
         TipoDto resultado = servicio.addTipo(tipoDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
 
@@ -77,7 +73,7 @@ public class TipoAPI_Test {
 
         tipoDto.set_estatus("Activo");
         // Estar pendiente con los ID registrados en la BD
-        servicio.modificarEstatusTipo(1L, tipoDto);
+        servicio.modificarEstatusTipo(1, tipoDto);
 
     }
 
@@ -91,7 +87,7 @@ public class TipoAPI_Test {
         tipoDto.set_nombre("");
         tipoDto.set_descripcion("");
         // Estar pendiente con los ID registrados en la BD
-        servicio.updateTipo(1L, tipoDto);
+        servicio.updateTipo(1, tipoDto);
 
     }
 
@@ -101,7 +97,7 @@ public class TipoAPI_Test {
 
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
         // Estar pendiente con los ID registrados en la BD
-        servicio.eliminarTipo(1L);
+        servicio.eliminarTipo(1);
 
     }
 

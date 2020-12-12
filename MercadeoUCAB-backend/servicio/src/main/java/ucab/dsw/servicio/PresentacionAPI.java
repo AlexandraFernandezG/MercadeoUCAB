@@ -95,11 +95,9 @@ public class PresentacionAPI extends AplicacionBase{
             DaoPresentacion daoPresentacion = new DaoPresentacion();
             Presentacion presentacion = new Presentacion();
 
-            presentacion.setNombre(presentacionDto.get_nombre());
-            presentacion.setCaracteristicas(presentacionDto.get_caracteristicas());
+            presentacion.set_nombre(presentacionDto.get_nombre());
+            presentacion.set_descripcion(presentacionDto.get_descripcion());
             presentacion.set_estatus(presentacionDto.get_estatus());
-            Producto producto = new Producto(presentacionDto.get_productoDto().getId());
-            presentacion.setProducto(producto);
             Presentacion resul = daoPresentacion.insert(presentacion);
             resultado.setId(resul.get_id());
 
@@ -157,8 +155,8 @@ public class PresentacionAPI extends AplicacionBase{
         }
 
             try {
-                presentacion_modificar.setNombre(presentacionDto.get_nombre());
-                presentacion_modificar.setCaracteristicas(presentacionDto.get_caracteristicas());
+                presentacion_modificar.set_nombre(presentacionDto.get_nombre());
+                presentacion_modificar.set_descripcion(presentacionDto.get_descripcion());
                 daoPresentacion.update(presentacion_modificar);
 
             } catch (Exception ex){

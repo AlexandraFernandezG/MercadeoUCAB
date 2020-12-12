@@ -28,7 +28,7 @@ public class RespuestaPreguntaAPI_Test {
     public void pruebaConsultarRespuestaPregunta(){
 
         ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
-        RespuestaPregunta respuestaPregunta_buscar = servicio.encontrarRespuestaPregunta(1L);
+        RespuestaPregunta respuestaPregunta_buscar = servicio.encontrarRespuestaPregunta(1);
 
         try {
 
@@ -63,7 +63,7 @@ public class RespuestaPreguntaAPI_Test {
         respuestaPreguntaDto.set_nombre("No muy buena la verdad");
         respuestaPreguntaDto.set_estatus("Inactivo");
         // Recuerden que deben ver los id de los registros en la BD
-        PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1L);
+        PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1);
         respuestaPreguntaDto.set_preguntaEncuestaDto(preguntaEncuestaDto);
         RespuestaPreguntaDto resultado = servicio.addRespuestaPregunta(respuestaPreguntaDto);
         Assert.assertNotEquals(resultado.getId(), 0);
@@ -77,7 +77,7 @@ public class RespuestaPreguntaAPI_Test {
         RespuestaPreguntaDto respuestaPreguntaDto = new RespuestaPreguntaDto();
         respuestaPreguntaDto.set_estatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarRespuestaPregunta(1L, respuestaPreguntaDto);
+        servicio.modificarRespuestaPregunta(1, respuestaPreguntaDto);
     }
 
     // Esta prueba permite modificar una Respuesta
@@ -88,7 +88,7 @@ public class RespuestaPreguntaAPI_Test {
         RespuestaPreguntaDto respuestaPreguntaDto = new RespuestaPreguntaDto();
         respuestaPreguntaDto.set_nombre("No muy buena la verdad");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarRespuestaPregunta(1L, respuestaPreguntaDto);
+        servicio.modificarRespuestaPregunta(1, respuestaPreguntaDto);
     }
 
     // Esta prueba permite eliminar una Respuesta
@@ -96,6 +96,6 @@ public class RespuestaPreguntaAPI_Test {
     public void pruebaEliminarRespuestaPregunta(){
 
         ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
-        servicio.eliminarRespuestaPregunta(1L);
+        servicio.eliminarRespuestaPregunta(1);
     }
 }

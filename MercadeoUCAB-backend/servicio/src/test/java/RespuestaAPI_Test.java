@@ -29,7 +29,7 @@ public class RespuestaAPI_Test {
     public void pruebaConsultarRespuesta(){
 
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
-        Respuesta respuesta_buscar = servicio.consultarRespuesta(1L);
+        Respuesta respuesta_buscar = servicio.consultarRespuesta(1);
 
         try {
             Assertions.assertEquals(1, respuesta_buscar.get_id());
@@ -66,8 +66,8 @@ public class RespuestaAPI_Test {
         respuestaDto.set_respuestaMultiple("");
         respuestaDto.set_estatus("Activo");
         //Estar mosca con los ID de la BD
-        PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto(1L);
-        UsuarioDto usuarioDto = new UsuarioDto(1L);
+        PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto(1);
+        UsuarioDto usuarioDto = new UsuarioDto(1);
         respuestaDto.set_preguntaEstudioDto(preguntaEstudioDto);
         respuestaDto.set_usuarioDto(usuarioDto);
         RespuestaDto resultado = servicio.addRespuesta(respuestaDto);
@@ -84,7 +84,7 @@ public class RespuestaAPI_Test {
 
         respuestaDto.set_estatus("Activo");
         //Estar mosca con los ID de la BD
-        servicio.modificarEstatusRespuesta(1L, respuestaDto);
+        servicio.modificarEstatusRespuesta(1, respuestaDto);
     }
 
     // Prueba actualizar estatus
@@ -100,7 +100,7 @@ public class RespuestaAPI_Test {
         respuestaDto.set_respuestaSimple("");
         respuestaDto.set_respuestaMultiple("");
         //Estar mosca con los ID de la BD
-        servicio.updateRespuesta(1L, respuestaDto);
+        servicio.updateRespuesta(1, respuestaDto);
     }
 
     // Prueba eliminar una respuesta
@@ -109,7 +109,7 @@ public class RespuestaAPI_Test {
 
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
         //Estar mosca con los ID de la BD
-        servicio.eliminarRespuesta(1L);
+        servicio.eliminarRespuesta(1);
 
     }
 

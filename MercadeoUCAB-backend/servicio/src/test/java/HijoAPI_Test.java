@@ -33,7 +33,7 @@ public class HijoAPI_Test {
     public void pruebaConsultarHijo(){
 
         ucab.dsw.servicio.HijoAPI servicio = new ucab.dsw.servicio.HijoAPI();
-        Hijo hijo_buscar = servicio.consultarHijo(1L);
+        Hijo hijo_buscar = servicio.consultarHijo(1);
 
         try {
             Assertions.assertEquals(1, hijo_buscar.get_id());

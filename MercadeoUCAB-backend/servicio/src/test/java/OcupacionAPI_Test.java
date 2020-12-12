@@ -26,7 +26,7 @@ public class OcupacionAPI_Test {
     public void pruebaConsultarOcupacion(){
 
         ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
-        Ocupacion ocupacion_buscar = servicio.consultarOcupacion(1L);
+        Ocupacion ocupacion_buscar = servicio.consultarOcupacion(1);
 
         try {
             Assertions.assertEquals(1, ocupacion_buscar.get_id());
@@ -59,7 +59,7 @@ public class OcupacionAPI_Test {
 
         ocupacionDto.set_nombre("");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.updateOcupacion(1L, ocupacionDto);
+        servicio.updateOcupacion(1, ocupacionDto);
 
     }
 
@@ -69,7 +69,7 @@ public class OcupacionAPI_Test {
 
         ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarOcupacion(2L);
+        servicio.eliminarOcupacion(2);
 
     }
 }

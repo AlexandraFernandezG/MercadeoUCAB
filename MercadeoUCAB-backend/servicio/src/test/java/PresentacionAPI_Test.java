@@ -1,7 +1,6 @@
 import org.junit.*;
 import org.junit.jupiter.api.Assertions;
 import ucab.dsw.dtos.PresentacionDto;
-import ucab.dsw.dtos.ProductoDto;
 import ucab.dsw.entidades.Presentacion;
 
 public class PresentacionAPI_Test {
@@ -27,7 +26,7 @@ public class PresentacionAPI_Test {
     public void pruebaConsultarPresentacion(){
 
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
-        Presentacion presentacion_buscar = servicio.consultarPresentacion(1L);
+        Presentacion presentacion_buscar = servicio.consultarPresentacion(1);
 
         try {
             Assertions.assertEquals(1, presentacion_buscar.get_id());
@@ -60,10 +59,8 @@ public class PresentacionAPI_Test {
         PresentacionDto presentacionDto = new PresentacionDto();
 
         presentacionDto.set_nombre("");
-        presentacionDto.set_caracteristicas("");
+        presentacionDto.set_descripcion("");
         presentacionDto.set_estatus("Activo");
-        ProductoDto productoDto = new ProductoDto(1L);
-        presentacionDto.set_productoDto(productoDto);
         PresentacionDto resultado = servicio.addPresentacion(presentacionDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
 
@@ -78,7 +75,7 @@ public class PresentacionAPI_Test {
 
         presentacionDto.set_estatus("Activo");
         // Estar mosca con los id de la bd
-        servicio.modificarEstatusPresentacion(1L, presentacionDto);
+        servicio.modificarEstatusPresentacion(1, presentacionDto);
 
     }
 
@@ -90,9 +87,9 @@ public class PresentacionAPI_Test {
         PresentacionDto presentacionDto = new PresentacionDto();
 
         presentacionDto.set_nombre("");
-        presentacionDto.set_caracteristicas("");
+        presentacionDto.set_descripcion("");
         // Estar mosca con los id de la bd
-        servicio.updatePresentacion(1L, presentacionDto);
+        servicio.updatePresentacion(1, presentacionDto);
 
     }
 
@@ -102,7 +99,7 @@ public class PresentacionAPI_Test {
 
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
         // Estar mosca con los id de la bd
-        servicio.eliminarPresentacion(1L);
+        servicio.eliminarPresentacion(1);
 
     }
 

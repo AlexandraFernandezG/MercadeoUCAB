@@ -13,7 +13,7 @@ public class PreguntasEstudioAPI_Test {
         ucab.dsw.servicio.PreguntasEstudioAPI servicio = new ucab.dsw.servicio.PreguntasEstudioAPI();
 
         try {
-            Assertions.assertTrue(servicio.listarPreguntasEstudio(1L).size() > 0);
+            Assertions.assertTrue(servicio.listarPreguntasEstudio(1).size() > 0);
 
         } catch (Exception e) {
 
@@ -31,8 +31,8 @@ public class PreguntasEstudioAPI_Test {
 
         preguntaEstudioDto.set_estatus("Activo");
         //Estar mosca con los Id de la base de datos
-        EstudioDto estudioDto = new EstudioDto(1L);
-        PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1L);
+        EstudioDto estudioDto = new EstudioDto(1);
+        PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1);
         preguntaEstudioDto.set_estudioDto(estudioDto);
         preguntaEstudioDto.set_preguntaEncuestaDto(preguntaEncuestaDto);
         PreguntaEstudioDto resultado = servicio.addPreguntaEstudio(preguntaEstudioDto);
@@ -49,7 +49,7 @@ public class PreguntasEstudioAPI_Test {
 
         preguntaEstudioDto.set_estatus("Inactivo");
         // Estas mosca con los ID de la base de datos
-        servicio.modificarEstatusPreguntaEstudio(1L, preguntaEstudioDto);
+        servicio.modificarEstatusPreguntaEstudio(1, preguntaEstudioDto);
     }
 
     // Esta prueba permite eliminar una preguntaEstudio
@@ -58,7 +58,7 @@ public class PreguntasEstudioAPI_Test {
 
         ucab.dsw.servicio.PreguntasEstudioAPI servicio = new ucab.dsw.servicio.PreguntasEstudioAPI();
         // Estas mosca con los ID de la base de datos
-        servicio.eliminarEstudioPreguntaEstudio(1L);
+        servicio.eliminarEstudioPreguntaEstudio(1);
 
     }
 

@@ -27,7 +27,7 @@ public class SubCategoriaAPI_Test {
     public void pruebaConsultarSubcategoria(){
 
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
-        Subcategoria subcategoria_buscar = servicio.consultarSubCategoria(1L);
+        Subcategoria subcategoria_buscar = servicio.consultarSubCategoria(1);
 
         try {
             Assertions.assertEquals(1, subcategoria_buscar.get_id());
@@ -74,7 +74,7 @@ public class SubCategoriaAPI_Test {
 
         subcategoriaDto.set_estatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarEstatusSubcategoria(3L,subcategoriaDto);
+        servicio.modificarEstatusSubcategoria(3,subcategoriaDto);
 
     }
 
@@ -87,7 +87,7 @@ public class SubCategoriaAPI_Test {
         subcategoriaDto.setNombre("Juguetes");
         subcategoriaDto.setDescripcion("Para diversion de los chicos");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarSubCategoria(3L,subcategoriaDto);
+        servicio.modificarSubCategoria(3,subcategoriaDto);
 
     }
 
@@ -97,7 +97,7 @@ public class SubCategoriaAPI_Test {
 
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarSubCategoria(1L);
+        servicio.eliminarSubCategoria(1);
 
     }
 }

@@ -113,6 +113,36 @@ public class CategoriaAPI extends AplicacionBase {
         }
     }
 
+    //Verificar nombre iguales de categoria
+
+    @GET
+    @Path("/verificarNombre")
+    @Produces( MediaType.APPLICATION_JSON )
+    public Boolean verificarNombreCategoria(CategoriaDto categoriaDto) throws NullPointerException{
+
+        DaoCategoria daoCategoria = new DaoCategoria();
+        List<Categoria> listaCategoria = daoCategoria.findAll(Categoria.class);
+
+        try {
+
+            for (Categoria categoria : listaCategoria) {
+
+                if (categoria.getNombre().equals(categoriaDto.getNombre())) {
+                    System.out.println("No se puede insertar esta categoria");
+                    return true;
+                }
+            }
+
+            return false;
+
+        } catch (NullPointerException ex){
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+        }
+    }
+
     //Agregar una categoria
     @POST
     @Path("/addCategoria")

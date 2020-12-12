@@ -47,7 +47,7 @@ public class CategoriaAPI_Test {
     public void pruebaConsultarCategoria(){
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
-        Categoria categoria_buscar = servicio.consultarCategoria(1L);
+        Categoria categoria_buscar = servicio.consultarCategoria(1);
 
         try {
             Assertions.assertEquals(1, categoria_buscar.get_id());
@@ -90,7 +90,7 @@ public class CategoriaAPI_Test {
         CategoriaDto categoriaDto = new CategoriaDto();
         categoriaDto.set_estatus("Inactivo");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarEstatusCategoria(1L,categoriaDto);
+        servicio.modificarEstatusCategoria(1,categoriaDto);
     }
 
     // Este prueba permite modificar los campos de un registro
@@ -102,7 +102,7 @@ public class CategoriaAPI_Test {
         categoriaDto.setNombre("Comida");
         categoriaDto.set_descripcion("Perros calientes de arandanos");
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarCategoria(1L,categoriaDto);
+        servicio.modificarCategoria(1,categoriaDto);
 
     }
 
@@ -112,6 +112,6 @@ public class CategoriaAPI_Test {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarCategoria(1L);
+        servicio.eliminarCategoria(1);
     }
 }
