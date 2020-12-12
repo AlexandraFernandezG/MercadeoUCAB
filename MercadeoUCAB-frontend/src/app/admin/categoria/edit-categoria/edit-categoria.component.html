@@ -1,1 +1,19 @@
-<p>edit-categoria works!</p>
+<form [formGroup]="categoriaForm" novalidate> 
+
+    <h4>Categoría</h4>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Nombre:</mat-label>
+          <input formControlName="nombre" matInput  [(ngModel)]="categoria._nombre" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Descripción:</mat-label>
+          <input formControlName="descripcion"  matInput  [(ngModel)]="categoria._descripcion"/>
+        </mat-form-field>
+      </div>
+  
+    <button type="submit"  mat-raised-button color="primary" (click)="editCategoria(categoria)">Editar Categoría</button>
+  </form>
+  

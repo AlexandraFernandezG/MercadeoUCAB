@@ -5,6 +5,7 @@ import { Categoria } from '../modelos/categoria';
 import { Categoria2 } from '../modelos/categoria';
 import { catchError, map, tap, retry } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,11 +27,28 @@ export class CategoriasService {
     return this.http.get<Categoria[]>(this.url + 'categoria/allCategoria');
   }
 
+  getCategoria(id: number): Observable<Categoria> {
+    console.log(id);
+    return this.http.get<Categoria>(this.url + 'categoria/consultarCategoria/' + id)
+    .pipe(
+      tap(_ => console.log(`fetched categoria id=${id}`)),
+      catchError(this.handleError)
+    );
+  }
+
   createCategoria(categoria: Categoria2): Observable<Categoria2>{
     console.log(categoria);
     return this.http.post<Categoria2>(this.url + 'categoria/addCategoria', JSON.stringify(categoria), this.httpOptions)
     .pipe(
       tap((newCategoria: Categoria2) => console.log(`added categoria w/ id=${newCategoria.id}`)),
+      catchError(this.handleError)
+    );
+  }
+
+  updateCategoria(categoria): Observable<Categoria>{
+    return this.http.put<Categoria>(this.url + 'categoria/updateCategoria/' + categoria.id, JSON.stringify(categoria), this.httpOptions)
+    .pipe(
+      retry(1),
       catchError(this.handleError)
     );
   }

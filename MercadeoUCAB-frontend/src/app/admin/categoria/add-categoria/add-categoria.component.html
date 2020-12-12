@@ -20,5 +20,5 @@
       </mat-form-field>
     </div>
 
-  <button type="submit"  mat-raised-button color="primary" (click)="addCategoria(categoria2.nombre, categoria2.descripcion)">Añadir Categoría</button>
+  <button type="submit"  mat-raised-button color="primary" (click)="addCategoria(categoria2.nombre, categoria2.descripcion)" [disabled]="categoriaForm.invalid">Añadir Categoría</button>
 </form>

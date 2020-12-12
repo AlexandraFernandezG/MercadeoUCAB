@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatInputModule} from '@angular/material/input';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router , ActivatedRoute} from '@angular/router';
 import { CategoriasService } from 'src/app/servicios/categorias.service';
 import { Categoria } from 'src/app/modelos/categoria';
 import { Categoria2 } from 'src/app/modelos/categoria';
+import { CategoriaComponent } from 'src/app/admin/categoria/categoria.component';
 
 
 
@@ -19,6 +21,7 @@ export class AddCategoriaComponent implements OnInit {
     private router: Router,
     private service: CategoriasService,
     public actRoute: ActivatedRoute,
+    public dialogRef: MatDialogRef<CategoriaComponent>
     ) {
 
     this.categoriaForm = this.fb.group({
@@ -27,7 +30,7 @@ export class AddCategoriaComponent implements OnInit {
     });
    }
 
-  categoria: Categoria = {_id: 1 , _nombre: '', _descripcion: '', estatus: 'Activo'};
+  categoria: Categoria = {_id: 1 , _nombre: '', _descripcion: '', _estatus: 'Activo'};
   categoria2: Categoria2 = {id: 1 , nombre: '', descripcion: '', estatus: 'Activo'};
   categoriaForm: FormGroup;
   ngOnInit(): void {
@@ -43,5 +46,6 @@ export class AddCategoriaComponent implements OnInit {
     estatus
     } as Categoria2).subscribe();
     console.log(id, nombre, descripcion, estatus);
+    this.dialogRef.close();
   }
 }
