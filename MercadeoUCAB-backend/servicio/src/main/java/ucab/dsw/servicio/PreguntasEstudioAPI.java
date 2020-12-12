@@ -53,7 +53,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
         }
     }
 
-    // Este metodo agrega preguntas cuando le pasas un solo estudio
+    // Este metodo agrega PreguntaEstudio
     @POST
     @Path("/addPreguntaEstudio")
     @Produces( MediaType.APPLICATION_JSON )
@@ -67,7 +67,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
                 DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
                 PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
 
-                preguntaEstudio.set_estatus("Activo/Inactivo");
+                preguntaEstudio.set_estatus(preguntaEstudioDto.get_estatus());
                 Estudio estudio = new Estudio(preguntaEstudioDto.get_estudioDto().getId());
                 preguntaEstudio.setEstudio(estudio);
                 PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.get_preguntaEncuestaDto().getId());
@@ -87,7 +87,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
     //Actualizar el estatus de Preguntas estudio
     @PUT
-    @Path("/updatePreguntaEstudio/{id}")
+    @Path("/updateEstatusPreguntaEstudio/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstatusPreguntaEstudio(@PathParam("id") long id, PreguntaEstudioDto preguntaEstudioDto){
@@ -103,7 +103,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
         try {
 
             preguntaEstudio_modificar.set_estatus(preguntaEstudioDto.get_estatus());
-            daoPreguntaEstudio.delete(preguntaEstudio_modificar);
+            daoPreguntaEstudio.update(preguntaEstudio_modificar);
 
         } catch (Exception ex){
 
