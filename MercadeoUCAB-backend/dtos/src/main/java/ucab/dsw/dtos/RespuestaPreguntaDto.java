@@ -9,16 +9,16 @@ public class RespuestaPreguntaDto extends DtoBase {
         return _nombre;
     }
 
-    public void setNombre(String nombre) {
-        this._nombre = nombre;
+    public void setNombre(String _nombre) {
+        this._nombre = _nombre;
     }
 
     public PreguntaEncuestaDto getPreguntaEncuestaDto() {
         return _preguntaEncuestaDto;
     }
 
-    public void setPreguntaEncuestaDto(PreguntaEncuestaDto preguntaEncuestaDto) {
-        this._preguntaEncuestaDto = preguntaEncuestaDto;
+    public void setPreguntaEncuestaDto(PreguntaEncuestaDto _preguntaEncuestaDto) {
+        this._preguntaEncuestaDto = _preguntaEncuestaDto;
     }
 
     public RespuestaPreguntaDto (long id) throws Exception{

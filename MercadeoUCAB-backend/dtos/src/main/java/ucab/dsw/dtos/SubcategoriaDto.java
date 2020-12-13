@@ -10,24 +10,24 @@ public class SubcategoriaDto extends DtoBase{
         return _nombre;
     }
 
-    public void setNombre(String nombre) {
-        this._nombre = nombre;
+    public void setNombre(String _nombre) {
+        this._nombre = _nombre;
     }
 
     public String getDescripcion() {
         return _descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this._descripcion = descripcion;
+    public void setDescripcion(String _descripcion) {
+        this._descripcion = _descripcion;
     }
 
     public CategoriaDto getCategoriaDto() {
         return _categoriaDto;
     }
 
-    public void setCategoriaDto(CategoriaDto categoriaDto) {
-        this._categoriaDto = categoriaDto;
+    public void setCategoriaDto(CategoriaDto _categoriaDto) {
+        this._categoriaDto = _categoriaDto;
     }
 
     public SubcategoriaDto (long id) throws Exception{

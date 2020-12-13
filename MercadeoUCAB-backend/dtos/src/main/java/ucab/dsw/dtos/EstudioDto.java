@@ -16,48 +16,48 @@ public class EstudioDto extends DtoBase {
         return _nombre;
     }
 
-    public void setNombre(String nombre) {
-        this._nombre = nombre;
+    public void setNombre(String _nombre) {
+        this._nombre = _nombre;
     }
 
     public String getTipoInstrumento() {
         return _tipoInstrumento;
     }
 
-    public void setTipoInstrumento(String tipoInstrumento) {
-        this._tipoInstrumento = tipoInstrumento;
+    public void setTipoInstrumento(String _tipoInstrumento) {
+        this._tipoInstrumento = _tipoInstrumento;
     }
 
     public Date getFechaInicio() {
         return _fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
-        this._fechaInicio = fechaInicio;
+    public void setFechaInicio(Date _fechaInicio) {
+        this._fechaInicio = _fechaInicio;
     }
 
     public Date getFechaFin() {
         return _fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
-        this._fechaFin = fechaFin;
+    public void setFechaFin(Date _fechaFin) {
+        this._fechaFin = _fechaFin;
     }
 
     public SolicitudEstudioDto getSolicitudEstudioDto() {
         return _solicitudEstudioDto;
     }
 
-    public void setSolicitudEstudioDto(SolicitudEstudioDto solicitudEstudioDto) {
-        this._solicitudEstudioDto = solicitudEstudioDto;
+    public void setSolicitudEstudioDto(SolicitudEstudioDto _solicitudEstudioDto) {
+        this._solicitudEstudioDto = _solicitudEstudioDto;
     }
 
     public UsuarioDto getUsuarioDto() {
         return _usuarioDto;
     }
 
-    public void setUsuarioDto(UsuarioDto usuarioDto) {
-        this._usuarioDto = usuarioDto;
+    public void setUsuarioDto(UsuarioDto _usuarioDto) {
+        this._usuarioDto = _usuarioDto;
     }
 
     public EstudioDto (long id) throws Exception{

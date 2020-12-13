@@ -10,24 +10,24 @@ public class HistoricoEstadoDto extends DtoBase {
         return _fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
-        this._fechaInicio = fechaInicio;
+    public void setFechaInicio(Date _fechaInicio) {
+        this._fechaInicio = _fechaInicio;
     }
 
     public Date getFechaFin() {
         return _fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
-        this._fechaFin = fechaFin;
+    public void setFechaFin(Date _fechaFin) {
+        this._fechaFin = _fechaFin;
     }
 
     public UsuarioDto getUsuarioDto() {
         return _usuarioDto;
     }
 
-    public void setUsuarioDto(UsuarioDto usuarioDto) {
-        this._usuarioDto = usuarioDto;
+    public void setUsuarioDto(UsuarioDto _usuarioDto) {
+        this._usuarioDto = _usuarioDto;
     }
 
     public HistoricoEstadoDto (long id) throws Exception{

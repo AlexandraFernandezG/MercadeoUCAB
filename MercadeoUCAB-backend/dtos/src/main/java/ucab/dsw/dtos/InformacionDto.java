@@ -23,120 +23,120 @@ public class InformacionDto extends DtoBase {
         return _cedula;
     }
 
-    public void setCedula(int cedula) {
-        this._cedula = cedula;
+    public void setCedula(int _cedula) {
+        this._cedula = _cedula;
     }
 
     public String getPrimerNombre() {
         return _primerNombre;
     }
 
-    public void setPrimerNombre(String primerNombre) {
-        this._primerNombre = primerNombre;
+    public void setPrimerNombre(String _primerNombre) {
+        this._primerNombre = _primerNombre;
     }
 
     public String getSegundoNombre() {
         return _segundoNombre;
     }
 
-    public void setSegundoNombre(String segundoNombre) {
-        this._segundoNombre = segundoNombre;
+    public void setSegundoNombre(String _segundoNombre) {
+        this._segundoNombre = _segundoNombre;
     }
 
     public String getPrimerApellido() {
         return _primerApellido;
     }
 
-    public void setPrimerApellido(String primerApellido) {
-        this._primerApellido = primerApellido;
+    public void setPrimerApellido(String _primerApellido) {
+        this._primerApellido = _primerApellido;
     }
 
     public String getSegundoApellido() {
         return _segundoApellido;
     }
 
-    public void setSegundoApellido(String segundoApellido) {
-        this._segundoApellido = segundoApellido;
+    public void setSegundoApellido(String _segundoApellido) {
+        this._segundoApellido = _segundoApellido;
     }
 
     public String getGenero() {
         return _genero;
     }
 
-    public void setGenero(String genero) {
-        this._genero = genero;
+    public void setGenero(String _genero) {
+        this._genero = _genero;
     }
 
     public Date getFechaNacimiento() {
         return _fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this._fechaNacimiento = fechaNacimiento;
+    public void setFechaNacimiento(Date _fechaNacimiento) {
+        this._fechaNacimiento = _fechaNacimiento;
     }
 
     public String getEstadoCivil() {
         return _estadoCivil;
     }
 
-    public void setEstadoCivil(String estadoCivil) {
-        this._estadoCivil = estadoCivil;
+    public void setEstadoCivil(String _estadoCivil) {
+        this._estadoCivil = _estadoCivil;
     }
 
     public String getDisponibilidadEnLinea() {
         return _disponibilidadEnLinea;
     }
 
-    public void setDisponibilidadEnLinea(String disponibilidadEnLinea) {
-        this._disponibilidadEnLinea = disponibilidadEnLinea;
+    public void setDisponibilidadEnLinea(String _disponibilidadEnLinea) {
+        this._disponibilidadEnLinea = _disponibilidadEnLinea;
     }
 
     public int getCantidadPersonas() {
         return _cantidadPersonas;
     }
 
-    public void setCantidadPersonas(int cantidadPersonas) {
-        this._cantidadPersonas = cantidadPersonas;
+    public void setCantidadPersonas(int _cantidadPersonas) {
+        this._cantidadPersonas = _cantidadPersonas;
     }
 
     public NivelEconomicoDto getNivelEconomicoDto() {
         return _nivelEconomicoDto;
     }
 
-    public void setNivelEconomicoDto(NivelEconomicoDto nivelEconomicoDto) {
-        this._nivelEconomicoDto = nivelEconomicoDto;
+    public void setNivelEconomicoDto(NivelEconomicoDto _nivelEconomicoDto) {
+        this._nivelEconomicoDto = _nivelEconomicoDto;
     }
 
     public UsuarioDto getUsuarioDto() {
         return _usuarioDto;
     }
 
-    public void setUsuarioDto(UsuarioDto usuarioDto) {
-        this._usuarioDto = usuarioDto;
+    public void setUsuarioDto(UsuarioDto _usuarioDto) {
+        this._usuarioDto = _usuarioDto;
     }
 
     public LugarDto getLugarDto() {
         return _lugarDto;
     }
 
-    public void setLugarDto(LugarDto lugarDto) {
-        this._lugarDto = lugarDto;
+    public void setLugarDto(LugarDto _lugarDto) {
+        this._lugarDto = _lugarDto;
     }
 
     public NivelAcademicoDto getNivelAcademicoDto() {
         return _nivelAcademicoDto;
     }
 
-    public void setNivelAcademicoDto(NivelAcademicoDto nivelAcademicoDto) {
-        this._nivelAcademicoDto = nivelAcademicoDto;
+    public void setNivelAcademicoDto(NivelAcademicoDto _nivelAcademicoDto) {
+        this._nivelAcademicoDto = _nivelAcademicoDto;
     }
 
     public OcupacionDto getOcupacionDto() {
         return _ocupacionDto;
     }
 
-    public void setOcupacionDto(OcupacionDto ocupacionDto) {
-        this._ocupacionDto = ocupacionDto;
+    public void setOcupacionDto(OcupacionDto _ocupacionDto) {
+        this._ocupacionDto = _ocupacionDto;
     }
 
     public InformacionDto (long id) throws Exception{

@@ -9,16 +9,16 @@ public class PreguntaEstudioDto extends DtoBase{
         return _preguntaEncuestaDto;
     }
 
-    public void setPreguntaEncuestaDto(PreguntaEncuestaDto preguntaEncuestaDto) {
-        this._preguntaEncuestaDto = preguntaEncuestaDto;
+    public void setPreguntaEncuestaDto(PreguntaEncuestaDto _preguntaEncuestaDto) {
+        this._preguntaEncuestaDto = _preguntaEncuestaDto;
     }
 
     public EstudioDto getEstudioDto() {
         return _estudioDto;
     }
 
-    public void setEstudioDto(EstudioDto estudioDto) {
-        this._estudioDto = estudioDto;
+    public void setEstudioDto(EstudioDto _estudioDto) {
+        this._estudioDto = _estudioDto;
     }
 
     public PreguntaEstudioDto(long id) throws Exception{

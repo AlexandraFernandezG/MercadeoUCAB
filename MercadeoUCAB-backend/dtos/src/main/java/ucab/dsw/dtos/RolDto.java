@@ -8,8 +8,8 @@ public class RolDto extends DtoBase{
         return _nombre;
     }
 
-    public void setNombre(String nombre) {
-        this._nombre = nombre;
+    public void setNombre(String _nombre) {
+        this._nombre = _nombre;
     }
 
     public RolDto (long id) throws Exception{

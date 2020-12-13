@@ -12,16 +12,16 @@ public class TelefonoDto extends DtoBase {
         return _numero;
     }
 
-    public void setNumero(int numero) {
-        this._numero = numero;
+    public void setNumero(int _numero) {
+        this._numero = _numero;
     }
 
     public InformacionDto getInformacionDto() {
         return _informacionDto;
     }
 
-    public void setInformacionDto(InformacionDto informacionDto) {
-        this._informacionDto = informacionDto;
+    public void setInformacionDto(InformacionDto _informacionDto) {
+        this._informacionDto = _informacionDto;
     }
 
     public TelefonoDto (long id) throws Exception{

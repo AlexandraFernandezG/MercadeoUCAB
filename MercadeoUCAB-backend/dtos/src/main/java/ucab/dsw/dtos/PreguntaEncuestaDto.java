@@ -12,32 +12,32 @@ public class PreguntaEncuestaDto extends DtoBase {
         return _descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this._descripcion = descripcion;
+    public void setDescripcion(String _descripcion) {
+        this._descripcion = _descripcion;
     }
 
     public String getTipoPregunta() {
         return _tipoPregunta;
     }
 
-    public void setTipoPregunta(String tipoPregunta) {
-        this._tipoPregunta = tipoPregunta;
+    public void setTipoPregunta(String _tipoPregunta) {
+        this._tipoPregunta = _tipoPregunta;
     }
 
     public UsuarioDto getUsuarioDto() {
         return _usuarioDto;
     }
 
-    public void setUsuarioDto(UsuarioDto usuarioDto) {
-        this._usuarioDto = usuarioDto;
+    public void setUsuarioDto(UsuarioDto _usuarioDto) {
+        this._usuarioDto = _usuarioDto;
     }
 
     public SubcategoriaDto getSubcategoriaDto() {
         return _subcategoriaDto;
     }
 
-    public void setSubcategoriaDto(SubcategoriaDto subcategoriaDto) {
-        this._subcategoriaDto = subcategoriaDto;
+    public void setSubcategoriaDto(SubcategoriaDto _subcategoriaDto) {
+        this._subcategoriaDto = _subcategoriaDto;
     }
 
     public PreguntaEncuestaDto (long id) throws Exception{

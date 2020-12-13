@@ -11,24 +11,24 @@ public class HijoDto extends DtoBase{
         return _fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this._fechaNacimiento = fechaNacimiento;
+    public void setFechaNacimiento(Date _fechaNacimiento) {
+        this._fechaNacimiento = _fechaNacimiento;
     }
 
     public String getGenero() {
         return _genero;
     }
 
-    public void setGenero(String genero) {
-        this._genero = genero;
+    public void setGenero(String _genero) {
+        this._genero = _genero;
     }
 
     public InformacionDto getInformacionDto() {
         return _informacionDto;
     }
 
-    public void setInformacionDto(InformacionDto informacionDto) {
-        this._informacionDto = informacionDto;
+    public void setInformacionDto(InformacionDto _informacionDto) {
+        this._informacionDto = _informacionDto;
     }
 
     public HijoDto (long id) throws Exception{

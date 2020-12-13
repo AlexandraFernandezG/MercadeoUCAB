@@ -10,16 +10,16 @@ public class ProductoPresentacionDto extends DtoBase{
         return _productoDto;
     }
 
-    public void setProductoDto(ProductoDto productoDto) {
-        this._productoDto = productoDto;
+    public void setProductoDto(ProductoDto _productoDto) {
+        this._productoDto = _productoDto;
     }
 
     public PresentacionDto getPresentacionDto() {
         return _presentacionDto;
     }
 
-    public void setPresentacionDto(PresentacionDto presentacionDto) {
-        this._presentacionDto = presentacionDto;
+    public void setPresentacionDto(PresentacionDto _presentacionDto) {
+        this._presentacionDto = _presentacionDto;
     }
 
     public ProductoPresentacionDto (long id) throws Exception{

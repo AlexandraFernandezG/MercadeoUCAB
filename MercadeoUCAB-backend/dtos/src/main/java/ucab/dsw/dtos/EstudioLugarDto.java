@@ -9,16 +9,16 @@ public class EstudioLugarDto extends DtoBase{
         return _estudioDto;
     }
 
-    public void setEstudioDto(EstudioDto estudioDto) {
-        this._estudioDto = estudioDto;
+    public void setEstudioDto(EstudioDto _estudioDto) {
+        this._estudioDto = _estudioDto;
     }
 
     public LugarDto getLugarDto() {
         return _lugarDto;
     }
 
-    public void setLugarDto(LugarDto lugarDto) {
-        this._lugarDto = lugarDto;
+    public void setLugarDto(LugarDto _lugarDto) {
+        this._lugarDto = _lugarDto;
     }
 
     public EstudioLugarDto(long id) throws Exception {

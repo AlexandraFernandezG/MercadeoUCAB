@@ -14,56 +14,56 @@ public class RespuestaDto extends DtoBase {
         return _respuestaAbierta;
     }
 
-    public void setRespuestaAbierta(String respuestaAbierta) {
-        this._respuestaAbierta = respuestaAbierta;
+    public void setRespuestaAbierta(String _respuestaAbierta) {
+        this._respuestaAbierta = _respuestaAbierta;
     }
 
     public String getEscala() {
         return _escala;
     }
 
-    public void setEscala(String escala) {
-        this._escala = escala;
+    public void setEscala(String _escala) {
+        this._escala = _escala;
     }
 
     public String getVerdaderoFalso() {
         return _verdaderoFalso;
     }
 
-    public void setVerdaderoFalso(String verdaderoFalso) {
-        this._verdaderoFalso = verdaderoFalso;
+    public void setVerdaderoFalso(String _verdaderoFalso) {
+        this._verdaderoFalso = _verdaderoFalso;
     }
 
     public String getRespuestaSimple() {
         return _respuestaSimple;
     }
 
-    public void setRespuestaSimple(String respuestaSimple) {
-        this._respuestaSimple = respuestaSimple;
+    public void setRespuestaSimple(String _respuestaSimple) {
+        this._respuestaSimple = _respuestaSimple;
     }
 
     public String getRespuestaMultiple() {
         return _respuestaMultiple;
     }
 
-    public void setRespuestaMultiple(String respuestaMultiple) {
-        this._respuestaMultiple = respuestaMultiple;
+    public void setRespuestaMultiple(String _respuestaMultiple) {
+        this._respuestaMultiple = _respuestaMultiple;
     }
 
     public PreguntaEstudioDto getPreguntaEstudioDto() {
         return _preguntaEstudioDto;
     }
 
-    public void setPreguntaEstudioDto(PreguntaEstudioDto preguntaEstudioDto) {
-        this._preguntaEstudioDto = preguntaEstudioDto;
+    public void setPreguntaEstudioDto(PreguntaEstudioDto _preguntaEstudioDto) {
+        this._preguntaEstudioDto = _preguntaEstudioDto;
     }
 
     public UsuarioDto getUsuarioDto() {
         return _usuarioDto;
     }
 
-    public void setUsuarioDto(UsuarioDto usuarioDto) {
-        this._usuarioDto = usuarioDto;
+    public void setUsuarioDto(UsuarioDto _usuarioDto) {
+        this._usuarioDto = _usuarioDto;
     }
 
     public RespuestaDto (long id) throws Exception{

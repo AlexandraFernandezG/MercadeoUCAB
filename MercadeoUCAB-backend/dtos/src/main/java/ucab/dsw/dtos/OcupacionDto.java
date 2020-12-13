@@ -8,8 +8,8 @@ public class OcupacionDto extends DtoBase{
         return _nombre;
     }
 
-    public void setNombre(String nombre) {
-        this._nombre = nombre;
+    public void setNombre(String _nombre) {
+        this._nombre = _nombre;
     }
 
     public OcupacionDto (long id) throws Exception{

@@ -10,16 +10,16 @@ public class CategoriaDto extends DtoBase{
         return _nombre;
     }
 
-    public void setNombre(String nombre) {
-        this._nombre = nombre;
+    public void setNombre(String _nombre) {
+        this._nombre = _nombre;
     }
 
     public String getDescripcion() {
         return _descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this._descripcion = descripcion;
+    public void setDescripcion(String _descripcion) {
+        this._descripcion = _descripcion;
     }
 
     public CategoriaDto (long id) throws Exception{

@@ -10,16 +10,16 @@ public class ProductoTipoDto extends DtoBase{
         return _productoDto;
     }
 
-    public void setProductoDto(ProductoDto productoDto) {
-        this._productoDto = productoDto;
+    public void setProductoDto(ProductoDto _productoDto) {
+        this._productoDto = _productoDto;
     }
 
     public TipoDto getTipoDto() {
         return _tipoDto;
     }
 
-    public void setTipoDto(TipoDto tipoDto) {
-        this._tipoDto = tipoDto;
+    public void setTipoDto(TipoDto _tipoDto) {
+        this._tipoDto = _tipoDto;
     }
 
     public ProductoTipoDto (long id) throws Exception{

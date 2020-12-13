@@ -10,24 +10,24 @@ public class MedioComunicacionDto extends DtoBase {
         return _tipoDeMedio;
     }
 
-    public void setTipoDeMedio(String tipoDeMedio) {
-        this._tipoDeMedio = tipoDeMedio;
+    public void setTipoDeMedio(String _tipoDeMedio) {
+        this._tipoDeMedio = _tipoDeMedio;
     }
 
     public InformacionDto getInformacionDto() {
         return _informacionDto;
     }
 
-    public void setInformacionDto(InformacionDto informacionDto) {
-        this._informacionDto = informacionDto;
+    public void setInformacionDto(InformacionDto _informacionDto) {
+        this._informacionDto = _informacionDto;
     }
 
     public SolicitudEstudioDto getSolicitudEstudioDto() {
         return _solicitudEstudioDto;
     }
 
-    public void setSolicitudEstudioDto(SolicitudEstudioDto solicitudEstudioDto) {
-        this._solicitudEstudioDto = solicitudEstudioDto;
+    public void setSolicitudEstudioDto(SolicitudEstudioDto _solicitudEstudioDto) {
+        this._solicitudEstudioDto = _solicitudEstudioDto;
     }
 
     public MedioComunicacionDto (long id) throws Exception{

@@ -8,8 +8,8 @@ public class NivelEconomicoDto extends DtoBase{
         return _descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this._descripcion = descripcion;
+    public void setDescripcion(String _descripcion) {
+        this._descripcion = _descripcion;
     }
 
     public NivelEconomicoDto (long id) throws Exception{
