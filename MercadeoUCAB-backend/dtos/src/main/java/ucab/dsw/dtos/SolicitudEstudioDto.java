@@ -4,151 +4,151 @@ import java.util.Date;
 
 public class SolicitudEstudioDto extends DtoBase{
 
-    private String _descripcion;
-    private String _genero;
-    private int _edadMinima;
-    private int _edadMaxima;
-    private String _estadoCivil;
-    private String _disponibilidadEnLinea;
-    private int _cantidadPersonas;
-    private int _cantidadHijos;
-    private String _generoHijos;
-    private int _edadMinimaHijos;
-    private int _edadMaximaHijos;
-    private UsuarioDto _usuarioDto;
-    private NivelEconomicoDto _nivelEconomicoDto;
-    private ProductoDto _productoDto;
-    private OcupacionDto _ocupacionDto;
-    private NivelAcademicoDto _nivelAcademicoDto;
+    private String descripcion;
+    private String genero;
+    private int edadMinima;
+    private int edadMaxima;
+    private String estadoCivil;
+    private String disponibilidadEnLinea;
+    private int cantidadPersonas;
+    private int cantidadHijos;
+    private String generoHijos;
+    private int edadMinimaHijos;
+    private int edadMaximaHijos;
+    private UsuarioDto usuarioDto;
+    private NivelEconomicoDto nivelEconomicoDto;
+    private ProductoDto productoDto;
+    private OcupacionDto ocupacionDto;
+    private NivelAcademicoDto nivelAcademicoDto;
     
     //Getters, Setters, y otros metodos.
 
-    public String get_descripcion() {
-        return _descripcion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void set_descripcion(String _descripcion) {
-        this._descripcion = _descripcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String get_genero() {
-        return _genero;
+    public String getGenero() {
+        return genero;
     }
 
-    public void set_genero(String _genero) {
-        this._genero = _genero;
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
-    public int get_edadMinima() {
-        return _edadMinima;
+    public int getEdadMinima() {
+        return edadMinima;
     }
 
-    public void set_edadMinima(int _edadMinima) {
-        this._edadMinima = _edadMinima;
+    public void setEdadMinima(int edadMinima) {
+        this.edadMinima = edadMinima;
     }
 
-    public int get_edadMaxima() {
-        return _edadMaxima;
+    public int getEdadMaxima() {
+        return edadMaxima;
     }
 
-    public void set_edadMaxima(int _edadMaxima) {
-        this._edadMaxima = _edadMaxima;
+    public void setEdadMaxima(int edadMaxima) {
+        this.edadMaxima = edadMaxima;
     }
 
-    public String get_estadoCivil() {
-        return _estadoCivil;
+    public String getEstadoCivil() {
+        return estadoCivil;
     }
 
-    public void set_estadoCivil(String _estadoCivil) {
-        this._estadoCivil = _estadoCivil;
+    public void setEstadoCivil(String estadoCivil) {
+        this.estadoCivil = estadoCivil;
     }
 
-    public String get_disponibilidadEnLinea() {
-        return _disponibilidadEnLinea;
+    public String getDisponibilidadEnLinea() {
+        return disponibilidadEnLinea;
     }
 
-    public void set_disponibilidadEnLinea(String _disponibilidadEnLinea) {
-        this._disponibilidadEnLinea = _disponibilidadEnLinea;
+    public void setDisponibilidadEnLinea(String disponibilidadEnLinea) {
+        this.disponibilidadEnLinea = disponibilidadEnLinea;
     }
 
-    public int get_cantidadPersonas() {
-        return _cantidadPersonas;
+    public int getCantidadPersonas() {
+        return cantidadPersonas;
     }
 
-    public void set_cantidadPersonas(int _cantidadPersonas) {
-        this._cantidadPersonas = _cantidadPersonas;
+    public void setCantidadPersonas(int cantidadPersonas) {
+        this.cantidadPersonas = cantidadPersonas;
     }
 
-    public int get_cantidadHijos() {
-        return _cantidadHijos;
+    public int getCantidadHijos() {
+        return cantidadHijos;
     }
 
-    public void set_cantidadHijos(int _cantidadHijos) {
-        this._cantidadHijos = _cantidadHijos;
+    public void setCantidadHijos(int cantidadHijos) {
+        this.cantidadHijos = cantidadHijos;
     }
 
-    public String get_generoHijos() {
-        return _generoHijos;
+    public String getGeneroHijos() {
+        return generoHijos;
     }
 
-    public void set_generoHijos(String _generoHijos) {
-        this._generoHijos = _generoHijos;
+    public void setGeneroHijos(String generoHijos) {
+        this.generoHijos = generoHijos;
     }
 
-    public int get_edadMinimaHijos() {
-        return _edadMinimaHijos;
+    public int getEdadMinimaHijos() {
+        return edadMinimaHijos;
     }
 
-    public void set_edadMinimaHijos(int _edadMinimaHijos) {
-        this._edadMinimaHijos = _edadMinimaHijos;
+    public void setEdadMinimaHijos(int edadMinimaHijos) {
+        this.edadMinimaHijos = edadMinimaHijos;
     }
 
-    public int get_edadMaximaHijos() {
-        return _edadMaximaHijos;
+    public int getEdadMaximaHijos() {
+        return edadMaximaHijos;
     }
 
-    public void set_edadMaximaHijos(int _edadMaximaHijos) {
-        this._edadMaximaHijos = _edadMaximaHijos;
+    public void setEdadMaximaHijos(int edadMaximaHijos) {
+        this.edadMaximaHijos = edadMaximaHijos;
     }
 
-    public UsuarioDto get_usuarioDto() {
-        return _usuarioDto;
+    public UsuarioDto getUsuarioDto() {
+        return usuarioDto;
     }
 
-    public void set_usuarioDto(UsuarioDto _usuarioDto) {
-        this._usuarioDto = _usuarioDto;
+    public void setUsuarioDto(UsuarioDto usuarioDto) {
+        this.usuarioDto = usuarioDto;
     }
 
-    public NivelEconomicoDto get_nivelEconomicoDto() {
-        return _nivelEconomicoDto;
+    public NivelEconomicoDto getNivelEconomicoDto() {
+        return nivelEconomicoDto;
     }
 
-    public void set_nivelEconomicoDto(NivelEconomicoDto _nivelEconomicoDto) {
-        this._nivelEconomicoDto = _nivelEconomicoDto;
+    public void setNivelEconomicoDto(NivelEconomicoDto nivelEconomicoDto) {
+        this.nivelEconomicoDto = nivelEconomicoDto;
     }
 
-    public ProductoDto get_productoDto() {
-        return _productoDto;
+    public ProductoDto getProductoDto() {
+        return productoDto;
     }
 
-    public void set_productoDto(ProductoDto _productoDto) {
-        this._productoDto = _productoDto;
+    public void setProductoDto(ProductoDto productoDto) {
+        this.productoDto = productoDto;
     }
 
-    public OcupacionDto get_ocupacionDto() {
-        return _ocupacionDto;
+    public OcupacionDto getOcupacionDto() {
+        return ocupacionDto;
     }
 
-    public void set_ocupacionDto(OcupacionDto _ocupacionDto) {
-        this._ocupacionDto = _ocupacionDto;
+    public void setOcupacionDto(OcupacionDto ocupacionDto) {
+        this.ocupacionDto = ocupacionDto;
     }
 
-    public NivelAcademicoDto get_nivelAcademicoDto() {
-        return _nivelAcademicoDto;
+    public NivelAcademicoDto getNivelAcademicoDto() {
+        return nivelAcademicoDto;
     }
 
-    public void set_nivelAcademicoDto(NivelAcademicoDto _nivelAcademicoDto) {
-        this._nivelAcademicoDto = _nivelAcademicoDto;
+    public void setNivelAcademicoDto(NivelAcademicoDto nivelAcademicoDto) {
+        this.nivelAcademicoDto = nivelAcademicoDto;
     }
 
     public SolicitudEstudioDto (long id) throws Exception{

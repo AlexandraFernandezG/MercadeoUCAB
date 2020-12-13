@@ -2,23 +2,23 @@ package ucab.dsw.dtos;
 
 public class EstudioLugarDto extends DtoBase{
 
-    private EstudioDto _estudioDto;
-    private LugarDto _lugarDto;
+    private EstudioDto estudioDto;
+    private LugarDto lugarDto;
 
-    public EstudioDto get_estudioDto() {
-        return _estudioDto;
+    public EstudioDto getEstudioDto() {
+        return estudioDto;
     }
 
-    public void set_estudioDto(EstudioDto _estudioDto) {
-        this._estudioDto = _estudioDto;
+    public void setEstudioDto(EstudioDto estudioDto) {
+        this.estudioDto = estudioDto;
     }
 
-    public LugarDto get_lugarDto() {
-        return _lugarDto;
+    public LugarDto getLugarDto() {
+        return lugarDto;
     }
 
-    public void set_lugarDto(LugarDto _lugarDto) {
-        this._lugarDto = _lugarDto;
+    public void setLugarDto(LugarDto lugarDto) {
+        this.lugarDto = lugarDto;
     }
 
     public EstudioLugarDto(long id) throws Exception {

@@ -95,9 +95,9 @@ public class TipoAPI extends AplicacionBase{
             DaoTipo daoTipo = new DaoTipo();
             Tipo tipo = new Tipo();
 
-            tipo.set_nombre(tipoDto.get_nombre());
-            tipo.set_descripcion(tipoDto.get_descripcion());
-            tipo.set_estatus(tipoDto.get_estatus());
+            tipo.set_nombre(tipoDto.getNombre());
+            tipo.set_descripcion(tipoDto.getDescripcion());
+            tipo.set_estatus(tipoDto.getEstatus());
             Tipo resul = daoTipo.insert(tipo);
             resultado.setId(resul.get_id());
 
@@ -127,7 +127,7 @@ public class TipoAPI extends AplicacionBase{
 
             try {
 
-                tipo_modificar.set_estatus(tipoDto.get_estatus());
+                tipo_modificar.set_estatus(tipoDto.getEstatus());
                 daoTipo.update(tipo_modificar);
 
             } catch (Exception ex){
@@ -156,8 +156,8 @@ public class TipoAPI extends AplicacionBase{
 
             try {
 
-                tipo_modificar.set_nombre(tipoDto.get_nombre());
-                tipo_modificar.set_descripcion(tipoDto.get_descripcion());
+                tipo_modificar.set_nombre(tipoDto.getNombre());
+                tipo_modificar.set_descripcion(tipoDto.getDescripcion());
                 daoTipo.update(tipo_modificar);
 
             } catch (Exception ex){

@@ -67,10 +67,10 @@ public class ProductoPresentacionAPI extends AplicacionBase{
             DaoProductoPresentacion daoProductoPresentacion = new DaoProductoPresentacion();
             ProductoPresentacion productoPresentacion = new ProductoPresentacion();
 
-            productoPresentacion.set_estatus(productoPresentacionDto.get_estatus());
-            Producto producto = new Producto(productoPresentacionDto.get_productoDto().getId());
+            productoPresentacion.set_estatus(productoPresentacionDto.getEstatus());
+            Producto producto = new Producto(productoPresentacionDto.getProductoDto().getId());
             productoPresentacion.set_producto(producto);
-            Presentacion presentacion = new Presentacion(productoPresentacionDto.get_presentacionDto().getId());
+            Presentacion presentacion = new Presentacion(productoPresentacionDto.getPresentacionDto().getId());
             productoPresentacion.set_presentacion(presentacion);
             ProductoPresentacion resul = daoProductoPresentacion.insert(productoPresentacion);
             resultado.setId(resul.get_id());
@@ -101,7 +101,7 @@ public class ProductoPresentacionAPI extends AplicacionBase{
 
         try {
 
-            productoPresentacion_modificar.set_estatus(productoPresentacionDto.get_estatus());
+            productoPresentacion_modificar.set_estatus(productoPresentacionDto.getEstatus());
             daoProductoPresentacion.update(productoPresentacion_modificar);
 
         } catch (Exception ex){

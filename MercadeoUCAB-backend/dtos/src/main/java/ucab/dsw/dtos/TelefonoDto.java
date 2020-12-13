@@ -5,23 +5,23 @@ import ucab.dsw.dtos.InformacionDto;
 
 public class TelefonoDto extends DtoBase {
 
-    private int _numero;
-    private InformacionDto _informacion;
+    private int numero;
+    private InformacionDto informacionDto;
 
-    public int get_numero() {
-        return _numero;
+    public int getNumero() {
+        return numero;
     }
 
-    public void set_numero(int _numero) {
-        this._numero = _numero;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
-    public InformacionDto get_informacion() {
-        return _informacion;
+    public InformacionDto getInformacionDto() {
+        return informacionDto;
     }
 
-    public void set_informacion(InformacionDto _informacion) {
-        this._informacion = _informacion;
+    public void setInformacionDto(InformacionDto informacionDto) {
+        this.informacionDto = informacionDto;
     }
 
     public TelefonoDto (long id) throws Exception{

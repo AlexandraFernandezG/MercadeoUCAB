@@ -94,23 +94,23 @@ public class SolicitudEstudioAPI extends AplicacionBase{
             DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
             SolicitudEstudio solicitudEstudio = new SolicitudEstudio();
 
-            solicitudEstudio.set_descripcion(solicitudEstudioDto.get_descripcion());
-            solicitudEstudio.set_genero(solicitudEstudioDto.get_genero());
-            solicitudEstudio.set_edadMaxima(solicitudEstudioDto.get_edadMaxima());
-            solicitudEstudio.set_edadMinima(solicitudEstudioDto.get_edadMinima());
-            solicitudEstudio.set_estadoCivil(solicitudEstudioDto.get_estadoCivil());
-            solicitudEstudio.set_disponibilidadEnLinea(solicitudEstudioDto.get_disponibilidadEnLinea());
-            solicitudEstudio.set_cantidadPersonas(solicitudEstudioDto.get_cantidadPersonas());
-            solicitudEstudio.set_cantidadHijos(solicitudEstudioDto.get_cantidadHijos());
-            solicitudEstudio.set_generoHijos(solicitudEstudioDto.get_generoHijos());
-            solicitudEstudio.set_edadMinimaHijos(solicitudEstudioDto.get_edadMinimaHijos());
-            solicitudEstudio.set_edadMaximaHijos(solicitudEstudioDto.get_edadMaximaHijos());
-            solicitudEstudio.set_estatus(solicitudEstudioDto.get_estatus());
-            NivelEconomico nivelEconomico = new NivelEconomico(solicitudEstudioDto.get_nivelEconomicoDto().getId());
-            Usuario usuario = new Usuario(solicitudEstudioDto.get_usuarioDto().getId());
-            Producto producto = new Producto(solicitudEstudioDto.get_productoDto().getId());
-            Ocupacion ocupacion = new Ocupacion(solicitudEstudioDto.get_ocupacionDto().getId());
-            NivelAcademico nivelAcademico = new NivelAcademico(solicitudEstudioDto.get_nivelAcademicoDto().getId());
+            solicitudEstudio.set_descripcion(solicitudEstudioDto.getDescripcion());
+            solicitudEstudio.set_genero(solicitudEstudioDto.getGenero());
+            solicitudEstudio.set_edadMaxima(solicitudEstudioDto.getEdadMaxima());
+            solicitudEstudio.set_edadMinima(solicitudEstudioDto.getEdadMinima());
+            solicitudEstudio.set_estadoCivil(solicitudEstudioDto.getEstadoCivil());
+            solicitudEstudio.set_disponibilidadEnLinea(solicitudEstudioDto.getDisponibilidadEnLinea());
+            solicitudEstudio.set_cantidadPersonas(solicitudEstudioDto.getCantidadPersonas());
+            solicitudEstudio.set_cantidadHijos(solicitudEstudioDto.getCantidadHijos());
+            solicitudEstudio.set_generoHijos(solicitudEstudioDto.getGeneroHijos());
+            solicitudEstudio.set_edadMinimaHijos(solicitudEstudioDto.getEdadMinimaHijos());
+            solicitudEstudio.set_edadMaximaHijos(solicitudEstudioDto.getEdadMaximaHijos());
+            solicitudEstudio.set_estatus(solicitudEstudioDto.getEstatus());
+            NivelEconomico nivelEconomico = new NivelEconomico(solicitudEstudioDto.getNivelEconomicoDto().getId());
+            Usuario usuario = new Usuario(solicitudEstudioDto.getUsuarioDto().getId());
+            Producto producto = new Producto(solicitudEstudioDto.getProductoDto().getId());
+            Ocupacion ocupacion = new Ocupacion(solicitudEstudioDto.getOcupacionDto().getId());
+            NivelAcademico nivelAcademico = new NivelAcademico(solicitudEstudioDto.getNivelAcademicoDto().getId());
             solicitudEstudio.set_nivelEconomico(nivelEconomico);
             solicitudEstudio.set_usuario(usuario);
             solicitudEstudio.set_producto(producto);
@@ -145,7 +145,7 @@ public class SolicitudEstudioAPI extends AplicacionBase{
 
             try {
 
-                solicitudEstudio_modificar.set_estatus(solicitudEstudioDto.get_estatus());
+                solicitudEstudio_modificar.set_estatus(solicitudEstudioDto.getEstatus());
                 daoSolicitudEstudio.update(solicitudEstudio_modificar);
                 DaoEstudio daoEstudio = new DaoEstudio();
 
@@ -155,7 +155,7 @@ public class SolicitudEstudioAPI extends AplicacionBase{
 
                     for (Estudio estudio : listaEstudio) {
 
-                        if (estudio.getSolicitudEstudio().get_id() == id) {
+                        if (estudio.get_solicitudEstudio().get_id() == id) {
                             estudio.set_estatus("Inactivo");
                             daoEstudio.update(estudio);
                         }
@@ -166,7 +166,7 @@ public class SolicitudEstudioAPI extends AplicacionBase{
 
                     for (Estudio estudio : listaEstudio) {
 
-                        if (estudio.getSolicitudEstudio().get_id() == id) {
+                        if (estudio.get_solicitudEstudio().get_id() == id) {
                             estudio.set_estatus("Activo");
                             daoEstudio.update(estudio);
                         }
@@ -199,17 +199,17 @@ public class SolicitudEstudioAPI extends AplicacionBase{
 
             try {
 
-                solicitudEstudio_modificar.set_descripcion(solicitudEstudioDto.get_descripcion());
-                solicitudEstudio_modificar.set_genero(solicitudEstudioDto.get_genero());
-                solicitudEstudio_modificar.set_edadMaxima(solicitudEstudioDto.get_edadMaxima());
-                solicitudEstudio_modificar.set_edadMinima(solicitudEstudioDto.get_edadMinima());
-                solicitudEstudio_modificar.set_estadoCivil(solicitudEstudioDto.get_estadoCivil());
-                solicitudEstudio_modificar.set_disponibilidadEnLinea(solicitudEstudioDto.get_disponibilidadEnLinea());
-                solicitudEstudio_modificar.set_cantidadPersonas(solicitudEstudioDto.get_cantidadPersonas());
-                solicitudEstudio_modificar.set_cantidadHijos(solicitudEstudioDto.get_cantidadHijos());
-                solicitudEstudio_modificar.set_generoHijos(solicitudEstudioDto.get_generoHijos());
-                solicitudEstudio_modificar.set_edadMinimaHijos(solicitudEstudioDto.get_edadMinimaHijos());
-                solicitudEstudio_modificar.set_edadMaximaHijos(solicitudEstudioDto.get_edadMaximaHijos());
+                solicitudEstudio_modificar.set_descripcion(solicitudEstudioDto.getDescripcion());
+                solicitudEstudio_modificar.set_genero(solicitudEstudioDto.getGenero());
+                solicitudEstudio_modificar.set_edadMaxima(solicitudEstudioDto.getEdadMaxima());
+                solicitudEstudio_modificar.set_edadMinima(solicitudEstudioDto.getEdadMinima());
+                solicitudEstudio_modificar.set_estadoCivil(solicitudEstudioDto.getEstadoCivil());
+                solicitudEstudio_modificar.set_disponibilidadEnLinea(solicitudEstudioDto.getDisponibilidadEnLinea());
+                solicitudEstudio_modificar.set_cantidadPersonas(solicitudEstudioDto.getCantidadPersonas());
+                solicitudEstudio_modificar.set_cantidadHijos(solicitudEstudioDto.getCantidadHijos());
+                solicitudEstudio_modificar.set_generoHijos(solicitudEstudioDto.getGeneroHijos());
+                solicitudEstudio_modificar.set_edadMinimaHijos(solicitudEstudioDto.getEdadMinimaHijos());
+                solicitudEstudio_modificar.set_edadMaximaHijos(solicitudEstudioDto.getEdadMaximaHijos());
                 daoSolicitudEstudio.update(solicitudEstudio_modificar);
 
             } catch (Exception ex){

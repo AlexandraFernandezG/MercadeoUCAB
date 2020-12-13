@@ -18,6 +18,7 @@ public class EstudioLugar extends EntidadBase {
 
     //Getters, setters y otros metodos
 
+
     public Estudio get_estudio() {
         return _estudio;
     }

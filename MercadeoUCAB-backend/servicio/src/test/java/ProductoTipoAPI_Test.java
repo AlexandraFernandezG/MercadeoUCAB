@@ -27,12 +27,12 @@ public class ProductoTipoAPI_Test {
         ucab.dsw.servicio.ProductoTipoAPI servicio = new ucab.dsw.servicio.ProductoTipoAPI();
         ProductoTipoDto productoTipoDto = new ProductoTipoDto();
 
-        productoTipoDto.set_estatus("Activo");
+        productoTipoDto.setEstatus("Activo");
         //Estar mosca con los Id de la base de datos
         ProductoDto productoDto = new ProductoDto(1);
         TipoDto tipoDto = new TipoDto(1);
-        productoTipoDto.set_productoDto(productoDto);
-        productoTipoDto.set_tipoDto(tipoDto);
+        productoTipoDto.setProductoDto(productoDto);
+        productoTipoDto.setTipoDto(tipoDto);
         ProductoTipoDto resultado = servicio.addProductoTipo(productoTipoDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
     }
@@ -43,7 +43,7 @@ public class ProductoTipoAPI_Test {
 
         ucab.dsw.servicio.ProductoTipoAPI servicio = new ucab.dsw.servicio.ProductoTipoAPI();
         ProductoTipoDto productoTipoDto = new ProductoTipoDto();
-        productoTipoDto.set_estatus("Activo");
+        productoTipoDto.setEstatus("Activo");
         //Estar mosca con los Id de la base de datos
         servicio.updateEstatusProductoTipo(1,productoTipoDto);
 

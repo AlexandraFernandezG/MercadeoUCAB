@@ -29,12 +29,12 @@ public class ProductoPresentacionAPI_Test {
         ucab.dsw.servicio.ProductoPresentacionAPI servicio = new ucab.dsw.servicio.ProductoPresentacionAPI();
         ProductoPresentacionDto productoPresentacionDto = new ProductoPresentacionDto();
 
-        productoPresentacionDto.set_estatus("Activo");
+        productoPresentacionDto.setEstatus("Activo");
         //Estar mosca con los Id de la base de datos
         ProductoDto productoDto = new ProductoDto(1);
         PresentacionDto presentacionDto = new PresentacionDto(1);
-        productoPresentacionDto.set_productoDto(productoDto);
-        productoPresentacionDto.set_presentacionDto(presentacionDto);
+        productoPresentacionDto.setProductoDto(productoDto);
+        productoPresentacionDto.setPresentacionDto(presentacionDto);
         ProductoPresentacionDto resultado = servicio.addProductoPresentacion(productoPresentacionDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
     }
@@ -46,7 +46,7 @@ public class ProductoPresentacionAPI_Test {
         ucab.dsw.servicio.ProductoPresentacionAPI servicio = new ucab.dsw.servicio.ProductoPresentacionAPI();
         ProductoPresentacionDto productoPresentacionDto = new ProductoPresentacionDto();
 
-        productoPresentacionDto.set_estatus("Activo");
+        productoPresentacionDto.setEstatus("Activo");
         //Estar mosca con los Id de la base de datos
         servicio.updateEstatusProductoPresentacion(1, productoPresentacionDto);
     }

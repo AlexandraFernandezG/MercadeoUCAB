@@ -2,23 +2,23 @@ package ucab.dsw.dtos;
 
 public class PresentacionDto extends DtoBase{
 
-    private String _nombre;
-    private String _descripcion;
+    private String nombre;
+    private String descripcion;
 
-    public String get_descripcion() {
-        return _descripcion;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void set_descripcion(String _caracteristicas) {
-        this._descripcion = _caracteristicas;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String get_nombre() {
-        return _nombre;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void set_nombre(String _nombre) {
-        this._nombre = _nombre;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public PresentacionDto (long id) throws Exception{

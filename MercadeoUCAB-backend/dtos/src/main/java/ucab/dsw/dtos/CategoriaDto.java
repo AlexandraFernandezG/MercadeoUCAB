@@ -2,24 +2,24 @@ package ucab.dsw.dtos;
 
 public class CategoriaDto extends DtoBase{
     
-    private String _nombre;
+    private String nombre;
 
-    private String _descripcion;
-
-    public String get_descripcion() {
-        return _descripcion;
-    }
+    private String descripcion;
 
     public String getNombre() {
-        return _nombre;
+        return nombre;
     }
 
-    public void setNombre(String _nombre) {
-        this._nombre = _nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void set_descripcion(String _descripcion) {
-        this._descripcion = _descripcion;
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public CategoriaDto (long id) throws Exception{

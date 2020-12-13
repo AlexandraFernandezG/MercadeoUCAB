@@ -23,22 +23,23 @@ public class Categoria extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String get_descripcion() {
-        return _descripcion;
-    }
 
-    public String getNombre() {
+    public String get_nombre() {
         return _nombre;
     }
 
-    public void setNombre(String _nombre) {
+    public void set_nombre(String _nombre) {
         this._nombre = _nombre;
+    }
+
+    public String get_descripcion() {
+        return _descripcion;
     }
 
     public void set_descripcion(String _descripcion) {
         this._descripcion = _descripcion;
     }
-    
+
     public Categoria (long id){
         super(id);
     }
@@ -47,16 +48,16 @@ public class Categoria extends EntidadBase{
         super(estatus);
     }
 
+    public Categoria(){
+        super();
+    }
+
     @Override
     public String toString() {
         return "Categoria{" +
                 "_nombre='" + _nombre + '\'' +
                 ", _descripcion='" + _descripcion + '\'' +
                 '}';
-    }
-
-    public Categoria(){
-        super();
     }
 }
 

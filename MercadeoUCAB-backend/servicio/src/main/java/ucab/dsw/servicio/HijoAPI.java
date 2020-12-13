@@ -70,11 +70,11 @@ public class HijoAPI extends AplicacionBase{
             DaoHijo daoHijo = new DaoHijo();
             Hijo hijo = new Hijo();
 
-            hijo.setFechaNacimiento(hijoDto.get_fechaNacimiento());
-            hijo.setGenero(hijoDto.get_genero());
-            hijo.set_estatus("Activo");
-            Informacion informacion = new Informacion(hijoDto.get_informacionDto().getId());
-            hijo.setInformacion(informacion);
+            hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
+            hijo.set_genero(hijoDto.getGenero());
+            hijo.set_estatus(hijoDto.getEstatus());
+            Informacion informacion = new Informacion(hijoDto.getInformacionDto().getId());
+            hijo.set_informacion(informacion);
             Hijo resul = daoHijo.insert(hijo);
             resultado.setId(resul.get_id());
 
@@ -106,9 +106,9 @@ public class HijoAPI extends AplicacionBase{
 
             try {
 
-                hijo_modificar.setFechaNacimiento(hijoDto.get_fechaNacimiento());
-                hijo_modificar.setGenero(hijoDto.get_genero());
-                hijo_modificar.set_estatus("Activo");
+                hijo_modificar.set_fechaNacimiento(hijoDto.getFechaNacimiento());
+                hijo_modificar.set_genero(hijoDto.getGenero());
+                hijo_modificar.set_estatus(hijoDto.getEstatus());
                 daoHijo.update(hijo_modificar);
 
             } catch (Exception ex){
@@ -141,7 +141,7 @@ public class HijoAPI extends AplicacionBase{
 
             } catch (Exception ex){
 
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.EXPECTATION_FAILED).build();
             }
 
             return Response.ok().entity(hijo_eliminar).build();

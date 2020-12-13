@@ -5,11 +5,6 @@
  */
 package ucab.dsw.entidades;
 
-/**
- *
- * @author Emanuel
- */
-
 import java.util.Date;
 import javax.persistence.*;
 import java.util.List;
@@ -45,60 +40,65 @@ public class Estudio extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
+
+    public String get_nombre() {
         return _nombre;
     }
 
-    public String getTipoInstrumento() {
-        return _tipoInstrumento;
-    }
-
-    public Date getFechaInicio() {
-        return _fechaInicio;
-    }
-
-    public Date getFechaFin() {
-        return _fechaFin;
-    }
-
-    public Usuario getUsuario() {
-        return _usuario;
-    }
-
-    public SolicitudEstudio getSolicitudEstudio() {
-        return _solicitudEstudio;
-    }
-
-    public void setNombre(String _nombre) {
+    public void set_nombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public void setTipoInstrumento(String _tipoInstrumento) {
+    public String get_tipoInstrumento() {
+        return _tipoInstrumento;
+    }
+
+    public void set_tipoInstrumento(String _tipoInstrumento) {
         this._tipoInstrumento = _tipoInstrumento;
     }
 
-    public void setFechaInicio(Date _fechaInicio) {
+    public Date get_fechaInicio() {
+        return _fechaInicio;
+    }
+
+    public void set_fechaInicio(Date _fechaInicio) {
         this._fechaInicio = _fechaInicio;
     }
 
-    public void setFechaFin(Date _fechaFin) {
+    public Date get_fechaFin() {
+        return _fechaFin;
+    }
+
+    public void set_fechaFin(Date _fechaFin) {
         this._fechaFin = _fechaFin;
     }
 
-    public void setUsuario(Usuario _usuario) {
+    public Usuario get_usuario() {
+        return _usuario;
+    }
+
+    public void set_usuario(Usuario _usuario) {
         this._usuario = _usuario;
     }
 
-    public void setSolicitudEstudio(SolicitudEstudio _solicitudEstudio) {
+    public SolicitudEstudio get_solicitudEstudio() {
+        return _solicitudEstudio;
+    }
+
+    public void set_solicitudEstudio(SolicitudEstudio _solicitudEstudio) {
         this._solicitudEstudio = _solicitudEstudio;
     }
-    
+
     public Estudio(long id){
         super(id);
     }
 
     public Estudio (String estatus) {
         super(estatus);
+    }
+
+    public Estudio(){
+        super();
     }
 
     @Override
@@ -112,8 +112,4 @@ public class Estudio extends EntidadBase{
                 ", _solicitudEstudio=" + _solicitudEstudio +
                 '}';
     }
-
-    public Estudio(){
-        super();
-    } 
 }

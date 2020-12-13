@@ -35,9 +35,9 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
             for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
 
-                if (preguntaEstudio.getEstudio().get_id() == id) {
+                if (preguntaEstudio.get_estudio().get_id() == id) {
 
-                    long idFk = preguntaEstudio.getPreguntaEncuesta().get_id();
+                    long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
                     DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
                     PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
                     listaPreguntasEstudio.add(preguntaEncuesta);
@@ -67,11 +67,11 @@ public class PreguntasEstudioAPI extends AplicacionBase {
                 DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
                 PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
 
-                preguntaEstudio.set_estatus(preguntaEstudioDto.get_estatus());
-                Estudio estudio = new Estudio(preguntaEstudioDto.get_estudioDto().getId());
-                preguntaEstudio.setEstudio(estudio);
-                PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.get_preguntaEncuestaDto().getId());
-                preguntaEstudio.setPreguntaEncuesta(preguntaEncuesta);
+                preguntaEstudio.set_estatus(preguntaEstudioDto.getEstatus());
+                Estudio estudio = new Estudio(preguntaEstudioDto.getEstudioDto().getId());
+                preguntaEstudio.set_estudio(estudio);
+                PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.getPreguntaEncuestaDto().getId());
+                preguntaEstudio.set_preguntaEncuesta(preguntaEncuesta);
                 PreguntaEstudio resul = daoPreguntaEstudio.insert(preguntaEstudio);
                 resultado.setId(resul.get_id());
 
@@ -102,7 +102,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
         try {
 
-            preguntaEstudio_modificar.set_estatus(preguntaEstudioDto.get_estatus());
+            preguntaEstudio_modificar.set_estatus(preguntaEstudioDto.getEstatus());
             daoPreguntaEstudio.update(preguntaEstudio_modificar);
 
         } catch (Exception ex){

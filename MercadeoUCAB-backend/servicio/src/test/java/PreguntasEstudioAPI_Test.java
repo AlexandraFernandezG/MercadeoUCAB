@@ -29,12 +29,12 @@ public class PreguntasEstudioAPI_Test {
         ucab.dsw.servicio.PreguntasEstudioAPI servicio = new ucab.dsw.servicio.PreguntasEstudioAPI();
         PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto();
 
-        preguntaEstudioDto.set_estatus("Activo");
+        preguntaEstudioDto.setEstatus("Activo");
         //Estar mosca con los Id de la base de datos
         EstudioDto estudioDto = new EstudioDto(1);
         PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1);
-        preguntaEstudioDto.set_estudioDto(estudioDto);
-        preguntaEstudioDto.set_preguntaEncuestaDto(preguntaEncuestaDto);
+        preguntaEstudioDto.setEstudioDto(estudioDto);
+        preguntaEstudioDto.setPreguntaEncuestaDto(preguntaEncuestaDto);
         PreguntaEstudioDto resultado = servicio.addPreguntaEstudio(preguntaEstudioDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
 
@@ -47,7 +47,7 @@ public class PreguntasEstudioAPI_Test {
         ucab.dsw.servicio.PreguntasEstudioAPI servicio = new ucab.dsw.servicio.PreguntasEstudioAPI();
         PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto();
 
-        preguntaEstudioDto.set_estatus("Inactivo");
+        preguntaEstudioDto.setEstatus("Inactivo");
         // Estas mosca con los ID de la base de datos
         servicio.modificarEstatusPreguntaEstudio(1, preguntaEstudioDto);
     }

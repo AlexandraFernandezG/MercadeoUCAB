@@ -2,41 +2,42 @@ package ucab.dsw.dtos;
 
 
 public class PreguntaEncuestaDto extends DtoBase {
-    private String _descripcion;
-    private String _tipoPregunta;
-    private UsuarioDto _usuarioDto;
-    private SubcategoriaDto _subcategoriaDto;
 
-    public String get_descripcion() {
-        return _descripcion;
+    private String descripcion;
+    private String tipoPregunta;
+    private UsuarioDto usuarioDto;
+    private SubcategoriaDto subcategoriaDto;
+
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void set_descripcion(String _descripcion) {
-        this._descripcion = _descripcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public SubcategoriaDto get_subcategoriaDto() {
-        return _subcategoriaDto;
+    public String getTipoPregunta() {
+        return tipoPregunta;
     }
 
-    public void set_subcategoriaDto(SubcategoriaDto _subcategoriaDto) {
-        this._subcategoriaDto = _subcategoriaDto;
+    public void setTipoPregunta(String tipoPregunta) {
+        this.tipoPregunta = tipoPregunta;
     }
 
-    public String get_tipoPregunta() {
-        return _tipoPregunta;
+    public UsuarioDto getUsuarioDto() {
+        return usuarioDto;
     }
 
-    public void set_tipoPregunta(String _tipoPregunta) {
-        this._tipoPregunta = _tipoPregunta;
+    public void setUsuarioDto(UsuarioDto usuarioDto) {
+        this.usuarioDto = usuarioDto;
     }
 
-    public UsuarioDto get_usuarioDto() {
-        return _usuarioDto;
+    public SubcategoriaDto getSubcategoriaDto() {
+        return subcategoriaDto;
     }
 
-    public void set_usuarioDto(UsuarioDto _usuarioDto) {
-        this._usuarioDto = _usuarioDto;
+    public void setSubcategoriaDto(SubcategoriaDto subcategoriaDto) {
+        this.subcategoriaDto = subcategoriaDto;
     }
 
     public PreguntaEncuestaDto (long id) throws Exception{

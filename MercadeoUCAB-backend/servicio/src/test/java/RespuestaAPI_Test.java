@@ -59,17 +59,17 @@ public class RespuestaAPI_Test {
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
         RespuestaDto respuestaDto = new RespuestaDto();
 
-        respuestaDto.set_respuestaAbierta("");
-        respuestaDto.set_escala("");
-        respuestaDto.set_verdaderoFalso("");
-        respuestaDto.set_respuestaSimple("");
-        respuestaDto.set_respuestaMultiple("");
-        respuestaDto.set_estatus("Activo");
+        respuestaDto.setRespuestaAbierta("");
+        respuestaDto.setEscala("");
+        respuestaDto.setVerdaderoFalso("");
+        respuestaDto.setRespuestaSimple("");
+        respuestaDto.setRespuestaMultiple("");
+        respuestaDto.setEstatus("Activo");
         //Estar mosca con los ID de la BD
         PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto(1);
         UsuarioDto usuarioDto = new UsuarioDto(1);
-        respuestaDto.set_preguntaEstudioDto(preguntaEstudioDto);
-        respuestaDto.set_usuarioDto(usuarioDto);
+        respuestaDto.setPreguntaEstudioDto(preguntaEstudioDto);
+        respuestaDto.setUsuarioDto(usuarioDto);
         RespuestaDto resultado = servicio.addRespuesta(respuestaDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
 
@@ -82,7 +82,7 @@ public class RespuestaAPI_Test {
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
         RespuestaDto respuestaDto = new RespuestaDto();
 
-        respuestaDto.set_estatus("Activo");
+        respuestaDto.setEstatus("Activo");
         //Estar mosca con los ID de la BD
         servicio.modificarEstatusRespuesta(1, respuestaDto);
     }
@@ -94,11 +94,11 @@ public class RespuestaAPI_Test {
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
         RespuestaDto respuestaDto = new RespuestaDto();
 
-        respuestaDto.set_respuestaAbierta("");
-        respuestaDto.set_escala("");
-        respuestaDto.set_verdaderoFalso("");
-        respuestaDto.set_respuestaSimple("");
-        respuestaDto.set_respuestaMultiple("");
+        respuestaDto.setRespuestaAbierta("");
+        respuestaDto.setEscala("");
+        respuestaDto.setVerdaderoFalso("");
+        respuestaDto.setRespuestaSimple("");
+        respuestaDto.setRespuestaMultiple("");
         //Estar mosca con los ID de la BD
         servicio.updateRespuesta(1, respuestaDto);
     }

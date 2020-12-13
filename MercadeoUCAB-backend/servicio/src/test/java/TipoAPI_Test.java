@@ -56,9 +56,9 @@ public class TipoAPI_Test {
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
         TipoDto tipoDto = new TipoDto();
 
-        tipoDto.set_nombre("");
-        tipoDto.set_descripcion("");
-        tipoDto.set_estatus("Activo");
+        tipoDto.setNombre("");
+        tipoDto.setDescripcion("");
+        tipoDto.setEstatus("Activo");
         TipoDto resultado = servicio.addTipo(tipoDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
 
@@ -71,7 +71,7 @@ public class TipoAPI_Test {
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
         TipoDto tipoDto = new TipoDto();
 
-        tipoDto.set_estatus("Activo");
+        tipoDto.setEstatus("Activo");
         // Estar pendiente con los ID registrados en la BD
         servicio.modificarEstatusTipo(1, tipoDto);
 
@@ -84,8 +84,8 @@ public class TipoAPI_Test {
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
         TipoDto tipoDto = new TipoDto();
 
-        tipoDto.set_nombre("");
-        tipoDto.set_descripcion("");
+        tipoDto.setNombre("");
+        tipoDto.setDescripcion("");
         // Estar pendiente con los ID registrados en la BD
         servicio.updateTipo(1, tipoDto);
 

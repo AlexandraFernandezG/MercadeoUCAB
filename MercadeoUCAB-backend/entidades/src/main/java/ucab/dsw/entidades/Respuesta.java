@@ -37,62 +37,62 @@ public class Respuesta extends EntidadBase {
     
     //Getters, Setters, y otros metodos.
 
-    public String getRespuestaAbierta() {
+    public String get_respuestaAbierta() {
         return _respuestaAbierta;
     }
 
-    public String getEscala() {
-        return _escala;
-    }
-
-    public String getVerdaderoFalso() {
-        return _verdaderoFalso;
-    }
-
-    public String getRespuestaSimple() {
-        return _respuestaSimple;
-    }
-
-    public String getRespuestaMultiple() {
-        return _respuestaMultiple;
-    }
-
-    public Usuario getUsuario() {
-        return _usuario;
-    }
-
-    public PreguntaEstudio getPreguntasEstudio() {
-        return _preguntaEstudio;
-    }
-
-    public void setRespuestaAbierta(String _respuestaAbierta) {
+    public void set_respuestaAbierta(String _respuestaAbierta) {
         this._respuestaAbierta = _respuestaAbierta;
     }
 
-    public void setEscala(String _escala) {
+    public String get_escala() {
+        return _escala;
+    }
+
+    public void set_escala(String _escala) {
         this._escala = _escala;
     }
 
-    public void setVerdaderoFalso(String _verdaderoFalso) {
+    public String get_verdaderoFalso() {
+        return _verdaderoFalso;
+    }
+
+    public void set_verdaderoFalso(String _verdaderoFalso) {
         this._verdaderoFalso = _verdaderoFalso;
     }
 
-    public void setRespuestaSimple(String _respuestaSimple) {
+    public String get_respuestaSimple() {
+        return _respuestaSimple;
+    }
+
+    public void set_respuestaSimple(String _respuestaSimple) {
         this._respuestaSimple = _respuestaSimple;
     }
 
-    public void setRespuestaMultiple(String _respuestaMultiple) {
+    public String get_respuestaMultiple() {
+        return _respuestaMultiple;
+    }
+
+    public void set_respuestaMultiple(String _respuestaMultiple) {
         this._respuestaMultiple = _respuestaMultiple;
     }
 
-    public void setUsuario(Usuario _usuario) {
+    public Usuario get_usuario() {
+        return _usuario;
+    }
+
+    public void set_usuario(Usuario _usuario) {
         this._usuario = _usuario;
     }
 
-    public void setPreguntasEstudio(PreguntaEstudio _preguntasEstudio) {
-        this._preguntaEstudio = _preguntasEstudio;
+    public PreguntaEstudio get_preguntaEstudio() {
+        return _preguntaEstudio;
     }
-    
+
+    public void set_preguntaEstudio(PreguntaEstudio _preguntaEstudio) {
+        this._preguntaEstudio = _preguntaEstudio;
+    }
+
     public Respuesta(long id){
         super(id);
     }

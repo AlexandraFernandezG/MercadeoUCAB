@@ -97,15 +97,15 @@ public class ProductoAPI extends AplicacionBase{
             DaoProducto daoProducto = new DaoProducto();
             Producto producto = new Producto();
 
-            producto.setNombre(productoDto.getNombre());
-            producto.setDescripcion(productoDto.getDescripcion());
-            producto.set_estatus(productoDto.get_estatus());
+            producto.set_nombre(productoDto.getNombre());
+            producto.set_descripcion(productoDto.getDescripcion());
+            producto.set_estatus(productoDto.getEstatus());
             Usuario usuario = new Usuario(productoDto.getUsuarioDto().getId());
             Subcategoria subcategoria = new Subcategoria(productoDto.getSubcategoriaDto().getId());
             Marca marca = new Marca(productoDto.getMarcaDto().getId());
-            producto.setUsuario(usuario);
-            producto.setSubcategoria(subcategoria);
-            producto.setMarca(marca);
+            producto.set_usuario(usuario);
+            producto.set_subcategoria(subcategoria);
+            producto.set_marca(marca);
             Producto resul = daoProducto.insert(producto);
             resultado.setId(resul.get_id());
 
@@ -135,54 +135,8 @@ public class ProductoAPI extends AplicacionBase{
 
             try {
 
-                producto_modificar.set_estatus(productoDto.get_estatus());
+                producto_modificar.set_estatus(productoDto.getEstatus());
                 daoProducto.update(producto_modificar);
-                DaoTipo daoTipo = new DaoTipo();
-                DaoPresentacion daoPresentacion = new DaoPresentacion();
-
-                if (producto_modificar.get_estatus() == "Inactivo") {
-
-                    List<Tipo> listaTipo = daoTipo.findAll(Tipo.class);
-                    List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
-
-                    for (Tipo tipo : listaTipo) {
-
-                        if (tipo.getProducto().get_id() == id) {
-                            tipo.set_estatus("Inactivo");
-                            daoTipo.update(tipo);
-                        }
-                    }
-
-                    for (Presentacion presentacion : listaPresentacion) {
-
-                        if (presentacion.getProducto().get_id() == id) {
-                            presentacion.set_estatus("Inactivo");
-                            daoPresentacion.update(presentacion);
-                        }
-                    }
-
-                } else if (producto_modificar.get_estatus() == "Activo") {
-
-                    List<Tipo> listaTipo = daoTipo.findAll(Tipo.class);
-                    List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
-
-                    for (Tipo tipo : listaTipo) {
-
-                        if (tipo.getProducto().get_id() == id) {
-                            tipo.set_estatus("Activo");
-                            daoTipo.update(tipo);
-                        }
-                    }
-
-                    for (Presentacion presentacion : listaPresentacion) {
-
-                        if (presentacion.getProducto().get_id() == id) {
-                            presentacion.set_estatus("Activo");
-                            daoPresentacion.update(presentacion);
-                        }
-                    }
-
-                }
 
             } catch (Exception ex){
 
@@ -210,8 +164,8 @@ public class ProductoAPI extends AplicacionBase{
 
             try {
 
-                producto_modificar.setNombre(productoDto.getNombre());
-                producto_modificar.setDescripcion(productoDto.getDescripcion());
+                producto_modificar.set_nombre(productoDto.getNombre());
+                producto_modificar.set_descripcion(productoDto.getDescripcion());
                 daoProducto.update(producto_modificar);
 
             } catch (Exception ex){

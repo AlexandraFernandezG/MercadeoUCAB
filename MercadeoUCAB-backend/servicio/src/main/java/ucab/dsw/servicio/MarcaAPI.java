@@ -98,8 +98,8 @@ public class MarcaAPI extends AplicacionBase{
             Marca marca = new Marca();
 
             marca.set_nombre(marcaDto.getNombre());
-            marca.set_estatus(marcaDto.get_estatus());
-            marca.set_descripcion(marcaDto.get_descripcion());
+            marca.set_estatus(marcaDto.getEstatus());
+            marca.set_descripcion(marcaDto.getDescripcion());
             daoMarca.insert(marca);
             Marca resul = daoMarca.insert(marca);
             resultado.setId(resul.get_id());
@@ -130,7 +130,7 @@ public class MarcaAPI extends AplicacionBase{
 
             try {
 
-                marca_modificar.set_estatus(marcaDto.get_estatus());
+                marca_modificar.set_estatus(marcaDto.getEstatus());
                 daoMarca.update(marca_modificar);
 
             } catch (Exception ex){
@@ -161,7 +161,7 @@ public class MarcaAPI extends AplicacionBase{
             try {
 
                 marca_modificar.set_nombre(marcaDto.getNombre());
-                marca_modificar.set_descripcion(marcaDto.get_descripcion());
+                marca_modificar.set_descripcion(marcaDto.getDescripcion());
                 daoMarca.update(marca_modificar);
 
             } catch (Exception ex){

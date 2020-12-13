@@ -61,7 +61,7 @@ public class ProductoAPI_Test {
 
         productoDto.setNombre("");
         productoDto.setDescripcion("");
-        productoDto.set_estatus("Activo");
+        productoDto.setEstatus("Activo");
         //Revisar los ID de los registros de la BD
         UsuarioDto usuarioDto = new UsuarioDto(1);
         SubcategoriaDto subcategoriaDto = new SubcategoriaDto(1);
@@ -81,7 +81,7 @@ public class ProductoAPI_Test {
         ucab.dsw.servicio.ProductoAPI servicio = new ucab.dsw.servicio.ProductoAPI();
         ProductoDto productoDto = new ProductoDto();
 
-        productoDto.set_estatus("Activo");
+        productoDto.setEstatus("Activo");
         //Revisar los ID de los registros de la BD
         servicio.modificarEstatusProducto(1,productoDto);
 

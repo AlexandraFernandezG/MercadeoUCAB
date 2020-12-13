@@ -2,50 +2,50 @@ package ucab.dsw.dtos;
 
 public class ProductoDto extends DtoBase{
     
-    private String _nombre;
-    private String _descripcion;
-    private UsuarioDto _usuarioDto;
-    private SubcategoriaDto _subcategoriaDto;
-    private MarcaDto _marcaDto;
+    private String nombre;
+    private String descripcion;
+    private UsuarioDto usuarioDto;
+    private SubcategoriaDto subcategoriaDto;
+    private MarcaDto marcaDto;
 
     public String getNombre() {
-        return _nombre;
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
-        return _descripcion;
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public UsuarioDto getUsuarioDto() {
-        return _usuarioDto;
+        return usuarioDto;
+    }
+
+    public void setUsuarioDto(UsuarioDto usuarioDto) {
+        this.usuarioDto = usuarioDto;
     }
 
     public SubcategoriaDto getSubcategoriaDto() {
-        return _subcategoriaDto;
+        return subcategoriaDto;
+    }
+
+    public void setSubcategoriaDto(SubcategoriaDto subcategoriaDto) {
+        this.subcategoriaDto = subcategoriaDto;
     }
 
     public MarcaDto getMarcaDto() {
-        return _marcaDto;
+        return marcaDto;
     }
 
-    public void setNombre(String _nombre) {
-        this._nombre = _nombre;
-    }
-
-    public void setDescripcion(String _descripcion) {
-        this._descripcion = _descripcion;
-    }
-
-    public void setUsuarioDto(UsuarioDto _usuario) {
-        this._usuarioDto = _usuario;
-    }
-
-    public void setSubcategoriaDto(SubcategoriaDto _subcategoria) {
-        this._subcategoriaDto = _subcategoria;
-    }
-
-    public void setMarcaDto(MarcaDto _marca) {
-        this._marcaDto = _marca;
+    public void setMarcaDto(MarcaDto marcaDto) {
+        this.marcaDto = marcaDto;
     }
 
     public ProductoDto (long id) throws Exception{

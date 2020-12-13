@@ -98,7 +98,7 @@ public class CategoriaAPI extends AplicacionBase {
 
             for (Subcategoria subcategoria : listaSubcategorias) {
 
-                if (subcategoria.getCategoria().get_id() == id) {
+                if (subcategoria.get_categoria().get_id() == id) {
                     listaSubcategoriasCategoria.add(subcategoria);
                 }
             }
@@ -127,7 +127,7 @@ public class CategoriaAPI extends AplicacionBase {
 
             for (Categoria categoria : listaCategoria) {
 
-                if (categoria.getNombre().equals(categoriaDto.getNombre())) {
+                if (categoria.get_nombre().equals(categoriaDto.getNombre())) {
                     System.out.println("No se puede insertar esta categoria");
                     return true;
                 }
@@ -157,9 +157,9 @@ public class CategoriaAPI extends AplicacionBase {
             DaoCategoria dao = new DaoCategoria();
             Categoria categoria = new Categoria();
 
-            categoria.setNombre(categoriaDto.getNombre());
-            categoria.set_descripcion(categoriaDto.get_descripcion());
-            categoria.set_estatus(categoriaDto.get_estatus());
+            categoria.set_nombre(categoriaDto.getNombre());
+            categoria.set_descripcion(categoriaDto.getDescripcion());
+            categoria.set_estatus(categoriaDto.getEstatus());
             Categoria resul = dao.insert(categoria);
             resultado.setId(resul.get_id());
 
@@ -189,7 +189,7 @@ public class CategoriaAPI extends AplicacionBase {
 
             try {
 
-                categoria_modificar.set_estatus(categoriaDto.get_estatus());
+                categoria_modificar.set_estatus(categoriaDto.getEstatus());
                 daoCategoria.update(categoria_modificar);
                 DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
 
@@ -199,7 +199,7 @@ public class CategoriaAPI extends AplicacionBase {
 
                     for (Subcategoria subcategoria : listaSubcategorias) {
 
-                        if (subcategoria.getCategoria().get_id() == id) {
+                        if (subcategoria.get_categoria().get_id() == id) {
                             subcategoria.set_estatus("Inactivo");
                             daoSubcategoria.update(subcategoria);
                         }
@@ -210,7 +210,7 @@ public class CategoriaAPI extends AplicacionBase {
 
                     for (Subcategoria subcategoria : listaSubcategorias) {
 
-                        if (subcategoria.getCategoria().get_id() == id) {
+                        if (subcategoria.get_categoria().get_id() == id) {
                             subcategoria.set_estatus("Activo");
                             daoSubcategoria.update(subcategoria);
                         }
@@ -243,8 +243,8 @@ public class CategoriaAPI extends AplicacionBase {
 
             try {
 
-                categoria_modificar.setNombre(categoriaDto.getNombre());
-                categoria_modificar.set_descripcion(categoriaDto.get_descripcion());
+                categoria_modificar.set_nombre(categoriaDto.getNombre());
+                categoria_modificar.set_descripcion(categoriaDto.getDescripcion());
                 dao.update(categoria_modificar);
 
             } catch (Exception ex) {

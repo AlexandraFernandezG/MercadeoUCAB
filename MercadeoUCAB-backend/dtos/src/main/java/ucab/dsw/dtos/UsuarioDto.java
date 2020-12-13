@@ -1,18 +1,19 @@
 package ucab.dsw.dtos;
 
 public class UsuarioDto extends DtoBase{
+
     private String nombreUsuario;
     private String correo;
     private String codigoRecuperacion;
-    private RolDto rol;
+    private RolDto rolDto;
     private String contrasena;
 
-    public String getCodigoRecuperacion() {
-        return codigoRecuperacion;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setCodigoRecuperacion(String codigoRecuperacion) {
-        this.codigoRecuperacion = codigoRecuperacion;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getCorreo() {
@@ -23,28 +24,20 @@ public class UsuarioDto extends DtoBase{
         this.correo = correo;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getCodigoRecuperacion() {
+        return codigoRecuperacion;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setCodigoRecuperacion(String codigoRecuperacion) {
+        this.codigoRecuperacion = codigoRecuperacion;
     }
 
-    public RolDto get_rol() {
-        return rol;
+    public RolDto getRolDto() {
+        return rolDto;
     }
 
-    public void set_rol(RolDto _rol) {
-        this.rol = _rol;
-    }
-
-    public UsuarioDto (long id) throws Exception{
-        super(id);
-    }
-
-    public UsuarioDto (String estatus) throws Exception {
-        super(estatus);
+    public void setRolDto(RolDto rolDto) {
+        this.rolDto = rolDto;
     }
 
     public String getContrasena() {
@@ -55,22 +48,17 @@ public class UsuarioDto extends DtoBase{
         this.contrasena = contrasena;
     }
 
-    public RolDto getRol() {
-        return rol;
+    public UsuarioDto (long id) throws Exception{
+        super(id);
     }
 
-    public void setRol(RolDto rol) {
-        this.rol = rol;
-    }
-
-    public String getNombreRol() {
-        return this.rol.get_nombre();
+    public UsuarioDto (String estatus) throws Exception {
+        super(estatus);
     }
 
     public UsuarioDto (){
         super();
     }
-
 
 }
 

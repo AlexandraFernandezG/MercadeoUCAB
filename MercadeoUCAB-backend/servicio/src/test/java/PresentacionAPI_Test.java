@@ -58,9 +58,9 @@ public class PresentacionAPI_Test {
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
         PresentacionDto presentacionDto = new PresentacionDto();
 
-        presentacionDto.set_nombre("");
-        presentacionDto.set_descripcion("");
-        presentacionDto.set_estatus("Activo");
+        presentacionDto.setNombre("");
+        presentacionDto.setDescripcion("");
+        presentacionDto.setEstatus("Activo");
         PresentacionDto resultado = servicio.addPresentacion(presentacionDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
 
@@ -73,7 +73,7 @@ public class PresentacionAPI_Test {
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
         PresentacionDto presentacionDto = new PresentacionDto();
 
-        presentacionDto.set_estatus("Activo");
+        presentacionDto.setEstatus("Activo");
         // Estar mosca con los id de la bd
         servicio.modificarEstatusPresentacion(1, presentacionDto);
 
@@ -86,8 +86,8 @@ public class PresentacionAPI_Test {
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
         PresentacionDto presentacionDto = new PresentacionDto();
 
-        presentacionDto.set_nombre("");
-        presentacionDto.set_descripcion("");
+        presentacionDto.setNombre("");
+        presentacionDto.setDescripcion("");
         // Estar mosca con los id de la bd
         servicio.updatePresentacion(1, presentacionDto);
 

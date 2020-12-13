@@ -3,32 +3,32 @@ package ucab.dsw.dtos;
 import java.util.Date;
 
 public class HijoDto extends DtoBase{
-    private Date _fechaNacimiento;
-    private String _genero;
-    private InformacionDto _informacionDto;
+    private Date fechaNacimiento;
+    private String genero;
+    private InformacionDto informacionDto;
 
-    public Date get_fechaNacimiento() {
-        return _fechaNacimiento;
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void set_fechaNacimiento(Date _fechaNacimiento) {
-        this._fechaNacimiento = _fechaNacimiento;
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String get_genero() {
-        return _genero;
+    public String getGenero() {
+        return genero;
     }
 
-    public void set_genero(String _genero) {
-        this._genero = _genero;
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
-    public InformacionDto get_informacionDto() {
-        return _informacionDto;
+    public InformacionDto getInformacionDto() {
+        return informacionDto;
     }
 
-    public void set_informacionDto(InformacionDto _informacionDto) {
-        this._informacionDto = _informacionDto;
+    public void setInformacionDto(InformacionDto informacionDto) {
+        this.informacionDto = informacionDto;
     }
 
     public HijoDto (long id) throws Exception{

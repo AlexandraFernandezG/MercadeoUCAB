@@ -67,7 +67,6 @@ public class SolicitudEstudio extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-
     public String get_descripcion() {
         return _descripcion;
     }

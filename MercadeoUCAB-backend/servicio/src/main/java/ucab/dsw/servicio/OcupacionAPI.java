@@ -64,8 +64,8 @@ public class OcupacionAPI extends AplicacionBase {
             DaoOcupacion daoOcupacion = new DaoOcupacion();
             Ocupacion ocupacion = new Ocupacion();
 
-            ocupacion.setNombre(ocupacionDto.get_nombre());
-            ocupacion.set_estatus(ocupacionDto.get_estatus());
+            ocupacion.set_nombre(ocupacionDto.getNombre());
+            ocupacion.set_estatus(ocupacionDto.getEstatus());
             Ocupacion resul = daoOcupacion.insert(ocupacion);
             resultado.setId(resul.get_id());
 
@@ -95,8 +95,8 @@ public class OcupacionAPI extends AplicacionBase {
 
             try {
 
-                ocupacion_modificar.setNombre(ocupacionDto.get_nombre());
-                ocupacion_modificar.set_estatus(ocupacionDto.get_estatus());
+                ocupacion_modificar.set_nombre(ocupacionDto.getNombre());
+                ocupacion_modificar.set_estatus(ocupacionDto.getEstatus());
                 daoOcupacion.update(ocupacion_modificar);
 
             } catch (Exception ex){
@@ -128,7 +128,7 @@ public class OcupacionAPI extends AplicacionBase {
 
             } catch (Exception ex){
 
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.EXPECTATION_FAILED).build();
             }
 
             return Response.ok().entity(ocupacion_eliminar).build();

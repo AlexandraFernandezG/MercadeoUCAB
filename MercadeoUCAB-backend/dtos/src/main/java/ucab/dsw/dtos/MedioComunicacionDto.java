@@ -2,32 +2,32 @@ package ucab.dsw.dtos;
 
 public class MedioComunicacionDto extends DtoBase {
 
-    private String _tipoDeMedio;
-    private InformacionDto _informacionDto;
-    private SolicitudEstudioDto _solicitudEstudioDto;
+    private String tipoDeMedio;
+    private InformacionDto informacionDto;
+    private SolicitudEstudioDto solicitudEstudioDto;
 
-    public InformacionDto get_informacionDto() {
-        return _informacionDto;
+    public String getTipoDeMedio() {
+        return tipoDeMedio;
     }
 
-    public void set_informacionDto(InformacionDto _informacionDto) {
-        this._informacionDto = _informacionDto;
+    public void setTipoDeMedio(String tipoDeMedio) {
+        this.tipoDeMedio = tipoDeMedio;
     }
 
-    public SolicitudEstudioDto get_solicitudEstudioDto() {
-        return _solicitudEstudioDto;
+    public InformacionDto getInformacionDto() {
+        return informacionDto;
     }
 
-    public void set_solicitudEstudioDto(SolicitudEstudioDto _solicitudEstudioDto) {
-        this._solicitudEstudioDto = _solicitudEstudioDto;
+    public void setInformacionDto(InformacionDto informacionDto) {
+        this.informacionDto = informacionDto;
     }
 
-    public String get_tipoDeMedio() {
-        return _tipoDeMedio;
+    public SolicitudEstudioDto getSolicitudEstudioDto() {
+        return solicitudEstudioDto;
     }
 
-    public void set_tipoDeMedio(String _tipoDeMedio) {
-        this._tipoDeMedio = _tipoDeMedio;
+    public void setSolicitudEstudioDto(SolicitudEstudioDto solicitudEstudioDto) {
+        this.solicitudEstudioDto = solicitudEstudioDto;
     }
 
     public MedioComunicacionDto (long id) throws Exception{

@@ -1,23 +1,24 @@
 package ucab.dsw.dtos;
 
 public class RespuestaPreguntaDto extends DtoBase {
-    private String _nombre;
-    private PreguntaEncuestaDto _preguntaEncuestaDto;
 
-    public String get_nombre() {
-        return _nombre;
+    private String nombre;
+    private PreguntaEncuestaDto preguntaEncuestaDto;
+
+    public String getNombre() {
+        return nombre;
     }
 
-    public PreguntaEncuestaDto get_preguntaEncuestaDto() {
-        return _preguntaEncuestaDto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void set_preguntaEncuestaDto(PreguntaEncuestaDto _preguntaEncuestaDto) {
-        this._preguntaEncuestaDto = _preguntaEncuestaDto;
+    public PreguntaEncuestaDto getPreguntaEncuestaDto() {
+        return preguntaEncuestaDto;
     }
 
-    public void set_nombre(String _nombre) {
-        this._nombre = _nombre;
+    public void setPreguntaEncuestaDto(PreguntaEncuestaDto preguntaEncuestaDto) {
+        this.preguntaEncuestaDto = preguntaEncuestaDto;
     }
 
     public RespuestaPreguntaDto (long id) throws Exception{

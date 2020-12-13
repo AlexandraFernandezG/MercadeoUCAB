@@ -2,32 +2,32 @@ package ucab.dsw.dtos;
 import java.util.Date;
 
 public class HistoricoEstadoDto extends DtoBase {
-    private Date _fechaInicio;
-    private Date _fechaFin;
-    private UsuarioDto _usuarioDto;
+    private Date fechaInicio;
+    private Date fechaFin;
+    private UsuarioDto usuarioDto;
 
-    public Date get_fechaFin() {
-        return _fechaFin;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void set_fechaFin(Date _fechaFin) {
-        this._fechaFin = _fechaFin;
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
-    public Date get_fechaInicio() {
-        return _fechaInicio;
+    public Date getFechaFin() {
+        return fechaFin;
     }
 
-    public void set_fechaInicio(Date _fechaInicio) {
-        this._fechaInicio = _fechaInicio;
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
-    public UsuarioDto get_usuarioDto() {
-        return _usuarioDto;
+    public UsuarioDto getUsuarioDto() {
+        return usuarioDto;
     }
 
-    public void set_usuarioDto(UsuarioDto _usuarioDto) {
-        this._usuarioDto = _usuarioDto;
+    public void setUsuarioDto(UsuarioDto usuarioDto) {
+        this.usuarioDto = usuarioDto;
     }
 
     public HistoricoEstadoDto (long id) throws Exception{

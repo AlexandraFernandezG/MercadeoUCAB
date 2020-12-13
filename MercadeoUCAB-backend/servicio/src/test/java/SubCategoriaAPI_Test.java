@@ -57,7 +57,7 @@ public class SubCategoriaAPI_Test {
 
         subcategoriaDto.setNombre("Perros calientes");
         subcategoriaDto.setDescripcion("Perros calientes con sabores raros");
-        subcategoriaDto.set_estatus("Activo");
+        subcategoriaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         CategoriaDto categoriaDto = new CategoriaDto(2);
         subcategoriaDto.setCategoriaDto(categoriaDto);
@@ -72,7 +72,7 @@ public class SubCategoriaAPI_Test {
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
         SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
 
-        subcategoriaDto.set_estatus("Activo");
+        subcategoriaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarEstatusSubcategoria(3,subcategoriaDto);
 

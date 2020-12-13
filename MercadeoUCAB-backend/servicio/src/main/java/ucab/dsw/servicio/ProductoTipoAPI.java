@@ -69,10 +69,10 @@ public class ProductoTipoAPI extends AplicacionBase{
             DaoProductoTipo daoProductoTipo = new DaoProductoTipo();
             ProductoTipo productoTipo = new ProductoTipo();
 
-            productoTipo.set_estatus(productoTipoDto.get_estatus());
-            Producto producto = new Producto(productoTipoDto.get_productoDto().getId());
+            productoTipo.set_estatus(productoTipoDto.getEstatus());
+            Producto producto = new Producto(productoTipoDto.getProductoDto().getId());
             productoTipo.set_producto(producto);
-            Tipo tipo = new Tipo(productoTipoDto.get_tipoDto().getId());
+            Tipo tipo = new Tipo(productoTipoDto.getTipoDto().getId());
             productoTipo.set_tipo(tipo);
             ProductoTipo resul = daoProductoTipo.insert(productoTipo);
             resultado.setId(resul.get_id());
@@ -103,7 +103,7 @@ public class ProductoTipoAPI extends AplicacionBase{
 
         try {
 
-            productoTipo_modificar.set_estatus(productoTipoDto.get_estatus());
+            productoTipo_modificar.set_estatus(productoTipoDto.getEstatus());
             daoProductoTipo.update(productoTipo_modificar);
 
         } catch (Exception ex){

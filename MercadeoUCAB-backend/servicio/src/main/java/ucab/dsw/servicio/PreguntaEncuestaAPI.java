@@ -96,13 +96,13 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
             DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
             PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta();
 
-            preguntaEncuesta.setDescripcion(preguntaEncuestaDto.get_descripcion());
-            preguntaEncuesta.setTipoPregunta(preguntaEncuestaDto.get_tipoPregunta());
-            preguntaEncuesta.set_estatus(preguntaEncuestaDto.get_estatus());
-            Usuario usuario = new Usuario(preguntaEncuestaDto.get_usuarioDto().getId());
-            preguntaEncuesta.setUsuario(usuario);
-            Subcategoria subcategoria = new Subcategoria(preguntaEncuestaDto.get_subcategoriaDto().getId());
-            preguntaEncuesta.setSubcategoria(subcategoria);
+            preguntaEncuesta.set_descripcion(preguntaEncuestaDto.getDescripcion());
+            preguntaEncuesta.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
+            preguntaEncuesta.set_estatus(preguntaEncuestaDto.getEstatus());
+            Usuario usuario = new Usuario(preguntaEncuestaDto.getUsuarioDto().getId());
+            preguntaEncuesta.set_usuario(usuario);
+            Subcategoria subcategoria = new Subcategoria(preguntaEncuestaDto.getSubcategoriaDto().getId());
+            preguntaEncuesta.set_subcategoria(subcategoria);
             PreguntaEncuesta resul = daoPreguntaEncuesta.insert(preguntaEncuesta);
             resultado.setId(resul.get_id());
 
@@ -132,7 +132,7 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
             try {
 
-                preguntaEncuesta_modificar.set_estatus(preguntaEncuestaDto.get_estatus());
+                preguntaEncuesta_modificar.set_estatus(preguntaEncuestaDto.getEstatus());
                 daoPreguntaEncuesta.update(preguntaEncuesta_modificar);
                 DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
 
@@ -142,7 +142,7 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
                     for (RespuestaPregunta respuestaPregunta : listaRespuesta) {
 
-                        if (respuestaPregunta.getPreguntaEncuesta().get_id() == id) {
+                        if (respuestaPregunta.get_preguntaEncuesta().get_id() == id) {
                             respuestaPregunta.set_estatus("Inactivo");
                             daoRespuestaPregunta.update(respuestaPregunta);
                         }
@@ -153,7 +153,7 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
                     for (RespuestaPregunta respuestaPregunta : listaRespuesta) {
 
-                        if (respuestaPregunta.getPreguntaEncuesta().get_id() == id) {
+                        if (respuestaPregunta.get_preguntaEncuesta().get_id() == id) {
                             respuestaPregunta.set_estatus("Activo");
                             daoRespuestaPregunta.update(respuestaPregunta);
                         }
@@ -185,8 +185,8 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
         }
 
             try {
-                preguntaEncuesta_modificar.setDescripcion(preguntaEncuestaDto.get_descripcion());
-                preguntaEncuesta_modificar.setTipoPregunta(preguntaEncuestaDto.get_tipoPregunta());
+                preguntaEncuesta_modificar.set_descripcion(preguntaEncuestaDto.getDescripcion());
+                preguntaEncuesta_modificar.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
                 daoPreguntaEncuesta.update(preguntaEncuesta_modificar);
 
             } catch (Exception ex){
