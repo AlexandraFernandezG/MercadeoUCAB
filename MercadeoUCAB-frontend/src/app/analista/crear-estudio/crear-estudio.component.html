@@ -1,0 +1,54 @@
+<html>
+    <div class="pageHeader">
+        <mat-toolbar>
+          <span class="fill-remaining-space"></span>
+          <span>Creación de Encuestas</span>
+          <span class="fill-remaining-space"></span>
+        </mat-toolbar>
+    </div>
+    <div class="well">
+      <button type="button" class="btn btn-primary" (click)="addPregunta()">Agregar Pregunta</button><br><br>
+    <form [formGroup]="myForm">
+      <div class="col-lg-8" formArrayName="preguntas">
+        <div *ngFor="let comp of myForm.get('preguntas')['controls']; let i=index">
+        <fieldset class="preg">
+          <legend><h3>PREGUNTA {{i+1}}: </h3></legend>
+          <div  [formGroupName]="i">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-default">Pregunta</span>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" formControlName="pregunta"/>
+            </div>
+            <div>
+              <button type="button" class="btn btn-outline-danger btn-sm" (click)="deletePregunta(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <div class="col-lg-7" formArrayName="respuestas">
+              <div *ngFor="let respuesta of comp.get('respuestas')['controls']; let j=index">
+                <fieldset>
+                  <legend><h4>RESPUESTA {{j+1}}</h4></legend>
+                  <div [formGroupName]="j">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text" id="inputGroup-sizing-default">Respuesta</span>
+                      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" formControlName="respuesta" />
+                    </div>
+                    <div>
+                      <button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteRespuesta(comp.controls.respuestas, j)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <button type="button" class="btn btn-primary" (click)="addRespuesta(comp.controls.respuestas)">Agregar Respuesta</button>
+            </div>
+          </div>
+        </fieldset>
+        </div>
+      </div><br>
+      
+    </form>
+  
+    <pre>{{myForm.value | json}}</pre>
+    </div>
+</html>

@@ -1,1 +1,47 @@
-<p>estudios-analista works!</p>
+<html>
+    <div class="pageHeader">
+      <mat-toolbar>
+        <span class="fill-remaining-space"></span>
+        <span>Estudios</span>
+        <span class="fill-remaining-space"></span>
+      </mat-toolbar>
+    </div>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+    
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+    
+        
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <mat-cell *matCellDef="let row">
+            <button mat-icon-button (click)="crearEstudio()">Realizar <mat-icon>build_circle</mat-icon></button>
+            
+          </mat-cell>
+        </ng-container>
+    
+        <!-- 
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef> Symbol </th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+      -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+    </div>
+    
+</html>

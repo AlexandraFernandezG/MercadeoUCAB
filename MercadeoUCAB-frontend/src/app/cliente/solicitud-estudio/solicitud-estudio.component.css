@@ -2,3 +2,19 @@
 .mat-form-field{
     margin: 10px;
 }
+div.pageHeader{
+    margin: 0px 40px;
+}
+.fill-remaining-space{
+    flex: 1 1 auto;
+}
+form{
+    width:  80%;;
+    margin: 10px auto;
+}
+.bottom-pad{
+    padding-bottom: 10px;
+}
+.mat-radio-button{
+    margin-left: 5px;
+}

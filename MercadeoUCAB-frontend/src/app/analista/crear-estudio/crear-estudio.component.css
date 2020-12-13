@@ -1,0 +1,16 @@
+div{
+    margin-top: 10px;
+}
+.encuesta-container{
+    background-color: aqua;
+}
+div.pageHeader{
+    margin: 0px 40px;
+}
+.fill-remaining-space{
+    flex: 1 1 auto;
+}
+.preg{
+    background-color: lightgray;
+    margin: 20px auto;
+}

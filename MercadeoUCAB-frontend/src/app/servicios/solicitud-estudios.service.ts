@@ -1,12 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Estudio } from '../modelos/estudio';
 import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class EstudiosService {
+export class SolicitudEstudiosService {
 
   estudiosUrl: string = 'https://jsonplaceholder.typicode.com/albums';
   
@@ -16,5 +17,4 @@ export class EstudiosService {
   getEstudios():Observable<Estudio[]>{
     return this.http.get<Estudio[]>(`${this.estudiosUrl}`);
   }
-
 }

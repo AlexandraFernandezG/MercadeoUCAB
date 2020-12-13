@@ -12,6 +12,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -41,6 +46,7 @@ import { AnalistaComponent } from './analista/analista.component';
 import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios-analista.component';
 import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
 import { CategoriasService } from './servicios/categorias.service';
+import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +74,9 @@ import { CategoriasService } from './servicios/categorias.service';
     RegistroEncuestadoComponent,
     AnalistaComponent,
     EstudiosAnalistaComponent,
-    DataEstudioComponent
+    DataEstudioComponent,
+    CrearEstudioComponent
+    
   ],
   imports: [
     RouterModule,
@@ -85,7 +93,12 @@ import { CategoriasService } from './servicios/categorias.service';
     HttpClientModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatRadioModule,
+    MatToolbarModule,
+    MatGridListModule
   ],
   providers: [CategoriasService],
   bootstrap: [AppComponent],
