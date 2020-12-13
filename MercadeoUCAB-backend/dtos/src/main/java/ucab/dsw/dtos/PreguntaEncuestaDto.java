@@ -3,41 +3,41 @@ package ucab.dsw.dtos;
 
 public class PreguntaEncuestaDto extends DtoBase {
 
-    private String descripcion;
-    private String tipoPregunta;
-    private UsuarioDto usuarioDto;
-    private SubcategoriaDto subcategoriaDto;
+    private String _descripcion;
+    private String _tipoPregunta;
+    private UsuarioDto _usuarioDto;
+    private SubcategoriaDto _subcategoriaDto;
 
     public String getDescripcion() {
-        return descripcion;
+        return _descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this._descripcion = descripcion;
     }
 
     public String getTipoPregunta() {
-        return tipoPregunta;
+        return _tipoPregunta;
     }
 
     public void setTipoPregunta(String tipoPregunta) {
-        this.tipoPregunta = tipoPregunta;
+        this._tipoPregunta = tipoPregunta;
     }
 
     public UsuarioDto getUsuarioDto() {
-        return usuarioDto;
+        return _usuarioDto;
     }
 
     public void setUsuarioDto(UsuarioDto usuarioDto) {
-        this.usuarioDto = usuarioDto;
+        this._usuarioDto = usuarioDto;
     }
 
     public SubcategoriaDto getSubcategoriaDto() {
-        return subcategoriaDto;
+        return _subcategoriaDto;
     }
 
     public void setSubcategoriaDto(SubcategoriaDto subcategoriaDto) {
-        this.subcategoriaDto = subcategoriaDto;
+        this._subcategoriaDto = subcategoriaDto;
     }
 
     public PreguntaEncuestaDto (long id) throws Exception{

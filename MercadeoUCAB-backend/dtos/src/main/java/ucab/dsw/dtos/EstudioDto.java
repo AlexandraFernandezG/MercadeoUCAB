@@ -5,59 +5,59 @@ import java.util.Date;
 
 public class EstudioDto extends DtoBase {
 
-    private String nombre;
-    private String tipoInstrumento;
-    private Date fechaInicio;
-    private Date fechaFin;
-    private SolicitudEstudioDto solicitudEstudioDto;
-    private UsuarioDto usuarioDto;
+    private String _nombre;
+    private String _tipoInstrumento;
+    private Date _fechaInicio;
+    private Date _fechaFin;
+    private SolicitudEstudioDto _solicitudEstudioDto;
+    private UsuarioDto _usuarioDto;
 
     public String getNombre() {
-        return nombre;
+        return _nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this._nombre = nombre;
     }
 
     public String getTipoInstrumento() {
-        return tipoInstrumento;
+        return _tipoInstrumento;
     }
 
     public void setTipoInstrumento(String tipoInstrumento) {
-        this.tipoInstrumento = tipoInstrumento;
+        this._tipoInstrumento = tipoInstrumento;
     }
 
     public Date getFechaInicio() {
-        return fechaInicio;
+        return _fechaInicio;
     }
 
     public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
+        this._fechaInicio = fechaInicio;
     }
 
     public Date getFechaFin() {
-        return fechaFin;
+        return _fechaFin;
     }
 
     public void setFechaFin(Date fechaFin) {
-        this.fechaFin = fechaFin;
+        this._fechaFin = fechaFin;
     }
 
     public SolicitudEstudioDto getSolicitudEstudioDto() {
-        return solicitudEstudioDto;
+        return _solicitudEstudioDto;
     }
 
     public void setSolicitudEstudioDto(SolicitudEstudioDto solicitudEstudioDto) {
-        this.solicitudEstudioDto = solicitudEstudioDto;
+        this._solicitudEstudioDto = solicitudEstudioDto;
     }
 
     public UsuarioDto getUsuarioDto() {
-        return usuarioDto;
+        return _usuarioDto;
     }
 
     public void setUsuarioDto(UsuarioDto usuarioDto) {
-        this.usuarioDto = usuarioDto;
+        this._usuarioDto = usuarioDto;
     }
 
     public EstudioDto (long id) throws Exception{

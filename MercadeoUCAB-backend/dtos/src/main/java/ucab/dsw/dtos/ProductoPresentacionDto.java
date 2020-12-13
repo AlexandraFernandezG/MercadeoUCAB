@@ -2,24 +2,24 @@ package ucab.dsw.dtos;
 
 public class ProductoPresentacionDto extends DtoBase{
 
-    private ProductoDto productoDto;
+    private ProductoDto _productoDto;
 
-    private PresentacionDto presentacionDto;
+    private PresentacionDto _presentacionDto;
 
     public ProductoDto getProductoDto() {
-        return productoDto;
+        return _productoDto;
     }
 
     public void setProductoDto(ProductoDto productoDto) {
-        this.productoDto = productoDto;
+        this._productoDto = productoDto;
     }
 
     public PresentacionDto getPresentacionDto() {
-        return presentacionDto;
+        return _presentacionDto;
     }
 
     public void setPresentacionDto(PresentacionDto presentacionDto) {
-        this.presentacionDto = presentacionDto;
+        this._presentacionDto = presentacionDto;
     }
 
     public ProductoPresentacionDto (long id) throws Exception{

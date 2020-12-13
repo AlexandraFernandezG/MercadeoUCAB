@@ -2,14 +2,14 @@ package ucab.dsw.dtos;
 
 public class NivelEconomicoDto extends DtoBase{
     
-    private String descripcion;
+    private String _descripcion;
 
     public String getDescripcion() {
-        return descripcion;
+        return _descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this._descripcion = descripcion;
     }
 
     public NivelEconomicoDto (long id) throws Exception{

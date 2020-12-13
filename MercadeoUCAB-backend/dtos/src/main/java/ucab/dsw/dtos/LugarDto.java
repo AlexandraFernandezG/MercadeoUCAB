@@ -2,41 +2,41 @@ package ucab.dsw.dtos;
 
 public class LugarDto extends DtoBase{
 
-    private String nombre;
-    private String tipo;
-    private String categoriaSocioEconomica;
-    private LugarDto lugar;
+    private String _nombre;
+    private String _tipo;
+    private String _categoriaSocioEconomica;
+    private LugarDto _lugar;
 
     public String getNombre() {
-        return nombre;
+        return _nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this._nombre = nombre;
     }
 
     public String getTipo() {
-        return tipo;
+        return _tipo;
     }
 
     public void setTipo(String tipo) {
-        this.tipo = tipo;
+        this._tipo = tipo;
     }
 
     public String getCategoriaSocioEconomica() {
-        return categoriaSocioEconomica;
+        return _categoriaSocioEconomica;
     }
 
     public void setCategoriaSocioEconomica(String categoriaSocioEconomica) {
-        this.categoriaSocioEconomica = categoriaSocioEconomica;
+        this._categoriaSocioEconomica = categoriaSocioEconomica;
     }
 
     public LugarDto getLugar() {
-        return lugar;
+        return _lugar;
     }
 
     public void setLugar(LugarDto lugar) {
-        this.lugar = lugar;
+        this._lugar = lugar;
     }
 
     public LugarDto (long id) throws Exception{

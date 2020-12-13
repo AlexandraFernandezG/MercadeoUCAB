@@ -2,14 +2,14 @@ package ucab.dsw.dtos;
 
 public class OcupacionDto extends DtoBase{
 
-    private String nombre;
+    private String _nombre;
 
     public String getNombre() {
-        return nombre;
+        return _nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this._nombre = nombre;
     }
 
     public OcupacionDto (long id) throws Exception{

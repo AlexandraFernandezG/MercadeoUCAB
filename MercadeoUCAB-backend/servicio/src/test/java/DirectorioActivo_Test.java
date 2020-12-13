@@ -10,10 +10,10 @@ public class DirectorioActivo_Test {
         UsuarioDto user = new UsuarioDto();
         user.setCorreo( "greggspinetti@gmail.com" );
         user.setContrasena( "1234abcd" );
-        user.set_estatus("Activo");
+        user.setEstatus("Activo");
         RolDto rol = new RolDto();
-        rol.set_nombre("Administrador");
-        user.setRol(rol);
+        rol.setNombre("Administrador");
+        user.setRolDto(rol);
         DirectorioActivo ldap = new DirectorioActivo();
         ldap.addEntryToLdap( user );
     }

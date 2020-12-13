@@ -2,23 +2,23 @@ package ucab.dsw.dtos;
 
 public class PreguntaEstudioDto extends DtoBase{
 
-    private PreguntaEncuestaDto preguntaEncuestaDto;
-    private EstudioDto estudioDto;
+    private PreguntaEncuestaDto _preguntaEncuestaDto;
+    private EstudioDto _estudioDto;
 
     public PreguntaEncuestaDto getPreguntaEncuestaDto() {
-        return preguntaEncuestaDto;
+        return _preguntaEncuestaDto;
     }
 
     public void setPreguntaEncuestaDto(PreguntaEncuestaDto preguntaEncuestaDto) {
-        this.preguntaEncuestaDto = preguntaEncuestaDto;
+        this._preguntaEncuestaDto = preguntaEncuestaDto;
     }
 
     public EstudioDto getEstudioDto() {
-        return estudioDto;
+        return _estudioDto;
     }
 
     public void setEstudioDto(EstudioDto estudioDto) {
-        this.estudioDto = estudioDto;
+        this._estudioDto = estudioDto;
     }
 
     public PreguntaEstudioDto(long id) throws Exception{

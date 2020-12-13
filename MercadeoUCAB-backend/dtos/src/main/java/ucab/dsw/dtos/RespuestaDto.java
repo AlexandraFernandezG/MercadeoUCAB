@@ -1,68 +1,69 @@
 package ucab.dsw.dtos;
 
 public class RespuestaDto extends DtoBase {
-    private String respuestaAbierta;
-    private String escala;
-    private String verdaderoFalso;
-    private String respuestaSimple;
-    private String respuestaMultiple;
-    private PreguntaEstudioDto preguntaEstudioDto;
-    private UsuarioDto usuarioDto;
+
+    private String _respuestaAbierta;
+    private String _escala;
+    private String _verdaderoFalso;
+    private String _respuestaSimple;
+    private String _respuestaMultiple;
+    private PreguntaEstudioDto _preguntaEstudioDto;
+    private UsuarioDto _usuarioDto;
 
     public String getRespuestaAbierta() {
-        return respuestaAbierta;
+        return _respuestaAbierta;
     }
 
     public void setRespuestaAbierta(String respuestaAbierta) {
-        this.respuestaAbierta = respuestaAbierta;
+        this._respuestaAbierta = respuestaAbierta;
     }
 
     public String getEscala() {
-        return escala;
+        return _escala;
     }
 
     public void setEscala(String escala) {
-        this.escala = escala;
+        this._escala = escala;
     }
 
     public String getVerdaderoFalso() {
-        return verdaderoFalso;
+        return _verdaderoFalso;
     }
 
     public void setVerdaderoFalso(String verdaderoFalso) {
-        this.verdaderoFalso = verdaderoFalso;
+        this._verdaderoFalso = verdaderoFalso;
     }
 
     public String getRespuestaSimple() {
-        return respuestaSimple;
+        return _respuestaSimple;
     }
 
     public void setRespuestaSimple(String respuestaSimple) {
-        this.respuestaSimple = respuestaSimple;
+        this._respuestaSimple = respuestaSimple;
     }
 
     public String getRespuestaMultiple() {
-        return respuestaMultiple;
+        return _respuestaMultiple;
     }
 
     public void setRespuestaMultiple(String respuestaMultiple) {
-        this.respuestaMultiple = respuestaMultiple;
+        this._respuestaMultiple = respuestaMultiple;
     }
 
     public PreguntaEstudioDto getPreguntaEstudioDto() {
-        return preguntaEstudioDto;
+        return _preguntaEstudioDto;
     }
 
     public void setPreguntaEstudioDto(PreguntaEstudioDto preguntaEstudioDto) {
-        this.preguntaEstudioDto = preguntaEstudioDto;
+        this._preguntaEstudioDto = preguntaEstudioDto;
     }
 
     public UsuarioDto getUsuarioDto() {
-        return usuarioDto;
+        return _usuarioDto;
     }
 
     public void setUsuarioDto(UsuarioDto usuarioDto) {
-        this.usuarioDto = usuarioDto;
+        this._usuarioDto = usuarioDto;
     }
 
     public RespuestaDto (long id) throws Exception{

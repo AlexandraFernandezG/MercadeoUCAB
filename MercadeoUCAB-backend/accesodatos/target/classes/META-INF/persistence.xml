@@ -17,6 +17,8 @@
     <class>ucab.dsw.entidades.PreguntaEstudio</class>
     <class>ucab.dsw.entidades.Presentacion</class>
     <class>ucab.dsw.entidades.Producto</class>
+    <class>ucab.dsw.entidades.ProductoPresentacion</class>
+    <class>ucab.dsw.entidades.ProductoTipo</class>
     <class>ucab.dsw.entidades.Respuesta</class>
     <class>ucab.dsw.entidades.RespuestaPregunta</class>
     <class>ucab.dsw.entidades.Rol</class>

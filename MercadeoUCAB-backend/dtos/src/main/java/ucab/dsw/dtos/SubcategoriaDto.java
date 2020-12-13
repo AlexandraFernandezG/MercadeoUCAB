@@ -2,32 +2,32 @@ package ucab.dsw.dtos;
 
 public class SubcategoriaDto extends DtoBase{
     
-    private String nombre;
-    private String descripcion;
-    private CategoriaDto categoriaDto;
+    private String _nombre;
+    private String _descripcion;
+    private CategoriaDto _categoriaDto;
 
     public String getNombre() {
-        return nombre;
+        return _nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this._nombre = nombre;
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return _descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this._descripcion = descripcion;
     }
 
     public CategoriaDto getCategoriaDto() {
-        return categoriaDto;
+        return _categoriaDto;
     }
 
     public void setCategoriaDto(CategoriaDto categoriaDto) {
-        this.categoriaDto = categoriaDto;
+        this._categoriaDto = categoriaDto;
     }
 
     public SubcategoriaDto (long id) throws Exception{
