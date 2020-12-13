@@ -78,7 +78,7 @@ public class EstudioAPI_Test {
         UsuarioDto usuarioDto = new UsuarioDto(1L);
         estudioDto.set_usuarioDto(usuarioDto);
         EstudioDto resultado = servicio.addEstudios(estudioDto);
-        Assert.assertNotEquals(resultado.getId(), 0);
+        Assert.assertNotEquals(resultado.get_id(), 0);
 
     }
 

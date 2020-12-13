@@ -99,18 +99,18 @@ public class RespuestaAPI extends AplicacionBase{
             DaoRespuesta daoRespuesta = new DaoRespuesta();
             Respuesta respuesta = new Respuesta();
 
-            respuesta.setRespuestaAbierta(respuestaDto.get_respuestaAbierta());
-            respuesta.setEscala(respuestaDto.get_escala());
-            respuesta.setVerdaderoFalso(respuestaDto.get_verdaderoFalso());
-            respuesta.setRespuestaSimple(respuestaDto.get_respuestaSimple());
-            respuesta.setRespuestaMultiple(respuestaDto.get_respuestaMultiple());
+            respuesta.set_respuestaAbierta(respuestaDto.get_respuestaAbierta());
+            respuesta.set_escala(respuestaDto.get_escala());
+            respuesta.set_verdaderoFalso(respuestaDto.get_verdaderoFalso());
+            respuesta.set_respuestaSimple(respuestaDto.get_respuestaSimple());
+            respuesta.set_respuestaMultiple(respuestaDto.get_respuestaMultiple());
             respuesta.set_estatus(respuestaDto.get_estatus());
-            PreguntaEstudio preguntaEstudio = new PreguntaEstudio(respuestaDto.get_preguntaEstudioDto().getId());
-            Usuario usuario = new Usuario(respuestaDto.get_usuarioDto().getId());
-            respuesta.setPreguntasEstudio(preguntaEstudio);
-            respuesta.setUsuario(usuario);
+            PreguntaEstudio preguntaEstudio = new PreguntaEstudio(respuestaDto.get_preguntaEstudioDto().get_id());
+            Usuario usuario = new Usuario(respuestaDto.get_usuarioDto().get_id());
+            respuesta.set_preguntaEstudio(preguntaEstudio);
+            respuesta.set_usuario(usuario);
             Respuesta resul = daoRespuesta.insert(respuesta);
-            resultado.setId(resul.get_id());
+            resultado.set_id(resul.get_id());
 
         } catch (Exception ex){
 
@@ -167,11 +167,11 @@ public class RespuestaAPI extends AplicacionBase{
 
             try {
 
-                respuesta_modificar.setRespuestaAbierta(respuestaDto.get_respuestaAbierta());
-                respuesta_modificar.setEscala(respuestaDto.get_escala());
-                respuesta_modificar.setVerdaderoFalso(respuestaDto.get_verdaderoFalso());
-                respuesta_modificar.setRespuestaSimple(respuestaDto.get_respuestaSimple());
-                respuesta_modificar.setRespuestaMultiple(respuestaDto.get_respuestaMultiple());
+                respuesta_modificar.set_respuestaAbierta(respuestaDto.get_respuestaAbierta());
+                respuesta_modificar.set_escala(respuestaDto.get_escala());
+                respuesta_modificar.set_verdaderoFalso(respuestaDto.get_verdaderoFalso());
+                respuesta_modificar.set_respuestaSimple(respuestaDto.get_respuestaSimple());
+                respuesta_modificar.set_respuestaMultiple(respuestaDto.get_respuestaMultiple());
                 daoRespuesta.update(respuesta_modificar);
 
             } catch (Exception ex){

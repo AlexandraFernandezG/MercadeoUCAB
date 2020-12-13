@@ -24,30 +24,31 @@ public class Subcategoria extends EntidadBase{
 
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
-        return _nombre;
-    }
 
-    public String getDescripcion() {
-        return _descripcion;
-    }
-
-    public Categoria getCategoria() {
+    public Categoria get_categoria() {
         return _categoria;
     }
 
-    public void setNombre(String _nombre) {
-        this._nombre = _nombre;
+    public void set_categoria(Categoria _categoria) {
+        this._categoria = _categoria;
     }
 
-    public void setDescripcion(String _descripcion) {
+    public String get_descripcion() {
+        return _descripcion;
+    }
+
+    public void set_descripcion(String _descripcion) {
         this._descripcion = _descripcion;
     }
 
-    public void setCategoria(Categoria _categoria) {
-        this._categoria = _categoria;
+    public String get_nombre() {
+        return _nombre;
     }
-    
+
+    public void set_nombre(String _nombre) {
+        this._nombre = _nombre;
+    }
+
     public Subcategoria (long id){
         super(id);
     }

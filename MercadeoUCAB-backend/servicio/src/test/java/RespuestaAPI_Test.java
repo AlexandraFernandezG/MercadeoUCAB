@@ -71,7 +71,7 @@ public class RespuestaAPI_Test {
         respuestaDto.set_preguntaEstudioDto(preguntaEstudioDto);
         respuestaDto.set_usuarioDto(usuarioDto);
         RespuestaDto resultado = servicio.addRespuesta(respuestaDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        Assert.assertNotEquals( resultado.get_id(), 0 );
 
     }
 

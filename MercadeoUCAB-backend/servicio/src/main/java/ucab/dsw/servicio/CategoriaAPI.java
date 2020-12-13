@@ -98,7 +98,7 @@ public class CategoriaAPI extends AplicacionBase {
 
             for (Subcategoria subcategoria : listaSubcategorias) {
 
-                if (subcategoria.getCategoria().get_id() == id) {
+                if (subcategoria.get_categoria().get_id() == id) {
                     listaSubcategoriasCategoria.add(subcategoria);
                 }
             }
@@ -127,11 +127,11 @@ public class CategoriaAPI extends AplicacionBase {
             DaoCategoria dao = new DaoCategoria();
             Categoria categoria = new Categoria();
 
-            categoria.setNombre(categoriaDto.getNombre());
+            categoria.set_nombre(categoriaDto.get_nombre());
             categoria.set_descripcion(categoriaDto.get_descripcion());
             categoria.set_estatus(categoriaDto.get_estatus());
             Categoria resul = dao.insert(categoria);
-            resultado.setId(resul.get_id());
+            resultado.set_id(resul.get_id());
 
         } catch (Exception ex){
 
@@ -169,7 +169,7 @@ public class CategoriaAPI extends AplicacionBase {
 
                     for (Subcategoria subcategoria : listaSubcategorias) {
 
-                        if (subcategoria.getCategoria().get_id() == id) {
+                        if (subcategoria.get_categoria().get_id() == id) {
                             subcategoria.set_estatus("Inactivo");
                             daoSubcategoria.update(subcategoria);
                         }
@@ -180,7 +180,7 @@ public class CategoriaAPI extends AplicacionBase {
 
                     for (Subcategoria subcategoria : listaSubcategorias) {
 
-                        if (subcategoria.getCategoria().get_id() == id) {
+                        if (subcategoria.get_categoria().get_id() == id) {
                             subcategoria.set_estatus("Activo");
                             daoSubcategoria.update(subcategoria);
                         }
@@ -213,7 +213,7 @@ public class CategoriaAPI extends AplicacionBase {
 
             try {
 
-                categoria_modificar.setNombre(categoriaDto.getNombre());
+                categoria_modificar.set_nombre(categoriaDto.get_nombre());
                 categoria_modificar.set_descripcion(categoriaDto.get_descripcion());
                 dao.update(categoria_modificar);
 

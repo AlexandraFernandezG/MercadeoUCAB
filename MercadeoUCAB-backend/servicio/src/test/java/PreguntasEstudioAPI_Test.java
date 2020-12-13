@@ -36,7 +36,7 @@ public class PreguntasEstudioAPI_Test {
         preguntaEstudioDto.set_estudioDto(estudioDto);
         preguntaEstudioDto.set_preguntaEncuestaDto(preguntaEncuestaDto);
         PreguntaEstudioDto resultado = servicio.addPreguntaEstudio(preguntaEstudioDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        Assert.assertNotEquals( resultado.get_id(), 0 );
 
     }
 

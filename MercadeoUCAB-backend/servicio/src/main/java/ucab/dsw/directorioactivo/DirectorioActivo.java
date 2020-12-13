@@ -72,12 +72,12 @@ public class DirectorioActivo
             SimpleDateFormat format = new SimpleDateFormat( "yyyyMMddHHmm" );
             BasicAttributes entry = new BasicAttributes();
             entry.put( oc );
-            entry.put( new BasicAttribute( "cn", user.getCorreo()) );
-            entry.put( new BasicAttribute( "sn", user.getCorreo() ) );
-            entry.put( new BasicAttribute( "userPassword", user.getContrasena()) );
+            entry.put( new BasicAttribute( "cn", user.get_correo()) );
+            entry.put( new BasicAttribute( "sn", user.get_correo() ) );
+            entry.put( new BasicAttribute( "userPassword", user.get_contrasena()) );
             entry.put( new BasicAttribute( "pwdLastSuccess", format.format( new Date() ) + "Z" ) );
             entry.put( new BasicAttribute( "description", user.getNombreRol()));
-            _ldapContext.createSubcontext( String.format( _userDirectory + "," + _directory, user.getCorreo()), entry );
+            _ldapContext.createSubcontext( String.format( _userDirectory + "," + _directory, user.get_correo()), entry );
 
         }
         catch(Exception exception)
@@ -91,7 +91,7 @@ public class DirectorioActivo
         try
         {
             connectLDAP( _user, _password );
-            _ldapContext.destroySubcontext( String.format(_userDirectory + "," + _directory, user.getCorreo()));
+            _ldapContext.destroySubcontext( String.format(_userDirectory + "," + _directory, user.get_correo()));
         }
         catch ( Exception exception )
         {
@@ -111,7 +111,7 @@ public class DirectorioActivo
             SearchControls searcCon = new SearchControls();
             searcCon.setSearchScope( SearchControls.SUBTREE_SCOPE );
             NamingEnumeration results =
-                    _ldapContext.search( _directory, String.format(_userDirectory, user.getCorreo()), searcCon );
+                    _ldapContext.search( _directory, String.format(_userDirectory, user.get_correo()), searcCon );
             if ( results != null )
             {
                 while ( results.hasMore() )
@@ -145,9 +145,9 @@ public class DirectorioActivo
             connectLDAP( _user, _password );
             ModificationItem[] modificationItems = new ModificationItem[ 1 ];
             modificationItems[0] = new ModificationItem( DirContext.REPLACE_ATTRIBUTE,
-                    new BasicAttribute( "userPassword", user.getContrasena()
+                    new BasicAttribute( "userPassword", user.get_contrasena()
                     ) );
-            _ldapContext.modifyAttributes(String.format(_userDirectory + "," + _directory, user.getCorreo()), modificationItems );
+            _ldapContext.modifyAttributes(String.format(_userDirectory + "," + _directory, user.get_correo()), modificationItems );
         }
         catch(Exception exception)
         {
@@ -168,7 +168,7 @@ public class DirectorioActivo
                 ModificationItem[] modificationItems = new ModificationItem[1];
                 modificationItems[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, new BasicAttribute(
                         "pwdLastSuccess", format.format(new Date()) + "Z"));
-                _ldapContext.modifyAttributes(String.format(_userDirectory + "," + _directory, user.getCorreo()), modificationItems);
+                _ldapContext.modifyAttributes(String.format(_userDirectory + "," + _directory, user.get_correo()), modificationItems);
                 return 1;
             } else {
                 return 0;
@@ -192,8 +192,8 @@ public class DirectorioActivo
             environment.put( Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory" );
             environment.put( Context.PROVIDER_URL, _url );
             environment.put( Context.SECURITY_AUTHENTICATION, _connType );
-            environment.put( Context.SECURITY_PRINCIPAL, String.format( "cn=%s," + _directory, user.getCorreo() ) );
-            environment.put( Context.SECURITY_CREDENTIALS, user.getContrasena() );
+            environment.put( Context.SECURITY_PRINCIPAL, String.format( "cn=%s," + _directory, user.get_correo() ) );
+            environment.put( Context.SECURITY_CREDENTIALS, user.get_contrasena() );
             _ldapContext = new InitialDirContext( environment );
 
         }
@@ -221,7 +221,7 @@ public class DirectorioActivo
             SearchControls searcCon = new SearchControls();
             searcCon.setSearchScope( SearchControls.SUBTREE_SCOPE );
             NamingEnumeration results =
-                    _ldapContext.search( _directory, String.format(_userDirectory, user.getCorreo()), searcCon );
+                    _ldapContext.search( _directory, String.format(_userDirectory, user.get_correo()), searcCon );
 
             if ( results != null )
             {

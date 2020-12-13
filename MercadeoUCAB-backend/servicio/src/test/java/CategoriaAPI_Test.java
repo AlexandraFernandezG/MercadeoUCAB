@@ -75,11 +75,11 @@ public class CategoriaAPI_Test {
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
         CategoriaDto categoriaDto = new CategoriaDto();
         
-        categoriaDto.setNombre("Jabones express");
+        categoriaDto.set_nombre("Jabones express");
         categoriaDto.set_descripcion("Jabones rapidos");
         categoriaDto.set_estatus("Inactivo");
         CategoriaDto resultado = servicio.addCategoria(categoriaDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        Assert.assertNotEquals( resultado.get_id(), 0 );
     }
 
     //Modificar estatus de la categoria
@@ -99,7 +99,7 @@ public class CategoriaAPI_Test {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
         CategoriaDto categoriaDto = new CategoriaDto();
-        categoriaDto.setNombre("Comida");
+        categoriaDto.set_nombre("Comida");
         categoriaDto.set_descripcion("Perros calientes de arandanos");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarCategoria(1L,categoriaDto);

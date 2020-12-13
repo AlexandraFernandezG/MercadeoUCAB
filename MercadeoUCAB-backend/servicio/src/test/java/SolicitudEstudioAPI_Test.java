@@ -94,7 +94,7 @@ public class SolicitudEstudioAPI_Test {
         solicitudEstudioDto.set_nivelEconomicoDto(nivelEconomicoDto);
 
         SolicitudEstudioDto resultado = servicio.addSolicitudEstudio(solicitudEstudioDto);
-        Assert.assertNotEquals(resultado.getId(), 0);
+        Assert.assertNotEquals(resultado.get_id(), 0);
     }
 
     //Prueba actualizar estatus de una solicitud

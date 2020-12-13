@@ -64,7 +64,7 @@ public class TipoAPI_Test {
         ProductoDto productoDto = new ProductoDto(1L);
         tipoDto.set_productoDto(productoDto);
         TipoDto resultado = servicio.addTipo(tipoDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        Assert.assertNotEquals( resultado.get_id(), 0 );
 
     }
 

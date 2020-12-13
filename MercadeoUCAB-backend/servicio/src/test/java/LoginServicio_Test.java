@@ -7,8 +7,8 @@ public class LoginServicio_Test {
     @Test
     public void loginTest(){
         UsuarioDto usuarioDto = new UsuarioDto();
-        usuarioDto.setCorreo( "greggspinetti@gmail.com" );
-        usuarioDto.setContrasena( "otraclave" );
+        usuarioDto.set_correo( "greggspinetti@gmail.com" );
+        usuarioDto.set_contrasena( "otraclave" );
         usuarioDto.set_estatus("Activo");
         RolDto rol = new RolDto();
         rol.set_nombre("Administrador");

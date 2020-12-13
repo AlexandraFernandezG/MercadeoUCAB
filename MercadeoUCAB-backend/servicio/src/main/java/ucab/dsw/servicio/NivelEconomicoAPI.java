@@ -66,10 +66,10 @@ public class NivelEconomicoAPI extends AplicacionBase{
             DaoNivelEconomico daoNivelEconomico = new DaoNivelEconomico();
             NivelEconomico nivelEconomico = new NivelEconomico();
 
-            nivelEconomico.setDescripcion(nivelEconomicoDto.getDescripcion());
+            nivelEconomico.set_descripcion(nivelEconomicoDto.getDescripcion());
             nivelEconomico.set_estatus(nivelEconomicoDto.get_estatus());
             NivelEconomico resul = daoNivelEconomico.insert(nivelEconomico);
-            resultado.setId(resul.get_id());
+            resultado.set_id(resul.get_id());
 
         } catch (Exception ex){
 
@@ -97,7 +97,7 @@ public class NivelEconomicoAPI extends AplicacionBase{
 
             try {
 
-                nivelEconomico_modificar.setDescripcion(nivelEconomicoDto.getDescripcion());
+                nivelEconomico_modificar.set_descripcion(nivelEconomicoDto.getDescripcion());
                 nivelEconomico_modificar.set_estatus(nivelEconomicoDto.get_estatus());
                 daoNivelEconomico.update(nivelEconomico_modificar);
 

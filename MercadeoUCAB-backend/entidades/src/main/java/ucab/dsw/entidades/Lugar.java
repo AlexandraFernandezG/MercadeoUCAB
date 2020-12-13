@@ -28,38 +28,39 @@ public class Lugar extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
-        return _nombre;
-    }
 
-    public String getTipo() {
-        return _tipo;
-    }
-
-    public String getCategoriaSocioEconomica() {
-        return _categoriaSocioEconomica;
-    }
-
-    public Lugar getLugar() {
+    public ucab.dsw.entidades.Lugar get_lugar() {
         return _lugar;
     }
 
-    public void setNombre(String _nombre) {
-        this._nombre = _nombre;
+    public void set_lugar(ucab.dsw.entidades.Lugar _lugar) {
+        this._lugar = _lugar;
     }
 
-    public void setTipo(String _tipo) {
-        this._tipo = _tipo;
+    public String get_categoriaSocioEconomica() {
+        return _categoriaSocioEconomica;
     }
 
-    public void setCategoriaSocioEconomica(String _categoriaSocioEconomica) {
+    public void set_categoriaSocioEconomica(String _categoriaSocioEconomica) {
         this._categoriaSocioEconomica = _categoriaSocioEconomica;
     }
 
-    public void setLugar(Lugar _lugar) {
-        this._lugar = _lugar;
+    public String get_tipo() {
+        return _tipo;
     }
-    
+
+    public void set_tipo(String _tipo) {
+        this._tipo = _tipo;
+    }
+
+    public String get_nombre() {
+        return _nombre;
+    }
+
+    public void set_nombre(String _nombre) {
+        this._nombre = _nombre;
+    }
+
     public Lugar (long id){
         super(id);
     }

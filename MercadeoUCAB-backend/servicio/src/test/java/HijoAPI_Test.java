@@ -61,7 +61,7 @@ public class HijoAPI_Test {
         InformacionDto informacionDto = new InformacionDto(1L);
         hijoDto.set_informacionDto(informacionDto);
         HijoDto resultado = servicio.addHijo(hijoDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        Assert.assertNotEquals( resultado.get_id(), 0 );
 
     }
 

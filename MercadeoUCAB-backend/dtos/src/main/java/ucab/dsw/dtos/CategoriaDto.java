@@ -10,11 +10,11 @@ public class CategoriaDto extends DtoBase{
         return _descripcion;
     }
 
-    public String getNombre() {
+    public String get_nombre() {
         return _nombre;
     }
 
-    public void setNombre(String _nombre) {
+    public void set_nombre(String _nombre) {
         this._nombre = _nombre;
     }
 

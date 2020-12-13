@@ -74,124 +74,125 @@ public class Informacion extends EntidadBase {
     
     //Getters, Setters, y otros metodos.
 
-    public int getCedula() {
-        return _cedula;
-    }
-
-    public String getPrimerNombre() {
-        return _primerNombre;
-    }
-
-    public String getSegundoNombre() {
-        return _segundoNombre;
-    }
-
-    public String getPrimerApellido() {
-        return _primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return _segundoApellido;
-    }
-
-    public String getGenero() {
-        return _genero;
-    }
-
-    public Date getFechaNacimiento() {
-        return _fechaNacimiento;
-    }
-
-    public String getEstadoCivil() {
-        return _estadoCivil;
-    }
-
-    public String getDisponibilidadEnLinea() {
-        return _disponibilidadEnLinea;
-    }
-
-    public int getCantidadPersonas() {
-        return _cantidadPersonas;
-    }
-
-    public Lugar getLugar() {
-        return _lugar;
-    }
-
-    public NivelAcademico getNivelAcademico() {
-        return _nivelAcademico;
-    }
-
-    public Ocupacion getOcupacion() {
-        return _ocupacion;
-    }
-
-    public NivelEconomico getNivelEconomico() {
-        return _nivelEconomico;
-    }
 
     public Usuario get_usuario() {
         return _usuario;
     }
 
-    public void setCedula(int _cedula) {
-        this._cedula = _cedula;
+    public void set_usuario(Usuario _usuario) {
+        this._usuario = _usuario;
     }
 
-    public void setPrimerNombre(String _primerNombre) {
-        this._primerNombre = _primerNombre;
+    public NivelEconomico get_nivelEconomico() {
+        return _nivelEconomico;
     }
 
-    public void setSegundoNombre(String _segundoNombre) {
-        this._segundoNombre = _segundoNombre;
-    }
-
-    public void setPrimerApellido(String _primerApellido) {
-        this._primerApellido = _primerApellido;
-    }
-
-    public void setSegundoApellido(String _segundoApellido) {
-        this._segundoApellido = _segundoApellido;
-    }
-
-    public void setGenero(String _genero) {
-        this._genero = _genero;
-    }
-
-    public void setFechaNacimiento(Date _fechaNacimiento) {
-        this._fechaNacimiento = _fechaNacimiento;
-    }
-
-    public void setEstadoCivil(String _estadoCivil) {
-        this._estadoCivil = _estadoCivil;
-    }
-
-    public void setDisponibilidadEnLinea(String _disponibilidadEnLinea) {
-        this._disponibilidadEnLinea = _disponibilidadEnLinea;
-    }
-
-    public void setCantidadPersonas(int _cantidadPersonas) {
-        this._cantidadPersonas = _cantidadPersonas;
-    }
-
-    public void setLugar(Lugar _lugar) {
-        this._lugar = _lugar;
-    }
-
-    public void setNivelAcademico(NivelAcademico _nivelAcademico) {
-        this._nivelAcademico = _nivelAcademico;
-    }
-
-    public void setOcupacion(Ocupacion _ocupacion) {
-        this._ocupacion = _ocupacion;
-    }
-
-    public void setNivelEconomico(NivelEconomico _nivelEconomico) {
+    public void set_nivelEconomico(NivelEconomico _nivelEconomico) {
         this._nivelEconomico = _nivelEconomico;
     }
 
-    public void set_usuario(Usuario _usuario) {
-        this._usuario = _usuario;
+    public Ocupacion get_ocupacion() {
+        return _ocupacion;
+    }
+
+    public void set_ocupacion(Ocupacion _ocupacion) {
+        this._ocupacion = _ocupacion;
+    }
+
+    public NivelAcademico get_nivelAcademico() {
+        return _nivelAcademico;
+    }
+
+    public void set_nivelAcademico(NivelAcademico _nivelAcademico) {
+        this._nivelAcademico = _nivelAcademico;
+    }
+
+    public Lugar get_lugar() {
+        return _lugar;
+    }
+
+    public void set_lugar(Lugar _lugar) {
+        this._lugar = _lugar;
+    }
+
+    public int get_cantidadPersonas() {
+        return _cantidadPersonas;
+    }
+
+    public void set_cantidadPersonas(int _cantidadPersonas) {
+        this._cantidadPersonas = _cantidadPersonas;
+    }
+
+    public String get_disponibilidadEnLinea() {
+        return _disponibilidadEnLinea;
+    }
+
+    public void set_disponibilidadEnLinea(String _disponibilidadEnLinea) {
+        this._disponibilidadEnLinea = _disponibilidadEnLinea;
+    }
+
+    public String get_estadoCivil() {
+        return _estadoCivil;
+    }
+
+    public void set_estadoCivil(String _estadoCivil) {
+        this._estadoCivil = _estadoCivil;
+    }
+
+    public Date get_fechaNacimiento() {
+        return _fechaNacimiento;
+    }
+
+    public void set_fechaNacimiento(Date _fechaNacimiento) {
+        this._fechaNacimiento = _fechaNacimiento;
+    }
+
+    public String get_genero() {
+        return _genero;
+    }
+
+    public void set_genero(String _genero) {
+        this._genero = _genero;
+    }
+
+    public String get_segundoApellido() {
+        return _segundoApellido;
+    }
+
+    public void set_segundoApellido(String _segundoApellido) {
+        this._segundoApellido = _segundoApellido;
+    }
+
+    public String get_primerApellido() {
+        return _primerApellido;
+    }
+
+    public void set_primerApellido(String _primerApellido) {
+        this._primerApellido = _primerApellido;
+    }
+
+    public String get_segundoNombre() {
+        return _segundoNombre;
+    }
+
+    public void set_segundoNombre(String _segundoNombre) {
+        this._segundoNombre = _segundoNombre;
+    }
+
+    public String get_primerNombre() {
+        return _primerNombre;
+    }
+
+    public void set_primerNombre(String _primerNombre) {
+        this._primerNombre = _primerNombre;
+    }
+
+    public int get_cedula() {
+        return _cedula;
+    }
+
+    public void set_cedula(int _cedula) {
+        this._cedula = _cedula;
     }
 
     public Informacion (String estatus) {

@@ -70,7 +70,7 @@ public class ProductoAPI_Test {
         productoDto.setSubcategoriaDto(subcategoriaDto);
         productoDto.setMarcaDto(marcaDto);
         ProductoDto resultado = servicio.addProducto(productoDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        Assert.assertNotEquals( resultado.get_id(), 0 );
 
     }
 

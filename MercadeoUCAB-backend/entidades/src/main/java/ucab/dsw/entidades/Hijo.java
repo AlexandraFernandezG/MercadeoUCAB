@@ -25,30 +25,31 @@ public class Hijo extends EntidadBase{
     
     ////Getters, Setters, y otros metodos.
 
-    public Date getFechaNacimiento() {
-        return _fechaNacimiento;
-    }
 
-    public String getGenero() {
-        return _genero;
-    }
-
-    public Informacion getInformacion() {
+    public Informacion get_informacion() {
         return _informacion;
     }
 
-    public void setFechaNacimiento(Date _fechaNacimiento) {
-        this._fechaNacimiento = _fechaNacimiento;
+    public void set_informacion(Informacion _informacion) {
+        this._informacion = _informacion;
     }
 
-    public void setGenero(String _genero) {
+    public String get_genero() {
+        return _genero;
+    }
+
+    public void set_genero(String _genero) {
         this._genero = _genero;
     }
 
-    public void setInformacion(Informacion _informacion) {
-        this._informacion = _informacion;
+    public Date get_fechaNacimiento() {
+        return _fechaNacimiento;
     }
-    
+
+    public void set_fechaNacimiento(Date _fechaNacimiento) {
+        this._fechaNacimiento = _fechaNacimiento;
+    }
+
     public Hijo (long id){
         super(id);
     }

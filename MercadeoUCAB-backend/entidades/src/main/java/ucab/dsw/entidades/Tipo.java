@@ -24,28 +24,29 @@ public class Tipo extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
-        return _nombre;
-    }
 
-    public String getDescripcion() {
-        return _descripcion;
-    }
-
-    public Producto getProducto() {
+    public Producto get_producto() {
         return _producto;
     }
 
-    public void setNombre(String _nombre) {
-        this._nombre = _nombre;
+    public void set_producto(Producto _producto) {
+        this._producto = _producto;
     }
 
-    public void setDescripcion(String _descripcion) {
+    public String get_descripcion() {
+        return _descripcion;
+    }
+
+    public void set_descripcion(String _descripcion) {
         this._descripcion = _descripcion;
     }
 
-    public void setProducto(Producto _producto) {
-        this._producto = _producto;
+    public String get_nombre() {
+        return _nombre;
+    }
+
+    public void set_nombre(String _nombre) {
+        this._nombre = _nombre;
     }
 
     public Tipo (String estatus) {

@@ -27,18 +27,18 @@ public class Categoria extends EntidadBase{
         return _descripcion;
     }
 
-    public String getNombre() {
-        return _nombre;
-    }
-
-    public void setNombre(String _nombre) {
-        this._nombre = _nombre;
-    }
-
     public void set_descripcion(String _descripcion) {
         this._descripcion = _descripcion;
     }
-    
+
+    public String get_nombre() {
+        return _nombre;
+    }
+
+    public void set_nombre(String _nombre) {
+        this._nombre = _nombre;
+    }
+
     public Categoria (long id){
         super(id);
     }

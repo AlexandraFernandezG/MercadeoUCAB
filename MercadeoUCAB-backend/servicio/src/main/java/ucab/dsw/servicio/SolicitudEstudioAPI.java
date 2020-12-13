@@ -106,18 +106,18 @@ public class SolicitudEstudioAPI extends AplicacionBase{
             solicitudEstudio.set_edadMinimaHijos(solicitudEstudioDto.get_edadMinimaHijos());
             solicitudEstudio.set_edadMaximaHijos(solicitudEstudioDto.get_edadMaximaHijos());
             solicitudEstudio.set_estatus(solicitudEstudioDto.get_estatus());
-            NivelEconomico nivelEconomico = new NivelEconomico(solicitudEstudioDto.get_nivelEconomicoDto().getId());
-            Usuario usuario = new Usuario(solicitudEstudioDto.get_usuarioDto().getId());
-            Producto producto = new Producto(solicitudEstudioDto.get_productoDto().getId());
-            Ocupacion ocupacion = new Ocupacion(solicitudEstudioDto.get_ocupacionDto().getId());
-            NivelAcademico nivelAcademico = new NivelAcademico(solicitudEstudioDto.get_nivelAcademicoDto().getId());
+            NivelEconomico nivelEconomico = new NivelEconomico(solicitudEstudioDto.get_nivelEconomicoDto().get_id());
+            Usuario usuario = new Usuario(solicitudEstudioDto.get_usuarioDto().get_id());
+            Producto producto = new Producto(solicitudEstudioDto.get_productoDto().get_id());
+            Ocupacion ocupacion = new Ocupacion(solicitudEstudioDto.get_ocupacionDto().get_id());
+            NivelAcademico nivelAcademico = new NivelAcademico(solicitudEstudioDto.get_nivelAcademicoDto().get_id());
             solicitudEstudio.set_nivelEconomico(nivelEconomico);
             solicitudEstudio.set_usuario(usuario);
             solicitudEstudio.set_producto(producto);
             solicitudEstudio.set_ocupacion(ocupacion);
             solicitudEstudio.set_nivelAcademico(nivelAcademico);
             SolicitudEstudio resul = daoSolicitudEstudio.insert(solicitudEstudio);
-            resultado.setId(resul.get_id());
+            resultado.set_id(resul.get_id());
 
         } catch (Exception ex){
 
@@ -155,7 +155,7 @@ public class SolicitudEstudioAPI extends AplicacionBase{
 
                     for (Estudio estudio : listaEstudio) {
 
-                        if (estudio.getSolicitudEstudio().get_id() == id) {
+                        if (estudio.get_solicitudEstudio().get_id() == id) {
                             estudio.set_estatus("Inactivo");
                             daoEstudio.update(estudio);
                         }
@@ -166,7 +166,7 @@ public class SolicitudEstudioAPI extends AplicacionBase{
 
                     for (Estudio estudio : listaEstudio) {
 
-                        if (estudio.getSolicitudEstudio().get_id() == id) {
+                        if (estudio.get_solicitudEstudio().get_id() == id) {
                             estudio.set_estatus("Activo");
                             daoEstudio.update(estudio);
                         }

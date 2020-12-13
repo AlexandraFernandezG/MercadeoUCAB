@@ -8,12 +8,12 @@ public class DirectorioActivo_Test {
     public void createUserLDAP()
     {
         UsuarioDto user = new UsuarioDto();
-        user.setCorreo( "greggspinetti@gmail.com" );
-        user.setContrasena( "1234abcd" );
+        user.set_correo( "greggspinetti@gmail.com" );
+        user.set_contrasena( "1234abcd" );
         user.set_estatus("Activo");
         RolDto rol = new RolDto();
         rol.set_nombre("Administrador");
-        user.setRol(rol);
+        user.set_rol(rol);
         DirectorioActivo ldap = new DirectorioActivo();
         ldap.addEntryToLdap( user );
     }
@@ -22,7 +22,7 @@ public class DirectorioActivo_Test {
     public void deleteUserLDAP()
     {
         UsuarioDto user = new UsuarioDto();
-        user.setCorreo( "greggspinetti@gmail.com" );
+        user.set_correo( "greggspinetti@gmail.com" );
         DirectorioActivo ldap = new DirectorioActivo();
         ldap.deleteEntry( user );
     }
@@ -31,7 +31,7 @@ public class DirectorioActivo_Test {
     public void getUserLDAP()
     {
         UsuarioDto user = new UsuarioDto();
-        user.setCorreo( "greggspinetti@gmail.com" );
+        user.set_correo( "greggspinetti@gmail.com" );
         DirectorioActivo ldap = new DirectorioActivo();
         ldap.getEntry( user );
     }
@@ -40,8 +40,8 @@ public class DirectorioActivo_Test {
     public void changePassword()
     {
         UsuarioDto user = new UsuarioDto();
-        user.setCorreo( "greggspinetti@gmail.com" );
-        user.setContrasena( "otraclave" );
+        user.set_correo( "greggspinetti@gmail.com" );
+        user.set_contrasena( "otraclave" );
         DirectorioActivo ldap = new DirectorioActivo();
         ldap.changePassword( user );
     }
@@ -50,8 +50,8 @@ public class DirectorioActivo_Test {
     public void userAuthentication()
     {
         UsuarioDto user = new UsuarioDto();
-        user.setCorreo( "greggspinetti@gmail.com" );
-        user.setContrasena( "otraclave" );
+        user.set_correo( "greggspinetti@gmail.com" );
+        user.set_contrasena( "otraclave" );
         DirectorioActivo ldap = new DirectorioActivo();
         ldap.userAuthentication( user );
     }
@@ -60,8 +60,8 @@ public class DirectorioActivo_Test {
     public void userRole()
     {
         UsuarioDto user = new UsuarioDto();
-        user.setCorreo( "greggspinetti@gmail.com" );
-        user.setContrasena( "otraclave" );
+        user.set_correo( "greggspinetti@gmail.com" );
+        user.set_contrasena( "otraclave" );
         DirectorioActivo ldap = new DirectorioActivo();
         ldap.getEntryRole( user );
     }

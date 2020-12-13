@@ -66,7 +66,7 @@ public class RespuestaPreguntaAPI_Test {
         PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1L);
         respuestaPreguntaDto.set_preguntaEncuestaDto(preguntaEncuestaDto);
         RespuestaPreguntaDto resultado = servicio.addRespuestaPregunta(respuestaPreguntaDto);
-        Assert.assertNotEquals(resultado.getId(), 0);
+        Assert.assertNotEquals(resultado.get_id(), 0);
     }
 
     // Esta prueba permite actualizar el estatus

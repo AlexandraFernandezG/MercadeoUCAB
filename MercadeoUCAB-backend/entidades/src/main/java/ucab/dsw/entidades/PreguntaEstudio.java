@@ -20,22 +20,23 @@ public class PreguntaEstudio extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public Estudio getEstudio() {
-        return _estudio;
-    }
 
-    public PreguntaEncuesta getPreguntaEncuesta() {
+    public PreguntaEncuesta get_preguntaEncuesta() {
         return _preguntaEncuesta;
     }
 
-    public void setEstudio(Estudio _estudio) {
+    public void set_preguntaEncuesta(PreguntaEncuesta _preguntaEncuesta) {
+        this._preguntaEncuesta = _preguntaEncuesta;
+    }
+
+    public Estudio get_estudio() {
+        return _estudio;
+    }
+
+    public void set_estudio(Estudio _estudio) {
         this._estudio = _estudio;
     }
 
-    public void setPreguntaEncuesta(PreguntaEncuesta _preguntaEncuesta) {
-        this._preguntaEncuesta = _preguntaEncuesta;
-    }
-    
     public PreguntaEstudio (long id){
         super(id);
     }

@@ -97,17 +97,17 @@ public class ProductoAPI extends AplicacionBase{
             DaoProducto daoProducto = new DaoProducto();
             Producto producto = new Producto();
 
-            producto.setNombre(productoDto.getNombre());
-            producto.setDescripcion(productoDto.getDescripcion());
+            producto.set_nombre(productoDto.getNombre());
+            producto.set_descripcion(productoDto.getDescripcion());
             producto.set_estatus(productoDto.get_estatus());
-            Usuario usuario = new Usuario(productoDto.getUsuarioDto().getId());
-            Subcategoria subcategoria = new Subcategoria(productoDto.getSubcategoriaDto().getId());
-            Marca marca = new Marca(productoDto.getMarcaDto().getId());
-            producto.setUsuario(usuario);
-            producto.setSubcategoria(subcategoria);
-            producto.setMarca(marca);
+            Usuario usuario = new Usuario(productoDto.getUsuarioDto().get_id());
+            Subcategoria subcategoria = new Subcategoria(productoDto.getSubcategoriaDto().get_id());
+            Marca marca = new Marca(productoDto.getMarcaDto().get_id());
+            producto.set_usuario(usuario);
+            producto.set_subcategoria(subcategoria);
+            producto.set_marca(marca);
             Producto resul = daoProducto.insert(producto);
-            resultado.setId(resul.get_id());
+            resultado.set_id(resul.get_id());
 
         } catch (Exception ex){
 
@@ -147,7 +147,7 @@ public class ProductoAPI extends AplicacionBase{
 
                     for (Tipo tipo : listaTipo) {
 
-                        if (tipo.getProducto().get_id() == id) {
+                        if (tipo.get_producto().get_id() == id) {
                             tipo.set_estatus("Inactivo");
                             daoTipo.update(tipo);
                         }
@@ -155,7 +155,7 @@ public class ProductoAPI extends AplicacionBase{
 
                     for (Presentacion presentacion : listaPresentacion) {
 
-                        if (presentacion.getProducto().get_id() == id) {
+                        if (presentacion.get_producto().get_id() == id) {
                             presentacion.set_estatus("Inactivo");
                             daoPresentacion.update(presentacion);
                         }
@@ -168,7 +168,7 @@ public class ProductoAPI extends AplicacionBase{
 
                     for (Tipo tipo : listaTipo) {
 
-                        if (tipo.getProducto().get_id() == id) {
+                        if (tipo.get_producto().get_id() == id) {
                             tipo.set_estatus("Activo");
                             daoTipo.update(tipo);
                         }
@@ -176,7 +176,7 @@ public class ProductoAPI extends AplicacionBase{
 
                     for (Presentacion presentacion : listaPresentacion) {
 
-                        if (presentacion.getProducto().get_id() == id) {
+                        if (presentacion.get_producto().get_id() == id) {
                             presentacion.set_estatus("Activo");
                             daoPresentacion.update(presentacion);
                         }
@@ -210,8 +210,8 @@ public class ProductoAPI extends AplicacionBase{
 
             try {
 
-                producto_modificar.setNombre(productoDto.getNombre());
-                producto_modificar.setDescripcion(productoDto.getDescripcion());
+                producto_modificar.set_nombre(productoDto.getNombre());
+                producto_modificar.set_descripcion(productoDto.getDescripcion());
                 daoProducto.update(producto_modificar);
 
             } catch (Exception ex){

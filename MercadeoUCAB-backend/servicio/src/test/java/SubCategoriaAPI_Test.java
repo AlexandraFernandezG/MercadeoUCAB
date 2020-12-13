@@ -62,7 +62,7 @@ public class SubCategoriaAPI_Test {
         CategoriaDto categoriaDto = new CategoriaDto(2);
         subcategoriaDto.setCategoriaDto(categoriaDto);
         SubcategoriaDto resultado = servicio.addSubCategoria(subcategoriaDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        Assert.assertNotEquals( resultado.get_id(), 0 );
     }
 
     // Esta prueba permite actualizar el estatus de una subcategoria

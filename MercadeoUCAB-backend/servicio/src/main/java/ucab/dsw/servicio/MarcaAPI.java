@@ -102,7 +102,7 @@ public class MarcaAPI extends AplicacionBase{
             marca.set_descripcion(marcaDto.get_descripcion());
             daoMarca.insert(marca);
             Marca resul = daoMarca.insert(marca);
-            resultado.setId(resul.get_id());
+            resultado.set_id(resul.get_id());
 
         } catch (Exception ex){
 

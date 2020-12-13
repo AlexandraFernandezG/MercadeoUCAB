@@ -65,7 +65,7 @@ public class PresentacionAPI_Test {
         ProductoDto productoDto = new ProductoDto(1L);
         presentacionDto.set_productoDto(productoDto);
         PresentacionDto resultado = servicio.addPresentacion(presentacionDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        Assert.assertNotEquals( resultado.get_id(), 0 );
 
     }
 

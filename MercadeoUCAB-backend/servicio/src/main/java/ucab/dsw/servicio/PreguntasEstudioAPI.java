@@ -35,9 +35,9 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
             for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
 
-                if (preguntaEstudio.getEstudio().get_id() == id) {
+                if (preguntaEstudio.get_estudio().get_id() == id) {
 
-                    long idFk = preguntaEstudio.getPreguntaEncuesta().get_id();
+                    long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
                     DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
                     PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
                     listaPreguntasEstudio.add(preguntaEncuesta);
@@ -68,12 +68,12 @@ public class PreguntasEstudioAPI extends AplicacionBase {
                 PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
 
                 preguntaEstudio.set_estatus("Activo/Inactivo");
-                Estudio estudio = new Estudio(preguntaEstudioDto.get_estudioDto().getId());
-                preguntaEstudio.setEstudio(estudio);
-                PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.get_preguntaEncuestaDto().getId());
-                preguntaEstudio.setPreguntaEncuesta(preguntaEncuesta);
+                Estudio estudio = new Estudio(preguntaEstudioDto.get_estudioDto().get_id());
+                preguntaEstudio.set_estudio(estudio);
+                PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.get_preguntaEncuestaDto().get_id());
+                preguntaEstudio.set_preguntaEncuesta(preguntaEncuesta);
                 PreguntaEstudio resul = daoPreguntaEstudio.insert(preguntaEstudio);
-                resultado.setId(resul.get_id());
+                resultado.set_id(resul.get_id());
 
             } catch (Exception ex){
 

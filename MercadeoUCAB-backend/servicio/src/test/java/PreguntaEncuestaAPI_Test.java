@@ -65,7 +65,7 @@ public class PreguntaEncuestaAPI_Test {
         preguntaEncuestaDto.set_usuarioDto(usuarioDto);
         preguntaEncuestaDto.set_subcategoriaDto(subcategoriaDto);
         PreguntaEncuestaDto resultado = servicio.addPreguntaEncuesta(preguntaEncuestaDto);
-        Assert.assertNotEquals(resultado.getId(), 0);
+        Assert.assertNotEquals(resultado.get_id(), 0);
     }
 
     // Esta prueba permite actualizar el estatus de Pregunta

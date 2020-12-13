@@ -46,7 +46,7 @@ public class OcupacionAPI_Test {
         ocupacionDto.set_nombre("Medico");
         ocupacionDto.set_estatus("Activo");
         OcupacionDto resultado = servicio.addOcupacion(ocupacionDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        Assert.assertNotEquals( resultado.get_id(), 0 );
 
     }
 
