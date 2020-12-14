@@ -142,4 +142,12 @@ public class InformacionDto extends DtoBase {
     public InformacionDto (){
         super();
     }
+
+    public OcupacionDto getOcupacionDto() {
+        return _ocupacionDto;
+    }
+
+    public void setOcupacionDto(OcupacionDto _ocupacionDto) {
+        this._ocupacionDto = _ocupacionDto;
+    }
 }
