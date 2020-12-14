@@ -56,16 +56,16 @@ public class PreguntaEncuestaAPI_Test {
         ucab.dsw.servicio.PreguntaEncuestaAPI servicio = new ucab.dsw.servicio.PreguntaEncuestaAPI();
         PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto();
 
-        preguntaEncuestaDto.set_descripcion("Que te parece los perros calientes de arandanos?");
-        preguntaEncuestaDto.set_tipoPregunta("Desarrollo");
-        preguntaEncuestaDto.set_estatus("Activo");
+        preguntaEncuestaDto.setDescripcion("Que te parece los perros calientes de arandanos?");
+        preguntaEncuestaDto.setTipoPregunta("Desarrollo");
+        preguntaEncuestaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         UsuarioDto usuarioDto = new UsuarioDto(1L);
         SubcategoriaDto subcategoriaDto = new SubcategoriaDto(5L);
-        preguntaEncuestaDto.set_usuarioDto(usuarioDto);
-        preguntaEncuestaDto.set_subcategoriaDto(subcategoriaDto);
+        preguntaEncuestaDto.setUsuarioDto(usuarioDto);
+        preguntaEncuestaDto.setSubcategoriaDto(subcategoriaDto);
         PreguntaEncuestaDto resultado = servicio.addPreguntaEncuesta(preguntaEncuestaDto);
-        Assert.assertNotEquals(resultado.get_id(), 0);
+        Assert.assertNotEquals(resultado.getId(), 0);
     }
 
     // Esta prueba permite actualizar el estatus de Pregunta
@@ -74,7 +74,7 @@ public class PreguntaEncuestaAPI_Test {
 
         ucab.dsw.servicio.PreguntaEncuestaAPI servicio = new ucab.dsw.servicio.PreguntaEncuestaAPI();
         PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto();
-        preguntaEncuestaDto.set_estatus("Activo");
+        preguntaEncuestaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarPreguntaEncuesta(1L, preguntaEncuestaDto);
     }
@@ -85,8 +85,8 @@ public class PreguntaEncuestaAPI_Test {
 
         ucab.dsw.servicio.PreguntaEncuestaAPI servicio = new ucab.dsw.servicio.PreguntaEncuestaAPI();
         PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto();
-        preguntaEncuestaDto.set_descripcion("Que te parece los perros calientes de arandanos?");
-        preguntaEncuestaDto.set_tipoPregunta("Desarrollo");
+        preguntaEncuestaDto.setDescripcion("Que te parece los perros calientes de arandanos?");
+        preguntaEncuestaDto.setTipoPregunta("Desarrollo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarPreguntaEncuesta(1L, preguntaEncuestaDto);
 

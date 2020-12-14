@@ -8,19 +8,19 @@ public class TelefonoDto extends DtoBase {
     private int _numero;
     private InformacionDto _informacion;
 
-    public int get_numero() {
+    public int getNumero() {
         return _numero;
     }
 
-    public void set_numero(int _numero) {
+    public void setNumero(int _numero) {
         this._numero = _numero;
     }
 
-    public InformacionDto get_informacion() {
+    public InformacionDto getInformacion() {
         return _informacion;
     }
 
-    public void set_informacion(InformacionDto _informacion) {
+    public void setInformacion(InformacionDto _informacion) {
         this._informacion = _informacion;
     }
 

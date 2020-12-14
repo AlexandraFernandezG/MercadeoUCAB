@@ -70,13 +70,13 @@ public class HijoAPI extends AplicacionBase{
             DaoHijo daoHijo = new DaoHijo();
             Hijo hijo = new Hijo();
 
-            hijo.set_fechaNacimiento(hijoDto.get_fechaNacimiento());
-            hijo.set_genero(hijoDto.get_genero());
+            hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
+            hijo.set_genero(hijoDto.getGenero());
             hijo.set_estatus("Activo");
-            Informacion informacion = new Informacion(hijoDto.get_informacionDto().get_id());
+            Informacion informacion = new Informacion(hijoDto.get_informacionDto().getId());
             hijo.set_informacion(informacion);
             Hijo resul = daoHijo.insert(hijo);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -106,8 +106,8 @@ public class HijoAPI extends AplicacionBase{
 
             try {
 
-                hijo_modificar.set_fechaNacimiento(hijoDto.get_fechaNacimiento());
-                hijo_modificar.set_genero(hijoDto.get_genero());
+                hijo_modificar.set_fechaNacimiento(hijoDto.getFechaNacimiento());
+                hijo_modificar.set_genero(hijoDto.getGenero());
                 hijo_modificar.set_estatus("Activo");
                 daoHijo.update(hijo_modificar);
 

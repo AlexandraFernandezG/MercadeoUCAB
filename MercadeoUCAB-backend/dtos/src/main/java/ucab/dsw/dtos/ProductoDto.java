@@ -1,7 +1,7 @@
 package ucab.dsw.dtos;
 
 public class ProductoDto extends DtoBase{
-    
+
     private String _nombre;
     private String _descripcion;
     private UsuarioDto _usuarioDto;
@@ -59,5 +59,5 @@ public class ProductoDto extends DtoBase{
     public ProductoDto (){
         super();
     }
-    
+
 }

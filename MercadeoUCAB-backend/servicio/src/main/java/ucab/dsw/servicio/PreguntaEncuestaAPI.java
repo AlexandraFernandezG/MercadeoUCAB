@@ -96,15 +96,15 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
             DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
             PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta();
 
-            preguntaEncuesta.set_descripcion(preguntaEncuestaDto.get_descripcion());
-            preguntaEncuesta.set_tipoPregunta(preguntaEncuestaDto.get_tipoPregunta());
-            preguntaEncuesta.set_estatus(preguntaEncuestaDto.get_estatus());
-            Usuario usuario = new Usuario(preguntaEncuestaDto.get_usuarioDto().get_id());
+            preguntaEncuesta.set_descripcion(preguntaEncuestaDto.getDescripcion());
+            preguntaEncuesta.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
+            preguntaEncuesta.set_estatus(preguntaEncuestaDto.getEstatus());
+            Usuario usuario = new Usuario(preguntaEncuestaDto.getUsuarioDto().getId());
             preguntaEncuesta.set_usuario(usuario);
-            Subcategoria subcategoria = new Subcategoria(preguntaEncuestaDto.get_subcategoriaDto().get_id());
+            Subcategoria subcategoria = new Subcategoria(preguntaEncuestaDto.getSubcategoriaDto().getId());
             preguntaEncuesta.set_subcategoria(subcategoria);
             PreguntaEncuesta resul = daoPreguntaEncuesta.insert(preguntaEncuesta);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -132,7 +132,7 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
             try {
 
-                preguntaEncuesta_modificar.set_estatus(preguntaEncuestaDto.get_estatus());
+                preguntaEncuesta_modificar.set_estatus(preguntaEncuestaDto.getEstatus());
                 daoPreguntaEncuesta.update(preguntaEncuesta_modificar);
                 DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
 
@@ -185,8 +185,8 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
         }
 
             try {
-                preguntaEncuesta_modificar.set_descripcion(preguntaEncuestaDto.get_descripcion());
-                preguntaEncuesta_modificar.set_tipoPregunta(preguntaEncuestaDto.get_tipoPregunta());
+                preguntaEncuesta_modificar.set_descripcion(preguntaEncuestaDto.getDescripcion());
+                preguntaEncuesta_modificar.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
                 daoPreguntaEncuesta.update(preguntaEncuesta_modificar);
 
             } catch (Exception ex){

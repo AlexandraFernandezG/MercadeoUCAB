@@ -67,10 +67,10 @@ public class NivelAcademicoAPI extends AplicacionBase{
             DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
             NivelAcademico nivelAcademico = new NivelAcademico();
 
-            nivelAcademico.set_descripcion(nivelAcademicoDto.get_descripcion());
-            nivelAcademico.set_estatus(nivelAcademicoDto.get_estatus());
+            nivelAcademico.set_descripcion(nivelAcademicoDto.getDescripcion());
+            nivelAcademico.set_estatus(nivelAcademicoDto.getEstatus());
             NivelAcademico resul = daoNivelAcademico.insert(nivelAcademico);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -98,8 +98,8 @@ public class NivelAcademicoAPI extends AplicacionBase{
         }
 
                 try {
-                    nivelAcademico_modificar.set_descripcion(nivelAcademicoDto.get_descripcion());
-                    nivelAcademico_modificar.set_estatus(nivelAcademicoDto.get_estatus());
+                    nivelAcademico_modificar.set_descripcion(nivelAcademicoDto.getDescripcion());
+                    nivelAcademico_modificar.set_estatus(nivelAcademicoDto.getEstatus());
                     daoNivelAcademico.update(nivelAcademico_modificar);
 
                 } catch (Exception ex){

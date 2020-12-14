@@ -68,12 +68,12 @@ public class PreguntasEstudioAPI extends AplicacionBase {
                 PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
 
                 preguntaEstudio.set_estatus("Activo/Inactivo");
-                Estudio estudio = new Estudio(preguntaEstudioDto.get_estudioDto().get_id());
+                Estudio estudio = new Estudio(preguntaEstudioDto.getEstudioDto().getId());
                 preguntaEstudio.set_estudio(estudio);
-                PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.get_preguntaEncuestaDto().get_id());
+                PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.getPreguntaEncuestaDto().getId());
                 preguntaEstudio.set_preguntaEncuesta(preguntaEncuesta);
                 PreguntaEstudio resul = daoPreguntaEstudio.insert(preguntaEstudio);
-                resultado.set_id(resul.get_id());
+                resultado.setId(resul.get_id());
 
             } catch (Exception ex){
 
@@ -102,7 +102,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
         try {
 
-            preguntaEstudio_modificar.set_estatus(preguntaEstudioDto.get_estatus());
+            preguntaEstudio_modificar.set_estatus(preguntaEstudioDto.getEstatus());
             daoPreguntaEstudio.delete(preguntaEstudio_modificar);
 
         } catch (Exception ex){

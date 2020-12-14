@@ -43,10 +43,10 @@ public class OcupacionAPI_Test {
         ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
         OcupacionDto ocupacionDto = new OcupacionDto();
 
-        ocupacionDto.set_nombre("Medico");
-        ocupacionDto.set_estatus("Activo");
+        ocupacionDto.setNombre("Medico");
+        ocupacionDto.setEstatus("Activo");
         OcupacionDto resultado = servicio.addOcupacion(ocupacionDto);
-        Assert.assertNotEquals( resultado.get_id(), 0 );
+        Assert.assertNotEquals( resultado.getId(), 0 );
 
     }
 
@@ -57,7 +57,7 @@ public class OcupacionAPI_Test {
         ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
         OcupacionDto ocupacionDto = new OcupacionDto();
 
-        ocupacionDto.set_nombre("");
+        ocupacionDto.setNombre("");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.updateOcupacion(1L, ocupacionDto);
 

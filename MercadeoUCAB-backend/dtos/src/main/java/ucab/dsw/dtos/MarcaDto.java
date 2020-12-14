@@ -1,7 +1,7 @@
 package ucab.dsw.dtos;
 
 public class MarcaDto extends DtoBase {
-    
+
     private String _nombre;
     private String _descripcion;
 
@@ -13,11 +13,11 @@ public class MarcaDto extends DtoBase {
         this._nombre = _nombre;
     }
 
-    public String get_descripcion() {
+    public String getDescripcion() {
         return _descripcion;
     }
 
-    public void set_descripcion(String _descripcion) {
+    public void setDescripcion(String _descripcion) {
         this._descripcion = _descripcion;
     }
 

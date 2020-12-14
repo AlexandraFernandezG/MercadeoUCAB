@@ -64,10 +64,10 @@ public class OcupacionAPI extends AplicacionBase {
             DaoOcupacion daoOcupacion = new DaoOcupacion();
             Ocupacion ocupacion = new Ocupacion();
 
-            ocupacion.set_nombre(ocupacionDto.get_nombre());
-            ocupacion.set_estatus(ocupacionDto.get_estatus());
+            ocupacion.set_nombre(ocupacionDto.getNombre());
+            ocupacion.set_estatus(ocupacionDto.getEstatus());
             Ocupacion resul = daoOcupacion.insert(ocupacion);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -95,8 +95,8 @@ public class OcupacionAPI extends AplicacionBase {
 
             try {
 
-                ocupacion_modificar.set_nombre(ocupacionDto.get_nombre());
-                ocupacion_modificar.set_estatus(ocupacionDto.get_estatus());
+                ocupacion_modificar.set_nombre(ocupacionDto.getNombre());
+                ocupacion_modificar.set_estatus(ocupacionDto.getEstatus());
                 daoOcupacion.update(ocupacion_modificar);
 
             } catch (Exception ex){

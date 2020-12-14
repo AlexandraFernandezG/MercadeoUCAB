@@ -7,43 +7,43 @@ public class UsuarioDto extends DtoBase{
     private RolDto _rol;
     private String _contrasena;
 
-    public String get_contrasena() {
+    public String getContrasena() {
         return _contrasena;
     }
 
-    public void set_contrasena(String _contrasena) {
+    public void setContrasena(String _contrasena) {
         this._contrasena = _contrasena;
     }
 
-    public RolDto get_rol() {
+    public RolDto getRol() {
         return _rol;
     }
 
-    public void set_rol(RolDto _rol) {
+    public void setRol(RolDto _rol) {
         this._rol = _rol;
     }
 
-    public String get_codigoRecuperacion() {
+    public String getCodigoRecuperacion() {
         return _codigoRecuperacion;
     }
 
-    public void set_codigoRecuperacion(String _codigoRecuperacion) {
+    public void setCodigoRecuperacion(String _codigoRecuperacion) {
         this._codigoRecuperacion = _codigoRecuperacion;
     }
 
-    public String get_correo() {
+    public String getCorreo() {
         return _correo;
     }
 
-    public void set_correo(String _correo) {
+    public void setCorreo(String _correo) {
         this._correo = _correo;
     }
 
-    public String get_nombreUsuario() {
+    public String getNombreUsuario() {
         return _nombreUsuario;
     }
 
-    public void set_nombreUsuario(String _nombreUsuario) {
+    public void setNombreUsuario(String _nombreUsuario) {
         this._nombreUsuario = _nombreUsuario;
     }
 
@@ -57,7 +57,7 @@ public class UsuarioDto extends DtoBase{
 
 
     public String getNombreRol() {
-        return _rol.get_nombre();
+        return _rol.getNombre();
     }
 
     public UsuarioDto (){

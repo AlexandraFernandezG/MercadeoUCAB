@@ -94,12 +94,12 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
             DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
             RespuestaPregunta respuestaPregunta = new RespuestaPregunta();
 
-            respuestaPregunta.set_nombre(respuestaPreguntaDto.get_nombre());
-            respuestaPregunta.set_estatus(respuestaPreguntaDto.get_estatus());
-            PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(respuestaPreguntaDto.get_preguntaEncuestaDto().get_id());
+            respuestaPregunta.set_nombre(respuestaPreguntaDto.getNombre());
+            respuestaPregunta.set_estatus(respuestaPreguntaDto.getEstatus());
+            PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(respuestaPreguntaDto.getPreguntaEncuestaDto().getId());
             respuestaPregunta.set_preguntaEncuesta(preguntaEncuesta);
             RespuestaPregunta resul = daoRespuestaPregunta.insert(respuestaPregunta);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -127,7 +127,7 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
 
             try {
 
-                respuestaPregunta_modificar.set_estatus(respuestaPreguntaDto.get_estatus());
+                respuestaPregunta_modificar.set_estatus(respuestaPreguntaDto.getEstatus());
                 daoRespuestaPregunta.update(respuestaPregunta_modificar);
 
             } catch (Exception ex){
@@ -156,7 +156,7 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
 
             try {
 
-                respuestaPregunta_modificar.set_nombre(respuestaPreguntaDto.get_nombre());
+                respuestaPregunta_modificar.set_nombre(respuestaPreguntaDto.getNombre());
                 daoRespuestaPregunta.update(respuestaPregunta_modificar);
 
             } catch (Exception ex){

@@ -6,27 +6,27 @@ public class MedioComunicacionDto extends DtoBase {
     private InformacionDto _informacionDto;
     private SolicitudEstudioDto _solicitudEstudioDto;
 
-    public InformacionDto get_informacionDto() {
+    public InformacionDto getInformacionDto() {
         return _informacionDto;
     }
 
-    public void set_informacionDto(InformacionDto _informacionDto) {
+    public void setInformacionDto(InformacionDto _informacionDto) {
         this._informacionDto = _informacionDto;
     }
 
-    public SolicitudEstudioDto get_solicitudEstudioDto() {
+    public SolicitudEstudioDto getSolicitudEstudioDto() {
         return _solicitudEstudioDto;
     }
 
-    public void set_solicitudEstudioDto(SolicitudEstudioDto _solicitudEstudioDto) {
+    public void setSolicitudEstudioDto(SolicitudEstudioDto _solicitudEstudioDto) {
         this._solicitudEstudioDto = _solicitudEstudioDto;
     }
 
-    public String get_tipoDeMedio() {
+    public String getTipoDeMedio() {
         return _tipoDeMedio;
     }
 
-    public void set_tipoDeMedio(String _tipoDeMedio) {
+    public void setTipoDeMedio(String _tipoDeMedio) {
         this._tipoDeMedio = _tipoDeMedio;
     }
 

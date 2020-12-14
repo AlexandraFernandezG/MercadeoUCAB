@@ -1,7 +1,7 @@
 package ucab.dsw.dtos;
 
 public class NivelEconomicoDto extends DtoBase{
-    
+
     private String _descripcion;
 
     public String getDescripcion() {

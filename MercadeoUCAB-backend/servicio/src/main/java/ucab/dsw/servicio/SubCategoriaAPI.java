@@ -104,11 +104,11 @@ public class SubCategoriaAPI extends AplicacionBase{
 
             subcategoria.set_nombre(subcategoriaDto.getNombre());
             subcategoria.set_descripcion(subcategoriaDto.getDescripcion());
-            subcategoria.set_estatus(subcategoriaDto.get_estatus());
-            Categoria categoria = new Categoria(subcategoriaDto.getCategoriaDto().get_id());
+            subcategoria.set_estatus(subcategoriaDto.getEstatus());
+            Categoria categoria = new Categoria(subcategoriaDto.getCategoriaDto().getId());
             subcategoria.set_categoria(categoria);
             Subcategoria resul = dao.insert(subcategoria);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -136,7 +136,7 @@ public class SubCategoriaAPI extends AplicacionBase{
 
             try {
 
-                subcategoria_modificar.set_estatus(subcategoriaDto.get_estatus());
+                subcategoria_modificar.set_estatus(subcategoriaDto.getEstatus());
                 dao.update(subcategoria_modificar);
 
             } catch (Exception ex){

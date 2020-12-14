@@ -99,15 +99,15 @@ public class ProductoAPI extends AplicacionBase{
 
             producto.set_nombre(productoDto.getNombre());
             producto.set_descripcion(productoDto.getDescripcion());
-            producto.set_estatus(productoDto.get_estatus());
-            Usuario usuario = new Usuario(productoDto.getUsuarioDto().get_id());
-            Subcategoria subcategoria = new Subcategoria(productoDto.getSubcategoriaDto().get_id());
-            Marca marca = new Marca(productoDto.getMarcaDto().get_id());
+            producto.set_estatus(productoDto.getEstatus());
+            Usuario usuario = new Usuario(productoDto.getUsuarioDto().getId());
+            Subcategoria subcategoria = new Subcategoria(productoDto.getSubcategoriaDto().getId());
+            Marca marca = new Marca(productoDto.getMarcaDto().getId());
             producto.set_usuario(usuario);
             producto.set_subcategoria(subcategoria);
             producto.set_marca(marca);
             Producto resul = daoProducto.insert(producto);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -135,7 +135,7 @@ public class ProductoAPI extends AplicacionBase{
 
             try {
 
-                producto_modificar.set_estatus(productoDto.get_estatus());
+                producto_modificar.set_estatus(productoDto.getEstatus());
                 daoProducto.update(producto_modificar);
                 DaoTipo daoTipo = new DaoTipo();
                 DaoPresentacion daoPresentacion = new DaoPresentacion();

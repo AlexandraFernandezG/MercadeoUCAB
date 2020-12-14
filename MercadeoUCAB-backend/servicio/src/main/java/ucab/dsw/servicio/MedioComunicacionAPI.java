@@ -68,14 +68,14 @@ public class MedioComunicacionAPI extends AplicacionBase{
             DaoMedioComunicacion daoMedioComunicacion = new DaoMedioComunicacion();
             MedioComunicacion medioComunicacion = new MedioComunicacion();
 
-            medioComunicacion.set_tipoDeMedio(medioComunicacionDto.get_tipoDeMedio());
-            medioComunicacion.set_estatus(medioComunicacionDto.get_estatus());
-            Informacion informacion = new Informacion(medioComunicacionDto.get_informacionDto().get_id());
-            SolicitudEstudio solicitudEstudio = new SolicitudEstudio(medioComunicacionDto.get_solicitudEstudioDto().get_id());
+            medioComunicacion.set_tipoDeMedio(medioComunicacionDto.getTipoDeMedio());
+            medioComunicacion.set_estatus(medioComunicacionDto.getEstatus());
+            Informacion informacion = new Informacion(medioComunicacionDto.getInformacionDto().getId());
+            SolicitudEstudio solicitudEstudio = new SolicitudEstudio(medioComunicacionDto.getSolicitudEstudioDto().getId());
             medioComunicacion.set_informacion(informacion);
             medioComunicacion.set_solicitudEstudio(solicitudEstudio);
             MedioComunicacion resul = daoMedioComunicacion.insert(medioComunicacion);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -104,8 +104,8 @@ public class MedioComunicacionAPI extends AplicacionBase{
 
             try {
 
-                medioComunicacion_modificar.set_tipoDeMedio(medioComunicacionDto.get_tipoDeMedio());
-                medioComunicacion_modificar.set_estatus(medioComunicacionDto.get_estatus());
+                medioComunicacion_modificar.set_tipoDeMedio(medioComunicacionDto.getTipoDeMedio());
+                medioComunicacion_modificar.set_estatus(medioComunicacionDto.getEstatus());
                 daoMedioComunicacion.update(medioComunicacion_modificar);
 
             } catch (Exception ex){

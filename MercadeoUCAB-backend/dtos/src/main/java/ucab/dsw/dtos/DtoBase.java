@@ -8,24 +8,24 @@ public class DtoBase
 
     public DtoBase(long id ) throws Exception
     {
-        set_id( id );
+        setId( id );
     }
 
     public DtoBase(String estatus) throws Exception{
 
-        set_estatus( estatus );
+        setEstatus( estatus );
     }
 
     public DtoBase()
     {
     }
 
-    public long get_id()
+    public long getId()
     {
         return _id;
     }
 
-    public void set_id( long id ) throws PruebaExcepcion
+    public void setId( long id ) throws PruebaExcepcion
     {
         if ( id >= 0 )
         {
@@ -37,11 +37,11 @@ public class DtoBase
         }
     }
 
-    public String get_estatus() {
+    public String getEstatus() {
         return _estatus;
     }
 
-    public void set_estatus(String _estatus) {
+    public void setEstatus(String _estatus) {
         this._estatus = _estatus;
     }
 }

@@ -54,14 +54,14 @@ public class HijoAPI_Test {
         String date1 = "2010-12-01";
         DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
         Date myDate = forma.parse(date1);
-        hijoDto.set_fechaNacimiento(myDate);
-        hijoDto.set_genero("masculino");
-        hijoDto.set_estatus("Activo");
+        hijoDto.setFechaNacimiento(myDate);
+        hijoDto.setGenero("masculino");
+        hijoDto.setEstatus("Activo");
         //Revisar sus registros en la base de datos
         InformacionDto informacionDto = new InformacionDto(1L);
-        hijoDto.set_informacionDto(informacionDto);
+        hijoDto.setInformacionDto(informacionDto);
         HijoDto resultado = servicio.addHijo(hijoDto);
-        Assert.assertNotEquals( resultado.get_id(), 0 );
+        Assert.assertNotEquals( resultado.getId(), 0 );
 
     }
 
@@ -75,9 +75,9 @@ public class HijoAPI_Test {
         String date1 = "2010-12-01";
         DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
         Date myDate = forma.parse(date1);
-        hijoDto.set_fechaNacimiento(myDate);
-        hijoDto.set_genero("masculino");
-        hijoDto.set_estatus("Activo");
+        hijoDto.setFechaNacimiento(myDate);
+        hijoDto.setGenero("masculino");
+        hijoDto.setEstatus("Activo");
         //Revisar sus registros en la base de datos
         servicio.updateHijo(1L, hijoDto);
 

@@ -99,13 +99,13 @@ public class HistoricoEstadoAPI extends AplicacionBase{
             DaoHistoricoEstado daoHistoricoEstado = new DaoHistoricoEstado();
             HistoricoEstado historicoEstado = new HistoricoEstado();
 
-            historicoEstado.set_fechaInicio(historicoEstadoDto.get_fechaInicio());
+            historicoEstado.set_fechaInicio(historicoEstadoDto.getFechaInicio());
             historicoEstado.set_fechaFin(historicoEstado.get_fechaFin());
-            historicoEstado.set_estatus(historicoEstadoDto.get_estatus());
+            historicoEstado.set_estatus(historicoEstadoDto.getEstatus());
             Usuario usuario = new Usuario(historicoEstado.get_usuario().get_id());
             historicoEstado.set_usuario(usuario);
             HistoricoEstado resul = daoHistoricoEstado.insert(historicoEstado);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -134,7 +134,7 @@ public class HistoricoEstadoAPI extends AplicacionBase{
         }
             try {
 
-                historicoEstadoDto.set_estatus(historicoEstadoDto.get_estatus());
+                historicoEstadoDto.setEstatus(historicoEstadoDto.getEstatus());
                 daoHistoricoEstado.update(historicoEstado_modificar);
 
             } catch (Exception ex) {

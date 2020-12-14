@@ -57,12 +57,12 @@ public class SubCategoriaAPI_Test {
 
         subcategoriaDto.setNombre("Perros calientes");
         subcategoriaDto.setDescripcion("Perros calientes con sabores raros");
-        subcategoriaDto.set_estatus("Activo");
+        subcategoriaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         CategoriaDto categoriaDto = new CategoriaDto(2);
         subcategoriaDto.setCategoriaDto(categoriaDto);
         SubcategoriaDto resultado = servicio.addSubCategoria(subcategoriaDto);
-        Assert.assertNotEquals( resultado.get_id(), 0 );
+        Assert.assertNotEquals( resultado.getId(), 0 );
     }
 
     // Esta prueba permite actualizar el estatus de una subcategoria
@@ -72,7 +72,7 @@ public class SubCategoriaAPI_Test {
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
         SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
 
-        subcategoriaDto.set_estatus("Activo");
+        subcategoriaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarEstatusSubcategoria(3L,subcategoriaDto);
 

@@ -67,12 +67,12 @@ public class TelefonoAPI extends AplicacionBase{
             DaoTelefono daoTelefono = new DaoTelefono();
             Telefono telefono = new Telefono();
 
-            telefono.set_numero(telefonoDto.get_numero());
-            telefono.set_estatus(telefonoDto.get_estatus());
-            Informacion informacion = new Informacion(telefonoDto.get_informacion().get_id());
+            telefono.set_numero(telefonoDto.getNumero());
+            telefono.set_estatus(telefonoDto.getEstatus());
+            Informacion informacion = new Informacion(telefonoDto.getInformacion().getId());
             telefono.set_informacion(informacion);
             Telefono resul = daoTelefono.insert(telefono);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -99,8 +99,8 @@ public class TelefonoAPI extends AplicacionBase{
         }
 
             try {
-                telefono_modificar.set_numero(telefonoDto.get_numero());
-                telefono_modificar.set_estatus(telefonoDto.get_estatus());
+                telefono_modificar.set_numero(telefonoDto.getNumero());
+                telefono_modificar.set_estatus(telefonoDto.getEstatus());
                 daoTelefono.update(telefono_modificar);
 
             } catch (Exception ex){

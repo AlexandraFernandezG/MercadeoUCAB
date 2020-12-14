@@ -60,41 +60,41 @@ public class SolicitudEstudioAPI_Test {
         ucab.dsw.servicio.SolicitudEstudioAPI servicio = new ucab.dsw.servicio.SolicitudEstudioAPI();
         SolicitudEstudioDto solicitudEstudioDto = new SolicitudEstudioDto();
 
-        solicitudEstudioDto.set_descripcion("Investigacion acerca de los perros calientes de arandanos");
-        solicitudEstudioDto.set_genero("");
-        solicitudEstudioDto.set_edadMaxima(35);
-        solicitudEstudioDto.set_edadMinima(20);
-        solicitudEstudioDto.set_estadoCivil("");
-        solicitudEstudioDto.set_disponibilidadEnLinea("");
-        solicitudEstudioDto.set_cantidadPersonas(0);
-        solicitudEstudioDto.set_cantidadHijos(0);
-        solicitudEstudioDto.set_generoHijos("");
-        solicitudEstudioDto.set_edadMinimaHijos(0);
-        solicitudEstudioDto.set_edadMaximaHijos(0);
-        solicitudEstudioDto.set_estatus("Activo");
+        solicitudEstudioDto.setDescripcion("Investigacion acerca de los perros calientes de arandanos");
+        solicitudEstudioDto.setGenero("");
+        solicitudEstudioDto.setEdadMaxima(35);
+        solicitudEstudioDto.setEdadMinima(20);
+        solicitudEstudioDto.setEstadoCivil("");
+        solicitudEstudioDto.setDisponibilidadEnLinea("");
+        solicitudEstudioDto.setCantidadPersonas(0);
+        solicitudEstudioDto.setCantidadHijos(0);
+        solicitudEstudioDto.setGeneroHijos("");
+        solicitudEstudioDto.setEdadMinimaHijos(0);
+        solicitudEstudioDto.setEdadMaximaHijos(0);
+        solicitudEstudioDto.setEstatus("Activo");
 
         // Recuerden que deben ver los id de los registros en la BD
         NivelAcademicoDto nivelAcademicoDto = new NivelAcademicoDto(1L);
-        solicitudEstudioDto.set_nivelAcademicoDto(nivelAcademicoDto);
+        solicitudEstudioDto.setNivelAcademicoDto(nivelAcademicoDto);
 
         // Recuerden que deben ver los id de los registros en la BD
         UsuarioDto usuarioDto = new UsuarioDto(1L);
-        solicitudEstudioDto.set_usuarioDto(usuarioDto);;
+        solicitudEstudioDto.setUsuarioDto(usuarioDto);;
 
         // Recuerden que deben ver los id de los registros en la BD
         ProductoDto productoDto = new ProductoDto(1L);
-        solicitudEstudioDto.set_productoDto(productoDto);
+        solicitudEstudioDto.setProductoDto(productoDto);
 
         // Recuerden que deben ver los id de los registros en la BD
         OcupacionDto ocupacionDto = new OcupacionDto(3L);
-        solicitudEstudioDto.set_ocupacionDto(ocupacionDto);
+        solicitudEstudioDto.setOcupacionDto(ocupacionDto);
 
         // Recuerden que deben ver los id de los registros en la BD
         NivelEconomicoDto nivelEconomicoDto = new NivelEconomicoDto(1L);
-        solicitudEstudioDto.set_nivelEconomicoDto(nivelEconomicoDto);
+        solicitudEstudioDto.setNivelEconomicoDto(nivelEconomicoDto);
 
         SolicitudEstudioDto resultado = servicio.addSolicitudEstudio(solicitudEstudioDto);
-        Assert.assertNotEquals(resultado.get_id(), 0);
+        Assert.assertNotEquals(resultado.getId(), 0);
     }
 
     //Prueba actualizar estatus de una solicitud
@@ -104,7 +104,7 @@ public class SolicitudEstudioAPI_Test {
         ucab.dsw.servicio.SolicitudEstudioAPI servicio = new ucab.dsw.servicio.SolicitudEstudioAPI();
         SolicitudEstudioDto solicitudEstudioDto = new SolicitudEstudioDto();
 
-        solicitudEstudioDto.set_estatus("Inactivo");
+        solicitudEstudioDto.setEstatus("Inactivo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarEstatusSolicitudEstudio(2L, solicitudEstudioDto);
     }
@@ -116,17 +116,17 @@ public class SolicitudEstudioAPI_Test {
         ucab.dsw.servicio.SolicitudEstudioAPI servicio = new ucab.dsw.servicio.SolicitudEstudioAPI();
         SolicitudEstudioDto solicitudEstudioDto = new SolicitudEstudioDto();
 
-        solicitudEstudioDto.set_descripcion("Investigacion acerca de los perros calientes de arandanos");
-        solicitudEstudioDto.set_genero("");
-        solicitudEstudioDto.set_edadMaxima(35);
-        solicitudEstudioDto.set_edadMinima(20);
-        solicitudEstudioDto.set_estadoCivil("");
-        solicitudEstudioDto.set_disponibilidadEnLinea("");
-        solicitudEstudioDto.set_cantidadPersonas(0);
-        solicitudEstudioDto.set_cantidadHijos(0);
-        solicitudEstudioDto.set_generoHijos("");
-        solicitudEstudioDto.set_edadMinimaHijos(0);
-        solicitudEstudioDto.set_edadMaximaHijos(0);
+        solicitudEstudioDto.setDescripcion("Investigacion acerca de los perros calientes de arandanos");
+        solicitudEstudioDto.setGenero("");
+        solicitudEstudioDto.setEdadMaxima(35);
+        solicitudEstudioDto.setEdadMinima(20);
+        solicitudEstudioDto.setEstadoCivil("");
+        solicitudEstudioDto.setDisponibilidadEnLinea("");
+        solicitudEstudioDto.setCantidadPersonas(0);
+        solicitudEstudioDto.setCantidadHijos(0);
+        solicitudEstudioDto.setGeneroHijos("");
+        solicitudEstudioDto.setEdadMinimaHijos(0);
+        solicitudEstudioDto.setEdadMaximaHijos(0);
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarSolicitudEstudio(2L, solicitudEstudioDto);
 

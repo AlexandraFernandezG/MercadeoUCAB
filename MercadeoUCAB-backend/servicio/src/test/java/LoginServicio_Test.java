@@ -7,11 +7,11 @@ public class LoginServicio_Test {
     @Test
     public void loginTest(){
         UsuarioDto usuarioDto = new UsuarioDto();
-        usuarioDto.set_correo( "greggspinetti@gmail.com" );
-        usuarioDto.set_contrasena( "otraclave" );
-        usuarioDto.set_estatus("Activo");
+        usuarioDto.setCorreo( "greggspinetti@gmail.com" );
+        usuarioDto.setContrasena( "otraclave" );
+        usuarioDto.setEstatus("Activo");
         RolDto rol = new RolDto();
-        rol.set_nombre("Administrador");
+        rol.setNombre("Administrador");
         LoginServicio login = new LoginServicio();
         login.login(usuarioDto);
     }

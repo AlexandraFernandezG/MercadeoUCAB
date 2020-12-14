@@ -61,24 +61,24 @@ public class EstudioAPI_Test {
         ucab.dsw.servicio.EstudioAPI servicio = new ucab.dsw.servicio.EstudioAPI();
         EstudioDto estudioDto = new EstudioDto();
 
-        estudioDto.set_nombre("Perros calientes raros parte 2");
-        estudioDto.set_tipoInstrumento("Encuesta");
+        estudioDto.setNombre("Perros calientes raros parte 2");
+        estudioDto.setTipoInstrumento("Encuesta");
         String date1 = "2020-12-01";
         DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
         Date myDate = forma.parse(date1);
-        estudioDto.set_fechaInicio(myDate);
+        estudioDto.setFechaInicio(myDate);
         String date2 = "2021-01-21";
         DateFormat forma2 = new SimpleDateFormat("yyyy-MM-dd");
         Date myDate2 = forma2.parse(date2);
-        estudioDto.set_fechaFin(myDate2);
-        estudioDto.set_estatus("Activo");
+        estudioDto.setFechaFin(myDate2);
+        estudioDto.setEstatus("Activo");
         // Revisar los registros de sus base de datos
         SolicitudEstudioDto solicitudEstudioDto = new SolicitudEstudioDto(1L);
-        estudioDto.set_solicitudEstudioDto(solicitudEstudioDto);
+        estudioDto.setSolicitudEstudioDto(solicitudEstudioDto);
         UsuarioDto usuarioDto = new UsuarioDto(1L);
-        estudioDto.set_usuarioDto(usuarioDto);
+        estudioDto.setUsuarioDto(usuarioDto);
         EstudioDto resultado = servicio.addEstudios(estudioDto);
-        Assert.assertNotEquals(resultado.get_id(), 0);
+        Assert.assertNotEquals(resultado.getId(), 0);
 
     }
 
@@ -88,7 +88,7 @@ public class EstudioAPI_Test {
 
         ucab.dsw.servicio.EstudioAPI servicio = new ucab.dsw.servicio.EstudioAPI();
         EstudioDto estudioDto = new EstudioDto();
-        estudioDto.set_estatus("Activo");
+        estudioDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarEstudio(1L, estudioDto);
     }
@@ -100,17 +100,17 @@ public class EstudioAPI_Test {
 
         ucab.dsw.servicio.EstudioAPI servicio = new ucab.dsw.servicio.EstudioAPI();
         EstudioDto estudioDto = new EstudioDto();
-        estudioDto.set_nombre("Perros calientes raros parte 2");
-        estudioDto.set_tipoInstrumento("Encuesta");
+        estudioDto.setNombre("Perros calientes raros parte 2");
+        estudioDto.setTipoInstrumento("Encuesta");
         String date1 = "2020-12-01";
         DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
         Date myDate = forma.parse(date1);
-        estudioDto.set_fechaInicio(myDate);
+        estudioDto.setFechaInicio(myDate);
         String date2 = "2021-01-21";
         DateFormat forma2 = new SimpleDateFormat("yyyy-MM-dd");
         Date myDate2 = forma2.parse(date2);
-        estudioDto.set_fechaFin(myDate2);
-        estudioDto.set_estatus("Activo");
+        estudioDto.setFechaFin(myDate2);
+        estudioDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarEstudio(1L, estudioDto);
     }

@@ -127,11 +127,11 @@ public class CategoriaAPI extends AplicacionBase {
             DaoCategoria dao = new DaoCategoria();
             Categoria categoria = new Categoria();
 
-            categoria.set_nombre(categoriaDto.get_nombre());
-            categoria.set_descripcion(categoriaDto.get_descripcion());
-            categoria.set_estatus(categoriaDto.get_estatus());
+            categoria.set_nombre(categoriaDto.getNombre());
+            categoria.set_descripcion(categoriaDto.getDescripcion());
+            categoria.set_estatus(categoriaDto.getEstatus());
             Categoria resul = dao.insert(categoria);
-            resultado.set_id(resul.get_id());
+            resultado.setId(resul.get_id());
 
         } catch (Exception ex){
 
@@ -159,7 +159,7 @@ public class CategoriaAPI extends AplicacionBase {
 
             try {
 
-                categoria_modificar.set_estatus(categoriaDto.get_estatus());
+                categoria_modificar.set_estatus(categoriaDto.getEstatus());
                 daoCategoria.update(categoria_modificar);
                 DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
 
@@ -213,8 +213,8 @@ public class CategoriaAPI extends AplicacionBase {
 
             try {
 
-                categoria_modificar.set_nombre(categoriaDto.get_nombre());
-                categoria_modificar.set_descripcion(categoriaDto.get_descripcion());
+                categoria_modificar.set_nombre(categoriaDto.getNombre());
+                categoria_modificar.set_descripcion(categoriaDto.getDescripcion());
                 dao.update(categoria_modificar);
 
             } catch (Exception ex) {
