@@ -35,6 +35,8 @@ import { EditCategoriaComponent } from './admin/categoria/edit-categoria/edit-ca
 import { AddUsuarioComponent } from './admin/usuario/add-usuario/add-usuario.component';
 import { EditUsuarioComponent } from './admin/usuario/edit-usuario/edit-usuario.component';
 import { AdminComponent } from './admin/admin.component';
+import { TipoComponent } from './admin/tipo/tipo.component';
+import { PresentacionComponent } from './admin/presentacion/presentacion.component';
 import { RouterModule } from '@angular/router';
 import { ClienteComponent } from './cliente/cliente.component';
 import { EstudiosClienteComponent } from './cliente/estudios-cliente/estudios-cliente.component';
@@ -79,7 +81,9 @@ import { MarcasService } from './servicios/marcas.service';
     AnalistaComponent,
     EstudiosAnalistaComponent,
     DataEstudioComponent,
-    CrearEstudioComponent
+    CrearEstudioComponent,
+    TipoComponent,
+    PresentacionComponent
   ],
   imports: [
     RouterModule,
