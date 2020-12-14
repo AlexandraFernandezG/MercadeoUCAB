@@ -15,6 +15,8 @@ import { EstudiosEncuestadoComponent } from './encuestado/estudios-encuestado/es
 import { AnalistaComponent } from './analista/analista.component';
 import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios-analista.component';
 import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.component';
+import { TipoComponent } from './admin/tipo/tipo.component';
+import { PresentacionComponent } from './admin/presentacion/presentacion.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: 'dashboard/marcas', component: MarcaComponent},
   { path: 'admin/categorias', component: CategoriaComponent},
   { path: 'admin/marcas', component: MarcaComponent},
+  { path: 'admin/tipos', component: TipoComponent},
+  { path: 'admin/presentaciones', component: PresentacionComponent},
   { path: 'dashboard/subcategorias', component: SubcategoriaComponent},
   { path: 'dashboard/usuarios', component: UsuarioComponent},
   { path: 'admin', component: AdminComponent },

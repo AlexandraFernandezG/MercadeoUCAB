@@ -36,7 +36,11 @@ import { AddUsuarioComponent } from './admin/usuario/add-usuario/add-usuario.com
 import { EditUsuarioComponent } from './admin/usuario/edit-usuario/edit-usuario.component';
 import { AdminComponent } from './admin/admin.component';
 import { TipoComponent } from './admin/tipo/tipo.component';
+import { AddTipoComponent } from './admin/tipo/add-tipo/add-tipo.component';
+import { EditTipoComponent } from './admin/tipo/edit-tipo/edit-tipo.component';
 import { PresentacionComponent } from './admin/presentacion/presentacion.component';
+import { AddPresentacionComponent } from './admin/presentacion/add-presentacion/add-presentacion.component';
+import { EditPresentacionComponent } from './admin/presentacion/edit-presentacion/edit-presentacion.component';
 import { RouterModule } from '@angular/router';
 import { ClienteComponent } from './cliente/cliente.component';
 import { EstudiosClienteComponent } from './cliente/estudios-cliente/estudios-cliente.component';
@@ -52,6 +56,8 @@ import { CategoriasService } from './servicios/categorias.service';
 import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.component';
 import { SubcategoriasService } from './servicios/subcategorias.service';
 import { MarcasService } from './servicios/marcas.service';
+import { TiposService } from './servicios/tipos.service';
+import { PresentacionesService } from './servicios/presentaciones.service';
 
 @NgModule({
   declarations: [
@@ -83,7 +89,11 @@ import { MarcasService } from './servicios/marcas.service';
     DataEstudioComponent,
     CrearEstudioComponent,
     TipoComponent,
-    PresentacionComponent
+    PresentacionComponent,
+    AddTipoComponent,
+    EditTipoComponent,
+    AddPresentacionComponent,
+    EditPresentacionComponent
   ],
   imports: [
     RouterModule,
@@ -110,7 +120,9 @@ import { MarcasService } from './servicios/marcas.service';
   providers: [
     CategoriasService,
     SubcategoriasService,
-    MarcasService
+    MarcasService,
+    TiposService,
+    PresentacionesService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

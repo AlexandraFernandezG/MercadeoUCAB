@@ -1,1 +1,19 @@
-<p>edit-tipo works!</p>
+<form [formGroup]="tipoForm" novalidate> 
+
+    <h4>Tipo</h4>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Nombre:</mat-label>
+          <input formControlName="nombre" matInput  [(ngModel)]="tipo._nombre" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Descripción:</mat-label>
+          <input formControlName="descripcion"  matInput  [(ngModel)]="tipo._descripcion"/>
+        </mat-form-field>
+      </div>
+  
+    <button type="submit"  mat-raised-button color="primary" (click)="editTipo(tipo)">Editar Tipo</button>
+  </form>
+  
