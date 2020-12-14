@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MarcaComponent } from './marca/marca.component';
+import { MarcaComponent } from './admin/marca/marca.component';
 import { CategoriaComponent } from './admin/categoria/categoria.component';
 import { SubcategoriaComponent } from './admin/subcategoria/subcategoria.component';
 import { UsuarioComponent } from './admin/usuario/usuario.component';
@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
   { path: 'dashboard/marcas', component: MarcaComponent},
   { path: 'admin/categorias', component: CategoriaComponent},
+  { path: 'admin/marcas', component: MarcaComponent},
   { path: 'dashboard/subcategorias', component: SubcategoriaComponent},
   { path: 'dashboard/usuarios', component: UsuarioComponent},
   { path: 'admin', component: AdminComponent },

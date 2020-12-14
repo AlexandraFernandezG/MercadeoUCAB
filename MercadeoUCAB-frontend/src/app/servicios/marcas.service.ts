@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Categoria } from '../modelos/categoria';
-import { Categoria2 } from '../modelos/categoria';
+import { Marca } from '../modelos/marca';
+import { Marca2 } from '../modelos/marca';
 import { catchError, map, tap, retry } from 'rxjs/operators';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriasService {
+export class MarcasService {
 
-  categoria: Categoria[];
+  marca: Marca[];
   constructor(public http: HttpClient) {
   }
   public url = '//localhost:8080/servicio-1.0-SNAPSHOT/api/';
@@ -23,31 +23,30 @@ export class CategoriasService {
     })
   };
 
-  getCategorias(){
-    return this.http.get<Categoria[]>(this.url + 'categoria/allCategoria');
+  getMarcas(){
+    return this.http.get<Marca[]>(this.url + 'marca/allMarca');
   }
 
-  getCategoria(id: number): Observable<Categoria> {
+  getMarca(id: number): Observable<Marca> {
     console.log(id);
-    return this.http.get<Categoria>(this.url + 'categoria/consultarCategoria/' + id)
+    return this.http.get<Marca>(this.url + 'marca/consultarMarca/' + id)
     .pipe(
-      tap(_ => console.log(`fetched categoria id=${id}`)),
+      tap(_ => console.log(`fetched marca id=${id}`)),
       catchError(this.handleError)
     );
   }
 
-  createCategoria(categoria: Categoria2): Observable<Categoria2>{
-    console.log(categoria);
-    return this.http.post<Categoria2>(this.url + 'categoria/addCategoria', JSON.stringify(categoria), this.httpOptions)
+  createMarca(marca: Marca2): Observable<Marca2>{
+    console.log(marca);
+    return this.http.post<Marca2>(this.url + 'marca/addMarca', JSON.stringify(marca), this.httpOptions)
     .pipe(
-      tap((newCategoria: Categoria2) => console.log(`added categoria w/ id=${newCategoria.id}`)),
+      tap((newmarca: Marca2) => console.log(`added marca w/ id=${newmarca.id}`)),
       catchError(this.handleError)
     );
   }
 
-  updateCategoria(categoria): Observable<Categoria>{
-    console.log(categoria);
-    return this.http.put<Categoria>(this.url + 'categoria/updateCategoria/' + categoria.id, JSON.stringify(categoria), this.httpOptions)
+  updateMarca(marca: Marca2): Observable<Marca2>{
+    return this.http.put<Marca2>(this.url + 'marca/updateMarca/' + marca.id, JSON.stringify(marca), this.httpOptions)
     .pipe(
       retry(1),
       catchError(this.handleError)

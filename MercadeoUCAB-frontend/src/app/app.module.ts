@@ -23,6 +23,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { MarcaComponent } from './admin/marca/marca.component';
+import { AddMarcaComponent } from './admin/marca/add-marca/add-marca.component';
 import { EditMarcaComponent } from './admin/marca/edit-marca/edit-marca.component';
 import { SubcategoriaComponent } from './admin/subcategoria/subcategoria.component';
 import { CategoriaComponent } from './admin/categoria/categoria.component';
@@ -47,6 +48,8 @@ import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios
 import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
 import { CategoriasService } from './servicios/categorias.service';
 import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.component';
+import { SubcategoriasService } from './servicios/subcategorias.service';
+import { MarcasService } from './servicios/marcas.service';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,7 @@ import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.co
     LoginComponent,
     DashboardComponent,
     MarcaComponent,
+    AddMarcaComponent,
     EditMarcaComponent,
     SubcategoriaComponent,
     CategoriaComponent,
@@ -76,7 +80,6 @@ import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.co
     EstudiosAnalistaComponent,
     DataEstudioComponent,
     CrearEstudioComponent
-    
   ],
   imports: [
     RouterModule,
@@ -100,7 +103,11 @@ import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.co
     MatToolbarModule,
     MatGridListModule
   ],
-  providers: [CategoriasService],
+  providers: [
+    CategoriasService,
+    SubcategoriasService,
+    MarcasService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     SolicitudEstudioComponent,
