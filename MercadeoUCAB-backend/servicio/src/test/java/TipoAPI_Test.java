@@ -60,9 +60,6 @@ public class TipoAPI_Test {
         tipoDto.setNombre("");
         tipoDto.setDescripcion("");
         tipoDto.setEstatus("Activo");
-        //Recordar revisar los registros de la BD
-        ProductoDto productoDto = new ProductoDto(1L);
-        tipoDto.setProductoDto(productoDto);
         TipoDto resultado = servicio.addTipo(tipoDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
 
