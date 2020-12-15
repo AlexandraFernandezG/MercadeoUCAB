@@ -28,7 +28,6 @@ public class Lugar extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-
     public ucab.dsw.entidades.Lugar get_lugar() {
         return _lugar;
     }

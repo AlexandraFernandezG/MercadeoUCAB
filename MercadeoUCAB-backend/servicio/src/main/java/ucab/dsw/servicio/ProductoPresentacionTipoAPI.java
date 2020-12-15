@@ -105,7 +105,7 @@ public class ProductoPresentacionTipoAPI extends AplicacionBase{
             DaoProductoPresentacionTipo dao = new DaoProductoPresentacionTipo();
             ProductoPresentacionTipo productoPresentacionTipo = new ProductoPresentacionTipo();
 
-            productoPresentacionTipo.set_estatus("Activo");
+            productoPresentacionTipo.set_estatus(productoPresentacionTipoDto.getEstatus());
             Producto producto = new Producto(productoPresentacionTipoDto.getProductoDto().getId());
             Presentacion presentacion = new Presentacion(productoPresentacionTipoDto.getPresentacionDto().getId());
             Tipo tipo = new Tipo(productoPresentacionTipoDto.getTipoDto().getId());
