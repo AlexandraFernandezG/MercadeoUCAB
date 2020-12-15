@@ -48,6 +48,7 @@ export class PresentacionesService {
   updatePresentacion(presentacion): Observable<Presentacion>{
     console.log(presentacion);
     return this.http.put<Presentacion>(this.url + 'presentacion/updatePresentacion/' +
+
     presentacion.id, JSON.stringify(presentacion), this.httpOptions)
     .pipe(
       retry(1),

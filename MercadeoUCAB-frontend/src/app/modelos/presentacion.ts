@@ -14,4 +14,3 @@ export class Presentacion2{
        public nombre: string
      ){}
      }
-   
