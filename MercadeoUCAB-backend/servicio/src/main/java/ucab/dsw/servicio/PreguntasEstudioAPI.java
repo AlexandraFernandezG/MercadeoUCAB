@@ -53,7 +53,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
         }
     }
 
-    // Este metodo agrega preguntas cuando le pasas un solo estudio
+    // Agregar la relacion Pregunta Estudio
     @POST
     @Path("/addPreguntaEstudio")
     @Produces( MediaType.APPLICATION_JSON )
@@ -67,7 +67,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
                 DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
                 PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
 
-                preguntaEstudio.set_estatus("Activo/Inactivo");
+                preguntaEstudio.set_estatus("Activo");
                 Estudio estudio = new Estudio(preguntaEstudioDto.getEstudioDto().getId());
                 preguntaEstudio.set_estudio(estudio);
                 PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.getPreguntaEncuestaDto().getId());

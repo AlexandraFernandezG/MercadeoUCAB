@@ -15,22 +15,15 @@ public class Tipo extends EntidadBase{
     
     @Column( name = "descripcion" )
     private String _descripcion;
-    
-    //Relaciones
-    
-    @ManyToOne
-    @JoinColumn(name="fk_producto")
-    private Producto _producto;
-    
+
     //Getters, Setters, y otros metodos.
 
-
-    public Producto get_producto() {
-        return _producto;
+    public String get_nombre() {
+        return _nombre;
     }
 
-    public void set_producto(Producto _producto) {
-        this._producto = _producto;
+    public void set_nombre(String _nombre) {
+        this._nombre = _nombre;
     }
 
     public String get_descripcion() {
@@ -39,14 +32,6 @@ public class Tipo extends EntidadBase{
 
     public void set_descripcion(String _descripcion) {
         this._descripcion = _descripcion;
-    }
-
-    public String get_nombre() {
-        return _nombre;
-    }
-
-    public void set_nombre(String _nombre) {
-        this._nombre = _nombre;
     }
 
     public Tipo (String estatus) {
@@ -66,7 +51,6 @@ public class Tipo extends EntidadBase{
         return "Tipo{" +
                 "_nombre='" + _nombre + '\'' +
                 ", _descripcion='" + _descripcion + '\'' +
-                ", _producto=" + _producto +
                 '}';
     }
 }

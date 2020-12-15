@@ -60,10 +60,8 @@ public class PresentacionAPI_Test {
         PresentacionDto presentacionDto = new PresentacionDto();
 
         presentacionDto.setNombre("");
-        presentacionDto.setCaracteristicas("");
+        presentacionDto.setDescripcion("");
         presentacionDto.setEstatus("Activo");
-        ProductoDto productoDto = new ProductoDto(1L);
-        presentacionDto.setProductoDto(productoDto);
         PresentacionDto resultado = servicio.addPresentacion(presentacionDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
 
@@ -90,7 +88,7 @@ public class PresentacionAPI_Test {
         PresentacionDto presentacionDto = new PresentacionDto();
 
         presentacionDto.setNombre("");
-        presentacionDto.setCaracteristicas("");
+        presentacionDto.setDescripcion("");
         // Estar mosca con los id de la bd
         servicio.updatePresentacion(1L, presentacionDto);
 

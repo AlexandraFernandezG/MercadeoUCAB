@@ -137,52 +137,6 @@ public class ProductoAPI extends AplicacionBase{
 
                 producto_modificar.set_estatus(productoDto.getEstatus());
                 daoProducto.update(producto_modificar);
-                DaoTipo daoTipo = new DaoTipo();
-                DaoPresentacion daoPresentacion = new DaoPresentacion();
-
-                if (producto_modificar.get_estatus() == "Inactivo") {
-
-                    List<Tipo> listaTipo = daoTipo.findAll(Tipo.class);
-                    List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
-
-                    for (Tipo tipo : listaTipo) {
-
-                        if (tipo.get_producto().get_id() == id) {
-                            tipo.set_estatus("Inactivo");
-                            daoTipo.update(tipo);
-                        }
-                    }
-
-                    for (Presentacion presentacion : listaPresentacion) {
-
-                        if (presentacion.get_producto().get_id() == id) {
-                            presentacion.set_estatus("Inactivo");
-                            daoPresentacion.update(presentacion);
-                        }
-                    }
-
-                } else if (producto_modificar.get_estatus() == "Activo") {
-
-                    List<Tipo> listaTipo = daoTipo.findAll(Tipo.class);
-                    List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
-
-                    for (Tipo tipo : listaTipo) {
-
-                        if (tipo.get_producto().get_id() == id) {
-                            tipo.set_estatus("Activo");
-                            daoTipo.update(tipo);
-                        }
-                    }
-
-                    for (Presentacion presentacion : listaPresentacion) {
-
-                        if (presentacion.get_producto().get_id() == id) {
-                            presentacion.set_estatus("Activo");
-                            daoPresentacion.update(presentacion);
-                        }
-                    }
-
-                }
 
             } catch (Exception ex){
 

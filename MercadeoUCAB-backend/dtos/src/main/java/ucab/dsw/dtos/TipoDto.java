@@ -1,9 +1,9 @@
 package ucab.dsw.dtos;
 
 public class TipoDto extends DtoBase{
+
     private String _nombre;
     private String _descripcion;
-    private ProductoDto _productoDto;
 
     public String getDescripcion() {
         return _descripcion;
@@ -19,14 +19,6 @@ public class TipoDto extends DtoBase{
 
     public void setNombre(String _nombre) {
         this._nombre = _nombre;
-    }
-
-    public ProductoDto getProductoDto() {
-        return _productoDto;
-    }
-
-    public void setProductoDto(ProductoDto _productoDto) {
-        this._productoDto = _productoDto;
     }
 
     public TipoDto (long id) throws Exception{

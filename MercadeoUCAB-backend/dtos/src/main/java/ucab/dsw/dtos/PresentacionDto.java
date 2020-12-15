@@ -1,16 +1,16 @@
 package ucab.dsw.dtos;
 
 public class PresentacionDto extends DtoBase{
-    private String _nombre;
-    private String _caracteristicas;
-    private ProductoDto _productoDto;
 
-    public String getCaracteristicas() {
-        return _caracteristicas;
+    private String _nombre;
+    private String _descripcion;
+
+    public String getDescripcion() {
+        return _descripcion;
     }
 
-    public void setCaracteristicas(String _caracteristicas) {
-        this._caracteristicas = _caracteristicas;
+    public void setDescripcion(String _descripcion) {
+        this._descripcion = _descripcion;
     }
 
     public String getNombre() {
@@ -19,14 +19,6 @@ public class PresentacionDto extends DtoBase{
 
     public void setNombre(String _nombre) {
         this._nombre = _nombre;
-    }
-
-    public ProductoDto getProductoDto() {
-        return _productoDto;
-    }
-
-    public void setProductoDto(ProductoDto _productoDto) {
-        this._productoDto = _productoDto;
     }
 
     public PresentacionDto (long id) throws Exception{

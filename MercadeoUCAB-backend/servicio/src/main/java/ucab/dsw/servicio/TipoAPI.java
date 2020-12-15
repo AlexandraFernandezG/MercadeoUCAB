@@ -98,8 +98,6 @@ public class TipoAPI extends AplicacionBase{
             tipo.set_nombre(tipoDto.getNombre());
             tipo.set_descripcion(tipoDto.getDescripcion());
             tipo.set_estatus(tipoDto.getEstatus());
-            Producto producto = new Producto(tipoDto.getProductoDto().getId());
-            tipo.set_producto(producto);
             Tipo resul = daoTipo.insert(tipo);
             resultado.setId(resul.get_id());
 
