@@ -58,6 +58,7 @@ import { SubcategoriasService } from './servicios/subcategorias.service';
 import { MarcasService } from './servicios/marcas.service';
 import { TiposService } from './servicios/tipos.service';
 import { PresentacionesService } from './servicios/presentaciones.service';
+import { UsuariosService } from './servicios/usuarios.service';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,10 @@ import { PresentacionesService } from './servicios/presentaciones.service';
     AddTipoComponent,
     EditTipoComponent,
     AddPresentacionComponent,
-    EditPresentacionComponent
+    EditPresentacionComponent,
+    UsuarioComponent,
+    AddUsuarioComponent,
+    EditUsuarioComponent
   ],
   imports: [
     RouterModule,
@@ -122,7 +126,8 @@ import { PresentacionesService } from './servicios/presentaciones.service';
     SubcategoriasService,
     MarcasService,
     TiposService,
-    PresentacionesService
+    PresentacionesService,
+    UsuariosService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'admin/marcas', component: MarcaComponent},
   { path: 'admin/tipos', component: TipoComponent},
   { path: 'admin/presentaciones', component: PresentacionComponent},
+  { path: 'admin/usuarios', component: UsuarioComponent},
   { path: 'dashboard/subcategorias', component: SubcategoriaComponent},
   { path: 'dashboard/usuarios', component: UsuarioComponent},
   { path: 'admin', component: AdminComponent },
