@@ -56,7 +56,7 @@ public class UsuarioAPI extends AplicacionBase {
     @Path("/addUsuario")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public UsuarioDto addCategoria(UsuarioDto usuarioDto) {
+    public UsuarioDto addUsuario(UsuarioDto usuarioDto) {
         UsuarioDto resultado = new UsuarioDto();
         try {
 
