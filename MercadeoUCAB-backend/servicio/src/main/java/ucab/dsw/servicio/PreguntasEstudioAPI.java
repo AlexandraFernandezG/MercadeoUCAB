@@ -67,7 +67,7 @@ public class PreguntasEstudioAPI extends AplicacionBase {
                 DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
                 PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
 
-                preguntaEstudio.set_estatus("Activo");
+                preguntaEstudio.set_estatus(preguntaEstudioDto.getEstatus());
                 Estudio estudio = new Estudio(preguntaEstudioDto.getEstudioDto().getId());
                 preguntaEstudio.set_estudio(estudio);
                 PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.getPreguntaEncuestaDto().getId());

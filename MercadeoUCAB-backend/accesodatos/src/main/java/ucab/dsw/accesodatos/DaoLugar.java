@@ -1,7 +1,9 @@
 package ucab.dsw.accesodatos;
 
 import ucab.dsw.entidades.Lugar;
-import javax.persistence.EntityManager;
+
+import javax.persistence.*;
+import java.util.List;
 
 public class DaoLugar extends Dao<Lugar>{
 

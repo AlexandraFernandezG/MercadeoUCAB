@@ -22,7 +22,7 @@ public class LugarDto extends DtoBase{
         this._categoriaSocioEconomica = _categoriaSocioEconomica;
     }
 
-    public LugarDto get_lugar() {
+    public LugarDto getLugar() {
         return _lugar;
     }
 
