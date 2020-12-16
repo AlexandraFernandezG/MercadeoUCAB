@@ -87,7 +87,7 @@ public class EntidadDto {
 		LugarDto lugarDto = new LugarDto();
 		Lugar lugar = daoLugar.find(id, Lugar.class);
 		
-		if (lugar != null && lugar.get_estatus().equals("Activo")) {
+		if (lugar != null) {
 			// No tiene la fk de estado.
 			LugarDto municipio = this.getLugarDtoBasico(lugar); // Le paso el lugar para tener los datos básicos.
 			LugarDto estado = this.getLugarDtoEstado(lugar.get_lugar().get_id()); // Busco el estado de ese lugar (municipio)
@@ -104,7 +104,7 @@ public class EntidadDto {
 		LugarDto estado = new LugarDto();
 		Lugar lugar = daoLugar.find(id, Lugar.class);
 		
-		if (lugar != null && lugar.get_estatus().equals("Activo")) {
+		if (lugar != null) {
 			estado = this.getLugarDtoBasico(lugar);
 			LugarDto pais = this.getLugarDtoPais(lugar.get_lugar().get_id()); // Busco el pais de ese lugar (estado).
 			
@@ -121,7 +121,7 @@ public class EntidadDto {
 		LugarDto pais = new LugarDto();
 		Lugar lugar = daoLugar.find(id, Lugar.class);
 		
-		if (lugar != null && lugar.get_estatus().equals("Activo")) {
+		if (lugar != null) {
 			pais = this.getLugarDtoBasico(lugar);
 		}
 		return pais;

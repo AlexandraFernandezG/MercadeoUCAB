@@ -61,7 +61,7 @@ class MedioComunicacionAPITest {
 		MedioComunicacionAPI servicio = new MedioComunicacionAPI();
 		MedioComunicacionDto mcDto = new MedioComunicacionDto();
 		
-		// Definición del nuevo registro de Teléfono.
+		// Definición del nuevo registro de Medio_Comunicacion.
 		mcDto.setEstatus("Activo");
 		mcDto.setTipoDeMedio("numquam");
 		
