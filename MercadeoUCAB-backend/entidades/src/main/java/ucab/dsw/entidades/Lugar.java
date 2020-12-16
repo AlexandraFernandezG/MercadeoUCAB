@@ -22,7 +22,7 @@ public class Lugar extends EntidadBase{
     
     //Relaciones
     
-    @ManyToOne
+    @ManyToOne/*(cascade = CascadeType.PERSIST)*/
     @JoinColumn(name="fk_lugar")
     private Lugar _lugar;
     
