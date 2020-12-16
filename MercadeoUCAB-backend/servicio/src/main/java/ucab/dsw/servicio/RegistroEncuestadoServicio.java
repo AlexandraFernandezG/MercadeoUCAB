@@ -9,17 +9,17 @@ import ucab.dsw.entidades.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
+
 
 @Path( "/registro" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class RegistroEncuestadoServicio extends AplicacionBase {
     @POST
-    @Path("/addUsuarioEncuestado")
+    @Path("/nuevoEncuestado")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public UsuarioDto addEncuestado(UsuarioDto usuarioDto) {
+    public UsuarioDto addEncuestado(UsuarioDto usuarioDto, InformacionDto informacionDto) {
         UsuarioDto resultado = new UsuarioDto();
         try {
 
@@ -29,31 +29,19 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
             usuario.set_nombre(usuarioDto.getNombreUsuario());
             usuario.set_correoelectronico(usuarioDto.getCorreo());
             usuario.set_estatus(usuarioDto.getEstatus());
-            Rol rol = new Rol(usuarioDto.getRol().getId());
+            Rol rol = new Rol(4);
             usuario.set_rol(rol);
             usuario.set_codigoRecuperacion(usuarioDto.getCodigoRecuperacion());
             Usuario resul = dao.insert(usuario);
+            long idUsuario = resul.get_id();
             resultado.setId(resul.get_id());
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.addEntryToLdap(usuarioDto);
-        } catch (Exception ex) {
 
-            String problema = ex.getMessage();
-            System.out.print(problema);
-        }
-        return resultado;
-    }
 
-    //Agregar una información
-    @POST
-    @Path("/{id}/addInformacionEncuestado")
-    @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
-    public InformacionDto addInformacion(InformacionDto informacionDto, @PathParam("id") long id){
+            //Insertar la información del encuestado
 
-        InformacionDto resultado = new InformacionDto();
-
-        try {
+            InformacionDto resultadoInformacion = new InformacionDto();
             DaoInformacion daoInformacion = new DaoInformacion();
             Informacion informacion = new Informacion();
 
@@ -67,8 +55,8 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
             informacion.set_segundoApellido(informacionDto.getSegundoApellido());
             informacion.set_segundoNombre(informacionDto.getSegundoNombre());
             informacion.set_estatus(informacionDto.getEstatus());
-            Usuario usuario = new Usuario(id);
-            informacion.set_usuario(usuario);
+            Usuario usuarioInformacion = new Usuario(idUsuario);
+            informacion.set_usuario(usuarioInformacion);
             Ocupacion ocupacion = new Ocupacion(informacionDto.getOcupacionDto().getId());
             informacion.set_ocupacion(ocupacion);
             NivelAcademico nivelAcademico = new NivelAcademico(informacionDto.getNivelAcademicoDto().getId());
@@ -77,17 +65,17 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
             informacion.set_nivelEconomico(nivelEconomico);
             Lugar lugar = new Lugar(informacionDto.getLugarDto().getId());
             informacion.set_lugar(lugar);
-            Informacion resul = daoInformacion.insert(informacion);
-            resultado.setId(resul.get_id());
+            Informacion resulInformacion = daoInformacion.insert(informacion);
+            resultado.setId(resulInformacion.get_id());
 
-        } catch (Exception ex){
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+        } catch (Exception ex) {
 
+            String problema = ex.getMessage();
+            System.out.print(problema);
         }
-
         return resultado;
     }
+
 
 }
