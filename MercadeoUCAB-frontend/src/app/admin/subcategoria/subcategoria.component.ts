@@ -38,7 +38,7 @@ export class SubcategoriaComponent implements OnInit {
     .subscribe(data => {this.subcategorias = data;
     } );
     this.serviceCategoria.getCategorias()
-    .subscribe(data => {this.categorias = data;
+    .subscribe(catego => {this.categorias = catego;
     } );
   }
 

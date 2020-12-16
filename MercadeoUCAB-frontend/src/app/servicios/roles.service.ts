@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Usuario } from '../modelos/usuario';
-import { Usuario2 } from '../modelos/usuario';
+import { Rol } from '../modelos/rol';
+import { Rol2 } from '../modelos/rol';
 import { catchError, map, tap, retry } from 'rxjs/operators';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
+export class RolesService {
 
-  usuario: Usuario[];
+  rol: Rol[];
   constructor(public http: HttpClient) {
   }
   public url = '//localhost:8080/servicio-1.0-SNAPSHOT/api/';
@@ -23,31 +23,31 @@ export class UsuariosService {
     })
   };
 
-  getUsuarios(){
-    return this.http.get<Usuario[]>(this.url + 'usuario/allUsuarios');
+  getRoles(){
+    return this.http.get<Rol[]>(this.url + 'rol/allRoles');
   }
 
-  getUsuario(id: number): Observable<Usuario> {
+  getRol(id: number): Observable<Rol> {
     console.log(id);
-    return this.http.get<Usuario>(this.url + 'usuario/consultarUsuario/' + id)
+    return this.http.get<Rol>(this.url + 'rol/consultarRol/' + id)
     .pipe(
-      tap(_ => console.log(`fetched usuario id=${id}`)),
+      tap(_ => console.log(`fetched rol id=${id}`)),
       catchError(this.handleError)
     );
   }
 
-  createUsuario(usuario: Usuario2): Observable<Usuario2>{
-    console.log(usuario);
-    return this.http.post<Usuario2>(this.url + 'usuario/addUsuario', JSON.stringify(usuario), this.httpOptions)
+  createRol(rol: Rol2): Observable<Rol2>{
+    console.log(rol);
+    return this.http.post<Rol2>(this.url + 'rol/addRol', JSON.stringify(rol), this.httpOptions)
     .pipe(
-      tap((newusuario: Usuario2) => console.log(`added usuario w/ id=${newusuario.id}`)),
+      tap((newrol: Rol2) => console.log(`added rol w/ id=${newrol.id}`)),
       catchError(this.handleError)
     );
   }
 
-  updateUsuario(usuario): Observable<Usuario>{
-    console.log(usuario);
-    return this.http.put<Usuario>(this.url + 'usuario/updateUsuario/' + usuario.id, JSON.stringify(usuario), this.httpOptions)
+  updateRol(rol): Observable<Rol>{
+    console.log(rol);
+    return this.http.put<Rol>(this.url + 'rol/updateRol/' + rol.id, JSON.stringify(rol), this.httpOptions)
     .pipe(
       retry(1),
       catchError(this.handleError)

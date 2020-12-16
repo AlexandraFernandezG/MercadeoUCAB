@@ -4,7 +4,7 @@
       <div class="form-group">
         <mat-form-field class="full-width" appaerance="outline">
           <mat-label>Nombre Usuario:</mat-label>
-          <input formControlName="nombreUsuario" matInput required [(ngModel)]="usuario2.nombreUsuario"/>
+          <input formControlName="nombreUsuario" matInput required [(ngModel)]="usuario._nombre"/>
           <mat-error *ngIf="usuarioForm.get('nombreUsuario').errors?.required">
               Falta llenar el nuevo nombre usuario
           </mat-error>
@@ -12,8 +12,8 @@
       </div>
       <div class="form-group">
         <mat-form-field class="full-width" appaerance="outline">
-          <mat-label>Email</mat-label>
-          <input formControlName="correo" matInput required [(ngModel)]="usuario2.correo" />
+          <mat-label>Email:</mat-label>
+          <input formControlName="correo" matInput required [(ngModel)]="usuario._correoelectronico" />
           <mat-error *ngIf="usuarioForm.get('correo').errors?.required">
             Falta llenar el correo electronico
           </mat-error>
@@ -21,8 +21,8 @@
       </div>
       <div class="form-group">
         <mat-form-field class="full-width" appareance="outline">
-            <mat-label>Password</mat-label>
-            <input formControlName="contraena" matInput [type]= "'hide' ? 'contrasena': 'text'" required/>
+            <mat-label>Contraseña:</mat-label>
+            <input formControlName="contrasena" matInput [type]= "'hide' ? 'contrasena': 'text'" required />
              <mat-error *ngIf="usuarioForm.get('contrasena').errors?.required">
                 Introduzca la contraseña
              </mat-error>

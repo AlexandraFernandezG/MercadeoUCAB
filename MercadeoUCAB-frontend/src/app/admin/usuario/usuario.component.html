@@ -33,17 +33,17 @@
         <tbody class="tbody">
           <tr *ngFor="let usuario of usuarios">
             <th class="text-center" scope="row">{{usuario._id}}</th>
-            <td class="text-center">{{usuario._nombreUsuario}}</td>
-            <td class="text-center">{{usuario._correo}}</td>
+            <td class="text-center">{{usuario._nombre}}</td>
+            <td class="text-center">{{usuario._correoelectronico}}</td>
             <td class="text-center">{{usuario._estatus}}</td>
-            <td class="text-center">{{usuario._fk_rol}}</td>
+            <td class="text-center">{{usuario._rol._nombre}}</td>
             <td>
               <div class="row">
                 <div align="center" class="col-sm-4">
                   <a class="btn btn-primary text-white" style="cursor: pointer;" data-toggle="modal" data-target="#Modal" (click)="openEModal(usuario._id)"><i class="fas fa-pencil-alt"></i></a>
                 </div>
                 <div align="center" class="col-sm-4">
-                  <button type="submit" class="btn btn-danger" (click)="deleteUsuario(usuario)"><i class="fas fa-trash"></i></button>
+                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                 </div>
               </div>
             </td>

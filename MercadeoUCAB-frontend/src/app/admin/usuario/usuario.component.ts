@@ -7,6 +7,8 @@ import { Usuario, Usuario2 } from 'src/app/modelos/usuario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { Rol } from 'src/app/modelos/rol';
+import { RolesService } from 'src/app/servicios/roles.service';
 
 
 
@@ -18,11 +20,13 @@ import { Location } from '@angular/common';
 export class UsuarioComponent implements OnInit {
 
   usuarios: Usuario[];
+  roles: Rol[];
 
 
   @Input() usuarioData: any = {};
   constructor(
     private service: UsuariosService,
+    private servicerol: RolesService,
     public actRoute: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
@@ -33,6 +37,8 @@ export class UsuarioComponent implements OnInit {
   ngOnInit() {
     this.service.getUsuarios()
     .subscribe(data => {this.usuarios = data;
+    } );
+    this.servicerol.getRoles().subscribe(rol => {this.roles = rol;
     } );
 
   }
@@ -49,6 +55,7 @@ export class UsuarioComponent implements OnInit {
     );
   }
 
+  /*
   deleteUsuario( usuario: Usuario): void{
     console.log('segundo', usuario);
     const deleteUs: Usuario2 = {
@@ -57,8 +64,8 @@ export class UsuarioComponent implements OnInit {
        correo: usuario._correo,
        codigoRecuperacion: usuario._codigoRecuperacion,
        estatus: 'Inactivo',
-       fk_rol: usuario._fk_rol
+      // rol: usuario._rol
     };
     this.service.updateUsuario(deleteUs).subscribe();
-      }
+      }*/
 }

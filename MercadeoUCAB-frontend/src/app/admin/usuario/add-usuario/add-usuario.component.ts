@@ -9,6 +9,7 @@ import { Usuario2 } from 'src/app/modelos/usuario';
 import { Rol } from 'src/app/modelos/rol';
 import { Rol2 } from 'src/app/modelos/rol';
 import { UsuarioComponent } from 'src/app/admin/usuario/usuario.component';
+import { RolesService } from 'src/app/servicios/roles.service';
 
 
 
@@ -20,8 +21,9 @@ import { UsuarioComponent } from 'src/app/admin/usuario/usuario.component';
 export class AddUsuarioComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
-//    private router: Router,
-//    private service: UsuariosService,
+    private router: Router,
+    private service: UsuariosService,
+    private servicerol: RolesService,
     public actRoute: ActivatedRoute,
     public dialogRef: MatDialogRef<UsuarioComponent>
     ) {
@@ -33,19 +35,32 @@ export class AddUsuarioComponent implements OnInit {
 
     });
    }
+  
+  usuario: Usuario = {
+    _id: 1 ,
+    _nombre: '',
+    _correoelectronico: '',
+    _codigoRecuperacion: 1,
+    _estatus: 'Activo',
+    _rol: {
+      _id: 0,
+      _nombre: '',
+      _estatus: ''
+    }
+  };
 
-  //usuario: Usuario = {_id: 1 , _nombreUsuario: '', _correo: '', _codigoRecuperacion: 1, _estatus: 'Activo', _fk_rol: 1 };
-  usuario2: Usuario2 = {id: 1 , nombreUsuario: '', correo: '', codigoRecuperacion: 1, estatus: 'Activo', fk_rol: 1 };
-  usuarioLDAP: UsuarioLDAP = { id: 1, nombreUsuario: '', correo: '', codigoRecuperacion: 1, estatus: 'Activo', contrasena: '',
-  fk_rol: 1 }
+
   roles: Rol[] = [
-    {_id: 1, _nombre: 'Administrador', _estatus: 'Activo'},
-    {_id: 2, _nombre: 'Cliente', _estatus: 'Activo'},
-    {_id: 3, _nombre: 'Encuestado', _estatus: 'Activo'},
-    {_id: 4, _nombre: 'Analista', _estatus: 'Activo'}
   ];
+  usuarios: any;
   usuarioForm: FormGroup;
   ngOnInit(): void {
+    this.service.getUsuarios()
+    .subscribe(data => {this.usuarios = data;
+    } );
+    this.servicerol.getRoles().subscribe(rol => {this.roles = rol;
+    } );
+    console.log(this.usuario)
   }
 
   /*
