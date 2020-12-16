@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-declare var $;
+
 
 @Component({
   selector: 'app-cliente',
@@ -9,12 +10,11 @@ declare var $;
 })
 export class ClienteComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
   }
-  action() {
-    $('body').toggleClass('sidebar-toggled');
-    $('.sidebar').toggleClass('toggled');
+  solicitarEstudio(): void {
+    this._router.navigate(['/cliente/solicitar_estudio']);
   }
 }

@@ -1,37 +1,20 @@
-/*
-.contenidoSolicitud{
-    font-size: 30px;
-    position: absolute;
-    top: 150px;
-    left: 650px;
- 
+
+.mat-form-field{
+    margin: 10px;
+}
+div.pageHeader{
+    margin: 0px 40px;
+}
+.fill-remaining-space{
+    flex: 1 1 auto;
 }
 form{
-    width: 500px;
+    width:  80%;;
+    margin: 10px auto;
 }
-.solicitudEst{
-    position: absolute;
-    top: 250px;
-    left: 400px;
-    max-width: 900px;
-    background-color: darkgray;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #cccccc;
-    border-radius: 7px;
-    border-top: solid 0px;
-    width: 500px;
-
+.bottom-pad{
+    padding-bottom: 10px;
 }
-.texto{
-    padding: 15px;
-    width: 470px;
+.mat-radio-button{
+    margin-left: 5px;
 }
-.col-auto{
-   width: 470px;
-}
-body{
- 
-    width: 500px;
-}
-*/

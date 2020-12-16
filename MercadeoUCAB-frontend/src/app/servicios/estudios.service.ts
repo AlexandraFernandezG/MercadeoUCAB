@@ -8,13 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class EstudiosService {
 
-  estudiosUrl: string = 'https://jsonplaceholder.typicode.com/albums';
-  limiteEstudios = '?_limit=5';
+  url: string = '//localhost:8080/servicio-1.0-SNAPSHOT/api/';
 
   constructor( private http: HttpClient) { }
 
   getEstudios():Observable<Estudio[]>{
-    return this.http.get<Estudio[]>(`${this.estudiosUrl}${this.limiteEstudios}`);
+    return this.http.get<Estudio[]>(this.url + 'estudio/allEstudio');
   }
 
 }

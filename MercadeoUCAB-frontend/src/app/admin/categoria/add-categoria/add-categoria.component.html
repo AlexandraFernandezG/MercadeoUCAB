@@ -1,1 +1,24 @@
-<p>add-categoria works!</p>
+<form [formGroup]="categoriaForm" novalidate> 
+
+  <h4>Categoría</h4>
+    <div class="form-group">
+      <mat-form-field class="full-width" appaerance="outline">
+        <mat-label>Nombre:</mat-label>
+        <input formControlName="nombre" matInput required [(ngModel)]="categoria2.nombre"/>
+        <mat-error *ngIf="categoriaForm.get('nombre').errors?.required">
+            Falta llenar el nuevo nombre de la categoría
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field class="full-width" appaerance="outline">
+        <mat-label>Descripción:</mat-label>
+        <input formControlName="descripcion" matInput required [(ngModel)]="categoria2.descripcion"/>
+         <mat-error *ngIf="categoriaForm.get('descripcion').errors?.required">
+            Falta llenar la descripción
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  <button type="submit"  mat-raised-button color="primary" (click)="addCategoria(categoria2.nombre, categoria2.descripcion)" [disabled]="categoriaForm.invalid">Añadir Categoría</button>
+</form>
