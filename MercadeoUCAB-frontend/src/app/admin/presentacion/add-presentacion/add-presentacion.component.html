@@ -12,14 +12,14 @@
       </div>
       <div class="form-group">
         <mat-form-field class="full-width" appaerance="outline">
-          <mat-label>Características:</mat-label>
-          <input formControlName="descripcion" matInput required [(ngModel)]="presentacion2.caracteristicas"/>
+          <mat-label>Descripción:</mat-label>
+          <input formControlName="descripcion" matInput required [(ngModel)]="presentacion2.descripcion"/>
            <mat-error *ngIf="presentacionForm.get('descripcion').errors?.required">
               Falta llenar la descripción
           </mat-error>
         </mat-form-field>
       </div>
   
-    <button type="submit"  mat-raised-button color="primary" (click)="addPresentacion(presentacion2.nombre, presentacion2.caracteristicas)" [disabled]="presentacionForm.invalid">Añadir Presentación</button>
+    <button type="submit"  mat-raised-button color="primary" (click)="addPresentacion(presentacion2.nombre, presentacion2.descripcion)" [disabled]="presentacionForm.invalid">Añadir Presentación</button>
   </form>
   

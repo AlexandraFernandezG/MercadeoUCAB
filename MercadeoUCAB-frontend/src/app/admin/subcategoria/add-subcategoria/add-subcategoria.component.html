@@ -1,4 +1,3 @@
-<p>add-subcategoria works!</p>
 <form [formGroup]="subcategoriaForm" novalidate> 
 
     <h4>Subcategorí­a</h4>
@@ -7,7 +6,7 @@
           <mat-label>Nombre:</mat-label>
           <input formControlName="nombre" matInput required />
           <mat-error *ngIf="subcategoriaForm.get('nombre').errors?.required">
-              Falta llenar el nuevo nombre de la categorÃ­a
+              Falta llenar el nuevo nombre de la categoría
           </mat-error>
         </mat-form-field>
       </div>

@@ -29,8 +29,8 @@ export class EditPresentacionComponent implements OnInit {
         caracteristicas: new FormControl([ Validators.maxLength(150)])
       });
     }
-  presentacion: Presentacion = {_id: 1 , _nombre: '' , _caracteristicas: '', _estatus: 'Activo'};
-  presentacion2: Presentacion2 = {id: 1, nombre: '', caracteristicas: '', estatus: 'Activo'};
+  presentacion: Presentacion = {_id: 1 , _nombre: '' , _descripcion: '', _estatus: 'Activo'};
+  presentacion2: Presentacion2 = {id: 1, nombre: '', descripcion: '', estatus: 'Activo'};
   presentacionForm: FormGroup;
   ngOnInit(): void {
     this.getId();
@@ -48,7 +48,7 @@ export class EditPresentacionComponent implements OnInit {
     const editPre: Presentacion2 = {
       id: this.data.id,
       nombre: presentacion._nombre,
-      caracteristicas: presentacion._caracteristicas,
+      descripcion: presentacion._descripcion,
       estatus: presentacion._estatus
     };
     this.service.updatePresentacion(editPre).subscribe();

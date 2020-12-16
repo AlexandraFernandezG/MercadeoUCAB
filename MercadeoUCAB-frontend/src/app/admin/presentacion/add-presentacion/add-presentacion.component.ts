@@ -26,26 +26,26 @@ export class AddPresentacionComponent implements OnInit {
 
     this.presentacionForm = this.fb.group({
       nombre: new FormControl('',[ Validators.required, Validators.maxLength(100)]),
-      caracteristicas: new FormControl( '',[ Validators.required, Validators.maxLength(150)])
+      descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(150)])
     });
    }
 
-  presentacion: Presentacion = {_id: 1 , _nombre: '', _caracteristicas: '', _estatus: 'Activo'};
-  presentacion2: Presentacion2 = {id: 1 , nombre: '', caracteristicas: '', estatus: 'Activo'};
+  presentacion: Presentacion = {_id: 1 , _nombre: '', _descripcion: '', _estatus: 'Activo'};
+  presentacion2: Presentacion2 = {id: 1 , nombre: '', descripcion: '', estatus: 'Activo'};
   presentacionForm: FormGroup;
   ngOnInit(): void {
   }
 
-  addPresentacion(nombre: string, caracteristicas: string): void{
+  addPresentacion(nombre: string, descripcion: string): void{
     const id = 1;
     const estatus = 'Activo';
     this.service.createPresentacion({
      id,
     nombre,
-    caracteristicas,
+    descripcion,
     estatus
     } as Presentacion2).subscribe();
-    console.log(id, nombre, caracteristicas, estatus);
+    console.log(id, nombre, descripcion, estatus);
     this.dialogRef.close();
   }
 }

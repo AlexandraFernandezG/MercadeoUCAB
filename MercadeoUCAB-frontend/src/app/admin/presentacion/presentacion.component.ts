@@ -54,7 +54,7 @@ export class PresentacionComponent implements OnInit {
     const deletePre: Presentacion2 = {
       id: presentacion._id,
       nombre: presentacion._nombre,
-      caracteristicas: presentacion._caracteristicas,
+      descripcion: presentacion._descripcion,
       estatus: 'Inactivo'
     };
     this.service.updatePresentacion(deletePre).subscribe();

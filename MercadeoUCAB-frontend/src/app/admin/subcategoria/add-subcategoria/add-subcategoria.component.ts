@@ -38,7 +38,6 @@ export class AddSubcategoriaComponent implements OnInit {
   subcategoriaForm: FormGroup;
   ngOnInit(): void {
   }
-   
 
   addSubcategoria(nombre: string, descripcion: string): void{
     const id = 1;
