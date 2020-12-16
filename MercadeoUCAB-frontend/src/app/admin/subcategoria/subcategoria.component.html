@@ -39,10 +39,10 @@
             <td>
               <div class="row">
                 <div align="center" class="col-sm-4">
-                  <a class="btn btn-primary text-white" style="cursor: pointer;" data-toggle="modal" data-target="#Modal"><i class="fas fa-pencil-alt"></i></a>
+                  <a class="btn btn-primary text-white" style="cursor: pointer;" data-toggle="modal" data-target="#Modal" (click)="openEModal(subcategoria._id)"><i class="fas fa-pencil-alt"></i></a>
                 </div>
                 <div align="center" class="col-sm-4">
-                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                  <button type="submit" class="btn btn-danger" (click)="deleteSubcategoria(subcategoria)"><i class="fas fa-trash"></i></button>
                 </div>
               </div>
             </td>

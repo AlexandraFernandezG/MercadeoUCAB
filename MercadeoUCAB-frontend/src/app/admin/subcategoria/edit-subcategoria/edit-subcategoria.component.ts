@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatInputModule} from '@angular/material/input';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router , ActivatedRoute} from '@angular/router';
 import { SubcategoriasService } from 'src/app/servicios/subcategorias.service';
@@ -8,6 +8,7 @@ import { SubcategoriaComponent } from 'src/app/admin/subcategoria/subcategoria.c
 import { Subcategoria } from 'src/app/modelos/subcategoria';
 import { Subcategoria2 } from 'src/app/modelos/subcategoria';
 import { Categoria } from 'src/app/modelos/categoria';
+import { CategoriasService } from 'src/app/servicios/categorias.service';
 
 @Component({
   selector: 'app-edit-subcategoria',
@@ -20,6 +21,7 @@ export class EditSubcategoriaComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private service: SubcategoriasService,
+    private serviceCategoria: CategoriasService,
     public actRoute: ActivatedRoute,
     public dialogRef: MatDialogRef<SubcategoriaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Subcategoria2,
@@ -27,38 +29,57 @@ export class EditSubcategoriaComponent implements OnInit {
 
       this.subcategoriaForm = this.fb.group({
         nombre: new FormControl([ Validators.maxLength(100)]),
-        caracteristicas: new FormControl([ Validators.maxLength(150)])
+        descripcion: new FormControl([ Validators.maxLength(150)]), 
+        categoriaDto: new FormControl('')
       });
     }
- // subcategoria: Subcategoria = {_id: 1 , _nombre: '' , _descripcion: '', _estatus: 'Activo'};
- // subcategoria2: Subcategoria2 = {id: 1, nombre: '', descripcion: '', estatus: 'Activo'};
- categorias: Categoria[] =[
-  {_id: 1, _nombre: 'Steak', _descripcion: 'cwwececw', _estatus: 'Activo'},
-  {_id: 2, _nombre: 'Steak2', _descripcion: 'cwwececw', _estatus: 'Activo'},
-  {_id: 3, _nombre: 'Steak3', _descripcion: 'cwwececw', _estatus: 'Activo'}
-];
+    categorias: Categoria[] =[
+    ]
+    subcategorias: any;
+    subcategoria: Subcategoria ={
+      _id: 0,
+      _nombre: '',
+      _estatus: '',
+      _descripcion: '',
+      _categoria: {
+        _id: 0,
+        _nombre: '',
+        _estatus: '',
+        _descripcion: ''
+      }
+    };
   subcategoriaForm: FormGroup;
   ngOnInit(): void {
     this.getId();
+    this.service.getSubcategorias()
+    .subscribe(data => {this.subcategorias = data;
+    } );
+    this.serviceCategoria.getCategorias()
+    .subscribe(catego => {this.categorias = catego;
+    } );
       }
 
   getId(){
-   // console.log('primero', this.subcategoria);
+    console.log('primero', this.subcategoria);
     const id = this.data.id;
-   // this.service.getSubcategoria(id).subscribe(data => {this.subcategoria = data;
-    }
-/*
-  editSubcategoria( subcategoria: Subcategoria): void{
-    console.log('segundo', subcategoria);
-    const editSub: Subcategoria2 = {
+    this.service.getSubcategoria(id).subscribe(data => {this.subcategoria = data;
+    });
+  }
+
+  
+  editSubcategoria(): void{
+   // const sub : Subcategoria;
+    console.log('segundo');
+  /*  const editSu: Subcategoria2 = {
       id: this.data.id,
-      nombre: subcategoria._nombre,
-      descripcion: subcategoria._descripcion,
-      estatus: subcategoria._estatus
+      nombre: sub._nombre,
+      descripcion: sub._descripcion,
+      estatus: sub._estatus,
+      categoriaDto: categoria
     };
-    this.service.updatesubcategoria(editSub).subscribe();
+    this.service.updateSubcategoria(editSu).subscribe();
+    */
     this.dialogRef.close();
-      }*/
+      }
 
 }
-

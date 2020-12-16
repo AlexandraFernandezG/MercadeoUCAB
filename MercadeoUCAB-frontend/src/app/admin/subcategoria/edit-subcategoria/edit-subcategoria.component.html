@@ -1,37 +1,36 @@
 <form [formGroup]="subcategoriaForm" novalidate> 
 
-    <h4>Subcategorí­a</h4>
-      <div class="form-group">
-        <mat-form-field class="full-width" appaerance="outline">
-          <mat-label>Nombre:</mat-label>
-          <input formControlName="nombre" matInput required />
-          <mat-error *ngIf="subcategoriaForm.get('nombre').errors?.required">
-              Falta llenar el nuevo nombre de la categoría
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field class="full-width" appaerance="outline">
-          <mat-label>Descripción:</mat-label>
-          <input formControlName="descripcion" matInput required/>
-           <mat-error *ngIf="subcategoriaForm.get('descripcion').errors?.required">
-              Falta llenar la descripción
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <h5>Seleccione una categoria:</h5>
-      <div class="fields">
-      <mat-form-field appearance="fill">
-        <mat-label>--Categoría--</mat-label>
-        <mat-select formControlName="categoria">
-            <mat-option *ngFor="let categoria of categorias" [value]="categoria._id">
-                {{ categoria._nombre }}
-            </mat-option>
-            </mat-select>
-    </mat-form-field>
-      </div>
-  
-    <button type="submit"  mat-raised-button color="primary" [disabled]="subcategoriaForm.invalid">Añadir Subcategoría</button>
-  </form>
-  
+  <h4>Subcategorí­a</h4>
+    <div class="form-group">
+      <mat-form-field class="full-width" appaerance="outline">
+        <mat-label>Nombre:</mat-label>
+        <input formControlName="nombre" matInput  [(ngModel)]="subcategoria._nombre"/>
+        <mat-error *ngIf="subcategoriaForm.get('nombre').errors?.required" >
+            Falta llenar el nuevo nombre de la subcategoría
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field class="full-width" appaerance="outline">
+        <mat-label>Descripción:</mat-label>
+        <input formControlName="descripcion" matInput [(ngModel)]="subcategoria._descripcion"/>
+         <mat-error *ngIf="subcategoriaForm.get('descripcion').errors?.required">
+            Falta llenar la descripción
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <h5>Seleccione una categoria:</h5>
+    <div class="fields">
+    <mat-form-field appearance="fill">
+      <mat-label>--Categoría--</mat-label>
+      <mat-select formControlName="categoriaDto" [(ngModel)]="subcategoria._categoria._id">
+          <mat-option *ngFor="let categoria of categorias" [value]="categoria._id" >
+              {{ categoria._nombre }}
+          </mat-option>
+          </mat-select>
+  </mat-form-field>
+    </div>
+
+  <button type="submit"  mat-raised-button color="primary" (click)="editSubcategoria()" [disabled]="subcategoriaForm.invalid" >Editar Subcategoría</button>
+</form>
 

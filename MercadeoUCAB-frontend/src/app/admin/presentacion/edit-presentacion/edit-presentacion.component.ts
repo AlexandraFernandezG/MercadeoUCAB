@@ -26,7 +26,7 @@ export class EditPresentacionComponent implements OnInit {
 
       this.presentacionForm = this.fb.group({
         nombre: new FormControl([ Validators.maxLength(100)]),
-        caracteristicas: new FormControl([ Validators.maxLength(150)])
+        descripcion: new FormControl([ Validators.maxLength(150)])
       });
     }
   presentacion: Presentacion = {_id: 1 , _nombre: '' , _descripcion: '', _estatus: 'Activo'};

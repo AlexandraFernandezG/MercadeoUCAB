@@ -24,12 +24,12 @@ export class TiposService {
   };
 
   getTipos(){
-    return this.http.get<Tipo[]>(this.url + 'tipo/alltipo');
+    return this.http.get<Tipo[]>(this.url + 'tipo/allTipo');
   }
 
   getTipo(id: number): Observable<Tipo> {
     console.log(id);
-    return this.http.get<Tipo>(this.url + 'tipo/consultartipo/' + id)
+    return this.http.get<Tipo>(this.url + 'tipo/consultarTipo/' + id)
     .pipe(
       tap(_ => console.log(`fetched tipo id=${id}`)),
       catchError(this.handleError)
@@ -38,7 +38,7 @@ export class TiposService {
 
   createTipo(tipo: Tipo2): Observable<Tipo2>{
     console.log(tipo);
-    return this.http.post<Tipo2>(this.url + 'tipo/addtipo', JSON.stringify(tipo), this.httpOptions)
+    return this.http.post<Tipo2>(this.url + 'tipo/addTipo', JSON.stringify(tipo), this.httpOptions)
     .pipe(
       tap((newtipo: Tipo2) => console.log(`added tipo w/ id=${newtipo.id}`)),
       catchError(this.handleError)
@@ -47,7 +47,7 @@ export class TiposService {
 
   updateTipo(tipo): Observable<Tipo>{
     console.log(tipo);
-    return this.http.put<Tipo>(this.url + 'tipo/updatetipo/' + tipo.id, JSON.stringify(tipo), this.httpOptions)
+    return this.http.put<Tipo>(this.url + 'tipo/updateTipo/' + tipo.id, JSON.stringify(tipo), this.httpOptions)
     .pipe(
       retry(1),
       catchError(this.handleError)

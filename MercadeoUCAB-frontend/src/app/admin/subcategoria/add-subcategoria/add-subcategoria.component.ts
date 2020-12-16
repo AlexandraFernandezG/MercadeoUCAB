@@ -28,7 +28,7 @@ export class AddSubcategoriaComponent implements OnInit {
     this.subcategoriaForm = this.fb.group({
       nombre: new FormControl('',[ Validators.required, Validators.maxLength(100)]),
       descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(150)]), 
-      categoriaDto: new FormControl(Validators.required)
+      categoriaDto: new FormControl('',[Validators.required])
     });
    }
     categorias: Categoria[] =[
@@ -58,7 +58,7 @@ export class AddSubcategoriaComponent implements OnInit {
     } );
   }
 
-  addSubcategoria(nombre: string, descripcion: string, categoriaDto: number): void{
+  addSubcategoria(nombre: string, descripcion: string): void{
     const id = 1;
     const estatus = 'Activo';
     this.service.createSubcategoria({
@@ -66,7 +66,7 @@ export class AddSubcategoriaComponent implements OnInit {
     nombre,
     descripcion,
     estatus,
-    categoriaDto
+    categoriaDto: this.subcategoriaForm.get("categoriaDto").value
     } as Subcategoria2).subscribe();
     console.log(Subcategoria2);
     this.dialogRef.close();

@@ -15,6 +15,6 @@ export class Subcategoria2{
        public estatus: string,
        public descripcion: string,
        public nombre: string,
-       public categoriaDto: number
+       public categoriaDto: Categoria2
      ){}
      }
