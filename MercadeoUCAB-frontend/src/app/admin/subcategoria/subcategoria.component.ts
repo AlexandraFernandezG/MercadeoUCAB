@@ -22,6 +22,7 @@ export class SubcategoriaComponent implements OnInit {
 
   constructor(
     private service: SubcategoriasService,
+    private serviceCategoria: CategoriasService,
     public actRoute: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
@@ -33,6 +34,9 @@ export class SubcategoriaComponent implements OnInit {
   ngOnInit(): void {
     this.service.getSubcategorias()
     .subscribe(data => {this.subcategorias = data;
+    } );
+    this.serviceCategoria.getCategorias()
+    .subscribe(data => {this.categorias = data;
     } );
   }
 

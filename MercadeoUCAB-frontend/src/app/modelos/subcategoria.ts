@@ -1,4 +1,4 @@
-import { Categoria } from './categoria';
+import { Categoria, Categoria2 } from './categoria';
 
 export class Subcategoria {
     constructor(
@@ -6,7 +6,7 @@ export class Subcategoria {
        public _estatus: string,
        public _descripcion: string,
        public _nombre: string,
-       public _fk_categoria: Categoria
+       public _categoria: Categoria
      ){}
    }
 export class Subcategoria2{
@@ -15,6 +15,6 @@ export class Subcategoria2{
        public estatus: string,
        public descripcion: string,
        public nombre: string,
-       public fk_categoria: Categoria
+       public categoriaDto: number
      ){}
      }

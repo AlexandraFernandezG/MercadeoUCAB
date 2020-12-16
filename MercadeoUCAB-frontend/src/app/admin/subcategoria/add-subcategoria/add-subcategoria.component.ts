@@ -7,7 +7,8 @@ import { SubcategoriasService } from 'src/app/servicios/subcategorias.service';
 import { Subcategoria } from 'src/app/modelos/subcategoria';
 import { Subcategoria2 } from 'src/app/modelos/subcategoria';
 import { SubcategoriaComponent } from 'src/app/admin/subcategoria/subcategoria.component';
-import { Categoria } from 'src/app/modelos/categoria';
+import { Categoria, Categoria2 } from 'src/app/modelos/categoria';
+import { CategoriasService } from 'src/app/servicios/categorias.service';
 
 @Component({
   selector: 'app-add-subcategoria',
@@ -19,36 +20,55 @@ export class AddSubcategoriaComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private service: SubcategoriasService,
+    private serviceCategoria: CategoriasService,
     public actRoute: ActivatedRoute,
     public dialogRef: MatDialogRef<SubcategoriaComponent>
     ) {
 
     this.subcategoriaForm = this.fb.group({
       nombre: new FormControl('',[ Validators.required, Validators.maxLength(100)]),
-      descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(150)])
+      descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(150)]), 
+      categoriaDto: new FormControl(Validators.required)
     });
    }
     categorias: Categoria[] =[
-      {_id: 1, _nombre: 'Steak', _descripcion: 'cwwececw', _estatus: 'Activo'},
-      {_id: 2, _nombre: 'Steak2', _descripcion: 'cwwececw', _estatus: 'Activo'},
-      {_id: 3, _nombre: 'Steak3', _descripcion: 'cwwececw', _estatus: 'Activo'}
-    ];
- // subcategoria: Subcategoria = {_id: 1 , _nombre: '', _descripcion: '', _estatus: 'Activo', _fk_categoria:};
- // subcategoria2: Subcategoria2 = {id: 1 , nombre: '', descripcion: '', estatus: 'Activo'  _fk_categoria:};
+    ]
+    subcategorias: any;
+    subcategoria: Subcategoria ={
+      _id: 0,
+      _nombre: '',
+      _estatus: '',
+      _descripcion: '',
+      _categoria: {
+        _id: 0,
+        _nombre: '',
+        _estatus: '',
+        _descripcion: ''
+      }
+    };
+
   subcategoriaForm: FormGroup;
   ngOnInit(): void {
+
+    this.service.getSubcategorias()
+    .subscribe(data => {this.subcategorias = data;
+    } );
+    this.serviceCategoria.getCategorias()
+    .subscribe(catego => {this.categorias = catego;
+    } );
   }
 
-  addSubcategoria(nombre: string, descripcion: string): void{
+  addSubcategoria(nombre: string, descripcion: string, categoriaDto: number): void{
     const id = 1;
     const estatus = 'Activo';
     this.service.createSubcategoria({
      id,
     nombre,
     descripcion,
-    estatus
+    estatus,
+    categoriaDto
     } as Subcategoria2).subscribe();
-    console.log(id, nombre, descripcion, estatus);
+    console.log(Subcategoria2);
     this.dialogRef.close();
   }
 }

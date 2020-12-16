@@ -29,9 +29,10 @@ export class SubcategoriasService {
 
   createSubcategoria(subcategoria: Subcategoria2): Observable<Subcategoria2>{
     console.log(subcategoria);
-    return this.http.post<Subcategoria2>(this.url + 'subcategoria/addCategoria', JSON.stringify(subcategoria), this.httpOptions)
+    console.log('entre');
+    return this.http.post<Subcategoria2>(this.url + 'subcategoria/addSubCategoria', JSON.stringify(subcategoria), this.httpOptions)
     .pipe(
-      tap((newSubcategoria: Subcategoria2) => console.log(`added categoria w/ id=${newSubcategoria.id}`)),
+      tap((newSubcategoria: Subcategoria2) => console.log(`added subcategoria w/ id=${newSubcategoria.id}`)),
       catchError(this.handleError)
     );
   }
