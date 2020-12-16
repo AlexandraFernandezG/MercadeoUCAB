@@ -132,39 +132,6 @@ class TelefonoAPITest {
 	}
 	
 	@Test
-	void testUpdateTelefono_Informacion() {
-		/** Prueba unitaria para actualizar todos los atributos de
-		 * un registro de Telefono.
-		 *
-		 * Busca el registro deseado para modificar, llama al método
-		 * getTelefonoDto para generar el DTO que será pasado
-		 * por parámetros al método de actualización, y actualiza el
-		 * registro con la asignación a otro registro Información.
-		 * */
-		
-		TelefonoAPI servicio = new TelefonoAPI();
-		Telefono telefono = servicio.consultarTelefono(3L);
-		
-		try {
-			// Solo actualizará un registro que exista en la BD.
-			if (telefono != null) {
-				TelefonoDto telefonoDto = dto.getTelefonoDto(telefono.get_id());
-				
-				DaoInformacion daoInformacion = new DaoInformacion();
-				Informacion nuevaInformacion = daoInformacion.find(2L, Informacion.class);
-				
-				if (nuevaInformacion != null) {
-					telefonoDto.setInformacion(dto.getInformacionDto(nuevaInformacion.get_id()));
-				}
-				
-				servicio.updateTelefono(telefonoDto.getId(), telefonoDto);
-			}
-		} catch (Exception e) {
-			Assertions.fail(e.getMessage(), e.getCause());
-		}
-	}
-	
-	@Test
 	void testUpdateTelefono_Todo() {
 		/** Prueba unitaria para actualizar todos los atributos de
 		 * un registro de Telefono.
@@ -183,13 +150,6 @@ class TelefonoAPITest {
 				
 				telefonoDto.setNumero(1784483);
 				telefonoDto.setEstatus("Inactivo");
-				
-				DaoInformacion daoInformacion = new DaoInformacion();
-				Informacion nuevaInformacion = daoInformacion.find(2L, Informacion.class);
-				
-				if (nuevaInformacion != null) {
-					telefonoDto.setInformacion(dto.getInformacionDto(nuevaInformacion.get_id()));
-				}
 				
 				servicio.updateTelefono(telefonoDto.getId(), telefonoDto);
 			}

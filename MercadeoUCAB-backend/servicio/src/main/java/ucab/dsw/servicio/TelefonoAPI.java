@@ -103,14 +103,6 @@ public class TelefonoAPI extends AplicacionBase{
             telefono_modificar.set_numero(telefonoDto.getNumero());
             telefono_modificar.set_estatus(telefonoDto.getEstatus());
     
-            DaoInformacion daoInformacion = new DaoInformacion();
-            Informacion nuevaInformacion = daoInformacion.find(telefonoDto.getInformacion().getId(),
-                Informacion.class);
-    
-            if (nuevaInformacion != null) {
-                telefono_modificar.set_informacion(nuevaInformacion);
-            }
-    
             daoTelefono.update(telefono_modificar);
 
         } catch (Exception ex){
