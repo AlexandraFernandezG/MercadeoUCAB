@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.accesodatos.DaoTelefono;
 import ucab.dsw.dtos.TelefonoDto;
 import ucab.dsw.entidades.Informacion;
@@ -98,17 +99,26 @@ public class TelefonoAPI extends AplicacionBase{
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-            try {
-                telefono_modificar.set_numero(telefonoDto.getNumero());
-                telefono_modificar.set_estatus(telefonoDto.getEstatus());
-                daoTelefono.update(telefono_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+        try {
+            telefono_modificar.set_numero(telefonoDto.getNumero());
+            telefono_modificar.set_estatus(telefonoDto.getEstatus());
+    
+            DaoInformacion daoInformacion = new DaoInformacion();
+            Informacion nuevaInformacion = daoInformacion.find(telefonoDto.getInformacion().getId(),
+                Informacion.class);
+    
+            if (nuevaInformacion != null) {
+                telefono_modificar.set_informacion(nuevaInformacion);
             }
+    
+            daoTelefono.update(telefono_modificar);
 
-            return Response.ok().entity(telefono_modificar).build();
+        } catch (Exception ex){
+
+            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+        }
+
+        return Response.ok().entity(telefono_modificar).build();
 
     }
 
