@@ -119,35 +119,6 @@ public class SubCategoriaAPI extends AplicacionBase{
         return  resultado;
     }
 
-    //Actualizar estatus de subcategoria
-    @PUT
-    @Path("/estatusSubcategoria/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
-    public Response modificarEstatusSubcategoria(@PathParam("id") long id, SubcategoriaDto subcategoriaDto){
-
-        DaoSubcategoria dao = new DaoSubcategoria();
-        Subcategoria subcategoria_modificar = dao.find(id, Subcategoria.class);
-
-        if (subcategoria_modificar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-            try {
-
-                subcategoria_modificar.set_estatus(subcategoriaDto.getEstatus());
-                dao.update(subcategoria_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
-            }
-
-            return Response.ok().entity(subcategoria_modificar).build();
-
-    }
-
     //Actualizar una subcategoria
     @PUT
     @Path("/updateSubCategoria/{id}")
@@ -167,6 +138,7 @@ public class SubCategoriaAPI extends AplicacionBase{
 
                 subcategoria_modificar.set_nombre(subcategoriaDto.getNombre());
                 subcategoria_modificar.set_descripcion(subcategoriaDto.getDescripcion());
+                subcategoria_modificar.set_estatus(subcategoriaDto.getEstatus());
                 dao.update(subcategoria_modificar);
 
             } catch (Exception ex){

@@ -110,35 +110,6 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
             return resultado;
     }
 
-    //Actualizar estatus de respuestas preguntas
-    @PUT
-    @Path("/estatusRespuestaPregunta/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
-    public Response modificarEstatusRespuestaPregunta(@PathParam("id") long id, RespuestaPreguntaDto respuestaPreguntaDto){
-
-        DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
-        RespuestaPregunta respuestaPregunta_modificar = daoRespuestaPregunta.find(id, RespuestaPregunta.class);
-
-        if (respuestaPregunta_modificar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-            try {
-
-                respuestaPregunta_modificar.set_estatus(respuestaPreguntaDto.getEstatus());
-                daoRespuestaPregunta.update(respuestaPregunta_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
-            }
-
-            return Response.ok().entity(respuestaPregunta_modificar).build();
-
-    }
-
     //Actualizar respuesta pregunta
     @PUT
     @Path("/updateRespuestaPregunta/{id}")
@@ -157,6 +128,7 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
             try {
 
                 respuestaPregunta_modificar.set_nombre(respuestaPreguntaDto.getNombre());
+                respuestaPregunta_modificar.set_estatus(respuestaPreguntaDto.getEstatus());
                 daoRespuestaPregunta.update(respuestaPregunta_modificar);
 
             } catch (Exception ex){

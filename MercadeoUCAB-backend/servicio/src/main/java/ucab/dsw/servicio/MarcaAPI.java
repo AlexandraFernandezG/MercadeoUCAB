@@ -113,35 +113,6 @@ public class MarcaAPI extends AplicacionBase{
             return resultado;
     }
 
-    //Actualizar el estatus de marca
-    @PUT
-    @Path("/estatusMarca/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
-    public Response modificarEstatusMarca(@PathParam("id") long id, MarcaDto marcaDto){
-
-        DaoMarca daoMarca = new DaoMarca();
-        Marca marca_modificar = daoMarca.find(id, Marca.class);
-
-        if (marca_modificar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-            try {
-
-                marca_modificar.set_estatus(marcaDto.getEstatus());
-                daoMarca.update(marca_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
-            }
-
-            return Response.ok().entity(marca_modificar).build();
-
-    }
-
     //Actualizar la marca
     @PUT
     @Path("/updateMarca/{id}")
@@ -162,6 +133,7 @@ public class MarcaAPI extends AplicacionBase{
 
                 marca_modificar.set_nombre(marcaDto.getNombre());
                 marca_modificar.set_descripcion(marcaDto.getDescripcion());
+                marca_modificar.set_estatus(marcaDto.getEstatus());
                 daoMarca.update(marca_modificar);
 
             } catch (Exception ex){

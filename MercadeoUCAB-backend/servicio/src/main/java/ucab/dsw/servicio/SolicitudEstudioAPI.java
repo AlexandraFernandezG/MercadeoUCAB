@@ -210,6 +210,7 @@ public class SolicitudEstudioAPI extends AplicacionBase{
                 solicitudEstudio_modificar.set_generoHijos(solicitudEstudioDto.getGeneroHijos());
                 solicitudEstudio_modificar.set_edadMinimaHijos(solicitudEstudioDto.getEdadMinimaHijos());
                 solicitudEstudio_modificar.set_edadMaximaHijos(solicitudEstudioDto.getEdadMaximaHijos());
+                solicitudEstudio_modificar.set_estatus(solicitudEstudioDto.getEstatus());
                 daoSolicitudEstudio.update(solicitudEstudio_modificar);
 
             } catch (Exception ex){

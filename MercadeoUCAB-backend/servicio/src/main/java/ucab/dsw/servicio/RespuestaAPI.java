@@ -121,35 +121,6 @@ public class RespuestaAPI extends AplicacionBase{
             return resultado;
     }
 
-    //Actualizar estatus de respuesta
-    @PUT
-    @Path("/estatusRespuesta/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
-    public Response modificarEstatusRespuesta(@PathParam("id") long id, RespuestaDto respuestaDto){
-
-        DaoRespuesta daoRespuesta = new DaoRespuesta();
-        Respuesta respuesta_modificar = daoRespuesta.find(id, Respuesta.class);
-
-        if(respuesta_modificar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-            try {
-
-                respuesta_modificar.set_estatus(respuestaDto.getEstatus());
-                daoRespuesta.update(respuesta_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
-            }
-
-        return Response.ok().entity(respuesta_modificar).build();
-
-    }
-
     //Actualizar respuesta
     @PUT
     @Path("/updateRespuesta/{id}")
@@ -172,6 +143,7 @@ public class RespuestaAPI extends AplicacionBase{
                 respuesta_modificar.set_verdaderoFalso(respuestaDto.getVerdaderoFalso());
                 respuesta_modificar.set_respuestaSimple(respuestaDto.getRespuestaSimple());
                 respuesta_modificar.set_respuestaMultiple(respuestaDto.getRespuestaMultiple());
+                respuesta_modificar.set_estatus(respuestaDto.getEstatus());
                 daoRespuesta.update(respuesta_modificar);
 
             } catch (Exception ex){

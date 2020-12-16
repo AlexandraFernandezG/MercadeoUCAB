@@ -117,36 +117,6 @@ public class EstudioAPI extends AplicacionBase {
 
     }
 
-    //Actualizar el estatus de estudio
-    @PUT
-    @Path("/estatusEstudio/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
-    public Response modificarEstatusEstudio(@PathParam("id") long id, EstudioDto estudioDto){
-
-        DaoEstudio daoEstudio = new DaoEstudio();
-        Estudio estudio_modificar = daoEstudio.find(id, Estudio.class);
-
-        if(estudio_modificar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-
-        }
-
-            try {
-
-                estudio_modificar.set_estatus(estudioDto.getEstatus());
-                daoEstudio.update(estudio_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
-            }
-
-            return Response.ok().entity(estudio_modificar).build();
-
-    }
-
     // Actualizar un estudio
     @PUT
     @Path("/updateEstudio/{id}")
@@ -168,6 +138,7 @@ public class EstudioAPI extends AplicacionBase {
                 estudio_modificar.set_tipoInstrumento(estudioDto.getTipoInstrumento());
                 estudio_modificar.set_fechaInicio(estudioDto.getFechaInicio());
                 estudio_modificar.set_fechaFin(estudioDto.getFechaFin());
+                estudio_modificar.set_estatus(estudioDto.getEstatus());
                 daoEstudio.update(estudio_modificar);
 
             } catch (Exception ex){

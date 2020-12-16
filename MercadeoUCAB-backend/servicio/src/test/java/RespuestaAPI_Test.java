@@ -77,18 +77,6 @@ public class RespuestaAPI_Test {
 
     // Prueba actualizar estatus
     @Test
-    public void pruebaModificarEstatusRespuesta(){
-
-        ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
-        RespuestaDto respuestaDto = new RespuestaDto();
-
-        respuestaDto.setEstatus("Activo");
-        //Estar mosca con los ID de la BD
-        servicio.modificarEstatusRespuesta(1L, respuestaDto);
-    }
-
-    // Prueba actualizar estatus
-    @Test
     public void pruebaModificarRespuesta(){
 
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
@@ -99,6 +87,7 @@ public class RespuestaAPI_Test {
         respuestaDto.setVerdaderoFalso("");
         respuestaDto.setRespuestaSimple("");
         respuestaDto.setRespuestaMultiple("");
+        respuestaDto.setEstatus("Activo");
         //Estar mosca con los ID de la BD
         servicio.updateRespuesta(1L, respuestaDto);
     }

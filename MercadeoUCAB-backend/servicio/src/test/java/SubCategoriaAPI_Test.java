@@ -55,27 +55,14 @@ public class SubCategoriaAPI_Test {
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
         SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
 
-        subcategoriaDto.setNombre("Perros calientes");
-        subcategoriaDto.setDescripcion("Perros calientes con sabores raros");
+        subcategoriaDto.setNombre("Jabones perfumados grasientos");
+        subcategoriaDto.setDescripcion("Olor exquisito a grasa");
         subcategoriaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
-        CategoriaDto categoriaDto = new CategoriaDto(2);
+        CategoriaDto categoriaDto = new CategoriaDto(1);
         subcategoriaDto.setCategoriaDto(categoriaDto);
         SubcategoriaDto resultado = servicio.addSubCategoria(subcategoriaDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
-    }
-
-    // Esta prueba permite actualizar el estatus de una subcategoria
-    @Test
-    public void pruebaModificarEstatusSubCategoria(){
-
-        ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
-        SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
-
-        subcategoriaDto.setEstatus("Activo");
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarEstatusSubcategoria(3L,subcategoriaDto);
-
     }
 
     // Esta prueba permite modificar una subcategoria
@@ -86,6 +73,7 @@ public class SubCategoriaAPI_Test {
         SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
         subcategoriaDto.setNombre("Juguetes");
         subcategoriaDto.setDescripcion("Para diversion de los chicos");
+        subcategoriaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarSubCategoria(3L,subcategoriaDto);
 

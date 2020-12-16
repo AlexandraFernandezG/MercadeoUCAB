@@ -87,6 +87,7 @@ public class PreguntaEncuestaAPI_Test {
         PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto();
         preguntaEncuestaDto.setDescripcion("Que te parece los perros calientes de arandanos?");
         preguntaEncuestaDto.setTipoPregunta("Desarrollo");
+        preguntaEncuestaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarPreguntaEncuesta(1L, preguntaEncuestaDto);
 

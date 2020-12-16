@@ -110,35 +110,6 @@ public class TipoAPI extends AplicacionBase{
             return resultado;
     }
 
-    //Actualizar estatus de tipo
-    @PUT
-    @Path("/estatusTipo/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
-    public Response modificarEstatusTipo(@PathParam("id") long id, TipoDto tipoDto){
-
-        DaoTipo daoTipo = new DaoTipo();
-        Tipo tipo_modificar = daoTipo.find(id, Tipo.class);
-
-        if(tipo_modificar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-            try {
-
-                tipo_modificar.set_estatus(tipoDto.getEstatus());
-                daoTipo.update(tipo_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
-            }
-
-            return Response.ok().entity(tipo_modificar).build();
-
-    }
-
     //Actualizar tipo
     @PUT
     @Path("/updateTipo/{id}")
@@ -158,6 +129,7 @@ public class TipoAPI extends AplicacionBase{
 
                 tipo_modificar.set_nombre(tipoDto.getNombre());
                 tipo_modificar.set_descripcion(tipoDto.getDescripcion());
+                tipo_modificar.set_estatus(tipoDto.getEstatus());
                 daoTipo.update(tipo_modificar);
 
             } catch (Exception ex){

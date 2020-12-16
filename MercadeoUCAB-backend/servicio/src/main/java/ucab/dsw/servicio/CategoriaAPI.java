@@ -215,6 +215,7 @@ public class CategoriaAPI extends AplicacionBase {
 
                 categoria_modificar.set_nombre(categoriaDto.getNombre());
                 categoria_modificar.set_descripcion(categoriaDto.getDescripcion());
+                categoria_modificar.set_estatus(categoriaDto.getEstatus());
                 dao.update(categoria_modificar);
 
             } catch (Exception ex) {
