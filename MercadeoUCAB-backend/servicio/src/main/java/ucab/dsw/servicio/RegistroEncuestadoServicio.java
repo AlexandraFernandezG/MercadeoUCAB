@@ -57,8 +57,8 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
             informacion.set_estatus(informacionDto.getEstatus());
             Usuario usuarioInformacion = new Usuario(idUsuario);
             informacion.set_usuario(usuarioInformacion);
-            Ocupacion ocupacion = new Ocupacion(informacionDto.getOcupacionDto().getId());
-            informacion.set_ocupacion(ocupacion);
+            //Ocupacion ocupacion = new Ocupacion(informacionDto.getOcupacionDto().getId());
+            //informacion.set_ocupacion(ocupacion);
             NivelAcademico nivelAcademico = new NivelAcademico(informacionDto.getNivelAcademicoDto().getId());
             informacion.set_nivelAcademico(nivelAcademico);
             NivelEconomico nivelEconomico = new NivelEconomico(informacionDto.getNivelEconomicoDto().getId());
@@ -68,6 +68,10 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
             Informacion resulInformacion = daoInformacion.insert(informacion);
             resultado.setId(resulInformacion.get_id());
 
+
+        } catch (javax.persistence.PersistenceException ex) {
+            String problema = ex.getMessage();
+            System.out.print("Usuario ya registrado");
 
         } catch (Exception ex) {
 

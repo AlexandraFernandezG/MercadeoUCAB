@@ -67,6 +67,7 @@ public class Usuario extends EntidadBase {
         this._nombre = _nombre;
     }
 
+
     public Usuario (String estatus) {
         super(estatus);
     }

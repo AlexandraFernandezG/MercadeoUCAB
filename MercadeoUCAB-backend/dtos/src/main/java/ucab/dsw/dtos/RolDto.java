@@ -16,9 +16,6 @@ public class RolDto extends DtoBase{
         super(id);
     }
 
-    public RolDto (String estatus) throws Exception {
-        super(estatus);
-    }
 
     public RolDto (){
         super();

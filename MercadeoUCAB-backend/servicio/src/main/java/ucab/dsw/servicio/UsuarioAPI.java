@@ -1,7 +1,9 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.accesodatos.DaoRol;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.directorioactivo.DirectorioActivo;
+import ucab.dsw.dtos.RolDto;
 import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.Rol;
 import ucab.dsw.entidades.Usuario;
@@ -59,21 +61,33 @@ public class UsuarioAPI extends AplicacionBase {
     public UsuarioDto addUsuario(UsuarioDto usuarioDto) {
         UsuarioDto resultado = new UsuarioDto();
         try {
-
-            DaoUsuario dao = new DaoUsuario();
-            Usuario usuario = new Usuario();
-
-            usuario.set_nombre(usuarioDto.getNombreUsuario());
-            usuario.set_correoelectronico(usuarioDto.getCorreo());
-            usuario.set_estatus(usuarioDto.getEstatus());
-            Rol rol = new Rol(usuarioDto.getRol().getId());
-            usuario.set_rol(rol);
-            usuario.set_codigoRecuperacion(usuarioDto.getCodigoRecuperacion());
-            Usuario resul = dao.insert(usuario);
-            resultado.setId(resul.get_id());
             DirectorioActivo ldap = new DirectorioActivo();
-            ldap.addEntryToLdap(usuarioDto);
-        } catch (Exception ex) {
+                DaoUsuario dao = new DaoUsuario();
+                Usuario usuario = new Usuario();
+
+                usuario.set_nombre(usuarioDto.getNombreUsuario());
+                usuario.set_correoelectronico(usuarioDto.getCorreo());
+                usuario.set_estatus(usuarioDto.getEstatus());
+                DaoRol daoRol = new DaoRol();
+                Rol rol = new Rol();
+                rol = daoRol.find(usuarioDto.getRol().getId(), Rol.class);
+                RolDto rolDto = new RolDto(rol.get_id());
+                rolDto.setNombre(rol.get_nombre());
+                usuarioDto.setRol(rolDto);
+                usuario.set_rol(rol);
+                usuario.set_codigoRecuperacion(usuarioDto.getCodigoRecuperacion());
+                Usuario resul = dao.insert(usuario);
+                resultado.setId(resul.get_id());
+                ldap.addEntryToLdap(usuarioDto);
+
+        }catch (javax.naming.NameAlreadyBoundException ex){
+            String problema = ex.getMessage();
+            System.out.print(problema);
+        }catch (javax.persistence.PersistenceException ex) {
+            String problema = ex.getMessage();
+            System.out.print(problema);
+        }
+        catch (Exception ex) {
 
             String problema = ex.getMessage();
             System.out.print(problema);
@@ -129,7 +143,6 @@ public class UsuarioAPI extends AplicacionBase {
         }
 
         try {
-
             daoUsuario.delete(usuario_eliminar);
 
         } catch (Exception ex) {
