@@ -29,14 +29,14 @@ export class EditSubcategoriaComponent implements OnInit {
 
       this.subcategoriaForm = this.fb.group({
         nombre: new FormControl([ Validators.maxLength(100)]),
-        descripcion: new FormControl([ Validators.maxLength(150)]), 
-        categoriaDto: new FormControl('')
+        descripcion: new FormControl([ Validators.maxLength(150)]),
+        categoriaDto: new FormControl('',[Validators.required])
       });
     }
-    categorias: Categoria[] =[
-    ]
+    categorias: Categoria[] = [
+    ];
     subcategorias: any;
-    subcategoria: Subcategoria ={
+    subcategoria: Subcategoria = {
       _id: 0,
       _nombre: '',
       _estatus: '',
@@ -66,20 +66,19 @@ export class EditSubcategoriaComponent implements OnInit {
     });
   }
 
-  
+
   editSubcategoria(): void{
-   // const sub : Subcategoria;
-    console.log('segundo');
-  /*  const editSu: Subcategoria2 = {
+   console.log('segundo');
+   const editSu: Subcategoria2 = {
       id: this.data.id,
-      nombre: sub._nombre,
-      descripcion: sub._descripcion,
-      estatus: sub._estatus,
-      categoriaDto: categoria
+      nombre: this.subcategoriaForm.get("nombre").value,
+      descripcion: this.subcategoriaForm.get("descripcion").value,
+      estatus: this.data.estatus,
+      categoriaDto: this.subcategoriaForm.get("categoriaDto").value
     };
-    this.service.updateSubcategoria(editSu).subscribe();
-    */
-    this.dialogRef.close();
+   this.service.updateSubcategoria(editSu).subscribe();
+
+   this.dialogRef.close();
       }
 
 }

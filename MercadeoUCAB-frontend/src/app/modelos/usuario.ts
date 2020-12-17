@@ -18,6 +18,7 @@ export class Usuario2 {
            public correo: string,
            public codigoRecuperacion: number,
            public estatus: string,
+           public contrasena: string,
            public rolDto: Rol2
          ){}
 }
@@ -30,6 +31,6 @@ export class UsuarioLDAP {
         public codigoRecuperacion: number,
         public estatus: string,
         public contrasena: string,
-        public RolDto: number
+        public rolDto: number
       ){}
 }

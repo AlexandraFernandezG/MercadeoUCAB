@@ -38,6 +38,7 @@ export class UsuariosService {
 
   createUsuario(usuario: Usuario2): Observable<Usuario2>{
     console.log(usuario);
+    console.log('hola');
     return this.http.post<Usuario2>(this.url + 'usuario/addUsuario', JSON.stringify(usuario), this.httpOptions)
     .pipe(
       tap((newusuario: Usuario2) => console.log(`added usuario w/ id=${newusuario.id}`)),

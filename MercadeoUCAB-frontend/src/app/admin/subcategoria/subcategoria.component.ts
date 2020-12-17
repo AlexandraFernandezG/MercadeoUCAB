@@ -50,21 +50,22 @@ export class SubcategoriaComponent implements OnInit {
   openEModal( id: number): void{
     this.dialog.open(EditSubcategoriaComponent,
       {
-        data: {id: id}
+        data: {id}
       }
     );
   }
 
-  deleteSubcategoria( subcategoria: Categoria): void{
+  deleteSubcategoria( subcategoria: Subcategoria): void{
     console.log('segundo', subcategoria);
-   /* const deleteSubca: Subcategoria2 = {
+    const editSu: Subcategoria2 = {
       id: subcategoria._id,
       nombre: subcategoria._nombre,
       descripcion: subcategoria._descripcion,
       estatus: 'Inactivo',
+      categoriaDto: subcategoria._categoria._id
     };
-    this.service.updateSubcategoria(deleteSubca).subscribe();
-     */
-    }
+    this.service.updateSubcategoria(editSu).subscribe();
+      }
+
 
 }

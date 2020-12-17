@@ -22,7 +22,7 @@
       <div class="form-group">
         <mat-form-field class="full-width" appareance="outline">
             <mat-label>Contraseña:</mat-label>
-            <input formControlName="contrasena" matInput [type]= "'hide' ? 'contrasena': 'text'" required />
+            <input formControlName="contrasena" matInput [type]= "'hide' ? 'password': 'text'" required />
              <mat-error *ngIf="usuarioForm.get('contrasena').errors?.required">
                 Introduzca la contraseña
              </mat-error>
@@ -32,7 +32,7 @@
         <div class="fields">
         <mat-form-field appearance="fill">
           <mat-label>--Roles--</mat-label>
-          <mat-select formControlName="rol">
+          <mat-select formControlName="rolDto" [(ngModel)]="usuario._rol._id">
               <mat-option *ngFor="let rol of roles" [value]="rol._id">
                   {{ rol._nombre }}
               </mat-option>
@@ -40,6 +40,6 @@
       </mat-form-field>
         </div>
   
-    <button type="submit"  mat-raised-button color="primary">Añadir Usuario</button>
+    <button type="submit"  mat-raised-button color="primary" (click)="addUsuario(usuario._correoelectronico, usuario._nombre)" [disabled]="usuarioForm.invalid">Añadir Usuario</button>
   </form>
   

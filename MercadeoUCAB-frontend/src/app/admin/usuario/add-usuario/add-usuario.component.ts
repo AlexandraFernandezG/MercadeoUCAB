@@ -31,11 +31,12 @@ export class AddUsuarioComponent implements OnInit {
     this.usuarioForm = this.fb.group({
       nombreUsuario: new FormControl('',[ Validators.required, Validators.maxLength(100)]),
       correo: new FormControl( '',[ Validators.required,  Validators.email, Validators.maxLength(100)]),
-      contrasena: new FormControl ('', [Validators.required, Validators.minLength(6)])
+      contrasena: new FormControl ('', [Validators.required, Validators.minLength(6)]),
+      rolDto: new FormControl('',[Validators.required]) 
 
     });
    }
-  
+
   usuario: Usuario = {
     _id: 1 ,
     _nombre: '',
@@ -63,8 +64,7 @@ export class AddUsuarioComponent implements OnInit {
     console.log(this.usuario)
   }
 
-  /*
-  addUsuario(nombreUsuario: string, correo: string, fk_rol: number): void{
+  addUsuario(nombreUsuario: string, correo: string): void{
     const id = 1;
     const estatus = 'Activo';
     const codigoRecuperacion = 1;
@@ -74,10 +74,10 @@ export class AddUsuarioComponent implements OnInit {
     correo,
     codigoRecuperacion,
     estatus,
-    fk_rol
+    contrasena: this.usuarioForm.get("contrasena").value,
+    rolDto: this.usuarioForm.get("rolDto").value
     } as Usuario2).subscribe();
-    console.log(id, nombreUsuario, correo, codigoRecuperacion, estatus, fk_rol);
+    console.log(id, nombreUsuario, correo, codigoRecuperacion, estatus);
     this.dialogRef.close();
   }
-  */
 }
