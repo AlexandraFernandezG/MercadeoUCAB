@@ -2,6 +2,7 @@ package ucab.dsw.servicio;
 import java.util.ArrayList;
 import java.util.List;
 
+import ucab.dsw.accesodatos.DaoCategoria;
 import ucab.dsw.accesodatos.DaoSubcategoria;
 import ucab.dsw.dtos.SubcategoriaDto;
 import ucab.dsw.entidades.Categoria;
@@ -101,11 +102,12 @@ public class SubCategoriaAPI extends AplicacionBase{
 
             DaoSubcategoria dao = new DaoSubcategoria();
             Subcategoria subcategoria = new Subcategoria();
+            DaoCategoria daoCategoria = new DaoCategoria();
 
             subcategoria.set_nombre(subcategoriaDto.getNombre());
             subcategoria.set_descripcion(subcategoriaDto.getDescripcion());
             subcategoria.set_estatus(subcategoriaDto.getEstatus());
-            Categoria categoria = new Categoria(subcategoriaDto.getCategoriaDto().getId());
+            Categoria categoria = daoCategoria.find(subcategoriaDto.getCategoriaDto().getId(), Categoria.class);
             subcategoria.set_categoria(categoria);
             Subcategoria resul = dao.insert(subcategoria);
             resultado.setId(resul.get_id());
