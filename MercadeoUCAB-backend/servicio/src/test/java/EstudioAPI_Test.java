@@ -82,18 +82,6 @@ public class EstudioAPI_Test {
 
     }
 
-    //Actualizar el estado del estudio
-    @Test
-    public void pruebaModificarEstatusEstudio() throws ParseException {
-
-        ucab.dsw.servicio.EstudioAPI servicio = new ucab.dsw.servicio.EstudioAPI();
-        EstudioDto estudioDto = new EstudioDto();
-        estudioDto.setEstatus("Activo");
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarEstudio(1L, estudioDto);
-    }
-
-
     // Esta prueba permite modificar un estudio
     @Test
     public void pruebaModificarEstudio() throws ParseException {

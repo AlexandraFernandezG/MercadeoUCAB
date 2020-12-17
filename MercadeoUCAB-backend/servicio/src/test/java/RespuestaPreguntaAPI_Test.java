@@ -69,17 +69,6 @@ public class RespuestaPreguntaAPI_Test {
         Assert.assertNotEquals(resultado.getId(), 0);
     }
 
-    // Esta prueba permite actualizar el estatus
-    @Test
-    public void pruebaModificarEstatusRespuestaPregunta(){
-
-        ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
-        RespuestaPreguntaDto respuestaPreguntaDto = new RespuestaPreguntaDto();
-        respuestaPreguntaDto.setEstatus("Activo");
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarRespuestaPregunta(1L, respuestaPreguntaDto);
-    }
-
     // Esta prueba permite modificar una Respuesta
     @Test
     public void pruebaModificarRespuestaPregunta(){
@@ -87,6 +76,7 @@ public class RespuestaPreguntaAPI_Test {
         ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
         RespuestaPreguntaDto respuestaPreguntaDto = new RespuestaPreguntaDto();
         respuestaPreguntaDto.setNombre("No muy buena la verdad");
+        respuestaPreguntaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarRespuestaPregunta(1L, respuestaPreguntaDto);
     }

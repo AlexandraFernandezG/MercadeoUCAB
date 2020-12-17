@@ -65,19 +65,6 @@ public class TipoAPI_Test {
 
     }
 
-    //Actualizar estatus de tipo
-    @Test
-    public void pruebaModificarEstatusTipo(){
-
-        ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
-        TipoDto tipoDto = new TipoDto();
-
-        tipoDto.setEstatus("Activo");
-        // Estar pendiente con los ID registrados en la BD
-        servicio.modificarEstatusTipo(1L, tipoDto);
-
-    }
-
     //Modificar tipo
     @Test
     public void pruebaModificarTipo(){
@@ -87,6 +74,7 @@ public class TipoAPI_Test {
 
         tipoDto.setNombre("");
         tipoDto.setDescripcion("");
+        tipoDto.setEstatus("Activo");
         // Estar pendiente con los ID registrados en la BD
         servicio.updateTipo(1L, tipoDto);
 

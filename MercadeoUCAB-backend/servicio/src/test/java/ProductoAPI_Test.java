@@ -74,19 +74,6 @@ public class ProductoAPI_Test {
 
     }
 
-    //Actualizar el estatus de producto
-    @Test
-    public void pruebaModificarEstatusProducto(){
-
-        ucab.dsw.servicio.ProductoAPI servicio = new ucab.dsw.servicio.ProductoAPI();
-        ProductoDto productoDto = new ProductoDto();
-
-        productoDto.setEstatus("Activo");
-        //Revisar los ID de los registros de la BD
-        servicio.modificarEstatusProducto(1L,productoDto);
-
-    }
-
     //Modificar el producto
     @Test
     public void pruebaModificarProducto(){
@@ -96,6 +83,7 @@ public class ProductoAPI_Test {
 
         productoDto.setNombre("");
         productoDto.setDescripcion("");
+        productoDto.setEstatus("Activo");
         //Revisar los ID de los registros de la BD
         servicio.modificarProducto(1L,productoDto);
 

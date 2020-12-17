@@ -93,7 +93,6 @@ public class ProductoAPI extends AplicacionBase{
 
         try {
 
-
             DaoProducto daoProducto = new DaoProducto();
             Producto producto = new Producto();
 
@@ -118,35 +117,6 @@ public class ProductoAPI extends AplicacionBase{
             return resultado;
     }
 
-    //Actualizar estatus de un producto
-    @PUT
-    @Path("/estatusProducto/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
-    public Response modificarEstatusProducto(@PathParam("id") long id, ProductoDto productoDto){
-
-        DaoProducto daoProducto = new DaoProducto();
-        Producto producto_modificar = daoProducto.find(id, Producto.class);
-
-        if (producto_modificar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-            try {
-
-                producto_modificar.set_estatus(productoDto.getEstatus());
-                daoProducto.update(producto_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
-            }
-
-            return Response.ok().entity(producto_modificar).build();
-
-    }
-
     //Actualizar Producto
     @PUT
     @Path("/updateProducto/{id}")
@@ -166,6 +136,7 @@ public class ProductoAPI extends AplicacionBase{
 
                 producto_modificar.set_nombre(productoDto.getNombre());
                 producto_modificar.set_descripcion(productoDto.getDescripcion());
+                producto_modificar.set_estatus(productoDto.getEstatus());
                 daoProducto.update(producto_modificar);
 
             } catch (Exception ex){

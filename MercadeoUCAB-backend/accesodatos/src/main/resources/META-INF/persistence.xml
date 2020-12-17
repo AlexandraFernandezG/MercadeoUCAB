@@ -25,6 +25,7 @@
     <class>ucab.dsw.entidades.Telefono</class>
     <class>ucab.dsw.entidades.Tipo</class>
     <class>ucab.dsw.entidades.Usuario</class>
+    <class>ucab.dsw.entidades.ProductoPresentacionTipo</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mercadeoucab"/>

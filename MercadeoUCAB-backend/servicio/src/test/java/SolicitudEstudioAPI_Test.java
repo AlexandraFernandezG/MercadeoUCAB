@@ -127,6 +127,7 @@ public class SolicitudEstudioAPI_Test {
         solicitudEstudioDto.setGeneroHijos("");
         solicitudEstudioDto.setEdadMinimaHijos(0);
         solicitudEstudioDto.setEdadMaximaHijos(0);
+        solicitudEstudioDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarSolicitudEstudio(2L, solicitudEstudioDto);
 

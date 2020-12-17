@@ -187,6 +187,7 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
             try {
                 preguntaEncuesta_modificar.set_descripcion(preguntaEncuestaDto.getDescripcion());
                 preguntaEncuesta_modificar.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
+                preguntaEncuesta_modificar.set_estatus(preguntaEncuestaDto.getEstatus());
                 daoPreguntaEncuesta.update(preguntaEncuesta_modificar);
 
             } catch (Exception ex){

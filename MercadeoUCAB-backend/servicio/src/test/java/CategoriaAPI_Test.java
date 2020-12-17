@@ -88,7 +88,7 @@ public class CategoriaAPI_Test {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
         CategoriaDto categoriaDto = new CategoriaDto();
-        categoriaDto.setEstatus("Inactivo");
+        categoriaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarEstatusCategoria(1L,categoriaDto);
     }
@@ -101,6 +101,7 @@ public class CategoriaAPI_Test {
         CategoriaDto categoriaDto = new CategoriaDto();
         categoriaDto.setNombre("Comida");
         categoriaDto.setDescripcion("Perros calientes de arandanos");
+        categoriaDto.setEstatus("Activo");
         // Recuerden que deben ver los id de los registros en la BD
         servicio.modificarCategoria(1L,categoriaDto);
 

@@ -67,19 +67,6 @@ public class PresentacionAPI_Test {
 
     }
 
-    // Prueba actualizar estatus
-    @Test
-    public void pruebaModificarEstatusPresentacion(){
-
-        ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
-        PresentacionDto presentacionDto = new PresentacionDto();
-
-        presentacionDto.setEstatus("Activo");
-        // Estar mosca con los id de la bd
-        servicio.modificarEstatusPresentacion(1L, presentacionDto);
-
-    }
-
     // Prueba para modificar presentacion
     @Test
     public void pruebaModificarPresentacion(){
@@ -89,6 +76,7 @@ public class PresentacionAPI_Test {
 
         presentacionDto.setNombre("");
         presentacionDto.setDescripcion("");
+        presentacionDto.setEstatus("Activo");
         // Estar mosca con los id de la bd
         servicio.updatePresentacion(1L, presentacionDto);
 
