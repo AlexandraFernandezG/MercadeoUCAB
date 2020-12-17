@@ -12,7 +12,7 @@ public class EntidadBase implements Serializable
 {
 
     @Id
-    @Column( name = "Id" )
+    @Column( name = "id" )
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private long _id;
 

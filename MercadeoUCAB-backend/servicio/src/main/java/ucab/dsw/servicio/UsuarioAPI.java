@@ -73,6 +73,7 @@ public class UsuarioAPI extends AplicacionBase {
                 rol = daoRol.find(usuarioDto.getRol().getId(), Rol.class);
                 RolDto rolDto = new RolDto(rol.get_id());
                 rolDto.setNombre(rol.get_nombre());
+                rolDto.setEstatus(rol.get_estatus());
                 usuarioDto.setRol(rolDto);
                 usuario.set_rol(rol);
                 usuario.set_codigoRecuperacion(usuarioDto.getCodigoRecuperacion());
@@ -118,6 +119,8 @@ public class UsuarioAPI extends AplicacionBase {
             usuario_modificar.set_estatus(usuarioDto.getEstatus());
             usuario_modificar.set_codigoRecuperacion(usuarioDto.getCodigoRecuperacion());
             daoUsuario.update(usuario_modificar);
+            DirectorioActivo ldap = new DirectorioActivo();
+            ldap.updateEntry(usuarioDto);
 
         } catch (Exception ex) {
 
@@ -132,17 +135,21 @@ public class UsuarioAPI extends AplicacionBase {
     @DELETE
     @Path("/deleteUsuario/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response deleteUsuario(@PathParam("id") long id){
+    public Response deleteUsuario(@PathParam("id") long id) throws Exception {
 
         DaoUsuario daoUsuario = new DaoUsuario();
         Usuario usuario_eliminar = daoUsuario.find(id, Usuario.class);
 
         if(usuario_eliminar == null) {
 
+
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         try {
+            UsuarioDto usuarioDto = new UsuarioDto(usuario_eliminar.get_id());
+            DirectorioActivo ldap = new DirectorioActivo();
+            ldap.deleteEntry(usuarioDto);
             daoUsuario.delete(usuario_eliminar);
 
         } catch (Exception ex) {
@@ -153,4 +160,68 @@ public class UsuarioAPI extends AplicacionBase {
         return Response.ok().entity(usuario_eliminar).build();
 
     }
+
+    @PUT
+    @Path("/changePassword/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response changePassword(@PathParam("id") long id, UsuarioDto usuarioDto){
+
+        DaoUsuario daoUsuario = new DaoUsuario();
+        Usuario usuario_modificar = daoUsuario.find(id, Usuario.class);
+
+        if(usuario_modificar == null){
+
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        try {
+            DirectorioActivo ldap = new DirectorioActivo();
+            ldap.changePassword(usuarioDto);
+
+        } catch (Exception ex) {
+
+            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+        }
+
+        return Response.ok().entity(usuario_modificar).build();
+
+    }
+
+    //Cambiar el estado a inactivo
+    @PUT
+    @Path("/estatusUsuario/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response estatusUsuario(@PathParam("id") long id, UsuarioDto usuarioDto){
+
+        DaoUsuario daoUsuario = new DaoUsuario();
+        Usuario usuario_modificar = daoUsuario.find(id, Usuario.class);
+
+        if(usuario_modificar == null){
+
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        try {
+
+            if (usuario_modificar.get_estatus() == "Activo") {
+                usuario_modificar.set_estatus("Inactivo");
+                daoUsuario.update(usuario_modificar);
+            }
+            else if (usuario_modificar.get_estatus() == "Inactivo"){
+                usuario_modificar.set_estatus("Activo");
+                daoUsuario.update(usuario_modificar);
+            }
+
+        } catch (Exception ex) {
+
+            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+        }
+
+        return Response.ok().entity(usuario_modificar).build();
+
+    }
+
+
 }

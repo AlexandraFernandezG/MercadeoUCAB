@@ -73,7 +73,7 @@ public class DirectorioActivo
             BasicAttributes entry = new BasicAttributes();
             entry.put( oc );
             entry.put( new BasicAttribute( "cn", user.getCorreo()) );
-            entry.put( new BasicAttribute( "sn", user.getCorreo() ) );
+            entry.put( new BasicAttribute( "sn", user.getNombreUsuario() ) );
             entry.put( new BasicAttribute( "userPassword", user.getContrasena()) );
             entry.put( new BasicAttribute( "pwdLastSuccess", format.format( new Date() ) + "Z" ) );
             entry.put( new BasicAttribute( "description", user.getNombreRol()));
@@ -128,6 +128,32 @@ public class DirectorioActivo
             }
         }
         catch ( Exception exception )
+        {
+            exception.printStackTrace();
+        }
+        finally
+        {
+            disconnectLDAP();
+        }
+    }
+
+    public void updateEntry(UsuarioDto user)
+    {
+        try
+        {
+            connectLDAP( _user, _password );
+            Attributes atbs = new BasicAttributes();
+            ModificationItem[] modificationItems = new ModificationItem[ 2 ];
+            modificationItems[0] = new ModificationItem( DirContext.REPLACE_ATTRIBUTE,
+                    new BasicAttribute( "cn", user.getCorreo()
+                    ));
+            modificationItems[1] = new ModificationItem( DirContext.REPLACE_ATTRIBUTE,
+                    new BasicAttribute( "sn", user.getNombreUsuario()
+                    ));
+            _ldapContext.modifyAttributes(String.format(_userDirectory + "," + _directory, user.getCorreo()), modificationItems );
+
+        }
+        catch(Exception exception)
         {
             exception.printStackTrace();
         }
