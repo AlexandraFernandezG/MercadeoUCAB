@@ -55,17 +55,17 @@ export class UsuarioComponent implements OnInit {
     );
   }
 
-  /*
-  deleteUsuario( usuario: Usuario): void{
-    console.log('segundo', usuario);
-    const deleteUs: Usuario2 = {
-       id: usuario._id,
-       nombreUsuario: usuario._nombreUsuario,
-       correo: usuario._correo,
-       codigoRecuperacion: usuario._codigoRecuperacion,
-       estatus: 'Inactivo',
-      // rol: usuario._rol
-    };
-    this.service.updateUsuario(deleteUs).subscribe();
-      }*/
+  deleteUsuario(usuario: Usuario): void{
+    console.log('segundo');
+    const deleteU: Usuario2 = {
+     id: usuario._id,
+     nombreUsuario: usuario._nombre,
+     correo: usuario._correoelectronico,
+     codigoRecuperacion: usuario._codigoRecuperacion,
+     estatus: usuario._estatus,
+     contrasena: '',
+     rol: usuario._rol._id
+     };
+    this.service.changeEstatusUsuario(deleteU).subscribe();
+       }
 }

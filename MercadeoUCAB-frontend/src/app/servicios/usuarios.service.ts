@@ -56,6 +56,7 @@ export class UsuariosService {
 
   changeEstatusUsuario(usuario): Observable<Usuario>{
     console.log(usuario);
+    console.log('entre');
     return this.http.put<Usuario>(this.url + 'usuario/estatusUsuario/' + usuario.id, JSON.stringify(usuario), this.httpOptions)
     .pipe(
       retry(1),
