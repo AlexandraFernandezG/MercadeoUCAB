@@ -32,7 +32,7 @@
         <div class="fields">
         <mat-form-field appearance="fill">
           <mat-label>--Roles--</mat-label>
-          <mat-select formControlName="rolDto" [(ngModel)]="usuario._rol._id">
+          <mat-select formControlName="rol" [(ngModel)]="usuario._rol._id">
               <mat-option *ngFor="let rol of roles" [value]="rol._id">
                   {{ rol._nombre }}
               </mat-option>

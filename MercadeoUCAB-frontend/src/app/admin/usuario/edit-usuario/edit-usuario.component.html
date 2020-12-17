@@ -1,1 +1,46 @@
-<p>edit-usuario works!</p>
+<form [formGroup]="usuarioForm" novalidate> 
+
+    <h4>Editar Usuario</h4>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Nombre Usuario:</mat-label>
+          <input formControlName="nombreUsuario" matInput [(ngModel)]="usuario._nombre"/>
+          <mat-error *ngIf="usuarioForm.get('nombreUsuario').errors?.required">
+              Falta llenar el nuevo nombre usuario
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Email:</mat-label>
+          <input formControlName="correo" matInput  [(ngModel)]="usuario._correoelectronico" />
+          <mat-error *ngIf="usuarioForm.get('correo').errors?.required">
+            Falta llenar el correo electronico
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width" appareance="outline">
+            <mat-label>Contraseña:</mat-label>
+            <input formControlName="contrasena" matInput [type]= "'hide' ? 'password': 'text'" required />
+             <mat-error *ngIf="usuarioForm.get('contrasena').errors?.required">
+                Introduzca la contraseña
+             </mat-error>
+        </mat-form-field>
+    </div>
+        <h5>Seleccione un rol:</h5>
+        <div class="fields">
+        <mat-form-field appearance="fill">
+          <mat-label>--Roles--</mat-label>
+          <mat-select formControlName="rol" [(ngModel)]="usuario._rol._id">
+              <mat-option *ngFor="let rol of roles" [value]="rol._id">
+                  {{ rol._nombre }}
+              </mat-option>
+              </mat-select>
+      </mat-form-field>
+        </div>
+  
+    <button type="submit"  mat-raised-button color="primary" (click)="editUsuario()">Editar Usuario</button>
+  </form>
+  
+

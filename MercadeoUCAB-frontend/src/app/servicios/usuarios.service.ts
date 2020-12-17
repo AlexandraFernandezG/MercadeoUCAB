@@ -38,7 +38,6 @@ export class UsuariosService {
 
   createUsuario(usuario: Usuario2): Observable<Usuario2>{
     console.log(usuario);
-    console.log('hola');
     return this.http.post<Usuario2>(this.url + 'usuario/addUsuario', JSON.stringify(usuario), this.httpOptions)
     .pipe(
       tap((newusuario: Usuario2) => console.log(`added usuario w/ id=${newusuario.id}`)),
@@ -49,6 +48,15 @@ export class UsuariosService {
   updateUsuario(usuario): Observable<Usuario>{
     console.log(usuario);
     return this.http.put<Usuario>(this.url + 'usuario/updateUsuario/' + usuario.id, JSON.stringify(usuario), this.httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+
+  changeEstatusUsuario(usuario): Observable<Usuario>{
+    console.log(usuario);
+    return this.http.put<Usuario>(this.url + 'usuario/estatusUsuario/' + usuario.id, JSON.stringify(usuario), this.httpOptions)
     .pipe(
       retry(1),
       catchError(this.handleError)

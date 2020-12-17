@@ -5,7 +5,7 @@ export class Usuario {
        public _id: number,
        public _nombre: string,
        public _correoelectronico: string,
-       public _codigoRecuperacion: number,
+       public _codigoRecuperacion: string,
        public _estatus: string,
        public _rol: Rol
      ){}
@@ -16,10 +16,10 @@ export class Usuario2 {
            public id: number,
            public nombreUsuario: string,
            public correo: string,
-           public codigoRecuperacion: number,
+           public codigoRecuperacion: string,
            public estatus: string,
            public contrasena: string,
-           public rolDto: Rol2
+           public rol: number
          ){}
 }
 
@@ -28,9 +28,9 @@ export class UsuarioLDAP {
         public id: number,
         public nombreUsuario: string,
         public correo: string,
-        public codigoRecuperacion: number,
+        public codigoRecuperacion: string,
         public estatus: string,
         public contrasena: string,
-        public rolDto: number
+        public rol: number
       ){}
 }
