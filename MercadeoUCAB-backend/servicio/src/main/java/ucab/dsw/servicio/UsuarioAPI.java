@@ -239,29 +239,33 @@ public class UsuarioAPI extends AplicacionBase {
         String contenido;
         DirectorioActivo directorioActivo = new DirectorioActivo();
 
-        try {
+        DaoUsuario daoUsuario = new DaoUsuario();
+        Usuario usuario_modificar = daoUsuario.find(usuarioDto.getId(), Usuario.class);
 
-            DirectorioActivo ldap = new DirectorioActivo();
-            //String correoElectronico = ldap.getCorreo();
+        if(usuario_modificar != null) {
 
-            //Este vendría siendo el correo que se optiene del get
-            String correoElectronico = "emanuelesposito3@gmail.com";
+            try {
 
-            String randomClave = RandomStringUtils.randomAlphanumeric(10);
+                DirectorioActivo ldap = new DirectorioActivo();
+                String correoElectronico = usuarioDto.getCorreo();
 
-            //UsuarioDto usuario = new UsuarioDto();
-            //usuario.setNombreUsuario(usuarioDto.getNombreUsuario());
-            //usuario.setContrasena(randomClave);
-            //directorioActivo.changePassword(usuario);
 
-            contenido = "Estimado " + usuarioDto.getNombreUsuario() + " su contraseña ha sido actualizada. Su nueva contraseña es: "+randomClave;
-            ucab.dsw.servicio.EmailUtility.enviarCorreoElectronico(correoElectronico, "Recuperacion de clave", contenido);
-            respuesta = Json.createObjectBuilder().add("estatus", "Correo enviado correctamente").build();
+                String randomClave = RandomStringUtils.randomAlphanumeric(10);
 
-        } catch (Exception ex){
+                usuarioDto.setContrasena(randomClave);
+                daoUsuario.update(usuario_modificar);
+                ldap.changePassword(usuarioDto);
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+                contenido = "Estimado " + usuarioDto.getNombreUsuario() + " su contraseña ha sido actualizada. Su nueva contraseña es: " + randomClave;
+                ucab.dsw.servicio.EmailUtility.enviarCorreoElectronico(correoElectronico, "Recuperacion de clave", contenido);
+                respuesta = Json.createObjectBuilder().add("estatus", "Correo enviado correctamente").build();
+
+            } catch (Exception ex) {
+
+                String mensaje = ex.getMessage();
+                System.out.print(mensaje);
+            }
+
         }
 
         return respuesta;
