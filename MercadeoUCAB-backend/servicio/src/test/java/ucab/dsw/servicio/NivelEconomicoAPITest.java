@@ -42,7 +42,7 @@ class NivelEconomicoAPITest {
 		
 		try {
 			Assertions.assertEquals(1,
-				servicio.consultarNivelEconomico(1L).get_id());
+				servicio.consultarNivelEconomico(1).get_id());
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -87,7 +87,7 @@ class NivelEconomicoAPITest {
 		NivelEconomicoAPI servicio = new NivelEconomicoAPI();
 		
 		try {
-			NivelEconomicoDto neDto = dto.getNivelEconomicoDto(2L);
+			NivelEconomicoDto neDto = dto.getNivelEconomicoDto(2);
 			
 			// Solo actualizará un registro que exista en la BD.
 			if (neDto != null) {
@@ -114,7 +114,7 @@ class NivelEconomicoAPITest {
 		NivelEconomicoAPI servicio = new NivelEconomicoAPI();
 		
 		try {
-			NivelEconomicoDto neDto = dto.getNivelEconomicoDto(1L);
+			NivelEconomicoDto neDto = dto.getNivelEconomicoDto(1);
 			
 			// Solo actualizará un registro que exista en la BD.
 			if (neDto != null) {
@@ -137,7 +137,7 @@ class NivelEconomicoAPITest {
 		 * */
 		
 		NivelEconomicoAPI servicio = new NivelEconomicoAPI();
-		NivelEconomico nivelEconomico = servicio.consultarNivelEconomico(3L);
+		NivelEconomico nivelEconomico = servicio.consultarNivelEconomico(3);
 		
 		try {
 			// Solo actualizará un registro que exista en la BD.
@@ -162,7 +162,7 @@ class NivelEconomicoAPITest {
 		 * */
 		
 		NivelEconomicoAPI servicio = new NivelEconomicoAPI();
-		NivelEconomico nivelEconomico = servicio.consultarNivelEconomico(3L);
+		NivelEconomico nivelEconomico = servicio.consultarNivelEconomico(3);
 		
 		try {
 			// Solo eliminará un registro que exista en la BD.

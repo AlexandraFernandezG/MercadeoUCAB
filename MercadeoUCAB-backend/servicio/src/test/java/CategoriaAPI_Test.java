@@ -33,7 +33,7 @@ public class CategoriaAPI_Test {
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
 
         try {
-            Assertions.assertTrue(servicio.listarSubcategoriasDeCategoria(1L).size() > 0);
+            Assertions.assertTrue(servicio.listarSubcategoriasDeCategoria(1).size() > 0);
 
         } catch (Exception e) {
 
@@ -47,7 +47,7 @@ public class CategoriaAPI_Test {
     public void pruebaConsultarCategoria(){
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
-        Categoria categoria_buscar = servicio.consultarCategoria(1L);
+        Categoria categoria_buscar = servicio.consultarCategoria(1);
 
         try {
             Assertions.assertEquals(1, categoria_buscar.get_id());
@@ -113,6 +113,6 @@ public class CategoriaAPI_Test {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarCategoria(1L);
+        servicio.eliminarCategoria(1);
     }
 }

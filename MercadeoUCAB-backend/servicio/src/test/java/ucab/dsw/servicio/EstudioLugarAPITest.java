@@ -2,8 +2,13 @@ package ucab.dsw.servicio;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ucab.dsw.accesodatos.DaoEstudioLugar;
 import ucab.dsw.dtos.EstudioLugarDto;
+import ucab.dsw.dtos.LugarDto;
+import ucab.dsw.entidades.EstudioLugar;
 import ucab.dsw.entidades.Telefono;
+
+import java.util.List;
 
 class EstudioLugarAPITest {
 	private final EntidadDto dto = new EntidadDto();
@@ -24,7 +29,7 @@ class EstudioLugarAPITest {
 		EstudioLugarAPI servicio = new EstudioLugarAPI();
 		
 		try {
-			Assertions.assertTrue(servicio.listarLugaresEstudio(1L).size() > 0);
+			Assertions.assertTrue(servicio.listarLugaresEstudio(1).size() > 0);
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -48,8 +53,11 @@ class EstudioLugarAPITest {
 		elDto.setEstatus("Activo");
 		
 		try {
-			elDto.setLugarDto(dto.getLugarDtoMunicipio(3L));
-			elDto.setEstudioDto(dto.getEstudioDto(1L));
+			LugarDto lugarDto = new LugarDto(3);
+			elDto.setLugarDto(lugarDto);
+			
+			elDto.setEstudioDto(dto.getEstudioDto(1));
+			
 			servicio.addEstudioLugar(elDto);
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
@@ -68,7 +76,7 @@ class EstudioLugarAPITest {
 		EstudioLugarAPI servicio = new EstudioLugarAPI();
 		
 		try {
-			EstudioLugarDto estudioLugarDto = dto.getEstudioLugarDto(1L);
+			EstudioLugarDto estudioLugarDto = dto.getEstudioLugarDto(1);
 			
 			estudioLugarDto.setEstatus("Inactivo");
 			
@@ -87,7 +95,7 @@ class EstudioLugarAPITest {
 		EstudioLugarAPI servicio = new EstudioLugarAPI();
 		
 		try {
-			servicio.deleteEstudiaLugar(2L);
+			servicio.deleteEstudiaLugar(2);
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}

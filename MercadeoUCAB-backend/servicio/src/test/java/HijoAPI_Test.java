@@ -33,7 +33,7 @@ public class HijoAPI_Test {
     public void pruebaConsultarHijo(){
 
         ucab.dsw.servicio.HijoAPI servicio = new ucab.dsw.servicio.HijoAPI();
-        Hijo hijo_buscar = servicio.consultarHijo(1L);
+        Hijo hijo_buscar = servicio.consultarHijo(1);
 
         try {
             Assertions.assertEquals(1, hijo_buscar.get_id());
@@ -58,7 +58,7 @@ public class HijoAPI_Test {
         hijoDto.setGenero("masculino");
         hijoDto.setEstatus("Activo");
         //Revisar sus registros en la base de datos
-        InformacionDto informacionDto = new InformacionDto(1L);
+        InformacionDto informacionDto = new InformacionDto(1);
         hijoDto.setInformacionDto(informacionDto);
         HijoDto resultado = servicio.addHijo(hijoDto);
         Assert.assertNotEquals( resultado.getId(), 0 );
@@ -89,7 +89,7 @@ public class HijoAPI_Test {
 
         ucab.dsw.servicio.HijoAPI servicio = new ucab.dsw.servicio.HijoAPI();
         //Revisar sus registros en la base de datos
-        servicio.deleteHijo(1L);
+        servicio.deleteHijo(1);
     }
 
 }

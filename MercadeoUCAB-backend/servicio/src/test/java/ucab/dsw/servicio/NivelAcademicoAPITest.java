@@ -42,7 +42,7 @@ class NivelAcademicoAPITest {
 		
 		try {
 			Assertions.assertEquals(1,
-				servicio.consultarNivelAcademico(1L).get_id());
+				servicio.consultarNivelAcademico(1).get_id());
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -85,7 +85,7 @@ class NivelAcademicoAPITest {
 		
 		NivelAcademicoAPI servicio = new NivelAcademicoAPI();
 		try {
-			NivelAcademicoDto naDto = dto.getNivelAcademicoDto(1L);
+			NivelAcademicoDto naDto = dto.getNivelAcademicoDto(1);
 			
 			// Solo actualizará un registro que exista en la BD.
 			if (naDto != null) {
@@ -111,7 +111,7 @@ class NivelAcademicoAPITest {
 		NivelAcademicoAPI servicio = new NivelAcademicoAPI();
 		
 		try {
-			NivelAcademicoDto naDto = dto.getNivelAcademicoDto(2L);
+			NivelAcademicoDto naDto = dto.getNivelAcademicoDto(2);
 			// Solo actualizará un registro que exista en la BD.
 			if (naDto != null) {
 				naDto.setEstatus("Inactivo");
@@ -133,7 +133,7 @@ class NivelAcademicoAPITest {
 		 * */
 		
 		NivelAcademicoAPI servicio = new NivelAcademicoAPI();
-		NivelAcademico nivelAcademico = servicio.consultarNivelAcademico(3L);
+		NivelAcademico nivelAcademico = servicio.consultarNivelAcademico(3);
 		
 		try {
 			// Solo actualizará un registro que exista en la BD.
@@ -157,7 +157,7 @@ class NivelAcademicoAPITest {
 		 * */
 		
 		NivelAcademicoAPI servicio = new NivelAcademicoAPI();
-		NivelAcademico nivelAcademico = servicio.consultarNivelAcademico(3L);
+		NivelAcademico nivelAcademico = servicio.consultarNivelAcademico(3);
 		
 		try {
 			// Solo eliminará un registro que exista en la BD.

@@ -27,7 +27,7 @@ public class PresentacionAPI_Test {
     public void pruebaConsultarPresentacion(){
 
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
-        Presentacion presentacion_buscar = servicio.consultarPresentacion(1L);
+        Presentacion presentacion_buscar = servicio.consultarPresentacion(1);
 
         try {
             Assertions.assertEquals(1, presentacion_buscar.get_id());
@@ -88,7 +88,7 @@ public class PresentacionAPI_Test {
 
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
         // Estar mosca con los id de la bd
-        servicio.eliminarPresentacion(1L);
+        servicio.eliminarPresentacion(1);
 
     }
 

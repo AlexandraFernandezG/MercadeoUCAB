@@ -33,7 +33,7 @@ public class EstudioAPI_Test {
     public void pruebaConsultarEstudio(){
 
         ucab.dsw.servicio.EstudioAPI servicio = new ucab.dsw.servicio.EstudioAPI();
-        Estudio estudio_buscar = servicio.consultarEstudio(1L);
+        Estudio estudio_buscar = servicio.consultarEstudio(1);
 
         try {
             Assertions.assertEquals(1, estudio_buscar.get_id());
@@ -73,9 +73,9 @@ public class EstudioAPI_Test {
         estudioDto.setFechaFin(myDate2);
         estudioDto.setEstatus("Activo");
         // Revisar los registros de sus base de datos
-        SolicitudEstudioDto solicitudEstudioDto = new SolicitudEstudioDto(1L);
+        SolicitudEstudioDto solicitudEstudioDto = new SolicitudEstudioDto(1);
         estudioDto.setSolicitudEstudioDto(solicitudEstudioDto);
-        UsuarioDto usuarioDto = new UsuarioDto(1L);
+        UsuarioDto usuarioDto = new UsuarioDto(1);
         estudioDto.setUsuarioDto(usuarioDto);
         EstudioDto resultado = servicio.addEstudios(estudioDto);
         Assert.assertNotEquals(resultado.getId(), 0);
@@ -109,7 +109,7 @@ public class EstudioAPI_Test {
 
         ucab.dsw.servicio.EstudioAPI servicio = new ucab.dsw.servicio.EstudioAPI();
         // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarEstudio(1L);
+        servicio.eliminarEstudio(1);
 
     }
 }

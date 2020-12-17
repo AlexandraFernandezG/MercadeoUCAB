@@ -28,7 +28,7 @@ public class RespuestaPreguntaAPI_Test {
     public void pruebaConsultarRespuestaPregunta(){
 
         ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
-        RespuestaPregunta respuestaPregunta_buscar = servicio.encontrarRespuestaPregunta(1L);
+        RespuestaPregunta respuestaPregunta_buscar = servicio.encontrarRespuestaPregunta(1);
 
         try {
 
@@ -63,7 +63,7 @@ public class RespuestaPreguntaAPI_Test {
         respuestaPreguntaDto.setNombre("No muy buena la verdad");
         respuestaPreguntaDto.setEstatus("Inactivo");
         // Recuerden que deben ver los id de los registros en la BD
-        PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1L);
+        PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1);
         respuestaPreguntaDto.setPreguntaEncuestaDto(preguntaEncuestaDto);
         RespuestaPreguntaDto resultado = servicio.addRespuestaPregunta(respuestaPreguntaDto);
         Assert.assertNotEquals(resultado.getId(), 0);
@@ -86,6 +86,6 @@ public class RespuestaPreguntaAPI_Test {
     public void pruebaEliminarRespuestaPregunta(){
 
         ucab.dsw.servicio.RespuestaPreguntaAPI servicio = new ucab.dsw.servicio.RespuestaPreguntaAPI();
-        servicio.eliminarRespuestaPregunta(1L);
+        servicio.eliminarRespuestaPregunta(1);
     }
 }

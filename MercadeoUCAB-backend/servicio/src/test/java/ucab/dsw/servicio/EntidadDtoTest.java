@@ -9,7 +9,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetInformacionDto() {
 		try {
-			Assertions.assertNotNull(dto.getInformacionDto(1L));
+			Assertions.assertNotNull(dto.getInformacionDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -18,7 +18,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetOcupacionDto() {
 		try {
-			Assertions.assertNotNull(dto.getOcupacionDto(1L));
+			Assertions.assertNotNull(dto.getOcupacionDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -27,7 +27,7 @@ class EntidadDtoTest {
 	@Test
 	void estGetUsuarioDto() {
 		try {
-			Assertions.assertNotNull(dto.getUsuarioDto(1L));
+			Assertions.assertNotNull(dto.getUsuarioDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -36,7 +36,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetLugarDtoMunicipio() {
 		try {
-			Assertions.assertNotNull(dto.getLugarDtoMunicipio(3L));
+			Assertions.assertNotNull(dto.getLugarDtoMunicipio(3));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -45,7 +45,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetLugarDtoEstado() {
 		try {
-			Assertions.assertNotNull(dto.getLugarDtoEstado(2L));
+			Assertions.assertNotNull(dto.getLugarDtoEstado(2));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -54,7 +54,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetLugarDtoPais() {
 		try {
-			Assertions.assertNotNull(dto.getLugarDtoPais(1L));
+			Assertions.assertNotNull(dto.getLugarDtoPais(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -63,7 +63,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetNivelAcademicoDto() {
 		try {
-			Assertions.assertNotNull(dto.getNivelAcademicoDto(1L));
+			Assertions.assertNotNull(dto.getNivelAcademicoDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -72,7 +72,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetNivelEconomicoDto() {
 		try {
-			Assertions.assertNotNull(dto.getNivelEconomicoDto(1L));
+			Assertions.assertNotNull(dto.getNivelEconomicoDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -81,7 +81,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetMarcaDto() {
 		try {
-			Assertions.assertNotNull(dto.getMarcaDto(1L));
+			Assertions.assertNotNull(dto.getMarcaDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -90,7 +90,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetCategoriaDto() {
 		try {
-			Assertions.assertNotNull(dto.getCategoriaDto(1L));
+			Assertions.assertNotNull(dto.getCategoriaDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -99,7 +99,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetSubcategoriaDto() {
 		try {
-			Assertions.assertNotNull(dto.getSubcategoriaDto(1L));
+			Assertions.assertNotNull(dto.getSubcategoriaDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -108,7 +108,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetProductoDto() {
 		try {
-			Assertions.assertNotNull(dto.getProductoDto(1L));
+			Assertions.assertNotNull(dto.getProductoDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -117,7 +117,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetTipoDto() {
 		try {
-			Assertions.assertNotNull(dto.getTipoDto(1L));
+			Assertions.assertNotNull(dto.getTipoDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -126,7 +126,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetEstudioDto() {
 		try {
-			Assertions.assertNotNull(dto.getEstudioDto(1L));
+			Assertions.assertNotNull(dto.getEstudioDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -135,7 +135,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetEstudioLugarDto() {
 		try {
-			Assertions.assertNotNull(dto.getEstudioLugarDto(1L));
+			Assertions.assertNotNull(dto.getEstudioLugarDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -144,7 +144,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetHijoDto() {
 		try {
-			Assertions.assertNotNull(dto.getHijoDto(1L));
+			Assertions.assertNotNull(dto.getHijoDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -153,7 +153,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetHistoricoEstadoDto() {
 		try {
-			Assertions.assertNotNull(dto.getHistoricoEstadoDto(1L));
+			Assertions.assertNotNull(dto.getHistoricoEstadoDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -162,7 +162,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetMedioComunicacionDto() {
 		try {
-			Assertions.assertNotNull(dto.getMedioComunicacionDto(1L));
+			Assertions.assertNotNull(dto.getMedioComunicacionDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -171,7 +171,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetPreguntaEncuestaDto() {
 		try {
-			Assertions.assertNotNull(dto.getPreguntaEncuestaDto(1L));
+			Assertions.assertNotNull(dto.getPreguntaEncuestaDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -180,7 +180,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetPreguntaEstudioDto() {
 		try {
-			Assertions.assertNotNull(dto.getPreguntaEstudioDto(1L));
+			Assertions.assertNotNull(dto.getPreguntaEstudioDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -189,7 +189,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetPresentacionDto() {
 		try {
-			Assertions.assertNotNull(dto.getHistoricoEstadoDto(1L));
+			Assertions.assertNotNull(dto.getHistoricoEstadoDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -198,7 +198,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetRespuestaDto() {
 		try {
-			Assertions.assertNotNull(dto.getRespuestaDto(1L));
+			Assertions.assertNotNull(dto.getRespuestaDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -207,7 +207,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetRespuestaPreguntaDto() {
 		try {
-			Assertions.assertNotNull(dto.getRespuestaPreguntaDto(1L));
+			Assertions.assertNotNull(dto.getRespuestaPreguntaDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -216,7 +216,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetRolDto() {
 		try {
-			Assertions.assertNotNull(dto.getRolDto(1L));
+			Assertions.assertNotNull(dto.getRolDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -225,7 +225,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetSolicitudEstudioDto() {
 		try {
-			Assertions.assertNotNull(dto.getSolicitudEstudioDto(1L));
+			Assertions.assertNotNull(dto.getSolicitudEstudioDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -234,7 +234,7 @@ class EntidadDtoTest {
 	@Test
 	void testGetTelefonoDto() {
 		try {
-			Assertions.assertNotNull(dto.getTelefonoDto(1L));
+			Assertions.assertNotNull(dto.getTelefonoDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -243,7 +243,7 @@ class EntidadDtoTest {
 	@Test
 	void getProductoPresentacionTipoDto() {
 		try {
-			Assertions.assertNotNull(dto.getProductoPresentacionTipoDto(1L));
+			Assertions.assertNotNull(dto.getProductoPresentacionTipoDto(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}

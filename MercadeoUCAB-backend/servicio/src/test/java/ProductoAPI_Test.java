@@ -31,7 +31,7 @@ public class ProductoAPI_Test {
     public void pruebaConsultarProducto(){
 
         ucab.dsw.servicio.ProductoAPI servicio = new ucab.dsw.servicio.ProductoAPI();
-        Producto producto_buscar = servicio.consultarProducto(1L);
+        Producto producto_buscar = servicio.consultarProducto(1);
 
         try {
             Assertions.assertEquals(1, producto_buscar.get_id());
@@ -63,9 +63,9 @@ public class ProductoAPI_Test {
         productoDto.setDescripcion("");
         productoDto.setEstatus("Activo");
         //Revisar los ID de los registros de la BD
-        UsuarioDto usuarioDto = new UsuarioDto(1L);
-        SubcategoriaDto subcategoriaDto = new SubcategoriaDto(1L);
-        MarcaDto marcaDto = new MarcaDto(1L);
+        UsuarioDto usuarioDto = new UsuarioDto(1);
+        SubcategoriaDto subcategoriaDto = new SubcategoriaDto(1);
+        MarcaDto marcaDto = new MarcaDto(1);
         productoDto.setUsuarioDto(usuarioDto);
         productoDto.setSubcategoriaDto(subcategoriaDto);
         productoDto.setMarcaDto(marcaDto);
@@ -96,7 +96,7 @@ public class ProductoAPI_Test {
 
         ucab.dsw.servicio.ProductoAPI servicio = new ucab.dsw.servicio.ProductoAPI();
         //Revisar los ID de los registros de la BD
-        servicio.deleteProducto(1L);
+        servicio.deleteProducto(1);
 
     }
 

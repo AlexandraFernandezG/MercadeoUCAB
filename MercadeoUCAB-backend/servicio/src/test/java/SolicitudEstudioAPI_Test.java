@@ -86,7 +86,7 @@ public class SolicitudEstudioAPI_Test {
         solicitudEstudioDto.setProductoDto(productoDto);
 
         // Recuerden que deben ver los id de los registros en la BD
-        OcupacionDto ocupacionDto = new OcupacionDto(3L);
+        OcupacionDto ocupacionDto = new OcupacionDto(1L);
         solicitudEstudioDto.setOcupacionDto(ocupacionDto);
 
         // Recuerden que deben ver los id de los registros en la BD

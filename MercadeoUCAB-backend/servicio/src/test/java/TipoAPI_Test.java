@@ -27,7 +27,7 @@ public class TipoAPI_Test {
     public void pruebaConsultarTipo(){
 
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
-        Tipo tipo_buscar = servicio.consultarTipo(1L);
+        Tipo tipo_buscar = servicio.consultarTipo(1);
 
         try {
             Assertions.assertEquals(1, tipo_buscar.get_id());
@@ -86,7 +86,7 @@ public class TipoAPI_Test {
 
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
         // Estar pendiente con los ID registrados en la BD
-        servicio.eliminarTipo(1L);
+        servicio.eliminarTipo(1);
 
     }
 

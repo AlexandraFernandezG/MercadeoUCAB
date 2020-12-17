@@ -164,7 +164,7 @@ class MedioComunicacionAPITest {
 		 * */
 		
 		MedioComunicacionAPI servicio = new MedioComunicacionAPI();
-		MedioComunicacion mc = servicio.consultarMedioComunicacion(4L);
+		MedioComunicacion mc = servicio.consultarMedioComunicacion(4);
 		
 		try {
 			// Solo eliminará un registro que exista en la BD.
