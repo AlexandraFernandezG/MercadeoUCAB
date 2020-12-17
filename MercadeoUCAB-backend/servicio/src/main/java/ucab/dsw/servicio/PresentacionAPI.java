@@ -115,28 +115,29 @@ public class PresentacionAPI extends AplicacionBase{
     @Path("/updatePresentacion/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response updatePresentacion(@PathParam("id") long id, PresentacionDto presentacionDto){
-
+    public Response updatePresentacion(@PathParam("id") long id, PresentacionDto presentacionDto) {
+    
         DaoPresentacion daoPresentacion = new DaoPresentacion();
         Presentacion presentacion_modificar = daoPresentacion.find(id, Presentacion.class);
-
-        if(presentacion_modificar != null){
-
+    
+        if (presentacion_modificar == null) {
+        
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-            try {
-                presentacion_modificar.set_nombre(presentacionDto.getNombre());
-                presentacion_modificar.set_descripcion(presentacionDto.getDescripcion());
-                presentacion_modificar.set_estatus(presentacionDto.getEstatus());
-                daoPresentacion.update(presentacion_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
-            }
-
-            return Response.ok().entity(presentacion_modificar).build();
+    
+        try {
+        
+            presentacion_modificar.set_nombre(presentacionDto.getNombre());
+            presentacion_modificar.set_descripcion(presentacionDto.getDescripcion());
+            presentacion_modificar.set_estatus(presentacionDto.getEstatus());
+            daoPresentacion.update(presentacion_modificar);
+        
+        } catch (Exception ex) {
+        
+            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+        }
+    
+        return Response.ok().entity(presentacion_modificar).build();
     }
 
     //Eliminar una presentacion
