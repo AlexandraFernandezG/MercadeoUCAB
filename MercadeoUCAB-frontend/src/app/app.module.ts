@@ -24,6 +24,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { MarcaComponent } from './admin/marca/marca.component';
+import { AddMarcaComponent } from './admin/marca/add-marca/add-marca.component';
 import { EditMarcaComponent } from './admin/marca/edit-marca/edit-marca.component';
 import { SubcategoriaComponent } from './admin/subcategoria/subcategoria.component';
 import { CategoriaComponent } from './admin/categoria/categoria.component';
@@ -35,6 +36,12 @@ import { EditCategoriaComponent } from './admin/categoria/edit-categoria/edit-ca
 import { AddUsuarioComponent } from './admin/usuario/add-usuario/add-usuario.component';
 import { EditUsuarioComponent } from './admin/usuario/edit-usuario/edit-usuario.component';
 import { AdminComponent } from './admin/admin.component';
+import { TipoComponent } from './admin/tipo/tipo.component';
+import { AddTipoComponent } from './admin/tipo/add-tipo/add-tipo.component';
+import { EditTipoComponent } from './admin/tipo/edit-tipo/edit-tipo.component';
+import { PresentacionComponent } from './admin/presentacion/presentacion.component';
+import { AddPresentacionComponent } from './admin/presentacion/add-presentacion/add-presentacion.component';
+import { EditPresentacionComponent } from './admin/presentacion/edit-presentacion/edit-presentacion.component';
 import { RouterModule } from '@angular/router';
 import { ClienteComponent } from './cliente/cliente.component';
 import { EstudiosClienteComponent } from './cliente/estudios-cliente/estudios-cliente.component';
@@ -48,6 +55,11 @@ import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios
 import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
 import { CategoriasService } from './servicios/categorias.service';
 import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.component';
+import { SubcategoriasService } from './servicios/subcategorias.service';
+import { MarcasService } from './servicios/marcas.service';
+import { TiposService } from './servicios/tipos.service';
+import { PresentacionesService } from './servicios/presentaciones.service';
+import { UsuariosService } from './servicios/usuarios.service';
 
 @NgModule({
   declarations: [
@@ -55,6 +67,7 @@ import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.co
     LoginComponent,
     DashboardComponent,
     MarcaComponent,
+    AddMarcaComponent,
     EditMarcaComponent,
     SubcategoriaComponent,
     CategoriaComponent,
@@ -76,8 +89,16 @@ import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.co
     AnalistaComponent,
     EstudiosAnalistaComponent,
     DataEstudioComponent,
-    CrearEstudioComponent
-    
+    CrearEstudioComponent,
+    TipoComponent,
+    PresentacionComponent,
+    AddTipoComponent,
+    EditTipoComponent,
+    AddPresentacionComponent,
+    EditPresentacionComponent,
+    UsuarioComponent,
+    AddUsuarioComponent,
+    EditUsuarioComponent
   ],
   imports: [
     RouterModule,
@@ -99,10 +120,16 @@ import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.co
     MatPaginatorModule,
     MatRadioModule,
     MatToolbarModule,
-    MatGridListModule,
-    MatTabsModule
+    MatGridListModule
   ],
-  providers: [CategoriasService],
+  providers: [
+    CategoriasService,
+    SubcategoriasService,
+    MarcasService,
+    TiposService,
+    PresentacionesService,
+    UsuariosService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     SolicitudEstudioComponent,

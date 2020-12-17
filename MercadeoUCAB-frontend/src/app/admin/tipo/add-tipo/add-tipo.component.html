@@ -1,0 +1,25 @@
+<form [formGroup]="tipoForm" novalidate> 
+
+    <h4>Tipo</h4>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Nombre:</mat-label>
+          <input formControlName="nombre" matInput required [(ngModel)]="tipo2.nombre"/>
+          <mat-error *ngIf="tipoForm.get('nombre').errors?.required">
+              Falta llenar el nuevo nombre del tipo
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Descripción:</mat-label>
+          <input formControlName="descripcion" matInput required [(ngModel)]="tipo2.descripcion"/>
+           <mat-error *ngIf="tipoForm.get('descripcion').errors?.required">
+              Falta llenar la descripción
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+    <button type="submit"  mat-raised-button color="primary" (click)="addTipo(tipo2.nombre, tipo2.descripcion)" [disabled]="tipoForm.invalid">Añadir Tipo</button>
+  </form>
+  

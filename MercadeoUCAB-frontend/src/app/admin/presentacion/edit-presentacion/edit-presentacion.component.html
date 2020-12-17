@@ -1,0 +1,19 @@
+<form [formGroup]="presentacionForm" novalidate> 
+
+    <h4>Categoría</h4>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Nombre:</mat-label>
+          <input formControlName="nombre" matInput  [(ngModel)]="presentacion._nombre" />
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Descripción:</mat-label>
+          <input formControlName="descripcion"  matInput  [(ngModel)]="presentacion._descripcion"/>
+        </mat-form-field>
+      </div>
+  
+    <button type="submit"  mat-raised-button color="primary" (click)="editPresentacion(presentacion)">Editar Presentación</button>
+  </form>
+  

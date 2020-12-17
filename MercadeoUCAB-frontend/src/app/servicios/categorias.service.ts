@@ -46,6 +46,7 @@ export class CategoriasService {
   }
 
   updateCategoria(categoria): Observable<Categoria>{
+    console.log(categoria);
     return this.http.put<Categoria>(this.url + 'categoria/updateCategoria/' + categoria.id, JSON.stringify(categoria), this.httpOptions)
     .pipe(
       retry(1),
