@@ -95,13 +95,15 @@ public class ProductoAPI extends AplicacionBase{
 
             DaoProducto daoProducto = new DaoProducto();
             Producto producto = new Producto();
+            DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
+            DaoMarca daoMarca = new DaoMarca();
 
             producto.set_nombre(productoDto.getNombre());
             producto.set_descripcion(productoDto.getDescripcion());
             producto.set_estatus(productoDto.getEstatus());
             Usuario usuario = new Usuario(productoDto.getUsuarioDto().getId());
-            Subcategoria subcategoria = new Subcategoria(productoDto.getSubcategoriaDto().getId());
-            Marca marca = new Marca(productoDto.getMarcaDto().getId());
+            Subcategoria subcategoria = daoSubcategoria.find(productoDto.getSubcategoriaDto().getId(),Subcategoria.class);
+            Marca marca = daoMarca.find(productoDto.getMarcaDto().getId(),Marca.class);
             producto.set_usuario(usuario);
             producto.set_subcategoria(subcategoria);
             producto.set_marca(marca);
