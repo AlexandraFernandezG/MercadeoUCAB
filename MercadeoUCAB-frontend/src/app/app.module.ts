@@ -17,6 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -98,7 +99,8 @@ import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.co
     MatPaginatorModule,
     MatRadioModule,
     MatToolbarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTabsModule
   ],
   providers: [CategoriasService],
   bootstrap: [AppComponent],
