@@ -1,8 +1,8 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.InformacionDto;
 import ucab.dsw.entidades.*;
-import ucab.dsw.accesodatos.DaoInformacion;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
@@ -45,6 +45,11 @@ public class InformacionAPI extends AplicacionBase{
         try {
             DaoInformacion daoInformacion = new DaoInformacion();
             Informacion informacion = new Informacion();
+            DaoUsuario daoUsuario = new DaoUsuario();
+            DaoOcupacion daoOcupacion = new DaoOcupacion();
+            DaoNivelEconomico daoNivelEconomico = new DaoNivelEconomico();
+            DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
+            DaoLugar daoLugar = new DaoLugar();
 
             informacion.set_cantidadPersonas(informacionDto.getCantidadPersonas());
             informacion.set_cedula(informacionDto.getCedula());
@@ -56,15 +61,15 @@ public class InformacionAPI extends AplicacionBase{
             informacion.set_segundoApellido(informacionDto.getSegundoApellido());
             informacion.set_segundoNombre(informacionDto.getSegundoNombre());
             informacion.set_estatus(informacionDto.getEstatus());
-            Usuario usuario = new Usuario(informacionDto.getUsuarioDto().getId());
+            Usuario usuario = daoUsuario.find(informacionDto.getUsuarioDto().getId(), Usuario.class);
             informacion.set_usuario(usuario);
-            Ocupacion ocupacion = new Ocupacion(informacionDto.getOcupacionDto().getId());
+            Ocupacion ocupacion = daoOcupacion.find(informacionDto.getOcupacionDto().getId(), Ocupacion.class);
             informacion.set_ocupacion(ocupacion);
-            NivelAcademico nivelAcademico = new NivelAcademico(informacionDto.getNivelAcademicoDto().getId());
+            NivelAcademico nivelAcademico = daoNivelAcademico.find(informacionDto.getNivelAcademicoDto().getId(), NivelAcademico.class);
             informacion.set_nivelAcademico(nivelAcademico);
-            NivelEconomico nivelEconomico = new NivelEconomico(informacionDto.getNivelEconomicoDto().getId());
+            NivelEconomico nivelEconomico = daoNivelEconomico.find(informacionDto.getNivelEconomicoDto().getId(), NivelEconomico.class);
             informacion.set_nivelEconomico(nivelEconomico);
-            Lugar lugar = new Lugar(informacionDto.getLugarDto().getId());
+            Lugar lugar = daoLugar.find(informacionDto.getLugarDto().getId(), Lugar.class);
             informacion.set_lugar(lugar);
             Informacion resul = daoInformacion.insert(informacion);
             resultado.setId(resul.get_id());

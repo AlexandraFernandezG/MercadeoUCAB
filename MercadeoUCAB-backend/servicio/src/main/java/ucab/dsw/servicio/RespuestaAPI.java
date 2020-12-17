@@ -1,6 +1,8 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.accesodatos.DaoPreguntaEstudio;
 import ucab.dsw.accesodatos.DaoRespuesta;
+import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.dtos.RespuestaDto;
 import ucab.dsw.entidades.PreguntaEstudio;
 import ucab.dsw.entidades.Respuesta;
@@ -98,6 +100,8 @@ public class RespuestaAPI extends AplicacionBase{
 
             DaoRespuesta daoRespuesta = new DaoRespuesta();
             Respuesta respuesta = new Respuesta();
+            DaoUsuario daoUsuario = new DaoUsuario();
+            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
 
             respuesta.set_respuestaAbierta(respuestaDto.getRespuestaAbierta());
             respuesta.set_escala(respuestaDto.getEscala());
@@ -105,8 +109,8 @@ public class RespuestaAPI extends AplicacionBase{
             respuesta.set_respuestaSimple(respuestaDto.getRespuestaSimple());
             respuesta.set_respuestaMultiple(respuestaDto.getRespuestaMultiple());
             respuesta.set_estatus(respuestaDto.getEstatus());
-            PreguntaEstudio preguntaEstudio = new PreguntaEstudio(respuestaDto.getPreguntaEstudioDto().getId());
-            Usuario usuario = new Usuario(respuestaDto.getUsuarioDto().getId());
+            PreguntaEstudio preguntaEstudio = daoPreguntaEstudio.find(respuestaDto.getPreguntaEstudioDto().getId(), PreguntaEstudio.class);
+            Usuario usuario = daoUsuario.find(respuestaDto.getUsuarioDto().getId(), Usuario.class);
             respuesta.set_preguntaEstudio(preguntaEstudio);
             respuesta.set_usuario(usuario);
             Respuesta resul = daoRespuesta.insert(respuesta);

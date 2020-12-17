@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.accesodatos.DaoEstudio;
 import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.accesodatos.DaoPreguntaEstudio;
 import ucab.dsw.dtos.PreguntaEstudioDto;
@@ -66,11 +67,13 @@ public class PreguntasEstudioAPI extends AplicacionBase {
 
                 DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
                 PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
+                DaoEstudio daoEstudio = new DaoEstudio();
+                DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
 
                 preguntaEstudio.set_estatus(preguntaEstudioDto.getEstatus());
-                Estudio estudio = new Estudio(preguntaEstudioDto.getEstudioDto().getId());
+                Estudio estudio = daoEstudio.find(preguntaEstudioDto.getEstudioDto().getId(), Estudio.class);
                 preguntaEstudio.set_estudio(estudio);
-                PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta(preguntaEstudioDto.getPreguntaEncuestaDto().getId());
+                PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(preguntaEstudioDto.getPreguntaEncuestaDto().getId(), PreguntaEncuesta.class);
                 preguntaEstudio.set_preguntaEncuesta(preguntaEncuesta);
                 PreguntaEstudio resul = daoPreguntaEstudio.insert(preguntaEstudio);
                 resultado.setId(resul.get_id());

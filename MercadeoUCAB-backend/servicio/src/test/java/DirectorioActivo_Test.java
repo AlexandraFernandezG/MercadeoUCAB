@@ -8,6 +8,7 @@ public class DirectorioActivo_Test {
     public void createUserLDAP()
     {
         UsuarioDto user = new UsuarioDto();
+        user.setNombreUsuario("EmanuelDriver");
         user.setCorreo( "greggspinetti@gmail.com" );
         user.setContrasena( "1234abcd" );
         user.setEstatus("Activo");

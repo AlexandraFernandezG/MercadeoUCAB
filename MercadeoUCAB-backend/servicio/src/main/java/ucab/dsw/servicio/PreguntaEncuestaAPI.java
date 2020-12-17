@@ -1,6 +1,8 @@
 package ucab.dsw.servicio;
 import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.accesodatos.DaoRespuestaPregunta;
+import ucab.dsw.accesodatos.DaoSubcategoria;
+import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.dtos.PreguntaEncuestaDto;
 import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.entidades.RespuestaPregunta;
@@ -95,13 +97,15 @@ public class PreguntaEncuestaAPI extends AplicacionBase{
 
             DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
             PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta();
+            DaoUsuario daoUsuario = new DaoUsuario();
+            DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
 
             preguntaEncuesta.set_descripcion(preguntaEncuestaDto.getDescripcion());
             preguntaEncuesta.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
             preguntaEncuesta.set_estatus(preguntaEncuestaDto.getEstatus());
-            Usuario usuario = new Usuario(preguntaEncuestaDto.getUsuarioDto().getId());
+            Usuario usuario = daoUsuario.find(preguntaEncuestaDto.getUsuarioDto().getId(), Usuario.class);
             preguntaEncuesta.set_usuario(usuario);
-            Subcategoria subcategoria = new Subcategoria(preguntaEncuestaDto.getSubcategoriaDto().getId());
+            Subcategoria subcategoria = daoSubcategoria.find(preguntaEncuestaDto.getSubcategoriaDto().getId(), Subcategoria.class);
             preguntaEncuesta.set_subcategoria(subcategoria);
             PreguntaEncuesta resul = daoPreguntaEncuesta.insert(preguntaEncuesta);
             resultado.setId(resul.get_id());

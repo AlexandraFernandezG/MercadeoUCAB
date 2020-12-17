@@ -1,6 +1,8 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.accesodatos.DaoMedioComunicacion;
+import ucab.dsw.accesodatos.DaoSolicitudEstudio;
 import ucab.dsw.dtos.MedioComunicacionDto;
 import ucab.dsw.entidades.Informacion;
 import ucab.dsw.entidades.MedioComunicacion;
@@ -67,11 +69,13 @@ public class MedioComunicacionAPI extends AplicacionBase{
 
             DaoMedioComunicacion daoMedioComunicacion = new DaoMedioComunicacion();
             MedioComunicacion medioComunicacion = new MedioComunicacion();
+            DaoInformacion daoInformacion = new DaoInformacion();
+            DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
 
             medioComunicacion.set_tipoDeMedio(medioComunicacionDto.getTipoDeMedio());
             medioComunicacion.set_estatus(medioComunicacionDto.getEstatus());
-            Informacion informacion = new Informacion(medioComunicacionDto.getInformacionDto().getId());
-            SolicitudEstudio solicitudEstudio = new SolicitudEstudio(medioComunicacionDto.getSolicitudEstudioDto().getId());
+            Informacion informacion = daoInformacion.find(medioComunicacionDto.getInformacionDto().getId(), Informacion.class);
+            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(medioComunicacionDto.getSolicitudEstudioDto().getId(), SolicitudEstudio.class);
             medioComunicacion.set_informacion(informacion);
             medioComunicacion.set_solicitudEstudio(solicitudEstudio);
             MedioComunicacion resul = daoMedioComunicacion.insert(medioComunicacion);

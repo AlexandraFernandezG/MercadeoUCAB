@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
-          <factory-entry name="entidades" value="d556d0c6-e690-48b6-acbb-c2a73f46eebe" />
+          <factory-entry name="entidades" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

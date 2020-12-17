@@ -2,6 +2,7 @@ package ucab.dsw.servicio;
 
 import org.eclipse.persistence.internal.sessions.DirectCollectionChangeRecord;
 import ucab.dsw.accesodatos.DaoHijo;
+import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.dtos.HijoDto;
 import ucab.dsw.entidades.Hijo;
 import ucab.dsw.entidades.Informacion;
@@ -69,11 +70,12 @@ public class HijoAPI extends AplicacionBase{
 
             DaoHijo daoHijo = new DaoHijo();
             Hijo hijo = new Hijo();
+            DaoInformacion daoInformacion = new DaoInformacion();
 
             hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
             hijo.set_genero(hijoDto.getGenero());
             hijo.set_estatus("Activo");
-            Informacion informacion = new Informacion(hijoDto.get_informacionDto().getId());
+            Informacion informacion = daoInformacion.find(hijoDto.get_informacionDto().getId(), Informacion.class);
             hijo.set_informacion(informacion);
             Hijo resul = daoHijo.insert(hijo);
             resultado.setId(resul.get_id());

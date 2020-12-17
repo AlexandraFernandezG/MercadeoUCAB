@@ -1,6 +1,7 @@
 package ucab.dsw.servicio;
 
 import ucab.dsw.accesodatos.DaoPresentacion;
+import ucab.dsw.accesodatos.DaoProducto;
 import ucab.dsw.accesodatos.DaoProductoPresentacionTipo;
 import ucab.dsw.accesodatos.DaoTipo;
 import ucab.dsw.dtos.ProductoPresentacionTipoDto;
@@ -104,11 +105,14 @@ public class ProductoPresentacionTipoAPI extends AplicacionBase{
 
             DaoProductoPresentacionTipo dao = new DaoProductoPresentacionTipo();
             ProductoPresentacionTipo productoPresentacionTipo = new ProductoPresentacionTipo();
+            DaoProducto daoProducto = new DaoProducto();
+            DaoPresentacion daoPresentacion = new DaoPresentacion();
+            DaoTipo daoTipo = new DaoTipo();
 
             productoPresentacionTipo.set_estatus(productoPresentacionTipoDto.getEstatus());
-            Producto producto = new Producto(productoPresentacionTipoDto.getProductoDto().getId());
-            Presentacion presentacion = new Presentacion(productoPresentacionTipoDto.getPresentacionDto().getId());
-            Tipo tipo = new Tipo(productoPresentacionTipoDto.getTipoDto().getId());
+            Producto producto = daoProducto.find(productoPresentacionTipoDto.getProductoDto().getId(), Producto.class);
+            Presentacion presentacion = daoPresentacion.find(productoPresentacionTipoDto.getPresentacionDto().getId(), Presentacion.class);
+            Tipo tipo = daoTipo.find(productoPresentacionTipoDto.getTipoDto().getId(), Tipo.class);
             productoPresentacionTipo.set_producto(producto);
             productoPresentacionTipo.set_presentacion(presentacion);
             productoPresentacionTipo.set_tipo(tipo);

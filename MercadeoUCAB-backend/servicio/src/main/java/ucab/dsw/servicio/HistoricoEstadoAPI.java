@@ -1,6 +1,7 @@
 package ucab.dsw.servicio;
 
 import ucab.dsw.accesodatos.DaoHistoricoEstado;
+import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.dtos.HistoricoEstadoDto;
 import ucab.dsw.entidades.HistoricoEstado;
 import ucab.dsw.entidades.Usuario;
@@ -98,11 +99,12 @@ public class HistoricoEstadoAPI extends AplicacionBase{
 
             DaoHistoricoEstado daoHistoricoEstado = new DaoHistoricoEstado();
             HistoricoEstado historicoEstado = new HistoricoEstado();
+            DaoUsuario daoUsuario = new DaoUsuario();
 
             historicoEstado.set_fechaInicio(historicoEstadoDto.getFechaInicio());
             historicoEstado.set_fechaFin(historicoEstado.get_fechaFin());
             historicoEstado.set_estatus(historicoEstadoDto.getEstatus());
-            Usuario usuario = new Usuario(historicoEstado.get_usuario().get_id());
+            Usuario usuario = daoUsuario.find(historicoEstado.get_usuario().get_id(), Usuario.class);
             historicoEstado.set_usuario(usuario);
             HistoricoEstado resul = daoHistoricoEstado.insert(historicoEstado);
             resultado.setId(resul.get_id());

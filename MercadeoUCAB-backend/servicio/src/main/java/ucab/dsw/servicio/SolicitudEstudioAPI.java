@@ -1,7 +1,6 @@
 package ucab.dsw.servicio;
 
-import ucab.dsw.accesodatos.DaoEstudio;
-import ucab.dsw.accesodatos.DaoSolicitudEstudio;
+import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.SolicitudEstudioDto;
 import ucab.dsw.entidades.*;
 
@@ -93,6 +92,13 @@ public class SolicitudEstudioAPI extends AplicacionBase{
 
             DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
             SolicitudEstudio solicitudEstudio = new SolicitudEstudio();
+            DaoNivelEconomico daoNivelEconomico = new DaoNivelEconomico();
+            DaoUsuario daoUsuario = new DaoUsuario();
+            DaoProducto daoProducto = new DaoProducto();
+            DaoOcupacion daoOcupacion = new DaoOcupacion();
+            DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
+
+
 
             solicitudEstudio.set_descripcion(solicitudEstudioDto.getDescripcion());
             solicitudEstudio.set_genero(solicitudEstudioDto.getGenero());
@@ -106,11 +112,11 @@ public class SolicitudEstudioAPI extends AplicacionBase{
             solicitudEstudio.set_edadMinimaHijos(solicitudEstudioDto.getEdadMinimaHijos());
             solicitudEstudio.set_edadMaximaHijos(solicitudEstudioDto.getEdadMaximaHijos());
             solicitudEstudio.set_estatus(solicitudEstudioDto.getEstatus());
-            NivelEconomico nivelEconomico = new NivelEconomico(solicitudEstudioDto.getNivelEconomicoDto().getId());
-            Usuario usuario = new Usuario(solicitudEstudioDto.getUsuarioDto().getId());
-            Producto producto = new Producto(solicitudEstudioDto.getProductoDto().getId());
-            Ocupacion ocupacion = new Ocupacion(solicitudEstudioDto.getOcupacionDto().getId());
-            NivelAcademico nivelAcademico = new NivelAcademico(solicitudEstudioDto.getNivelAcademicoDto().getId());
+            NivelEconomico nivelEconomico = daoNivelEconomico.find(solicitudEstudioDto.getNivelEconomicoDto().getId(), NivelEconomico.class);
+            Usuario usuario = daoUsuario.find(solicitudEstudioDto.getUsuarioDto().getId(), Usuario.class);
+            Producto producto = daoProducto.find(solicitudEstudioDto.getProductoDto().getId(), Producto.class);
+            Ocupacion ocupacion = daoOcupacion.find(solicitudEstudioDto.getOcupacionDto().getId(), Ocupacion.class);
+            NivelAcademico nivelAcademico = daoNivelAcademico.find(solicitudEstudioDto.getNivelAcademicoDto().getId(), NivelAcademico.class);
             solicitudEstudio.set_nivelEconomico(nivelEconomico);
             solicitudEstudio.set_usuario(usuario);
             solicitudEstudio.set_producto(producto);

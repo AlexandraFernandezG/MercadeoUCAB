@@ -249,7 +249,6 @@ public class UsuarioAPI extends AplicacionBase {
                 DirectorioActivo ldap = new DirectorioActivo();
                 String correoElectronico = usuarioDto.getCorreo();
 
-
                 String randomClave = RandomStringUtils.randomAlphanumeric(10);
 
                 usuarioDto.setContrasena(randomClave);

@@ -208,7 +208,7 @@ public class LugarAPI extends AplicacionBase{
             lugar.set_tipo(lugarDto.getTipo());
             lugar.set_categoriaSocioEconomica(lugarDto.getCategoriaSocioEconomica());
             lugar.set_estatus(lugarDto.getEstatus());
-            Lugar lugar_fk = new Lugar(lugarDto.getLugar().getId());
+            Lugar lugar_fk = daoLugar.find(lugarDto.getLugar().getId(), Lugar.class);
             lugar.set_lugar(lugar_fk);
             Lugar resul = daoLugar.insert(lugar);
             resultado.setId(resul.get_id());

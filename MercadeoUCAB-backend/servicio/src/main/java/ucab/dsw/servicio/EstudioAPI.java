@@ -1,5 +1,7 @@
 package ucab.dsw.servicio;
 import ucab.dsw.accesodatos.DaoEstudio;
+import ucab.dsw.accesodatos.DaoSolicitudEstudio;
+import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.dtos.EstudioDto;
 import ucab.dsw.entidades.*;
 
@@ -94,14 +96,16 @@ public class EstudioAPI extends AplicacionBase {
 
             DaoEstudio daoEstudio = new DaoEstudio();
             Estudio estudio = new Estudio();
+            DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
+            DaoUsuario daoUsuario = new DaoUsuario();
 
             estudio.set_nombre(estudioDto.getNombre());
             estudio.set_tipoInstrumento(estudioDto.getTipoInstrumento());
             estudio.set_fechaInicio(estudioDto.getFechaInicio());
             estudio.set_fechaFin(estudioDto.getFechaFin());
             estudio.set_estatus(estudioDto.getEstatus());
-            SolicitudEstudio solicitudEstudio = new SolicitudEstudio(estudioDto.getSolicitudEstudioDto().getId());
-            Usuario usuario = new Usuario(estudioDto.getUsuarioDto().getId());
+            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(estudioDto.getSolicitudEstudioDto().getId(), SolicitudEstudio.class);
+            Usuario usuario = daoUsuario.find(estudioDto.getUsuarioDto().getId(), Usuario.class);
             estudio.set_solicitudEstudio(solicitudEstudio);
             estudio.set_usuario(usuario);
             Estudio resul = daoEstudio.insert(estudio);

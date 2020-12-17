@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.accesodatos.DaoEstudio;
 import ucab.dsw.accesodatos.DaoEstudioLugar;
 import ucab.dsw.accesodatos.DaoLugar;
 import ucab.dsw.dtos.EstudioLugarDto;
@@ -67,10 +68,12 @@ public class EstudioLugarAPI extends AplicacionBase {
 
             DaoEstudioLugar daoEstudioLugar = new DaoEstudioLugar();
             EstudioLugar estudioLugar = new EstudioLugar();
+            DaoLugar daoLugar = new DaoLugar();
+            DaoEstudio daoEstudio = new DaoEstudio();
 
             estudioLugar.set_estatus(estudioLugarDto.getEstatus());
-            Estudio estudio = new Estudio(estudioLugarDto.getEstudioDto().getId());
-            Lugar lugar = new Lugar(estudioLugarDto.getLugarDto().getId());
+            Estudio estudio = daoEstudio.find(estudioLugarDto.getEstudioDto().getId(), Estudio.class);
+            Lugar lugar = daoLugar.find(estudioLugarDto.getLugarDto().getId() , Lugar.class);
             estudioLugar.set_estudio(estudio);
             estudioLugar.set_lugar(lugar);
             EstudioLugar resul = daoEstudioLugar.insert(estudioLugar);

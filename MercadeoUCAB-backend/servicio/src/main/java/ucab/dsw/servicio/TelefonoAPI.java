@@ -67,10 +67,11 @@ public class TelefonoAPI extends AplicacionBase{
 
             DaoTelefono daoTelefono = new DaoTelefono();
             Telefono telefono = new Telefono();
+            DaoInformacion daoInformacion = new DaoInformacion();
 
             telefono.set_numero(telefonoDto.getNumero());
             telefono.set_estatus(telefonoDto.getEstatus());
-            Informacion informacion = new Informacion(telefonoDto.getInformacion().getId());
+            Informacion informacion = daoInformacion.find(telefonoDto.getInformacion().getId(), Informacion.class);
             telefono.set_informacion(informacion);
             Telefono resul = daoTelefono.insert(telefono);
             resultado.setId(resul.get_id());
