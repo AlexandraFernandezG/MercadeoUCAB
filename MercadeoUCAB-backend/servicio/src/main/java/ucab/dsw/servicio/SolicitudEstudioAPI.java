@@ -155,7 +155,7 @@ public class SolicitudEstudioAPI extends AplicacionBase{
                 daoSolicitudEstudio.update(solicitudEstudio_modificar);
                 DaoEstudio daoEstudio = new DaoEstudio();
 
-                if (solicitudEstudio_modificar.get_estatus() == "Inactivo") {
+                if (solicitudEstudio_modificar.get_estatus().equals("Inactivo")) {
 
                     List<Estudio> listaEstudio = daoEstudio.findAll(Estudio.class);
 
@@ -166,7 +166,7 @@ public class SolicitudEstudioAPI extends AplicacionBase{
                             daoEstudio.update(estudio);
                         }
                     }
-                } else if (solicitudEstudio_modificar.get_estatus() == "Activo") {
+                } else if (solicitudEstudio_modificar.get_estatus().equals("Activo")) {
 
                     List<Estudio> listaEstudio = daoEstudio.findAll(Estudio.class);
 

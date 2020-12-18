@@ -163,7 +163,7 @@ public class CategoriaAPI extends AplicacionBase {
                 daoCategoria.update(categoria_modificar);
                 DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
 
-                if (categoria_modificar.get_estatus() == "Inactivo") {
+                if (categoria_modificar.get_estatus().equals("Inactivo")) {
 
                     List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
 
@@ -174,7 +174,7 @@ public class CategoriaAPI extends AplicacionBase {
                             daoSubcategoria.update(subcategoria);
                         }
                     }
-                } else if (categoria_modificar.get_estatus() == "Activo") {
+                } else if (categoria_modificar.get_estatus().equals("Activo")) {
 
                     List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
 

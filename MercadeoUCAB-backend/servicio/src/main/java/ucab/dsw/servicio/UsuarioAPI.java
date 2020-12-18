@@ -209,11 +209,11 @@ public class UsuarioAPI extends AplicacionBase {
 
         try {
 
-            if (usuario_modificar.get_estatus() == "Activo") {
+            if (usuario_modificar.get_estatus().equals("Activo")) {
                 usuario_modificar.set_estatus("Inactivo");
                 daoUsuario.update(usuario_modificar);
             }
-            else if (usuario_modificar.get_estatus() == "Inactivo"){
+            else if (usuario_modificar.get_estatus().equals("Inactivo")){
                 usuario_modificar.set_estatus("Activo");
                 daoUsuario.update(usuario_modificar);
             }
