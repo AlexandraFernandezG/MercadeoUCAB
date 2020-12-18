@@ -65,8 +65,9 @@ public class UsuarioAPI_Test {
         try {
 
             UsuarioDto usuarioDto = new UsuarioDto();
+            usuarioDto.setCorreo("emanuelesposito3@gmail.com");
             usuarioDto.setContrasena("hola4321");
-            servicio.changePassword(6, usuarioDto);
+            servicio.changePassword(usuarioDto);
 
 
         } catch (Exception e) {

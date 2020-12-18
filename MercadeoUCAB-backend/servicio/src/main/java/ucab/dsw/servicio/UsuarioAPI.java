@@ -166,18 +166,18 @@ public class UsuarioAPI extends AplicacionBase {
     }
 
     @PUT
-    @Path("/changePassword/{id}")
+    @Path("/changePassword")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response changePassword(@PathParam("id") long id, UsuarioDto usuarioDto){
+    public Response changePassword(UsuarioDto usuarioDto){
 
-        DaoUsuario daoUsuario = new DaoUsuario();
-        Usuario usuario_modificar = daoUsuario.find(id, Usuario.class);
+        //DaoUsuario daoUsuario = new DaoUsuario();
+        //Usuario usuario_modificar = daoUsuario.find(id, Usuario.class);
 
-        if(usuario_modificar == null){
+        //if(usuario_modificar == null){
 
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+            //return Response.status(Response.Status.NOT_FOUND).build();
+        //}
 
         try {
             DirectorioActivo ldap = new DirectorioActivo();
@@ -188,7 +188,7 @@ public class UsuarioAPI extends AplicacionBase {
             return Response.status(Response.Status.EXPECTATION_FAILED).build();
         }
 
-        return Response.ok().entity(usuario_modificar).build();
+        return Response.ok().entity(usuarioDto).build();
 
     }
 
