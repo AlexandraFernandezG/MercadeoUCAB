@@ -117,11 +117,8 @@ public class UsuarioAPI extends AplicacionBase {
         try {
 
             usuario_modificar.set_nombre(usuarioDto.getNombreUsuario());
-            usuario_modificar.set_correoelectronico(usuarioDto.getCorreo());
             Rol rol = new Rol(usuarioDto.getRol().getId());
             usuario_modificar.set_rol(rol);
-            usuario_modificar.set_estatus(usuarioDto.getEstatus());
-            usuario_modificar.set_codigoRecuperacion(usuarioDto.getCodigoRecuperacion());
             daoUsuario.update(usuario_modificar);
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.updateEntry(usuarioDto);
@@ -151,7 +148,8 @@ public class UsuarioAPI extends AplicacionBase {
         }
 
         try {
-            UsuarioDto usuarioDto = new UsuarioDto(usuario_eliminar.get_correoelectronico());
+            UsuarioDto usuarioDto = new UsuarioDto();
+            usuarioDto.setCorreo(usuario_eliminar.get_correoelectronico());
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.deleteEntry(usuarioDto);
             daoUsuario.delete(usuario_eliminar);
@@ -170,14 +168,6 @@ public class UsuarioAPI extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
     public Response changePassword(UsuarioDto usuarioDto){
-
-        //DaoUsuario daoUsuario = new DaoUsuario();
-        //Usuario usuario_modificar = daoUsuario.find(id, Usuario.class);
-
-        //if(usuario_modificar == null){
-
-            //return Response.status(Response.Status.NOT_FOUND).build();
-        //}
 
         try {
             DirectorioActivo ldap = new DirectorioActivo();
@@ -239,7 +229,6 @@ public class UsuarioAPI extends AplicacionBase {
         String contenido;
         DirectorioActivo directorioActivo = new DirectorioActivo();
 
-        DaoUsuario daoUsuario = new DaoUsuario();
 
             try {
 

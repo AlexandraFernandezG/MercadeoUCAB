@@ -17,8 +17,8 @@ public class UsuarioAPI_Test {
 
         try {
 
-            usuarioDto.setNombreUsuario("EmanuelDriver");
-            usuarioDto.setCorreo("emanuelesposito3@gmail.com");
+            usuarioDto.setNombreUsuario("greggspinetti");
+            usuarioDto.setCorreo("greggspinetti@gmail.com");
             usuarioDto.setEstatus("Activo");
             usuarioDto.setContrasena("hola123");
             // Recuerden que deben ver los id de los registros en la BD
@@ -42,8 +42,8 @@ public class UsuarioAPI_Test {
         try {
 
             UsuarioDto usuarioDto = new UsuarioDto();
-            usuarioDto.setNombreUsuario("EmanuelDriver123");
-            usuarioDto.setCorreo("emadicris1234@hotmail.com");
+            usuarioDto.setNombreUsuario("gregg");
+            usuarioDto.setCorreo("greggspinetti@gmail.com");
             usuarioDto.setEstatus("Inactivo");
             // Recuerden que deben ver los id de los registros en la BD
             RolDto rolDto = new RolDto(1);
@@ -65,8 +65,8 @@ public class UsuarioAPI_Test {
         try {
 
             UsuarioDto usuarioDto = new UsuarioDto();
-            usuarioDto.setCorreo("emanuelesposito3@gmail.com");
-            usuarioDto.setContrasena("hola4321");
+            usuarioDto.setCorreo("greggspinetti@gmail.com");
+            usuarioDto.setContrasena("hola");
             servicio.changePassword(usuarioDto);
 
 
@@ -86,7 +86,7 @@ public class UsuarioAPI_Test {
             UsuarioDto usuarioDto = new UsuarioDto();
             usuarioDto.setEstatus("Activo");
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.estatusUsuario(6, usuarioDto);
+            servicio.estatusUsuario(12, usuarioDto);
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -101,10 +101,8 @@ public class UsuarioAPI_Test {
 
         try {
             UsuarioDto usuarioDto = new UsuarioDto();
-
-            //usuarioDto.setId(6);
-            usuarioDto.setNombreUsuario("EmanuelDriver");
-            usuarioDto.setCorreo("emanuelesposito3@gmail.com");
+            usuarioDto.setNombreUsuario("gregg");
+            usuarioDto.setCorreo("greggspinetti@gmail.com");
             servicio.recuperarClaveUsuario(usuarioDto);
 
         } catch (Exception e) {
@@ -119,7 +117,7 @@ public class UsuarioAPI_Test {
         ucab.dsw.servicio.UsuarioAPI servicio = new ucab.dsw.servicio.UsuarioAPI();
 
         try {
-            servicio.deleteUsuario(5);
+            servicio.deleteUsuario(11);
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
