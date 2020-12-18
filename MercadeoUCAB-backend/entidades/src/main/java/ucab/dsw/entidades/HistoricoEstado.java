@@ -25,30 +25,31 @@ public class HistoricoEstado extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public Date getFechaInicio() {
-        return _fechaInicio;
-    }
 
-    public Date getFechaFin() {
-        return _fechaFin;
-    }
-
-    public Usuario getUsuario() {
+    public Usuario get_usuario() {
         return _usuario;
     }
 
-    public void setFechaInicio(Date _fechaInicio) {
-        this._fechaInicio = _fechaInicio;
+    public void set_usuario(Usuario _usuario) {
+        this._usuario = _usuario;
     }
 
-    public void setFechaFin(Date _fechaFin) {
+    public Date get_fechaFin() {
+        return _fechaFin;
+    }
+
+    public void set_fechaFin(Date _fechaFin) {
         this._fechaFin = _fechaFin;
     }
 
-    public void setUsuario(Usuario _usuario) {
-        this._usuario = _usuario;
+    public Date get_fechaInicio() {
+        return _fechaInicio;
     }
-    
+
+    public void set_fechaInicio(Date _fechaInicio) {
+        this._fechaInicio = _fechaInicio;
+    }
+
     public HistoricoEstado(long id){
         super(id);
     }

@@ -1,24 +1,26 @@
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\PresentacionDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\CategoriaDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\RespuestaPreguntaDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\OcupacionDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\TipoDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\NivelEconomicoDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\EstudioDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\NivelAcademicoDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\ProductoDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\SubcategoriaDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\HistoricoEstadoDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\RolDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\HijoDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\MarcaDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\PreguntaEstudioDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\SolicitudEstudioDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\UsuarioDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\PreguntaEncuestaDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\InformacionDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\RespuestaDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\LugarDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\MedioComunicacionDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\TelefonoDto.java
-C:\Users\Emanuel\Documents\NetBeansProjects\DS-MercadeoUCAB-Version v1 (Emanuel)\mercadeoUcab-master\dtos\src\main\java\ucab\dsw\dtos\DtoBase.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\NivelAcademicoDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\ProductoDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\MedioComunicacionDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\PreguntaEstudioDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\DtoBase.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\TelefonoDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\CategoriaDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\ProductoPresentacionTipoDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\RespuestaDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\RolDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\SolicitudEstudioDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\EstudioLugarDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\HistoricoEstadoDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\NivelEconomicoDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\LugarDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\SubcategoriaDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\MarcaDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\PresentacionDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\PreguntaEncuestaDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\EstudioDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\HijoDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\TipoDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\OcupacionDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\RespuestaPreguntaDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\InformacionDto.java
+D:\Proyectos\_Proyectos de la universidad\2020-2021 Desarrollo del Software\DS-Proyecto (Todo)\DSW_EmpresaB\MercadeoUCAB-backend\dtos\src\main\java\ucab\dsw\dtos\UsuarioDto.java

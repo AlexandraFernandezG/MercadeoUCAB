@@ -13,40 +13,27 @@ public class Presentacion extends EntidadBase{
     @Column( name = "nombre" )
     private String _nombre;
     
-    @Column( name = "caracteristicas" )
-    private String _caracteristicas;
-    
-    //Relaciones
-    @ManyToOne
-    @JoinColumn(name="fk_producto")
-    private Producto _producto;
+    @Column( name = "descripcion" )
+    private String _descripcion;
     
     //Getters, Setters, y otros metodos.
 
-    public String getNombre() {
+    public String get_nombre() {
         return _nombre;
     }
 
-    public String getCaracteristicas() {
-        return _caracteristicas;
-    }
-
-    public Producto getProducto() {
-        return _producto;
-    }
-
-    public void setNombre(String _nombre) {
+    public void set_nombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public void setCaracteristicas(String _caracteristicas) {
-        this._caracteristicas = _caracteristicas;
+    public String get_descripcion() {
+        return _descripcion;
     }
 
-    public void setProducto(Producto _producto) {
-        this._producto = _producto;
+    public void set_descripcion(String _descripcion) {
+        this._descripcion = _descripcion;
     }
-    
+
     public Presentacion (long id){
         super(id);
     }
@@ -54,7 +41,7 @@ public class Presentacion extends EntidadBase{
     public Presentacion (String estatus) {
         super(estatus);
     }
-    
+
     public Presentacion(){
         super();
     }
@@ -63,8 +50,7 @@ public class Presentacion extends EntidadBase{
     public String toString() {
         return "Presentacion{" +
                 "_nombre='" + _nombre + '\'' +
-                ", _caracteristicas='" + _caracteristicas + '\'' +
-                ", _producto=" + _producto +
+                ", _descripcion='" + _descripcion + '\'' +
                 '}';
     }
 }

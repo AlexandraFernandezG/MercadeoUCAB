@@ -34,37 +34,39 @@ public class Usuario extends EntidadBase {
     
     ////Getters, Setters, y otros metodos.
 
-    public String getNombre() {
-        return _nombre;
-    }
 
-    public String getCorreoelectronico() {
-        return _correoelectronico;
-    }
-
-    public String getCodigoRecuperacion() {
-        return _codigoRecuperacion;
-    }
-
-    public Rol getRol() {
+    public Rol get_rol() {
         return _rol;
     }
 
-    public void setNombre(String _nombre) {
-        this._nombre = _nombre;
+    public void set_rol(Rol _rol) {
+        this._rol = _rol;
     }
 
-    public void setCorreoelectronico(String _correoelectronico) {
-        this._correoelectronico = _correoelectronico;
+    public String get_codigoRecuperacion() {
+        return _codigoRecuperacion;
     }
 
-    public void setCodigoRecuperacion(String _codigoRecuperacion) {
+    public void set_codigoRecuperacion(String _codigoRecuperacion) {
         this._codigoRecuperacion = _codigoRecuperacion;
     }
 
-    public void setRol(Rol _rol) {
-        this._rol = _rol;
+    public String get_correoelectronico() {
+        return _correoelectronico;
     }
+
+    public void set_correoelectronico(String _correoelectronico) {
+        this._correoelectronico = _correoelectronico;
+    }
+
+    public String get_nombre() {
+        return _nombre;
+    }
+
+    public void set_nombre(String _nombre) {
+        this._nombre = _nombre;
+    }
+
 
     public Usuario (String estatus) {
         super(estatus);

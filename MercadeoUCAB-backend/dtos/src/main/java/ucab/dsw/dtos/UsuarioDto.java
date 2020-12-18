@@ -1,32 +1,50 @@
 package ucab.dsw.dtos;
 
 public class UsuarioDto extends DtoBase{
-    private String nombreUsuario;
-    private String correo;
-    private String codigoRecuperacion;
+    private String _nombreUsuario;
+    private String _correo;
+    private String _codigoRecuperacion;
+    private RolDto _rol;
+    private String _contrasena;
 
-    public String getCodigoRecuperacion() {
-        return codigoRecuperacion;
+    public String getContrasena() {
+        return _contrasena;
     }
 
-    public void setCodigoRecuperacion(String codigoRecuperacion) {
-        this.codigoRecuperacion = codigoRecuperacion;
+    public void setContrasena(String _contrasena) {
+        this._contrasena = _contrasena;
+    }
+
+    public RolDto getRol() {
+        return _rol;
+    }
+
+    public void setRol(RolDto _rol) {
+        this._rol = _rol;
+    }
+
+    public String getCodigoRecuperacion() {
+        return _codigoRecuperacion;
+    }
+
+    public void setCodigoRecuperacion(String _codigoRecuperacion) {
+        this._codigoRecuperacion = _codigoRecuperacion;
     }
 
     public String getCorreo() {
-        return correo;
+        return _correo;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setCorreo(String _correo) {
+        this._correo = _correo;
     }
 
     public String getNombreUsuario() {
-        return nombreUsuario;
+        return _nombreUsuario;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setNombreUsuario(String _nombreUsuario) {
+        this._nombreUsuario = _nombreUsuario;
     }
 
     public UsuarioDto (long id) throws Exception{
@@ -37,7 +55,15 @@ public class UsuarioDto extends DtoBase{
         super(estatus);
     }
 
+
+    public String getNombreRol() {
+        return _rol.getNombre();
+    }
+
     public UsuarioDto (){
         super();
     }
+
+
 }
+

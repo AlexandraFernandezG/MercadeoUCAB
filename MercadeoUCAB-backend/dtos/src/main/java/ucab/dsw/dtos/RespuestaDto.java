@@ -9,59 +9,59 @@ public class RespuestaDto extends DtoBase {
     private PreguntaEstudioDto _preguntaEstudioDto;
     private UsuarioDto _usuarioDto;
 
-    public String get_escala() {
+    public String getEscala() {
         return _escala;
     }
 
-    public PreguntaEstudioDto get_preguntaEstudioDto() {
+    public PreguntaEstudioDto getPreguntaEstudioDto() {
         return _preguntaEstudioDto;
     }
 
-    public String get_respuestaAbierta() {
+    public String getRespuestaAbierta() {
         return _respuestaAbierta;
     }
 
-    public String get_respuestaMultiple() {
+    public String getRespuestaMultiple() {
         return _respuestaMultiple;
     }
 
-    public String get_respuestaSimple() {
+    public String getRespuestaSimple() {
         return _respuestaSimple;
     }
 
-    public UsuarioDto get_usuarioDto() {
+    public UsuarioDto getUsuarioDto() {
         return _usuarioDto;
     }
 
-    public String get_verdaderoFalso() {
+    public String getVerdaderoFalso() {
         return _verdaderoFalso;
     }
 
-    public void set_verdaderoFalso(String _verdaderoFalso) {
+    public void setVerdaderoFalso(String _verdaderoFalso) {
         this._verdaderoFalso = _verdaderoFalso;
     }
 
-    public void set_usuarioDto(UsuarioDto _usuarioDto) {
+    public void setUsuarioDto(UsuarioDto _usuarioDto) {
         this._usuarioDto = _usuarioDto;
     }
 
-    public void set_respuestaSimple(String _respuestaSimple) {
+    public void setRespuestaSimple(String _respuestaSimple) {
         this._respuestaSimple = _respuestaSimple;
     }
 
-    public void set_respuestaMultiple(String _respuestaMultiple) {
+    public void setRespuestaMultiple(String _respuestaMultiple) {
         this._respuestaMultiple = _respuestaMultiple;
     }
 
-    public void set_respuestaAbierta(String _respuestaAbierta) {
+    public void setRespuestaAbierta(String _respuestaAbierta) {
         this._respuestaAbierta = _respuestaAbierta;
     }
 
-    public void set_preguntaEstudioDto(PreguntaEstudioDto _preguntaEstudioDto) {
+    public void setPreguntaEstudioDto(PreguntaEstudioDto _preguntaEstudioDto) {
         this._preguntaEstudioDto = _preguntaEstudioDto;
     }
 
-    public void set_escala(String _escala) {
+    public void setEscala(String _escala) {
         this._escala = _escala;
     }
 

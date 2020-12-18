@@ -28,38 +28,39 @@ public class PreguntaEncuesta extends EntidadBase{
    
    //Getters, Setters, y otros metodos.
 
-    public String getDescripcion() {
-        return _descripcion;
-    }
 
-    public String getTipoPregunta() {
-        return _tipoPregunta;
-    }
-
-    public Usuario getUsuario() {
-        return _usuario;
-    }
-
-    public Subcategoria getSubcategoria() {
+    public Subcategoria get_subcategoria() {
         return _subcategoria;
     }
 
-    public void setDescripcion(String _descripcion) {
-        this._descripcion = _descripcion;
+    public void set_subcategoria(Subcategoria _subcategoria) {
+        this._subcategoria = _subcategoria;
     }
 
-    public void setTipoPregunta(String _tipoPregunta) {
-        this._tipoPregunta = _tipoPregunta;
+    public Usuario get_usuario() {
+        return _usuario;
     }
 
-    public void setUsuario(Usuario _usuario) {
+    public void set_usuario(Usuario _usuario) {
         this._usuario = _usuario;
     }
 
-    public void setSubcategoria(Subcategoria _subcategoria) {
-        this._subcategoria = _subcategoria;
+    public String get_tipoPregunta() {
+        return _tipoPregunta;
     }
-   
+
+    public void set_tipoPregunta(String _tipoPregunta) {
+        this._tipoPregunta = _tipoPregunta;
+    }
+
+    public String get_descripcion() {
+        return _descripcion;
+    }
+
+    public void set_descripcion(String _descripcion) {
+        this._descripcion = _descripcion;
+    }
+
     public PreguntaEncuesta(long id){
        super(id);
    }

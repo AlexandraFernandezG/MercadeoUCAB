@@ -1,21 +1,51 @@
-import org.hamcrest.core.IsEqual;
-import org.hamcrest.core.IsNot;
 import org.junit.*;
-import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import ucab.dsw.dtos.CategoriaDto;
 import ucab.dsw.dtos.SubcategoriaDto;
 import ucab.dsw.entidades.Subcategoria;
 
 public class SubCategoriaAPI_Test {
 
-    //Esta prueba muestra la lista de subcategorias activas.
+    //Listar todos las subcategorias (Esta forma fue realizada por Valentina)
     @Test
-    public void pruebaListarActivos(){
+    public void pruebaListarSubcategorias(){
 
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
-        List<Subcategoria> listaSubcategoriasActivas = servicio.subcategoriasActivas();
-        List<Subcategoria> listaSubcategorias = servicio.listarSubCategorias();
-        Assert.assertThat(listaSubcategorias, IsNot.not(IsEqual.equalTo(listaSubcategoriasActivas)));
+
+        try {
+            Assertions.assertTrue(servicio.listarSubCategorias().size() > 0);
+
+        } catch (Exception e) {
+
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Consultar una subcategoria (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaConsultarSubcategoria(){
+
+        ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
+        Subcategoria subcategoria_buscar = servicio.consultarSubCategoria(1);
+
+        try {
+            Assertions.assertEquals(1, subcategoria_buscar.get_id());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
+    //Listar subcategorias activas (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarSubcategoriasActivas(){
+
+        try {
+            Assertions.assertNotNull(new ucab.dsw.servicio.SubCategoriaAPI().subcategoriasActivas());
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
     }
 
     // Esta prueba permite insertar una subcategoria
@@ -23,16 +53,22 @@ public class SubCategoriaAPI_Test {
     public void pruebaInsertarSubCategoria() throws Exception{
 
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
-        SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
 
-        subcategoriaDto.setNombre("Limpieza");
-        subcategoriaDto.setDescripcion("Para la limpieza del hogar");
-        subcategoriaDto.set_estatus("Inactivo");
-        // Recuerden que deben ver los id de los registros en la BD
-        CategoriaDto categoriaDto = new CategoriaDto(5L);
-        subcategoriaDto.setCategoriaDto(categoriaDto);
-        Subcategoria resultado = servicio.addSubCategoria(subcategoriaDto);
-        Assert.assertNotEquals( resultado.get_id(), 0 );
+        try {
+            SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
+
+            subcategoriaDto.setNombre("Jabones perfumados grasientos");
+            subcategoriaDto.setDescripcion("Olor exquisito a grasa");
+            subcategoriaDto.setEstatus("Activo");
+            // Recuerden que deben ver los id de los registros en la BD
+            CategoriaDto categoriaDto = new CategoriaDto(1);
+            subcategoriaDto.setCategoriaDto(categoriaDto);
+            SubcategoriaDto resultado = servicio.addSubCategoria(subcategoriaDto);
+            Assert.assertNotEquals(resultado.getId(), 0);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
     }
 
     // Esta prueba permite modificar una subcategoria
@@ -40,12 +76,18 @@ public class SubCategoriaAPI_Test {
     public void pruebaModificarSubCategoria(){
 
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
-        SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
-        subcategoriaDto.setNombre("Juguetes");
-        subcategoriaDto.setDescripcion("Para diversion de los chicos");
-        subcategoriaDto.set_estatus("Inactivo");
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarSubCategoria(3L,subcategoriaDto);
+
+        try {
+            SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
+            subcategoriaDto.setNombre("Juguetes");
+            subcategoriaDto.setDescripcion("Para diversion de los chicos");
+            subcategoriaDto.setEstatus("Activo");
+            // Recuerden que deben ver los id de los registros en la BD
+            servicio.modificarSubCategoria(3, subcategoriaDto);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -54,8 +96,14 @@ public class SubCategoriaAPI_Test {
     public void pruebaEliminarSubCategoria(){
 
         ucab.dsw.servicio.SubCategoriaAPI servicio = new ucab.dsw.servicio.SubCategoriaAPI();
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarSubCategoria(3l);
+
+        try {
+            // Recuerden que deben ver los id de los registros en la BD
+            servicio.eliminarSubCategoria(1);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 }

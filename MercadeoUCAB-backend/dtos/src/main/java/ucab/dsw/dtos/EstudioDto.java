@@ -12,51 +12,51 @@ public class EstudioDto extends DtoBase {
     private SolicitudEstudioDto _solicitudEstudioDto;
     private UsuarioDto _usuarioDto;
 
-    public Date get_fechaFin() {
+    public Date getFechaFin() {
         return _fechaFin;
     }
 
-    public Date get_fechaInicio() {
+    public Date getFechaInicio() {
         return _fechaInicio;
     }
 
-    public String get_nombre() {
+    public String getNombre() {
         return _nombre;
     }
 
-    public SolicitudEstudioDto get_solicitudEstudioDto() {
+    public SolicitudEstudioDto getSolicitudEstudioDto() {
         return _solicitudEstudioDto;
     }
 
-    public String get_tipoInstrumento() {
+    public String getTipoInstrumento() {
         return _tipoInstrumento;
     }
 
-    public UsuarioDto get_usuarioDto() {
+    public UsuarioDto getUsuarioDto() {
         return _usuarioDto;
     }
 
-    public void set_usuarioDto(UsuarioDto _usuarioDto) {
+    public void setUsuarioDto(UsuarioDto _usuarioDto) {
         this._usuarioDto = _usuarioDto;
     }
 
-    public void set_tipoInstrumento(String _tipoInstrumento) {
+    public void setTipoInstrumento(String _tipoInstrumento) {
         this._tipoInstrumento = _tipoInstrumento;
     }
 
-    public void set_solicitudEstudioDto(SolicitudEstudioDto _solicitudEstudioDto) {
+    public void setSolicitudEstudioDto(SolicitudEstudioDto _solicitudEstudioDto) {
         this._solicitudEstudioDto = _solicitudEstudioDto;
     }
 
-    public void set_nombre(String _nombre) {
+    public void setNombre(String _nombre) {
         this._nombre = _nombre;
     }
 
-    public void set_fechaInicio(Date _fechaInicio) {
+    public void setFechaInicio(Date _fechaInicio) {
         this._fechaInicio = _fechaInicio;
     }
 
-    public void set_fechaFin(Date _fechaFin) {
+    public void setFechaFin(Date _fechaFin) {
         this._fechaFin = _fechaFin;
     }
 
