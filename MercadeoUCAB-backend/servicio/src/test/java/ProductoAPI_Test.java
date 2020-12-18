@@ -31,7 +31,7 @@ public class ProductoAPI_Test {
     public void pruebaConsultarProducto(){
 
         ucab.dsw.servicio.ProductoAPI servicio = new ucab.dsw.servicio.ProductoAPI();
-        Producto producto_buscar = servicio.consultarProducto(1L);
+        Producto producto_buscar = servicio.consultarProducto(1);
 
         try {
             Assertions.assertEquals(1, producto_buscar.get_id());
@@ -57,20 +57,26 @@ public class ProductoAPI_Test {
     public void pruebaInsertarProducto() throws Exception {
 
         ucab.dsw.servicio.ProductoAPI servicio = new ucab.dsw.servicio.ProductoAPI();
-        ProductoDto productoDto = new ProductoDto();
 
-        productoDto.setNombre("");
-        productoDto.setDescripcion("");
-        productoDto.setEstatus("Activo");
-        //Revisar los ID de los registros de la BD
-        UsuarioDto usuarioDto = new UsuarioDto(1L);
-        SubcategoriaDto subcategoriaDto = new SubcategoriaDto(1L);
-        MarcaDto marcaDto = new MarcaDto(1L);
-        productoDto.setUsuarioDto(usuarioDto);
-        productoDto.setSubcategoriaDto(subcategoriaDto);
-        productoDto.setMarcaDto(marcaDto);
-        ProductoDto resultado = servicio.addProducto(productoDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        try {
+            ProductoDto productoDto = new ProductoDto();
+
+            productoDto.setNombre("");
+            productoDto.setDescripcion("");
+            productoDto.setEstatus("Activo");
+            //Revisar los ID de los registros de la BD
+            UsuarioDto usuarioDto = new UsuarioDto(1);
+            SubcategoriaDto subcategoriaDto = new SubcategoriaDto(1);
+            MarcaDto marcaDto = new MarcaDto(1);
+            productoDto.setUsuarioDto(usuarioDto);
+            productoDto.setSubcategoriaDto(subcategoriaDto);
+            productoDto.setMarcaDto(marcaDto);
+            ProductoDto resultado = servicio.addProducto(productoDto);
+            Assert.assertNotEquals(resultado.getId(), 0);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -79,13 +85,19 @@ public class ProductoAPI_Test {
     public void pruebaModificarProducto(){
 
         ucab.dsw.servicio.ProductoAPI servicio = new ucab.dsw.servicio.ProductoAPI();
-        ProductoDto productoDto = new ProductoDto();
 
-        productoDto.setNombre("");
-        productoDto.setDescripcion("");
-        productoDto.setEstatus("Activo");
-        //Revisar los ID de los registros de la BD
-        servicio.modificarProducto(1L,productoDto);
+        try {
+            ProductoDto productoDto = new ProductoDto();
+
+            productoDto.setNombre("");
+            productoDto.setDescripcion("");
+            productoDto.setEstatus("Activo");
+            //Revisar los ID de los registros de la BD
+            servicio.modificarProducto(1, productoDto);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
 
     }
@@ -95,8 +107,14 @@ public class ProductoAPI_Test {
     public void pruebaEliminarProducto(){
 
         ucab.dsw.servicio.ProductoAPI servicio = new ucab.dsw.servicio.ProductoAPI();
-        //Revisar los ID de los registros de la BD
-        servicio.deleteProducto(1L);
+
+        try {
+            //Revisar los ID de los registros de la BD
+            servicio.deleteProducto(1);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 

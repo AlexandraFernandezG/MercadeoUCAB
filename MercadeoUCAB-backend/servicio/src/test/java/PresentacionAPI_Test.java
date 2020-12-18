@@ -27,7 +27,7 @@ public class PresentacionAPI_Test {
     public void pruebaConsultarPresentacion(){
 
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
-        Presentacion presentacion_buscar = servicio.consultarPresentacion(1L);
+        Presentacion presentacion_buscar = servicio.consultarPresentacion(1);
 
         try {
             Assertions.assertEquals(1, presentacion_buscar.get_id());
@@ -57,13 +57,19 @@ public class PresentacionAPI_Test {
     public void pruebaInsertarPresentacion() throws Exception {
 
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
-        PresentacionDto presentacionDto = new PresentacionDto();
 
-        presentacionDto.setNombre("");
-        presentacionDto.setDescripcion("");
-        presentacionDto.setEstatus("Activo");
-        PresentacionDto resultado = servicio.addPresentacion(presentacionDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        try {
+            PresentacionDto presentacionDto = new PresentacionDto();
+
+            presentacionDto.setNombre("");
+            presentacionDto.setDescripcion("");
+            presentacionDto.setEstatus("Activo");
+            PresentacionDto resultado = servicio.addPresentacion(presentacionDto);
+            Assert.assertNotEquals(resultado.getId(), 0);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -72,13 +78,19 @@ public class PresentacionAPI_Test {
     public void pruebaModificarPresentacion(){
 
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
-        PresentacionDto presentacionDto = new PresentacionDto();
 
-        presentacionDto.setNombre("");
-        presentacionDto.setDescripcion("");
-        presentacionDto.setEstatus("Activo");
-        // Estar mosca con los id de la bd
-        servicio.updatePresentacion(1L, presentacionDto);
+        try {
+            PresentacionDto presentacionDto = new PresentacionDto();
+
+            presentacionDto.setNombre("");
+            presentacionDto.setDescripcion("");
+            presentacionDto.setEstatus("Activo");
+            // Estar mosca con los id de la bd
+            servicio.updatePresentacion(1, presentacionDto);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -87,8 +99,14 @@ public class PresentacionAPI_Test {
     public void pruebaEliminarPresentacion(){
 
         ucab.dsw.servicio.PresentacionAPI servicio = new ucab.dsw.servicio.PresentacionAPI();
-        // Estar mosca con los id de la bd
-        servicio.eliminarPresentacion(1L);
+
+        try {
+            // Estar mosca con los id de la bd
+            servicio.eliminarPresentacion(1);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 

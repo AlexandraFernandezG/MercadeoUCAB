@@ -33,7 +33,7 @@ public class HijoAPI_Test {
     public void pruebaConsultarHijo(){
 
         ucab.dsw.servicio.HijoAPI servicio = new ucab.dsw.servicio.HijoAPI();
-        Hijo hijo_buscar = servicio.consultarHijo(1L);
+        Hijo hijo_buscar = servicio.consultarHijo(1);
 
         try {
             Assertions.assertEquals(1, hijo_buscar.get_id());
@@ -49,19 +49,25 @@ public class HijoAPI_Test {
     public void pruebaInsertarHijo() throws Exception {
 
         ucab.dsw.servicio.HijoAPI servicio = new ucab.dsw.servicio.HijoAPI();
-        HijoDto hijoDto = new HijoDto();
 
-        String date1 = "2010-12-01";
-        DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
-        Date myDate = forma.parse(date1);
-        hijoDto.setFechaNacimiento(myDate);
-        hijoDto.setGenero("masculino");
-        hijoDto.setEstatus("Activo");
-        //Revisar sus registros en la base de datos
-        InformacionDto informacionDto = new InformacionDto(1L);
-        hijoDto.setInformacionDto(informacionDto);
-        HijoDto resultado = servicio.addHijo(hijoDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        try {
+            HijoDto hijoDto = new HijoDto();
+
+            String date1 = "2010-12-01";
+            DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
+            Date myDate = forma.parse(date1);
+            hijoDto.setFechaNacimiento(myDate);
+            hijoDto.setGenero("masculino");
+            hijoDto.setEstatus("Activo");
+            //Revisar sus registros en la base de datos
+            InformacionDto informacionDto = new InformacionDto(1);
+            hijoDto.setInformacionDto(informacionDto);
+            HijoDto resultado = servicio.addHijo(hijoDto);
+            Assert.assertNotEquals(resultado.getId(), 0);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -70,16 +76,22 @@ public class HijoAPI_Test {
     public void pruebaModificarHijo() throws ParseException {
 
         ucab.dsw.servicio.HijoAPI servicio = new ucab.dsw.servicio.HijoAPI();
-        HijoDto hijoDto = new HijoDto();
 
-        String date1 = "2010-12-01";
-        DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
-        Date myDate = forma.parse(date1);
-        hijoDto.setFechaNacimiento(myDate);
-        hijoDto.setGenero("masculino");
-        hijoDto.setEstatus("Activo");
-        //Revisar sus registros en la base de datos
-        servicio.updateHijo(1L, hijoDto);
+        try {
+            HijoDto hijoDto = new HijoDto();
+
+            String date1 = "2010-12-01";
+            DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
+            Date myDate = forma.parse(date1);
+            hijoDto.setFechaNacimiento(myDate);
+            hijoDto.setGenero("masculino");
+            hijoDto.setEstatus("Activo");
+            //Revisar sus registros en la base de datos
+            servicio.updateHijo(1, hijoDto);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -88,8 +100,14 @@ public class HijoAPI_Test {
     public void pruebaEliminarHijo(){
 
         ucab.dsw.servicio.HijoAPI servicio = new ucab.dsw.servicio.HijoAPI();
-        //Revisar sus registros en la base de datos
-        servicio.deleteHijo(1L);
+
+        try {
+            //Revisar sus registros en la base de datos
+            servicio.deleteHijo(1);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
     }
 
 }

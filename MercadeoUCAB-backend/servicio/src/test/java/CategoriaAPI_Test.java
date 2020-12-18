@@ -33,7 +33,7 @@ public class CategoriaAPI_Test {
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
 
         try {
-            Assertions.assertTrue(servicio.listarSubcategoriasDeCategoria(1L).size() > 0);
+            Assertions.assertTrue(servicio.listarSubcategoriasDeCategoria(1).size() > 0);
 
         } catch (Exception e) {
 
@@ -47,7 +47,7 @@ public class CategoriaAPI_Test {
     public void pruebaConsultarCategoria(){
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
-        Categoria categoria_buscar = servicio.consultarCategoria(1L);
+        Categoria categoria_buscar = servicio.consultarCategoria(1);
 
         try {
             Assertions.assertEquals(1, categoria_buscar.get_id());
@@ -73,13 +73,19 @@ public class CategoriaAPI_Test {
     public void pruebaInsertarCategoria() {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
-        CategoriaDto categoriaDto = new CategoriaDto();
-        
-        categoriaDto.setNombre("Jabones express");
-        categoriaDto.setDescripcion("Jabones rapidos");
-        categoriaDto.setEstatus("Inactivo");
-        CategoriaDto resultado = servicio.addCategoria(categoriaDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+
+        try {
+            CategoriaDto categoriaDto = new CategoriaDto();
+
+            categoriaDto.setNombre("Jabones express");
+            categoriaDto.setDescripcion("Jabones rapidos");
+            categoriaDto.setEstatus("Inactivo");
+            CategoriaDto resultado = servicio.addCategoria(categoriaDto);
+            Assert.assertNotEquals(resultado.getId(), 0);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
     }
 
     //Modificar estatus de la categoria
@@ -87,10 +93,17 @@ public class CategoriaAPI_Test {
     public void pruebaModificarEstatusCategoria() throws Exception {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
-        CategoriaDto categoriaDto = new CategoriaDto();
-        categoriaDto.setEstatus("Activo");
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarEstatusCategoria(1L,categoriaDto);
+
+        try {
+
+            CategoriaDto categoriaDto = new CategoriaDto();
+            categoriaDto.setEstatus("Activo");
+            // Recuerden que deben ver los id de los registros en la BD
+            servicio.modificarEstatusCategoria(1, categoriaDto);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
     }
 
     // Este prueba permite modificar los campos de un registro
@@ -98,12 +111,18 @@ public class CategoriaAPI_Test {
     public void pruebaModificarCategoria() throws Exception {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
-        CategoriaDto categoriaDto = new CategoriaDto();
-        categoriaDto.setNombre("Comida");
-        categoriaDto.setDescripcion("Perros calientes de arandanos");
-        categoriaDto.setEstatus("Activo");
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.modificarCategoria(1L,categoriaDto);
+
+        try {
+            CategoriaDto categoriaDto = new CategoriaDto();
+            categoriaDto.setNombre("Comida");
+            categoriaDto.setDescripcion("Perros calientes de arandanos");
+            categoriaDto.setEstatus("Activo");
+            // Recuerden que deben ver los id de los registros en la BD
+            servicio.modificarCategoria(1, categoriaDto);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -112,7 +131,13 @@ public class CategoriaAPI_Test {
     public void pruebaEliminarCategoria() throws Exception {
 
         ucab.dsw.servicio.CategoriaAPI servicio = new ucab.dsw.servicio.CategoriaAPI();
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarCategoria(1L);
+
+        try {
+            // Recuerden que deben ver los id de los registros en la BD
+            servicio.eliminarCategoria(1);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
     }
 }

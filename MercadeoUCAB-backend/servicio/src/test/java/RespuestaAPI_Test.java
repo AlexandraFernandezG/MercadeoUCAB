@@ -29,7 +29,7 @@ public class RespuestaAPI_Test {
     public void pruebaConsultarRespuesta(){
 
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
-        Respuesta respuesta_buscar = servicio.consultarRespuesta(1L);
+        Respuesta respuesta_buscar = servicio.consultarRespuesta(1);
 
         try {
             Assertions.assertEquals(1, respuesta_buscar.get_id());
@@ -57,21 +57,27 @@ public class RespuestaAPI_Test {
     public void pruebaInsertarRespuesta() throws Exception {
 
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
-        RespuestaDto respuestaDto = new RespuestaDto();
 
-        respuestaDto.setRespuestaAbierta("");
-        respuestaDto.setEscala("");
-        respuestaDto.setVerdaderoFalso("");
-        respuestaDto.setRespuestaSimple("");
-        respuestaDto.setRespuestaMultiple("");
-        respuestaDto.setEstatus("Activo");
-        //Estar mosca con los ID de la BD
-        PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto(1L);
-        UsuarioDto usuarioDto = new UsuarioDto(1L);
-        respuestaDto.setPreguntaEstudioDto(preguntaEstudioDto);
-        respuestaDto.setUsuarioDto(usuarioDto);
-        RespuestaDto resultado = servicio.addRespuesta(respuestaDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        try {
+            RespuestaDto respuestaDto = new RespuestaDto();
+
+            respuestaDto.setRespuestaAbierta("");
+            respuestaDto.setEscala("");
+            respuestaDto.setVerdaderoFalso("");
+            respuestaDto.setRespuestaSimple("");
+            respuestaDto.setRespuestaMultiple("");
+            respuestaDto.setEstatus("Activo");
+            //Estar mosca con los ID de la BD
+            PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto(1);
+            UsuarioDto usuarioDto = new UsuarioDto(1);
+            respuestaDto.setPreguntaEstudioDto(preguntaEstudioDto);
+            respuestaDto.setUsuarioDto(usuarioDto);
+            RespuestaDto resultado = servicio.addRespuesta(respuestaDto);
+            Assert.assertNotEquals(resultado.getId(), 0);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -80,16 +86,22 @@ public class RespuestaAPI_Test {
     public void pruebaModificarRespuesta(){
 
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
-        RespuestaDto respuestaDto = new RespuestaDto();
 
-        respuestaDto.setRespuestaAbierta("");
-        respuestaDto.setEscala("");
-        respuestaDto.setVerdaderoFalso("");
-        respuestaDto.setRespuestaSimple("");
-        respuestaDto.setRespuestaMultiple("");
-        respuestaDto.setEstatus("Activo");
-        //Estar mosca con los ID de la BD
-        servicio.updateRespuesta(1L, respuestaDto);
+        try {
+            RespuestaDto respuestaDto = new RespuestaDto();
+
+            respuestaDto.setRespuestaAbierta("");
+            respuestaDto.setEscala("");
+            respuestaDto.setVerdaderoFalso("");
+            respuestaDto.setRespuestaSimple("");
+            respuestaDto.setRespuestaMultiple("");
+            respuestaDto.setEstatus("Activo");
+            //Estar mosca con los ID de la BD
+            servicio.updateRespuesta(1, respuestaDto);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
     }
 
     // Prueba eliminar una respuesta
@@ -97,8 +109,14 @@ public class RespuestaAPI_Test {
     public void pruebaEliminarRespuesta(){
 
         ucab.dsw.servicio.RespuestaAPI servicio = new ucab.dsw.servicio.RespuestaAPI();
-        //Estar mosca con los ID de la BD
-        servicio.eliminarRespuesta(1L);
+
+        try {
+            //Estar mosca con los ID de la BD
+            servicio.eliminarRespuesta(1);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 

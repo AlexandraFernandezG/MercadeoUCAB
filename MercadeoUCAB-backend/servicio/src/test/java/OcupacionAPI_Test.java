@@ -26,7 +26,7 @@ public class OcupacionAPI_Test {
     public void pruebaConsultarOcupacion(){
 
         ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
-        Ocupacion ocupacion_buscar = servicio.consultarOcupacion(1L);
+        Ocupacion ocupacion_buscar = servicio.consultarOcupacion(1);
 
         try {
             Assertions.assertEquals(1, ocupacion_buscar.get_id());
@@ -41,12 +41,18 @@ public class OcupacionAPI_Test {
     public void pruebaInsertarOcupacion(){
 
         ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
-        OcupacionDto ocupacionDto = new OcupacionDto();
 
-        ocupacionDto.setNombre("Medico");
-        ocupacionDto.setEstatus("Activo");
-        OcupacionDto resultado = servicio.addOcupacion(ocupacionDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        try {
+            OcupacionDto ocupacionDto = new OcupacionDto();
+
+            ocupacionDto.setNombre("Medico");
+            ocupacionDto.setEstatus("Activo");
+            OcupacionDto resultado = servicio.addOcupacion(ocupacionDto);
+            Assert.assertNotEquals(resultado.getId(), 0);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -55,11 +61,17 @@ public class OcupacionAPI_Test {
     public void pruebaModificarOcupacion(){
 
         ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
-        OcupacionDto ocupacionDto = new OcupacionDto();
 
-        ocupacionDto.setNombre("");
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.updateOcupacion(1L, ocupacionDto);
+        try {
+            OcupacionDto ocupacionDto = new OcupacionDto();
+
+            ocupacionDto.setNombre("");
+            // Recuerden que deben ver los id de los registros en la BD
+            servicio.updateOcupacion(1, ocupacionDto);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -68,8 +80,14 @@ public class OcupacionAPI_Test {
     public void pruebaEliminarOcupacion(){
 
         ucab.dsw.servicio.OcupacionAPI servicio = new ucab.dsw.servicio.OcupacionAPI();
-        // Recuerden que deben ver los id de los registros en la BD
-        servicio.eliminarOcupacion(2L);
+
+        try {
+            // Recuerden que deben ver los id de los registros en la BD
+            servicio.eliminarOcupacion(2);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 }

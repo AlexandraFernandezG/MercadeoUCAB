@@ -27,7 +27,7 @@ public class TipoAPI_Test {
     public void pruebaConsultarTipo(){
 
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
-        Tipo tipo_buscar = servicio.consultarTipo(1L);
+        Tipo tipo_buscar = servicio.consultarTipo(1);
 
         try {
             Assertions.assertEquals(1, tipo_buscar.get_id());
@@ -55,13 +55,19 @@ public class TipoAPI_Test {
     public void pruebaInsertarTipo() throws Exception {
 
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
-        TipoDto tipoDto = new TipoDto();
 
-        tipoDto.setNombre("");
-        tipoDto.setDescripcion("");
-        tipoDto.setEstatus("Activo");
-        TipoDto resultado = servicio.addTipo(tipoDto);
-        Assert.assertNotEquals( resultado.getId(), 0 );
+        try {
+            TipoDto tipoDto = new TipoDto();
+
+            tipoDto.setNombre("");
+            tipoDto.setDescripcion("");
+            tipoDto.setEstatus("Activo");
+            TipoDto resultado = servicio.addTipo(tipoDto);
+            Assert.assertNotEquals(resultado.getId(), 0);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -70,13 +76,19 @@ public class TipoAPI_Test {
     public void pruebaModificarTipo(){
 
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
-        TipoDto tipoDto = new TipoDto();
 
-        tipoDto.setNombre("");
-        tipoDto.setDescripcion("");
-        tipoDto.setEstatus("Activo");
-        // Estar pendiente con los ID registrados en la BD
-        servicio.updateTipo(1L, tipoDto);
+        try {
+            TipoDto tipoDto = new TipoDto();
+
+            tipoDto.setNombre("");
+            tipoDto.setDescripcion("");
+            tipoDto.setEstatus("Activo");
+            // Estar pendiente con los ID registrados en la BD
+            servicio.updateTipo(1, tipoDto);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 
@@ -85,8 +97,14 @@ public class TipoAPI_Test {
     public void pruebaEliminarTipo(){
 
         ucab.dsw.servicio.TipoAPI servicio = new ucab.dsw.servicio.TipoAPI();
-        // Estar pendiente con los ID registrados en la BD
-        servicio.eliminarTipo(1L);
+
+        try {
+            // Estar pendiente con los ID registrados en la BD
+            servicio.eliminarTipo(1);
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
 
     }
 

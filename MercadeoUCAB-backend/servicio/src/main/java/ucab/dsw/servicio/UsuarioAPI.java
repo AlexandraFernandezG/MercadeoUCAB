@@ -120,6 +120,8 @@ public class UsuarioAPI extends AplicacionBase {
             usuario_modificar.set_correoelectronico(usuarioDto.getCorreo());
             Rol rol = new Rol(usuarioDto.getRol().getId());
             usuario_modificar.set_rol(rol);
+            usuario_modificar.set_estatus(usuarioDto.getEstatus());
+            usuario_modificar.set_codigoRecuperacion(usuarioDto.getCodigoRecuperacion());
             daoUsuario.update(usuario_modificar);
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.updateEntry(usuarioDto);
@@ -250,6 +252,7 @@ public class UsuarioAPI extends AplicacionBase {
                 String randomClave = RandomStringUtils.randomAlphanumeric(10);
 
                 usuarioDto.setContrasena(randomClave);
+                daoUsuario.update(usuario_modificar);
                 ldap.changePassword(usuarioDto);
 
                 contenido = "Estimado " + usuarioDto.getNombreUsuario() + " su contraseña ha sido actualizada. Su nueva contraseña es: " + randomClave;
