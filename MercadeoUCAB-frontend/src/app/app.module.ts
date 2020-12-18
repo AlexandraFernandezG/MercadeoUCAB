@@ -51,7 +51,6 @@ import { SolicitudEstudioComponent } from './cliente/solicitud-estudio/solicitud
 import { EncuestadoComponent } from './encuestado/encuestado.component';
 import { EstudiosEncuestadoComponent } from './encuestado/estudios-encuestado/estudios-encuestado.component';
 import { RespuestasEncuestaComponent } from './encuestado/respuestas-encuesta/respuestas-encuesta.component';
-import { RegistroEncuestadoComponent } from './registro-encuestado/registro-encuestado.component';
 import { AnalistaComponent } from './analista/analista.component';
 import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios-analista.component';
 import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
@@ -67,6 +66,7 @@ import { AddProductoComponent } from './cliente/producto/add-producto/add-produc
 import { ProductosService } from './servicios/productos.service';
 import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
 
 @NgModule({
   declarations: [
@@ -92,7 +92,6 @@ import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena
     EncuestadoComponent,
     EstudiosEncuestadoComponent,
     RespuestasEncuestaComponent,
-    RegistroEncuestadoComponent,
     AnalistaComponent,
     EstudiosAnalistaComponent,
     DataEstudioComponent,
@@ -119,6 +118,7 @@ import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatDatepickerModule,
     MatInputModule,
     ReactiveFormsModule,
     NgbModule,
