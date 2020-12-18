@@ -151,7 +151,7 @@ public class UsuarioAPI extends AplicacionBase {
         }
 
         try {
-            UsuarioDto usuarioDto = new UsuarioDto(usuario_eliminar.get_id());
+            UsuarioDto usuarioDto = new UsuarioDto(usuario_eliminar.get_correoelectronico());
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.deleteEntry(usuarioDto);
             daoUsuario.delete(usuario_eliminar);
@@ -240,9 +240,6 @@ public class UsuarioAPI extends AplicacionBase {
         DirectorioActivo directorioActivo = new DirectorioActivo();
 
         DaoUsuario daoUsuario = new DaoUsuario();
-        Usuario usuario_modificar = daoUsuario.find(usuarioDto.getId(), Usuario.class);
-
-        if(usuario_modificar != null) {
 
             try {
 
@@ -252,7 +249,6 @@ public class UsuarioAPI extends AplicacionBase {
                 String randomClave = RandomStringUtils.randomAlphanumeric(10);
 
                 usuarioDto.setContrasena(randomClave);
-                daoUsuario.update(usuario_modificar);
                 ldap.changePassword(usuarioDto);
 
                 contenido = "Estimado " + usuarioDto.getNombreUsuario() + " su contraseña ha sido actualizada. Su nueva contraseña es: " + randomClave;
@@ -264,8 +260,6 @@ public class UsuarioAPI extends AplicacionBase {
                 String mensaje = ex.getMessage();
                 System.out.print(mensaje);
             }
-
-        }
 
         return respuesta;
 

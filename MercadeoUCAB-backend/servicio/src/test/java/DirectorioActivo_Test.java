@@ -9,8 +9,8 @@ public class DirectorioActivo_Test {
     {
         UsuarioDto user = new UsuarioDto();
         user.setNombreUsuario("EmanuelDriver");
-        user.setCorreo( "greggspinetti@gmail.com" );
-        user.setContrasena( "1234abcd" );
+        user.setCorreo( "emadicris@hotmail.com" );
+        user.setContrasena( "juventus1234" );
         user.setEstatus("Activo");
         RolDto rol = new RolDto();
         rol.setNombre("Administrador");
