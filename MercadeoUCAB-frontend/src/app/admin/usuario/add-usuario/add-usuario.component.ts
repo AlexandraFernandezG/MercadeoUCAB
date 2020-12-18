@@ -46,7 +46,7 @@ export class AddUsuarioComponent implements OnInit {
     _rol: {
       _id: 0,
       _nombre: '',
-      _estatus: ''
+      _estatus: 'Activo'
     }
   };
 

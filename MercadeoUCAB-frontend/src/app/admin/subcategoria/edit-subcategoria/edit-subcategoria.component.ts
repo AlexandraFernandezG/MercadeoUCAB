@@ -73,7 +73,7 @@ export class EditSubcategoriaComponent implements OnInit {
       id: this.data.id,
       nombre: this.subcategoriaForm.get("nombre").value,
       descripcion: this.subcategoriaForm.get("descripcion").value,
-      estatus: this.data.estatus,
+      estatus: 'Activo',
       categoriaDto: this.subcategoriaForm.get("categoriaDto").value
     };
    this.service.updateSubcategoria(editSu).subscribe();

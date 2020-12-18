@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Tipo } from '../modelos/tipo';
-import { Tipo2 } from '../modelos/tipo';
 import { catchError, map, tap, retry } from 'rxjs/operators';
+import { Tipo, Tipo2 } from '../modelos/tipo';
 
 
 @Injectable({

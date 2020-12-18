@@ -1,7 +1,7 @@
 import { Ocupacion, Ocupacion2 } from "./ocupacion";
 import { Producto, Producto2 } from "./producto";
-import { Usuario, Usuario2 } from "./usuario";
-import { NivelAcademico, NivelAcademico2, NivelEconomico, NivelEconomico2 } from "./varios";
+import { Usuario, Usuario2 } from './usuario';
+import { NivelAcademico, NivelAcademico2, NivelEconomico, NivelEconomico2 } from './varios';
 
 export class Solicitud{
     constructor(

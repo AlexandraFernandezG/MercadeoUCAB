@@ -1,0 +1,15 @@
+<br><br>
+<h2 class='margin'>Recuperacion de Contraseña:</h2>
+<form name="envioForm" [formGroup]="envioForm">
+  <div class="form-group">
+    <mat-form-field class="full-width" appaerance="outline">
+      <mat-label>Ingrese el correo:</mat-label>
+      <input formControlName="correo" matInput required [(ngModel)]="usuario._correoelectronico"/>
+      <mat-error *ngIf="envioForm.get('correo').errors?.required">
+        Falta llenar el correo electronico
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <button mat-flat-button color="primary" [disabled]="envioForm.invalid" (click)="envioPassword(usuario)">Enviar contraseña</button>
+</form>
+  

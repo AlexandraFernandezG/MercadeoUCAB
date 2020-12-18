@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddMarcaComponent } from './add-marca.component';
+import { CambioContrasenaComponent } from './cambio-contrasena.component';
 
-describe('AddMarcaComponent', () => {
-  let component: AddMarcaComponent;
-  let fixture: ComponentFixture<AddMarcaComponent>;
+describe('CambioContrasenaComponent', () => {
+  let component: CambioContrasenaComponent;
+  let fixture: ComponentFixture<CambioContrasenaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddMarcaComponent ]
+      declarations: [ CambioContrasenaComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddMarcaComponent);
+    fixture = TestBed.createComponent(CambioContrasenaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

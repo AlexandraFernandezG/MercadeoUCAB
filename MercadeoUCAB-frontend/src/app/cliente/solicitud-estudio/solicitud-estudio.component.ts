@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductosService } from '../../servicios/productos.service';
-import { Producto, Producto2 } from '../../modelos/producto';
 import { Ocupacion } from 'src/app/modelos/ocupacion';
-import { OcupacionService } from 'src/app/servicios/ocupacion.service';
 import { Lugar } from '../../modelos/lugar';
-import { LugarService } from 'src/app/servicios/lugar.service';
 import { SolicitudEstudiosService } from '../../servicios/solicitud-estudios.service';
 import { Solicitud2 } from '../../modelos/solicitud';
-import { VariosService } from 'src/app/servicios/varios.service';
-import { NivelAcademico, NivelAcademico2, NivelEconomico } from 'src/app/modelos/varios';
+//import { VariosService } from 'src/app/servicios/varios.service';
 import { Usuario2 } from 'src/app/modelos/usuario';
 import { Rol } from 'src/app/modelos/rol';
+import { NivelAcademico, NivelAcademico2, NivelEconomico } from 'src/app/modelos/varios';
+import { Producto, Producto2 } from 'src/app/modelos/producto';
+import { OcupacionService } from 'src/app/servicios/ocupacion.service';
+import { LugarService } from 'src/app/servicios/lugar.service';
 
 
 @Component({
@@ -45,9 +45,10 @@ export class SolicitudEstudioComponent implements OnInit {
     id: 1,
     estatus:"a",
     nombreUsuario: "carlos",
+    contrasena: '',
     correo:"carlos@gmail.com",
-    codigoRecuperacion: 1234,
-    rolDto: {id:1,estatus:"a",nombre:"admin"}
+    codigoRecuperacion: '',
+    rol : 1
   }
 
 
@@ -59,12 +60,12 @@ export class SolicitudEstudioComponent implements OnInit {
     private ocupacionService: OcupacionService,
     private lugarService: LugarService,
     private solicitudEstudiosService: SolicitudEstudiosService,
-    private variosService: VariosService,
-    ) 
-    
+   // private variosService: VariosService,
+    )
+   
     {
     this.solicitudForm = this.fb.group({
-      
+   
       descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
       edadMinima: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
       edadMaxima: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
@@ -88,20 +89,20 @@ export class SolicitudEstudioComponent implements OnInit {
 
   ngOnInit(): void {
     //Productos de la BD para el select
-    this.productoService.getProductos()
-    .subscribe(productosData => {this.productos = productosData;});
+    //this.productoService.getProductos()
+  //  .subscribe(productosData => {this.productos = productosData;});
 
     //Ocupaciones de la BD para el select
-    this.ocupacionService.getOcupaciones()
-    .subscribe(ocupacionesData => {this.ocupaciones = ocupacionesData;});
+   // this.ocupacionService.getOcupaciones()
+    //.subscribe(ocupacionesData => {this.ocupaciones = ocupacionesData;});
 
     //Nivel Académico de la BD para el select
-    this.variosService.getNivelAcademico()
-    .subscribe(nivelAcademicoData => {this.nivelAcademicoArray = nivelAcademicoData;});
+  //  this.variosService.getNivelAcademico()
+   // .subscribe(nivelAcademicoData => {this.nivelAcademicoArray = nivelAcademicoData;});
 
     //Nivel Económico de la BD para el select
-    this.variosService.getNivelEconomico()
-    .subscribe(nivelEconomicoData => {this.nivelEconomicoArray = nivelEconomicoData;});
+  //  this.variosService.getNivelEconomico()
+ //   .subscribe(nivelEconomicoData => {this.nivelEconomicoArray = nivelEconomicoData;});
 
     //Lugares de la BD para el select
     this.lugarService.getLugares().subscribe(lugaresData => {
@@ -132,7 +133,7 @@ export class SolicitudEstudioComponent implements OnInit {
   }
 
   onSubmit(): void{
-    this.solicitud2 = {
+   /* this.solicitud2 = {
       id: 1,
       descripcion: this.solicitudForm.value.descripcion,
       genero: this.solicitudForm.value.genero,
@@ -152,7 +153,7 @@ export class SolicitudEstudioComponent implements OnInit {
         estatus: this.solicitudForm.value.nivelEconomicoDto._estatus,
       },
       usuarioDto: this.usuariotest,
-      productoDto: {
+    /*  productoDto: {
         id: this.solicitudForm.value.productoDto._id,
         nombre: this.solicitudForm.value.productoDto._nombre,
         descripcion: this.solicitudForm.value.productoDto._descripcion,
@@ -175,6 +176,5 @@ export class SolicitudEstudioComponent implements OnInit {
      console.log(Solicitud2);
      //this.router.navigate(['/cliente/estudios']);
    }
-   
-
+  */}
 }
