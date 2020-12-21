@@ -3,9 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ucab.dsw.accesodatos.DaoCategoria;
+import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.accesodatos.DaoSubcategoria;
 import ucab.dsw.dtos.SubcategoriaDto;
 import ucab.dsw.entidades.Categoria;
+import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.entidades.Subcategoria;
 
 import javax.ws.rs.core.Response;
@@ -87,6 +89,36 @@ public class SubCategoriaAPI extends AplicacionBase{
 
         }
 
+    }
+
+    //Listar las preguntas en correlacion con una subcategoria
+    @GET
+    @Path("/listarPreguntasSubcategoria/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public List<PreguntaEncuesta> listarPreguntasSubcategoria(@PathParam("id") long id) throws NullPointerException{
+
+        DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+        List<PreguntaEncuesta> listarPreguntas = daoPreguntaEncuesta.findAll(PreguntaEncuesta.class);
+        List<PreguntaEncuesta> listaPreguntasSubcategoria = new ArrayList<PreguntaEncuesta>();
+
+        try {
+
+            for (PreguntaEncuesta preguntaEncuesta: listarPreguntas){
+
+                if(preguntaEncuesta.get_subcategoria().get_id() == id){
+
+                    listaPreguntasSubcategoria.add(preguntaEncuesta);
+                }
+            }
+
+            return listaPreguntasSubcategoria;
+
+        } catch (NullPointerException ex){
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+        }
     }
 
     //Agregar una subcategoria
