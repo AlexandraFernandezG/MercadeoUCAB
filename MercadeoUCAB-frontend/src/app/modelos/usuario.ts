@@ -16,7 +16,7 @@ export class Usuario2 {
            public id: number,
            public nombreUsuario: string,
            public correo: string,
-           public codigoRecuperacion: number,
+           public codigoRecuperacion: string,
            public estatus: string,
            public rolDto: Rol2
          ){}

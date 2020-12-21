@@ -14,13 +14,12 @@ import { NivelAcademico, NivelAcademico2, NivelEconomico } from 'src/app/modelos
 import { Usuario2 } from 'src/app/modelos/usuario';
 import { Rol } from 'src/app/modelos/rol';
 
-
 @Component({
-  selector: 'app-solicitud-estudio',
-  templateUrl: './solicitud-estudio.component.html',
-  styleUrls: ['./solicitud-estudio.component.css']
+  selector: 'app-registro-encuestado',
+  templateUrl: './registro-encuestado.component.html',
+  styleUrls: ['./registro-encuestado.component.css']
 })
-export class SolicitudEstudioComponent implements OnInit {
+export class RegistroEncuestadoComponent implements OnInit {
 
   solicitudForm: FormGroup;
   productos: Producto[];
@@ -50,8 +49,6 @@ export class SolicitudEstudioComponent implements OnInit {
     rolDto: {id:1,estatus:"a",nombre:"admin"}
   }
 
-
-
   constructor(
     private fb: FormBuilder, 
     private router: Router, 
@@ -60,15 +57,15 @@ export class SolicitudEstudioComponent implements OnInit {
     private lugarService: LugarService,
     private solicitudEstudiosService: SolicitudEstudiosService,
     private variosService: VariosService,
-    ) 
-    
-    {
+  ) { 
     this.solicitudForm = this.fb.group({
       
-      descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
-      edadMinima: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
-      edadMaxima: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
-      genero: new FormControl('',[Validators.maxLength(100)]),
+      primerNombre: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
+      segundoNombre: new FormControl('',[Validators.maxLength(100)]),
+      primerApellido: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
+      segundoApellido: new FormControl('',[Validators.maxLength(100)]),
+      fechaNacimiento: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
+      genero: new FormControl('',[Validators.required,Validators.maxLength(100)]),
       estadoCivil: new FormControl('',[Validators.maxLength(100)]),
       estado: new FormControl('',[Validators.maxLength(100)]),
       municipio: new FormControl('',[Validators.maxLength(100)]),
@@ -80,11 +77,10 @@ export class SolicitudEstudioComponent implements OnInit {
       edadMaximaHijos: new FormControl('',[Validators.maxLength(100)]),
 
       nivelEconomicoDto: new FormControl('',[Validators.maxLength(100)]),
-      productoDto: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
       ocupacionDto: new FormControl('',[Validators.maxLength(100)]),
       nivelAcademicoDto: new FormControl('',[Validators.maxLength(100)]),
     });
-   }
+  }
 
   ngOnInit(): void {
     //Productos de la BD para el select
@@ -130,51 +126,5 @@ export class SolicitudEstudioComponent implements OnInit {
     this.ocupacionService.getOcupaciones().subscribe(ocupacionesData => console.log(ocupacionesData));
     this.lugarService.getLugares().subscribe(lugaresData => console.log(lugaresData));
   }
-
-  onSubmit(): void{
-    this.solicitud2 = {
-      id: 1,
-      descripcion: this.solicitudForm.value.descripcion,
-      genero: this.solicitudForm.value.genero,
-      edadMinima: this.solicitudForm.value.edadMinima,
-      edadMaxima: this.solicitudForm.value.edadMaxima,
-      estadoCivil: this.solicitudForm.value.estadoCivil,
-      disponibilidadEnLinea: this.solicitudForm.value.disponibilidadEnLinea,
-      cantidadPersonas: this.solicitudForm.value.cantidadPersonas,
-      cantidadHijos: this.solicitudForm.value.cantidadHijos,
-      generoHijos: this.solicitudForm.value.generoHijos,
-      edadMinimaHijos: this.solicitudForm.value.edadMinimaHijos,
-      edadMaximaHijos: this.solicitudForm.value.edadMaximaHijos,
-      estatus: 'activo',
-      nivelEconomicoDto: {
-        id: this.solicitudForm.value.nivelEconomicoDto._id,
-        descripcion: this.solicitudForm.value.nivelEconomicoDto._descripcion,
-        estatus: this.solicitudForm.value.nivelEconomicoDto._estatus,
-      },
-      usuarioDto: this.usuariotest,
-      productoDto: {
-        id: this.solicitudForm.value.productoDto._id,
-        nombre: this.solicitudForm.value.productoDto._nombre,
-        descripcion: this.solicitudForm.value.productoDto._descripcion,
-        estatus: this.solicitudForm.value.nivelEconomicoDto._estatus,
-      },
-      ocupacionDto: {
-        id: this.solicitudForm.value.ocupacionDto._id,
-        nombre: this.solicitudForm.value.ocupacionDto._nombre,
-        estatus: this.solicitudForm.value.ocupacionDto._estatus,
-      },
-      nivelAcademicoDto: {
-        id: this.solicitudForm.value.nivelAcademicoDto._id,
-        descripcion: this.solicitudForm.value.nivelAcademicoDto._descripcion,
-        estatus: this.solicitudForm.value.nivelAcademicoDto._estatus,
-      }
-    };
-    this.solicitudEstudiosService.createSolicitud(
-      this.solicitud2 as Solicitud2
-     ).subscribe();
-     console.log(Solicitud2);
-     //this.router.navigate(['/cliente/estudios']);
-   }
-   
-
+  onSubmit(){};
 }
