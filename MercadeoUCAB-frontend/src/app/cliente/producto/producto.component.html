@@ -1,0 +1,47 @@
+<body>
+<form [formGroup]="productoForm" novalidate> 
+
+    <h4>Nuevo Producto</h4>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Nombre:</mat-label>
+          <input formControlName="nombre" matInput required [(ngModel)]="producto._nombre"/>
+          <mat-error *ngIf="productoForm.get('nombre').errors?.required">
+              Falta llenar el nuevo nombre del producto
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Descripción:</mat-label>
+          <input formControlName="descripcion" matInput required [(ngModel)]="producto._descripcion"/>
+           <mat-error *ngIf="productoForm.get('descripcion').errors?.required">
+              Falta llenar la descripción
+          </mat-error>
+        </mat-form-field>
+      </div>
+    <h5>Seleccione una marca:</h5>
+    <div class="fields">
+    <mat-form-field appearance="fill">
+      <mat-label>--Marcas--</mat-label>
+      <mat-select formControlName="marca" [(ngModel)]="producto._marca._id">
+          <mat-option *ngFor="let marca of marcas" [value]="marca._id">
+              {{ marca._nombre }}
+          </mat-option>
+          </mat-select>
+  </mat-form-field>
+    </div>
+  <h5>Seleccione una Subcategoria:</h5>
+    <div class="fields">
+    <mat-form-field appearance="fill">
+      <mat-label>--Subcategoria--</mat-label>
+      <mat-select formControlName="subcategoria" [(ngModel)]="producto._subcategoria._id">
+          <mat-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria._id">
+              {{ subcategoria._nombre }}
+          </mat-option>
+          </mat-select>
+  </mat-form-field>
+    </div>
+    <button type="submit"  mat-raised-button color="primary" >Añadir producto</button>
+</form>
+</body>

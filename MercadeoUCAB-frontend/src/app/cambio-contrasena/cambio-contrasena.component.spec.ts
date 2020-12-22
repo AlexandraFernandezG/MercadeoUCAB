@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditMarcaComponent } from './edit-marca.component';
+import { CambioContrasenaComponent } from './cambio-contrasena.component';
 
-describe('EditMarcaComponent', () => {
-  let component: EditMarcaComponent;
-  let fixture: ComponentFixture<EditMarcaComponent>;
+describe('CambioContrasenaComponent', () => {
+  let component: CambioContrasenaComponent;
+  let fixture: ComponentFixture<CambioContrasenaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditMarcaComponent ]
+      declarations: [ CambioContrasenaComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditMarcaComponent);
+    fixture = TestBed.createComponent(CambioContrasenaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

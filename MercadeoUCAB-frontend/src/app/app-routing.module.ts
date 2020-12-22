@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MarcaComponent } from './marca/marca.component';
+import { MarcaComponent } from './admin/marca/marca.component';
 import { CategoriaComponent } from './admin/categoria/categoria.component';
 import { SubcategoriaComponent } from './admin/subcategoria/subcategoria.component';
 import { UsuarioComponent } from './admin/usuario/usuario.component';
@@ -19,6 +19,9 @@ import { TipoComponent } from './admin/tipo/tipo.component';
 import { PresentacionComponent } from './admin/presentacion/presentacion.component';
 import { RegistroEncuestadoComponent } from './encuestado/registro-encuestado/registro-encuestado.component';
 
+import { ProductoComponent } from './cliente/producto/producto.component';
+import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
+import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -35,14 +38,16 @@ const routes: Routes = [
   { path: 'cliente', component: ClienteComponent },
   { path: 'cliente/estudios', component: EstudiosClienteComponent },
   { path: 'cliente/solicitar_estudio', component: SolicitudEstudioComponent },
+  { path: 'cliente/producto', component: ProductoComponent },
   { path: 'encuestado/estudios', component: EstudiosEncuestadoComponent },
   { path: 'encuestado/registro-encuestado', component: RegistroEncuestadoComponent },
   { path: 'analista', component: AnalistaComponent },
   { path: 'analista/solicitudes', component: EstudiosAnalistaComponent },
   { path: 'analista/crearEncuesta', component: CrearEstudioComponent },
+  { path: 'recuperarContrasena', component: RecuperarContrasenaComponent},
+  { path: 'cambioContrasena', component:  CambioContrasenaComponent},
 
-
-  { path: '', redirectTo: 'categorias', pathMatch: 'full' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({

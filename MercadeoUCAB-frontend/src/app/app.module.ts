@@ -8,9 +8,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule} from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -61,6 +63,12 @@ import { MarcasService } from './servicios/marcas.service';
 import { TiposService } from './servicios/tipos.service';
 import { PresentacionesService } from './servicios/presentaciones.service';
 import { UsuariosService } from './servicios/usuarios.service';
+import { ProductoComponent } from './cliente/producto/producto.component';
+import { AddProductoComponent } from './cliente/producto/add-producto/add-producto.component';
+import { ProductosService } from './servicios/productos.service';
+import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
+import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
+
 
 @NgModule({
   declarations: [
@@ -86,7 +94,6 @@ import { UsuariosService } from './servicios/usuarios.service';
     EncuestadoComponent,
     EstudiosEncuestadoComponent,
     RespuestasEncuestaComponent,
-    RegistroEncuestadoComponent,
     AnalistaComponent,
     EstudiosAnalistaComponent,
     DataEstudioComponent,
@@ -99,7 +106,12 @@ import { UsuariosService } from './servicios/usuarios.service';
     EditPresentacionComponent,
     UsuarioComponent,
     AddUsuarioComponent,
-    EditUsuarioComponent
+    EditUsuarioComponent,
+    ProductoComponent,
+    AddProductoComponent,
+    RecuperarContrasenaComponent,
+    CambioContrasenaComponent,
+    RegistroEncuestadoComponent
   ],
   imports: [
     RouterModule,
@@ -109,12 +121,14 @@ import { UsuariosService } from './servicios/usuarios.service';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatDatepickerModule,
     MatInputModule,
     ReactiveFormsModule,
     NgbModule,
     FontAwesomeModule,
     HttpClientModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     MatFormFieldModule,
     MatSelectModule,
     MatTableModule,
@@ -131,7 +145,8 @@ import { UsuariosService } from './servicios/usuarios.service';
     MarcasService,
     TiposService,
     PresentacionesService,
-    UsuariosService
+    UsuariosService,
+    ProductosService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

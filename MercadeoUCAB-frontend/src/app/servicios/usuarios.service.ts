@@ -64,6 +64,16 @@ export class UsuariosService {
     );
   }
 
+  enviarClave(usuario): Observable<Usuario>{
+    console.log(usuario);
+    console.log('entre');
+    return this.http.put<Usuario>(this.url + 'usuario/recuperarClave/' +  JSON.stringify(usuario), this.httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+
     /// Error HandleError
     handleError(error): Observable<never> {
       let errorMessage = '';

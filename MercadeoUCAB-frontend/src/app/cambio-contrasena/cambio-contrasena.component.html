@@ -1,0 +1,27 @@
+<form [formGroup]="cambioContrasenaForm" novalidate> 
+
+  <h4>Cambio Contraseña:</h4>
+    <div class="form-group">
+      <mat-form-field class="full-width" appaerance="outline">
+        <mat-label>Contraseña:</mat-label>
+        <input formControlName="contrasena" matInput [type]= "'hide' ? 'password': 'text'"  matInput required />
+        <mat-error *ngIf="cambioContrasenaForm.get('contrasena').errors?.required" >
+            Falta llenar el campo
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field class="full-width" appaerance="outline">
+        <mat-label>Repita la Contraseña:</mat-label>
+        <input formControlName="contrasena2" matInput [type]= "'hide' ? 'password': 'text'"  matInput required />
+         <mat-error *ngIf="cambioContrasenaForm.get('contrasena2').errors?.required">
+            Falta llenar el campo
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  <button type="submit"  mat-raised-button color="primary"  (click)="cambiarPassword(usuario)">Cambiar Contraseña</button>
+</form>
+
+
+  

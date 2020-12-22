@@ -13,4 +13,4 @@ export class Tipo2{
        public descripcion: string,
        public nombre: string
      ){}
-     }
+}

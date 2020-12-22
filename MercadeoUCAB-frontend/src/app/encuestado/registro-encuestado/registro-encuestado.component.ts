@@ -1,18 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProductosService } from '../../servicios/productos.service';
-import { Producto, Producto2 } from '../../modelos/producto';
 import { Ocupacion } from 'src/app/modelos/ocupacion';
 import { OcupacionService } from 'src/app/servicios/ocupacion.service';
 import { Lugar } from '../../modelos/lugar';
 import { LugarService } from 'src/app/servicios/lugar.service';
-import { SolicitudEstudiosService } from '../../servicios/solicitud-estudios.service';
-import { Solicitud2 } from '../../modelos/solicitud';
 import { VariosService } from 'src/app/servicios/varios.service';
 import { NivelAcademico, NivelAcademico2, NivelEconomico } from 'src/app/modelos/varios';
-import { Usuario2 } from 'src/app/modelos/usuario';
-import { Rol } from 'src/app/modelos/rol';
 import { RegistroEncuestadoService } from 'src/app/servicios/registro-encuestado.service';
 import { RegistroEncuestado2 } from 'src/app/modelos/registro-encuestado';
 

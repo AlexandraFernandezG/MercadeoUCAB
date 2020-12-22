@@ -13,4 +13,4 @@ export class Presentacion2{
        public descripcion: string,
        public nombre: string
      ){}
-     }
+}
