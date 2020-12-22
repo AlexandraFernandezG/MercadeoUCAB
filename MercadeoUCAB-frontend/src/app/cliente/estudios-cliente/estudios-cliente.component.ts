@@ -42,4 +42,5 @@ export class EstudiosClienteComponent implements OnInit {
   onCreate(){
     this.dialog.open(SolicitudEstudioComponent);
   }
+  crearProducto(){};
 }

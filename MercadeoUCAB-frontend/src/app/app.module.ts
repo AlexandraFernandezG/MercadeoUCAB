@@ -17,7 +17,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -49,7 +50,7 @@ import { SolicitudEstudioComponent } from './cliente/solicitud-estudio/solicitud
 import { EncuestadoComponent } from './encuestado/encuestado.component';
 import { EstudiosEncuestadoComponent } from './encuestado/estudios-encuestado/estudios-encuestado.component';
 import { RespuestasEncuestaComponent } from './encuestado/respuestas-encuesta/respuestas-encuesta.component';
-import { RegistroEncuestadoComponent } from './registro-encuestado/registro-encuestado.component';
+import { RegistroEncuestadoComponent } from './encuestado/registro-encuestado/registro-encuestado.component';
 import { AnalistaComponent } from './analista/analista.component';
 import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios-analista.component';
 import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
@@ -120,7 +121,9 @@ import { UsuariosService } from './servicios/usuarios.service';
     MatPaginatorModule,
     MatRadioModule,
     MatToolbarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     CategoriasService,
@@ -133,7 +136,9 @@ import { UsuariosService } from './servicios/usuarios.service';
   bootstrap: [AppComponent],
   entryComponents: [
     SolicitudEstudioComponent,
-    CategoriaComponent
+    CategoriaComponent,
+    MatDatepickerModule,
+    MatNativeDateModule
     ]
 })
 export class AppModule { }

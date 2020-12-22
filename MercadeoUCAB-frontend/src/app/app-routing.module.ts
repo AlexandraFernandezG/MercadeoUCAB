@@ -17,6 +17,8 @@ import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios
 import { CrearEstudioComponent } from './analista/crear-estudio/crear-estudio.component';
 import { TipoComponent } from './admin/tipo/tipo.component';
 import { PresentacionComponent } from './admin/presentacion/presentacion.component';
+import { RegistroEncuestadoComponent } from './encuestado/registro-encuestado/registro-encuestado.component';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -34,6 +36,7 @@ const routes: Routes = [
   { path: 'cliente/estudios', component: EstudiosClienteComponent },
   { path: 'cliente/solicitar_estudio', component: SolicitudEstudioComponent },
   { path: 'encuestado/estudios', component: EstudiosEncuestadoComponent },
+  { path: 'encuestado/registro-encuestado', component: RegistroEncuestadoComponent },
   { path: 'analista', component: AnalistaComponent },
   { path: 'analista/solicitudes', component: EstudiosAnalistaComponent },
   { path: 'analista/crearEncuesta', component: CrearEstudioComponent },

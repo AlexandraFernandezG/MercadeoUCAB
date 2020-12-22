@@ -13,23 +13,24 @@ import { VariosService } from 'src/app/servicios/varios.service';
 import { NivelAcademico, NivelAcademico2, NivelEconomico } from 'src/app/modelos/varios';
 import { Usuario2 } from 'src/app/modelos/usuario';
 import { Rol } from 'src/app/modelos/rol';
-
+import { RegistroEncuestadoService } from 'src/app/servicios/registro-encuestado.service';
+import { RegistroEncuestado2 } from 'src/app/modelos/registro-encuestado';
 
 @Component({
-  selector: 'app-solicitud-estudio',
-  templateUrl: './solicitud-estudio.component.html',
-  styleUrls: ['./solicitud-estudio.component.css']
+  selector: 'app-registro-encuestado',
+  templateUrl: './registro-encuestado.component.html',
+  styleUrls: ['./registro-encuestado.component.css']
 })
-export class SolicitudEstudioComponent implements OnInit {
+export class RegistroEncuestadoComponent implements OnInit {
 
-  solicitudForm: FormGroup;
-  productos: Producto[];
-  producto2: Producto2;
+  registroForm: FormGroup;
+  registroEncuestado2: RegistroEncuestado2;
   ocupaciones: Ocupacion[];
   estados: Lugar[];
   nivelAcademicoArray: NivelAcademico[];
   nivelAcademico2: NivelAcademico2;
   nivelEconomicoArray: NivelEconomico[];
+
   selectedEstado: Lugar = { 
     _id: 0,
     _nombre: '',
@@ -40,49 +41,39 @@ export class SolicitudEstudioComponent implements OnInit {
   }
   municipios: Lugar[];
   // allMunicipios: Lugar[];
-  solicitud2: Solicitud2 ;
+
   
-
-
 
   constructor(
     private fb: FormBuilder, 
-    private router: Router, 
-    private productoService: ProductosService,
+    private router: Router,
     private ocupacionService: OcupacionService,
     private lugarService: LugarService,
-    private solicitudEstudiosService: SolicitudEstudiosService,
+    private registroEncuestadoService: RegistroEncuestadoService,
     private variosService: VariosService,
-    ) 
-    
-    {
-    this.solicitudForm = this.fb.group({
+  ) { 
+    this.registroForm = this.fb.group({
       
-      descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
-      edadMinima: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
-      edadMaxima: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
-      genero: new FormControl('',[Validators.maxLength(100)]),
+      primerNombre: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
+      segundoNombre: new FormControl('',[Validators.maxLength(100)]),
+      primerApellido: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
+      segundoApellido: new FormControl('',[Validators.maxLength(100)]),
+      fechaNacimiento: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
+      genero: new FormControl('',[Validators.required,Validators.maxLength(100)]),
       estadoCivil: new FormControl('',[Validators.maxLength(100)]),
       estado: new FormControl('',[Validators.maxLength(100)]),
       municipio: new FormControl('',[Validators.maxLength(100)]),
       disponibilidadEnLinea: new FormControl('',[Validators.maxLength(100)]),
       cantidadPersonas: new FormControl('',[Validators.maxLength(100)]),
-      cantidadHijos: new FormControl('',[Validators.maxLength(100)]),
-      generoHijos: new FormControl('',[Validators.maxLength(100)]),
-      edadMinimaHijos: new FormControl('',[Validators.maxLength(100)]),
-      edadMaximaHijos: new FormControl('',[Validators.maxLength(100)]),
-
+      
+      //lugarDto: new FormControl('',[Validators.required,Validators.maxLength(100)]),
       nivelEconomicoDto: new FormControl('',[Validators.maxLength(100)]),
-      productoDto: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
       ocupacionDto: new FormControl('',[Validators.maxLength(100)]),
       nivelAcademicoDto: new FormControl('',[Validators.maxLength(100)]),
     });
-   }
+  }
 
   ngOnInit(): void {
-    //Productos de la BD para el select
-    this.productoService.getProductos()
-    .subscribe(productosData => {this.productos = productosData;});
 
     //Ocupaciones de la BD para el select
     this.ocupacionService.getOcupaciones()
@@ -119,38 +110,31 @@ export class SolicitudEstudioComponent implements OnInit {
       );
     });
     
-    this.productoService.getProductos().subscribe(productosData => console.log(productosData));
     this.ocupacionService.getOcupaciones().subscribe(ocupacionesData => console.log(ocupacionesData));
     this.lugarService.getLugares().subscribe(lugaresData => console.log(lugaresData));
   }
-
-  onSubmit(): void{
-    this.solicitud2 = {
+  onSubmit(){
+    this.registroEncuestado2 = {
       id: 1,
-      descripcion: this.solicitudForm.value.descripcion,
-      genero: this.solicitudForm.value.genero,
-      edadMinima: this.solicitudForm.value.edadMinima,
-      edadMaxima: this.solicitudForm.value.edadMaxima,
-      estadoCivil: this.solicitudForm.value.estadoCivil,
-      disponibilidadEnLinea: this.solicitudForm.value.disponibilidadEnLinea,
-      cantidadPersonas: this.solicitudForm.value.cantidadPersonas,
-      cantidadHijos: this.solicitudForm.value.cantidadHijos,
-      generoHijos: this.solicitudForm.value.generoHijos,
-      edadMinimaHijos: this.solicitudForm.value.edadMinimaHijos,
-      edadMaximaHijos: this.solicitudForm.value.edadMaximaHijos,
-      estatus: 'activo',
-      nivelEconomicoDto: this.solicitudForm.value.nivelEconomicoDto._id,
+      descripcion: this.registroForm.value.descripcion,
+      genero: this.registroForm.value.genero,
+      edadMinima: this.registroForm.value.edadMinima,
+      edadMaxima: this.registroForm.value.edadMaxima,
+      estadoCivil: this.registroForm.value.estadoCivil,
+      disponibilidadEnLinea: this.registroForm.value.disponibilidadEnLinea,
+      cantidadPersonas: this.registroForm.value.cantidadPersonas,
+      //estatus: 'activo',
+      nivelEconomicoDto: this.registroForm.value.nivelEconomicoDto._id,
       usuarioDto: 1,
-      productoDto: this.solicitudForm.value.productoDto._id,
-      ocupacionDto: this.solicitudForm.value.ocupacionDto._id,
-      nivelAcademicoDto: this.solicitudForm.value.nivelAcademicoDto._id
+      lugarDto: this.registroForm.value.municipio._id,
+      ocupacionDto: this.registroForm.value.ocupacionDto._id,
+      nivelAcademicoDto: this.registroForm.value.nivelAcademicoDto._id
     };
-    this.solicitudEstudiosService.createSolicitud(
-      this.solicitud2 as Solicitud2
+    this.registroEncuestadoService.createRegistro(
+      this.registroEncuestado2 as RegistroEncuestado2
      ).subscribe();
-     console.log(Solicitud2);
-     this.router.navigate(['/cliente/estudios']);
-   }
+     console.log(this.registroEncuestado2);
+    // this.router.navigate(['/cliente/estudios']);
    
-
+  };
 }
