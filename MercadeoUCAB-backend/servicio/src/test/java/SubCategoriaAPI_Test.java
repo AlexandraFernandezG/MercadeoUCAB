@@ -57,8 +57,8 @@ public class SubCategoriaAPI_Test {
         try {
             SubcategoriaDto subcategoriaDto = new SubcategoriaDto();
 
-            subcategoriaDto.setNombre("Jabones perfumados grasientos");
-            subcategoriaDto.setDescripcion("Olor exquisito a grasa");
+            subcategoriaDto.setNombre("Jabones perfumados grasientos plus");
+            subcategoriaDto.setDescripcion("Mas olor exquisito a grasa");
             subcategoriaDto.setEstatus("Activo");
             // Recuerden que deben ver los id de los registros en la BD
             CategoriaDto categoriaDto = new CategoriaDto(1);

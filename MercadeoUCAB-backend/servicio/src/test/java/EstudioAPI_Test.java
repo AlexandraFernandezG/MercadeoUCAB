@@ -77,7 +77,7 @@ public class EstudioAPI_Test {
             // Revisar los registros de sus base de datos
             SolicitudEstudioDto solicitudEstudioDto = new SolicitudEstudioDto(1);
             estudioDto.setSolicitudEstudioDto(solicitudEstudioDto);
-            UsuarioDto usuarioDto = new UsuarioDto(1);
+            UsuarioDto usuarioDto = new UsuarioDto(6);
             estudioDto.setUsuarioDto(usuarioDto);
             EstudioDto resultado = servicio.addEstudios(estudioDto);
             Assert.assertNotEquals(resultado.getId(), 0);
