@@ -68,6 +68,10 @@ import { AddProductoComponent } from './cliente/producto/add-producto/add-produc
 import { ProductosService } from './servicios/productos.service';
 import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
+import { PreguntaComponent } from './admin/pregunta/pregunta.component';
+import { AddPreguntaComponent } from './admin/pregunta/add-pregunta/add-pregunta.component';
+import { EditPreguntaComponent } from './admin/pregunta/edit-pregunta/edit-pregunta.component';
+import { PreguntasService } from './servicios/preguntas.service';
 
 
 @NgModule({
@@ -111,7 +115,10 @@ import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena
     AddProductoComponent,
     RecuperarContrasenaComponent,
     CambioContrasenaComponent,
-    RegistroEncuestadoComponent
+    RegistroEncuestadoComponent,
+    PreguntaComponent,
+    AddPreguntaComponent,
+    EditPreguntaComponent
   ],
   imports: [
     RouterModule,
@@ -146,7 +153,8 @@ import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena
     TiposService,
     PresentacionesService,
     UsuariosService,
-    ProductosService
+    ProductosService,
+    PreguntasService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

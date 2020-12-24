@@ -1,0 +1,58 @@
+<form [formGroup]="preguntaForm" novalidate>
+
+  <h4>Nueva Pregunta</h4>
+  <h5>Seleccione una subcategoria asociada:</h5>
+  <div class="fields">
+    <mat-form-field appearance="fill">
+      <mat-label>--Subcategoría--</mat-label>
+      <mat-select formControlName="subcategoriaDto">
+        <mat-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria._id">
+          {{ subcategoria._nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <h5>Seleccione el tipo de pregunta:</h5>
+  <div class="fields">
+    <mat-form-field appearance="fill">
+      <mat-label>--Tipo de Pregunta--</mat-label>
+      <mat-select formControlName="tipoPregunta">
+        <mat-option [value]="tipoPregunta.nombre" *ngFor="let tipoPregunta of tipoPreguntas">
+          {{tipoPregunta.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="full-width" appaerance="outline">
+      <mat-label>Descripción:</mat-label>
+      <input formControlName="descripcion" matInput required />
+      <mat-error *ngIf="preguntaForm.get('descripcion').errors?.required">
+        Falta llenar la descripción
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!--Para las opciones de Seleccion Simple y Multiple-->
+  <div
+    *ngIf="preguntaForm.value.tipoPregunta == 'Selección Simple' || preguntaForm.value.tipoPregunta == 'Selección Múltiple'">
+    <div formArrayName="respuestas">
+    <mat-label>Opciones:</mat-label>
+    <button mat-mini-fab color="plus" (click)="addRespuesta()"><i class="fas fa-plus"></i></button>
+    <button mat-mini-fab color="warn" (click)="deleteRespuesta(i)"><i class="fas fa-minus"></i></button>
+    <div *ngFor="let resp of respuestas.controls; let i=index">
+      <div class="form-group">
+        <mat-form-field class="full-width" appaerance="outline">
+          <mat-label>Opcion {{i+1}}</mat-label>
+          <input formControlName="descripcion" matInput required />
+          <mat-error *ngIf="preguntaForm.get('descripcion').errors?.required">
+            Falta llenar la descripción
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <button type="submit" mat-raised-button color="primary">Añadir Pregunta</button>
+</form>

@@ -22,6 +22,7 @@ import { RegistroEncuestadoComponent } from './encuestado/registro-encuestado/re
 import { ProductoComponent } from './cliente/producto/producto.component';
 import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
+import { PreguntaComponent } from './admin/pregunta/pregunta.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'admin/presentaciones', component: PresentacionComponent},
   { path: 'admin/usuarios', component: UsuarioComponent},
   { path: 'admin/subcategorias', component: SubcategoriaComponent},
+  { path: 'admin/preguntas', component: PreguntaComponent},
   { path: 'dashboard/usuarios', component: UsuarioComponent},
   { path: 'admin', component: AdminComponent },
   { path: 'cliente', component: ClienteComponent },
