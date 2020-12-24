@@ -12,6 +12,22 @@ import java.util.Date;
 
 public class InformacionAPI_Test {
 
+    //Listar encuestados (Esta forma fue realizada por Valentina)
+    @Test
+    public void pruebaListarInformacionEncuestado(){
+
+        ucab.dsw.servicio.InformacionAPI servicio = new ucab.dsw.servicio.InformacionAPI();
+
+        try {
+            Assertions.assertTrue(servicio.listarInformacionEncuestados().size() > 0);
+
+        } catch (Exception e) {
+
+            Assertions.fail(e.getMessage());
+        }
+
+    }
+
     //Consultar un encuestado (Esta forma fue realizada por Valentina)
     @Test
     public void pruebaConsultarEncuestado(){

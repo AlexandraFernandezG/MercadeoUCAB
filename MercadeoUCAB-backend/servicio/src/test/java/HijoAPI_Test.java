@@ -8,7 +8,9 @@ import ucab.dsw.entidades.Hijo;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class HijoAPI_Test {
 
@@ -51,9 +53,10 @@ public class HijoAPI_Test {
         ucab.dsw.servicio.HijoAPI servicio = new ucab.dsw.servicio.HijoAPI();
 
         try {
+
             HijoDto hijoDto = new HijoDto();
 
-            String date1 = "2010-12-01";
+            String date1 = "2013-11-16";
             DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
             Date myDate = forma.parse(date1);
             hijoDto.setFechaNacimiento(myDate);
@@ -62,8 +65,13 @@ public class HijoAPI_Test {
             //Revisar sus registros en la base de datos
             InformacionDto informacionDto = new InformacionDto(1);
             hijoDto.setInformacionDto(informacionDto);
-            HijoDto resultado = servicio.addHijo(hijoDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+
+            //Lista hijo
+            List<HijoDto> listaHijoDto = new ArrayList<HijoDto>();
+
+            listaHijoDto.add(hijoDto);
+
+            servicio.addHijo(listaHijoDto);
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -103,7 +111,7 @@ public class HijoAPI_Test {
 
         try {
             //Revisar sus registros en la base de datos
-            servicio.deleteHijo(1);
+            servicio.deleteHijo(4);
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

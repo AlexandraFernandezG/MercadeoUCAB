@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path( "/hijo" )
@@ -62,9 +63,9 @@ public class HijoAPI extends AplicacionBase{
     @Path("/addHijo")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public HijoDto addHijo(HijoDto hijoDto){
+    public List<Hijo> addHijo(List<HijoDto> listaHijoDto){
 
-        HijoDto resultado = new HijoDto();
+        List<Hijo> listaHijo = new ArrayList<Hijo>();
 
         try {
 
@@ -72,13 +73,16 @@ public class HijoAPI extends AplicacionBase{
             Hijo hijo = new Hijo();
             DaoInformacion daoInformacion = new DaoInformacion();
 
-            hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
-            hijo.set_genero(hijoDto.getGenero());
-            hijo.set_estatus("Activo");
-            Informacion informacion = daoInformacion.find(hijoDto.get_informacionDto().getId(), Informacion.class);
-            hijo.set_informacion(informacion);
-            Hijo resul = daoHijo.insert(hijo);
-            resultado.setId(resul.get_id());
+            for (HijoDto hijoDto: listaHijoDto) {
+
+                hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
+                hijo.set_genero(hijoDto.getGenero());
+                hijo.set_estatus(hijoDto.getEstatus());
+                Informacion informacion = daoInformacion.find(hijoDto.get_informacionDto().getId(), Informacion.class);
+                hijo.set_informacion(informacion);
+                listaHijo.add(hijo);
+                daoHijo.insert(hijo);
+            }
 
         } catch (Exception ex){
 
@@ -87,7 +91,7 @@ public class HijoAPI extends AplicacionBase{
 
         }
 
-            return resultado;
+            return listaHijo;
     }
 
     //Actualizar un hijo

@@ -15,6 +15,44 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class InformacionAPI extends AplicacionBase {
 
+    //Consultar persona con la cedula
+    @GET
+    @Path("/consultarCedula/{cedula}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Informacion> consultarInformacionCedula(@PathParam("cedula") int cedula) throws NullPointerException{
+
+        DaoInformacion daoInformacion = new DaoInformacion();
+
+        try {
+            return daoInformacion.obtenerInformacion(cedula);
+
+        } catch (NullPointerException ex) {
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+        }
+    }
+
+    //Listar todos los encuestados
+    @GET
+    @Path("/listarInformacion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Informacion> listarInformacionEncuestados() throws NullPointerException{
+
+        DaoInformacion daoInformacion = new DaoInformacion();
+
+        try {
+            return daoInformacion.findAll(Informacion.class);
+
+        } catch (NullPointerException ex) {
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+        }
+    }
+
     //Consultar una información
     @GET
     @Path("/consultarInformacion/{id}")
