@@ -57,31 +57,69 @@ public class HijoAPI extends AplicacionBase{
             return null;
         }
     }
-
-    // Agregar un hijo
+    
+    /**
+     * Este método inserta un solo registro de Hijo, en la BD.
+     *
+     * @param hijoDto Hijo a insertar en la BD.
+     * */
     @POST
     @Path("/addHijo")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Hijo addHijo(HijoDto hijoDto) {
+        
+        DaoHijo daoHijo = new DaoHijo();
+        Hijo hijo = new Hijo();
+        Hijo hijoInsertado = new Hijo();
+        DaoInformacion daoInformacion = new DaoInformacion();
+    
+        try {
+            hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
+            System.out.println(hijo.get_fechaNacimiento());
+            hijo.set_genero(hijoDto.getGenero());
+            System.out.println(hijo.get_genero());
+            hijo.set_estatus(hijoDto.getEstatus());
+            System.out.println(hijo.get_estatus());
+        
+            // Busca la información del padre/la madre
+            Informacion informacion = daoInformacion.find(hijoDto.get_informacionDto().getId(), Informacion.class);
+            hijo.set_informacion(informacion);
+            System.out.println(hijo.get_informacion());
+    
+            hijoInsertado = daoHijo.insert(hijo);
+            System.out.println(hijoInsertado.get_id());
+    
+        } catch (Exception e) {
+            
+            String mensaje = e.getMessage();
+            System.out.print(mensaje);
+        }
+    
+        return hijoInsertado;
+    }
+    
+    /**
+     * Inserta varios registros de Hijo, en la BD.
+     *
+     * Recorre la lista pasada por parámetro con los hijos de un
+     * mismo padre/madre y los inserta en la BD usando el método addHijo,
+     * de esta misma API.
+     *
+     * @param listaHijoDto Lista de HijoDto que se desea insertar en la BD.
+     * */
+    @POST
+    @Path("/addVariosHijos")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public List<Hijo> addHijo(List<HijoDto> listaHijoDto){
-
+    public List<Hijo> addVariosHijos(List<HijoDto> listaHijoDto){
         List<Hijo> listaHijo = new ArrayList<Hijo>();
 
         try {
-
-            DaoHijo daoHijo = new DaoHijo();
-            Hijo hijo = new Hijo();
-            DaoInformacion daoInformacion = new DaoInformacion();
-
+            int n = 1;
+            System.out.println("Hijo n° " + n);
             for (HijoDto hijoDto: listaHijoDto) {
-
-                hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
-                hijo.set_genero(hijoDto.getGenero());
-                hijo.set_estatus(hijoDto.getEstatus());
-                Informacion informacion = daoInformacion.find(hijoDto.get_informacionDto().getId(), Informacion.class);
-                hijo.set_informacion(informacion);
-                listaHijo.add(hijo);
-                daoHijo.insert(hijo);
+                listaHijo.add(addHijo(hijoDto));
             }
 
         } catch (Exception ex){

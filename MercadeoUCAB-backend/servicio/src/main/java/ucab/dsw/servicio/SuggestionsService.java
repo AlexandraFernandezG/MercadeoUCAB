@@ -31,7 +31,7 @@ public class SuggestionsService extends AplicacionBase{
     public List<Estudio> listarEstudiosRecomendados(SolicitudEstudioDto solicitudEstudioDto){
 
         /**
-         * Este método filtra los estudios que tengan coinciendcia con la
+         * Este método filtra los estudios que tengan coincidencia con la
          * descripción de una solicitud
          *
          * NOTA: Funciona, pero puede ser mejorado.
