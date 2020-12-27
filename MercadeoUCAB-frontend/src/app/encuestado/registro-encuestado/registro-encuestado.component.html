@@ -7,7 +7,14 @@
   </div>
   <form novalidate [formGroup]="registroForm" name="registroForm" (ngSubmit)="onSubmit()"> 
   
+    <div>
     
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Cedula</mat-label>
+        <input type="number" formControlName="cedula" matInput/>
+      </mat-form-field>
+      
+    </div>
   
     <div class="nombres-input">
 			<mat-form-field class="full-width" appearance="fill">
@@ -87,7 +94,7 @@
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Municipio</mat-label>
         <mat-select formControlName="municipio" matInput required>
-          <mat-option *ngFor="let municipio of municipios" [value]="municipio._id">
+          <mat-option *ngFor="let municipio of municipios" [value]="municipio">
             {{municipio._nombre}}
           </mat-option>
         </mat-select>

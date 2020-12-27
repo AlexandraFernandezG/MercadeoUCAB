@@ -47,7 +47,7 @@ export class RegistroEncuestadoComponent implements OnInit {
     private variosService: VariosService,
   ) { 
     this.registroForm = this.fb.group({
-      
+      cedula: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
       primerNombre: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
       segundoNombre: new FormControl('',[Validators.maxLength(100)]),
       primerApellido: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
@@ -110,10 +110,13 @@ export class RegistroEncuestadoComponent implements OnInit {
   onSubmit(){
     this.registroEncuestado2 = {
       id: 1,
-      descripcion: this.registroForm.value.descripcion,
+      cedula: this.registroForm.value.cedula,
+      primerNombre: this.registroForm.value.primerNombre,
+      segundoNombre: this.registroForm.value.segundoNombre,
+      primerApellido: this.registroForm.value.primerApellido,
+      segundoApellido: this.registroForm.value.segundoApellido,
       genero: this.registroForm.value.genero,
-      edadMinima: this.registroForm.value.edadMinima,
-      edadMaxima: this.registroForm.value.edadMaxima,
+      fechaNacimiento: this.registroForm.value.fechaNacimiento,
       estadoCivil: this.registroForm.value.estadoCivil,
       disponibilidadEnLinea: this.registroForm.value.disponibilidadEnLinea,
       cantidadPersonas: this.registroForm.value.cantidadPersonas,

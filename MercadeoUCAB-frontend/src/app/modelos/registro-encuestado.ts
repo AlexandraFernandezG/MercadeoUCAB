@@ -29,10 +29,13 @@ export class RegistroEncuestado{
 export class RegistroEncuestado2{
     constructor(
         public id: number,
-        public descripcion: string,
+        public cedula: number,
+        public primerNombre: string,
+        public segundoNombre: string,
+        public primerApellido: string,
+        public segundoApellido: string,
         public genero: string,
-        public edadMinima: number,
-        public edadMaxima: number,
+        public fechaNacimiento: Date,
         public estadoCivil: string,
         public disponibilidadEnLinea: string,
         public cantidadPersonas: number,
