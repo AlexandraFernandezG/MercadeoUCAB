@@ -41,7 +41,7 @@ export class PreguntasService {
     return this.http.post<Pregunta2>(this.url + 'preguntasEncuesta/addPreguntaEncuesta', JSON.stringify(pregunta), this.httpOptions)
     .pipe(
       tap((newpregunta: Pregunta2) => console.log(`added pregunta w/ id=${newpregunta.id}`)),
-      catchError(this.handleError) 
+      catchError(this.handleError)
     );
   }
 

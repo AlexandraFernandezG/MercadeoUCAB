@@ -17,9 +17,11 @@
     <mat-form-field appearance="fill">
       <mat-label>--Tipo de Pregunta--</mat-label>
       <mat-select formControlName="tipoPregunta">
-        <mat-option [value]="tipoPregunta.nombre" *ngFor="let tipoPregunta of tipoPreguntas">
-          {{tipoPregunta.nombre}}
-        </mat-option>
+        <mat-option value='Abierta'>Abierta</mat-option>
+        <mat-option value='Verdadero o Falso'>Verdadero o Falso</mat-option>
+        <mat-option value='Escala'>Escala</mat-option>
+        <mat-option value='Selección Simple'>Selección Simple</mat-option>
+        <mat-option value='Selección Múltiple'>Selección Múltiple</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -35,24 +37,21 @@
 
   <!--Para las opciones de Seleccion Simple y Multiple-->
   <div
-    *ngIf="preguntaForm.value.tipoPregunta == 'Selección Simple' || preguntaForm.value.tipoPregunta == 'Selección Múltiple'">
+    *ngIf="preguntaForm.get('tipoPregunta').value == 'Selección Simple' || preguntaForm.get('tipoPregunta').value == 'Selección Múltiple'">
     <div formArrayName="respuestas">
     <mat-label>Opciones:</mat-label>
-    <button mat-mini-fab color="plus" (click)="addRespuesta()"><i class="fas fa-plus"></i></button>
+    <button mat-mini-fab color="plus" (click)="addResp()"><i class="fas fa-plus"></i></button>
     <button mat-mini-fab color="warn" (click)="deleteRespuesta(i)"><i class="fas fa-minus"></i></button>
-    <div *ngFor="let resp of respuestas.controls; let i=index">
+    <div *ngFor="let resp of preguntaForm.controls['respuestas'].controls; let i=index" [formGroupName]="i">
       <div class="form-group">
         <mat-form-field class="full-width" appaerance="outline">
           <mat-label>Opcion {{i+1}}</mat-label>
-          <input formControlName="descripcion" matInput required />
-          <mat-error *ngIf="preguntaForm.get('descripcion').errors?.required">
-            Falta llenar la descripción
-          </mat-error>
+          <input formControlName="nombre" matInput required />
         </mat-form-field>
       </div>
     </div>
     </div>
   </div>
 
-  <button type="submit" mat-raised-button color="primary">Añadir Pregunta</button>
+  <button type="submit" mat-raised-button color="primary"(click)="addPregunta()" [disabled]="preguntaForm.invalid">Añadir Pregunta</button>
 </form>

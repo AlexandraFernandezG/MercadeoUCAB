@@ -24,24 +24,18 @@ export class AddPreguntaComponent implements OnInit {
     public actRoute: ActivatedRoute,
     public dialogRef: MatDialogRef<PreguntaComponent>
     ) {}
-
+   
     preguntaForm = this.fb.group({
       descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(200)]),
       subcategoriaDto: new FormControl('',[Validators.required]),
       tipoPregunta: new FormControl('',[Validators.required]),
       respuestas: this.fb.array([
-      this.fb.control('')
+        this.addRespuesta()
        ])
    });
     subcategorias: Subcategoria[] =[
     ]
-    tipoPreguntas = [
-      { nombre: 'Abierta', value: 1 },
-      { nombre: 'Verdadero o Falso', value: 2 },
-      { nombre: 'Escala', value: 3 },
-      { nombre: 'Selección Simple', value: 4 },
-      { nombre: 'Selección Múltiple', value: 5 }
-    ];
+
     preguntas: any;
     pregunta: Pregunta2 ={
       id: 0,
@@ -61,31 +55,46 @@ export class AddPreguntaComponent implements OnInit {
     .subscribe(catego => {this.subcategorias = catego;
     } );
   }
-
-    get respuestas(): FormArray {
-      return this.preguntaForm.get('respuestas') as FormArray;
-    }
-
     addRespuesta(){
-      
-      this.respuestas.push(this.fb.control(''));
+      return this.fb.group({
+        id:1,
+        nombre:[''],
+        estado:'Activo',
+        PreguntaEncuestaDto:1
+
+      })
     }
 
-    deleteRespuesta(indice: number){
-      this.respuestas.removeAt(indice);
+    addResp(){
+      (this.preguntaForm.controls['respuestas'] as FormArray).push(this.addRespuesta());
     }
-/*  addpregunta(nombre: string, descripcion: string): void{
+    deleteRespuesta(indice: number){
+      (this.preguntaForm.controls['respuestas'] as FormArray).removeAt(indice);
+    }
+
+    addRespuestaPregunta(): void{
+
+    }
+    addPregunta(): void{
     const id = 1;
     const estatus = 'Activo';
-    this.service.createpregunta({
-     id,
-    nombre,
-    descripcion,
+    const usuarioDto = 1;
+    this.service.createPregunta({
+    id,
+    descripcion: this.preguntaForm.get("descripcion").value,
+    tipoPregunta: this.preguntaForm.get("tipoPregunta").value,
     estatus,
-    categoriaDto: this.preguntaForm.get("categoriaDto").value
-    } as pregunta2).subscribe();
-    console.log(pregunta2);
+    usuarioDto,
+    subcategoriaDto: this.preguntaForm.get("subcategoriaDto").value
+    } as Pregunta2).subscribe();
+    const respuestas = this.preguntaForm.get("respuestas").value;
+    console.log(Pregunta2);
+    console.log(respuestas);
+  
+    if (this.preguntaForm.get("tipoPregunta").value =="Selección Simple" || this.preguntaForm.get("tipoPregunta").value =="Selección Múltiple")
+      console.log("entre");
+    console.log(Pregunta2);
     this.dialogRef.close();
-  }*/
+  }
 }
 
