@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
 import { CategoriasService } from './categorias.service';
+import { respuestaPregunta2 } from '../modelos/respuestaPregunta';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,16 @@ export class PreguntasService {
     return this.http.post<Pregunta2>(this.url + 'preguntasEncuesta/addPreguntaEncuesta', JSON.stringify(pregunta), this.httpOptions)
     .pipe(
       tap((newpregunta: Pregunta2) => console.log(`added pregunta w/ id=${newpregunta.id}`)),
+      catchError(this.handleError)
+    );
+  }
+
+  createPreguntaRespuesta(respuesta: respuestaPregunta2): Observable<respuestaPregunta2>{
+    console.log(respuesta);
+    console.log('entre');
+    return this.http.post<respuestaPregunta2>(this.url + 'respuestaPregunta/addRespuestaPregunta', JSON.stringify(respuesta), this.httpOptions)
+    .pipe(
+      tap((newrespuesta: respuestaPregunta2) => console.log(`added respuestapregunta w/ id=${newrespuesta.id}`)),
       catchError(this.handleError)
     );
   }

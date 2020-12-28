@@ -14,7 +14,7 @@ export class respuestaPregunta2{
         public id: number,
         public nombre: string,
         public estatus: string,
-        public PreguntaEncuestaDto: number
+        public preguntaEncuestaDto: number
      ){}
      }
 

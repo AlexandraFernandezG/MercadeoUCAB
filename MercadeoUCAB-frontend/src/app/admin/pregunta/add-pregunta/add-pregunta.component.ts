@@ -6,6 +6,7 @@ import { Router , ActivatedRoute} from '@angular/router';
 import { PreguntasService } from 'src/app/servicios/preguntas.service';
 import { Pregunta } from 'src/app/modelos/pregunta';
 import { Pregunta2 } from 'src/app/modelos/pregunta';
+import { respuestaPregunta, respuestaPregunta2 } from 'src/app/modelos/respuestaPregunta';
 import { PreguntaComponent } from 'src/app/admin/pregunta/pregunta.component';
 import { Subcategoria, Subcategoria2 } from 'src/app/modelos/subcategoria';
 import { SubcategoriasService } from 'src/app/servicios/subcategorias.service';
@@ -60,7 +61,7 @@ export class AddPreguntaComponent implements OnInit {
         id:1,
         nombre:[''],
         estado:'Activo',
-        PreguntaEncuestaDto:1
+        PreguntaEncuestaDto: 1
 
       })
     }
@@ -81,19 +82,30 @@ export class AddPreguntaComponent implements OnInit {
     const usuarioDto = 1;
     this.service.createPregunta({
     id,
-    descripcion: this.preguntaForm.get("descripcion").value,
-    tipoPregunta: this.preguntaForm.get("tipoPregunta").value,
+    descripcion: this.preguntaForm.get('descripcion').value,
+    tipoPregunta: this.preguntaForm.get('tipoPregunta').value,
     estatus,
     usuarioDto,
-    subcategoriaDto: this.preguntaForm.get("subcategoriaDto").value
+    subcategoriaDto: this.preguntaForm.get('subcategoriaDto').value
     } as Pregunta2).subscribe();
-    const respuestas = this.preguntaForm.get("respuestas").value;
+    const respuestas = this.preguntaForm.get('respuestas').value;
     console.log(Pregunta2);
     console.log(respuestas);
+
+    if (this.preguntaForm.get('tipoPregunta').value =='Selección Simple' || this.preguntaForm.get('tipoPregunta').value =='Selección Múltiple'){ 
+      const preguntaEncuestaDto=1;
+       const estatus='Activo';
+       const id=1;
+      this.service.createPreguntaRespuesta({
+        id, 
+        nombre:respuestas[0].nombre, 
+        estatus,
+        preguntaEncuestaDto
+      } as respuestaPregunta2).subscribe();
+     
   
-    if (this.preguntaForm.get("tipoPregunta").value =="Selección Simple" || this.preguntaForm.get("tipoPregunta").value =="Selección Múltiple")
-      console.log("entre");
-    console.log(Pregunta2);
+    console.log(respuestaPregunta2);
+    }
     this.dialogRef.close();
   }
 }
