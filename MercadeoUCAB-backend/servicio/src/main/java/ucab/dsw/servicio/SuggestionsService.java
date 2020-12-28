@@ -1,13 +1,19 @@
 package ucab.dsw.servicio;
 
-import ucab.dsw.accesodatos.DaoEstudio;
-import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
+import ucab.dsw.accesodatos.*;
+import ucab.dsw.dtos.EstudioDto;
+import ucab.dsw.dtos.InformacionDto;
 import ucab.dsw.dtos.SolicitudEstudioDto;
 import ucab.dsw.dtos.SubcategoriaDto;
-import ucab.dsw.entidades.Estudio;
-import ucab.dsw.entidades.PreguntaEncuesta;
+import ucab.dsw.entidades.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ws.rs.core.Response;
@@ -45,7 +51,7 @@ public class SuggestionsService extends AplicacionBase{
 
             String descripcion_solicitud = solicitudEstudioDto.getDescripcion();
 
-            //Extraer cada plabra de la cadena de string
+            //Extraer cada palabra de la cadena de string
             String[] palabras_solicitud = descripcion_solicitud.split("\\s+");
 
             for (Estudio estudio : listarEstudios) {
@@ -134,5 +140,109 @@ public class SuggestionsService extends AplicacionBase{
     }
 
     //Listar encuesta recomendada para el cliente.
+    @GET
+    @Path("/suggestionsEstudiosEncuestado")
+    @Produces( MediaType.APPLICATION_JSON )
+    public List<Estudio> listarEstudiosEncuestado(InformacionDto informacionDto){
+
+        /**
+         * Este método filtra los estudios que hagan referencia a la persona
+         * que vaya a realizar una encuesta (Estudios recomendados).
+         *
+         * NOTA: Funciona, pero puede ser mejorado.
+         */
+
+        //Lista del return
+        List<Estudio> listaEstudiosRecomendados = new ArrayList<Estudio>();
+
+        String genero = informacionDto.getGenero();
+        Date fecha_nacimiento = informacionDto.getFechaNacimiento();
+        String estadoCivil = informacionDto.getEstadoCivil();
+        String disponibilidadLinea = informacionDto.getDisponibilidadEnLinea();
+        int cantidad_personas = informacionDto.getCantidadPersonas();
+
+        try {
+
+            //Primero pasamos la fecha de nacimiento a string
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha_nac = sdf.format(fecha_nacimiento);
+
+            //Formato de la fecha para la operacion de la edad
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            //Parseamos la fecha y obtener la fecha actual.
+            LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
+            LocalDate ahora = LocalDate.now();
+
+            //Calcular la edad
+            Period periodo = Period.between(fechaNac, ahora);
+
+            //Edad de la persona
+            int edad = periodo.getYears();
+
+            //Realizar el match con la tabla solicitudEstudio
+
+            DaoEstudio daoEstudio = new DaoEstudio();
+            DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
+            List<Estudio> listaEstudio = daoEstudio.findAll(Estudio.class);
+
+            for (Estudio estudio: listaEstudio){
+
+                long id_fk = estudio.get_solicitudEstudio().get_id();
+                SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id_fk, SolicitudEstudio.class);
+
+                if (solicitudEstudio.get_genero() != null) {
+
+                    if (solicitudEstudio.get_genero().equals(genero)) {
+
+                        listaEstudiosRecomendados.add(estudio);
+                    }
+                }
+
+                if(solicitudEstudio.get_edadMinima() != 0 && solicitudEstudio.get_edadMaxima() != 0) {
+
+                    if (edad > solicitudEstudio.get_edadMinima() && edad < solicitudEstudio.get_edadMaxima()) {
+
+                        listaEstudiosRecomendados.add(estudio);
+                    }
+                }
+
+                if (solicitudEstudio.get_estadoCivil() != null) {
+
+                    if (solicitudEstudio.get_estadoCivil().equals(estadoCivil)) {
+
+                        listaEstudiosRecomendados.add(estudio);
+                    }
+                }
+
+                if(solicitudEstudio.get_disponibilidadEnLinea() != null) {
+
+                    if (solicitudEstudio.get_disponibilidadEnLinea().equals(disponibilidadLinea)) {
+
+                        listaEstudiosRecomendados.add(estudio);
+                    }
+                }
+
+                if (solicitudEstudio.get_cantidadPersonas() == cantidad_personas){
+
+                    listaEstudiosRecomendados.add(estudio);
+                }
+
+                else {
+
+                    return null;
+                }
+            }
+
+            return listaEstudiosRecomendados;
+
+        } catch (Exception ex) {
+
+            String problema = ex.getMessage();
+            System.out.print(problema);
+            return null;
+
+        }
+    }
 
 }

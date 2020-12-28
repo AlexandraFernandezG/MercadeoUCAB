@@ -75,6 +75,7 @@ public class HijoAPI extends AplicacionBase{
         DaoInformacion daoInformacion = new DaoInformacion();
     
         try {
+
             hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
             System.out.println(hijo.get_fechaNacimiento());
             hijo.set_genero(hijoDto.getGenero());

@@ -123,7 +123,7 @@ public class EstudioAPI_Test {
 
         try {
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.eliminarEstudio(1);
+            servicio.eliminarEstudio(2);
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
