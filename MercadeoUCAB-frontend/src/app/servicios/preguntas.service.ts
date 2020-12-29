@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Pregunta, Pregunta2 } from '../modelos/pregunta';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry, tap } from 'rxjs/operators';
+import { catchError, retry, tap} from 'rxjs/operators';
 import { CategoriasService } from './categorias.service';
 import { respuestaPregunta2 } from '../modelos/respuestaPregunta';
 
@@ -46,14 +46,9 @@ export class PreguntasService {
     );
   }
 
-  createPreguntaRespuesta(respuesta: respuestaPregunta2): Observable<respuestaPregunta2>{
-    console.log(respuesta);
-    console.log('entre');
-    return this.http.post<respuestaPregunta2>(this.url + 'respuestaPregunta/addRespuestaPregunta', JSON.stringify(respuesta), this.httpOptions)
-    .pipe(
-      tap((newrespuesta: respuestaPregunta2) => console.log(`added respuestapregunta w/ id=${newrespuesta.id}`)),
-      catchError(this.handleError)
-    );
+  createPreguntaRespuesta(idPregunta: number, respuesta: any): Observable<any>{
+   let headers = new HttpHeaders().set('Content-Type', 'application/json');
+   return this.http.post(this.url + 'respuestaPregunta/addRespuestaPregunta/'+`${idPregunta}`,JSON.stringify(respuesta), this.httpOptions );
   }
 
   updatepregunta(pregunta): Observable<Pregunta>{
