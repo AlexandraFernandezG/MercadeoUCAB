@@ -80,36 +80,38 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
             return null;
         }
     }
-
+    
     //Agregar una respuesta de pregunta
     @POST
-    @Path("/addRespuestaPregunta")
+    @Path("/addRespuestaPregunta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public RespuestaPreguntaDto addRespuestaPregunta(RespuestaPreguntaDto respuestaPreguntaDto){
-
+    public RespuestaPreguntaDto addRespuestaPregunta(@PathParam("id") long id, List<RespuestaPreguntaDto> respuestas){
+        
         RespuestaPreguntaDto resultado = new RespuestaPreguntaDto();
-
+        
         try {
-
+            
             DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
-            RespuestaPregunta respuestaPregunta = new RespuestaPregunta();
             DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-
-            respuestaPregunta.set_nombre(respuestaPreguntaDto.getNombre());
-            respuestaPregunta.set_estatus(respuestaPreguntaDto.getEstatus());
-            PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(respuestaPreguntaDto.getPreguntaEncuestaDto().getId(), PreguntaEncuesta.class);
-            respuestaPregunta.set_preguntaEncuesta(preguntaEncuesta);
-            RespuestaPregunta resul = daoRespuestaPregunta.insert(respuestaPregunta);
-            resultado.setId(resul.get_id());
-
+            for (RespuestaPreguntaDto respuestaPreguntaDto : respuestas) {
+                
+                RespuestaPregunta respuestaPregunta = new RespuestaPregunta();
+                respuestaPregunta.set_nombre(respuestaPreguntaDto.getNombre());
+                respuestaPregunta.set_estatus(respuestaPreguntaDto.getEstatus());
+                PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
+                respuestaPregunta.set_preguntaEncuesta(preguntaEncuesta);
+                RespuestaPregunta resul = daoRespuestaPregunta.insert(respuestaPregunta);
+                resultado.setId(resul.get_id());
+            }
+            
         } catch (Exception ex){
-
+            
             String mensaje = ex.getMessage();
             System.out.print(mensaje);
         }
-
-            return resultado;
+        
+        return resultado; // Devuelve la última respuesta de la lista.
     }
 
     //Actualizar respuesta pregunta
