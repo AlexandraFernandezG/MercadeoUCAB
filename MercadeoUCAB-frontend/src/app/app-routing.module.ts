@@ -23,6 +23,7 @@ import { ProductoComponent } from './cliente/producto/producto.component';
 import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 import { PreguntaComponent } from './admin/pregunta/pregunta.component';
+import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analista-poblacion.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -46,6 +47,7 @@ const routes: Routes = [
   { path: 'analista', component: AnalistaComponent },
   { path: 'analista/solicitudes', component: EstudiosAnalistaComponent },
   { path: 'analista/crearEncuesta', component: CrearEstudioComponent },
+  { path: 'analista/poblacion', component: AnalistaPoblacionComponent },
   { path: 'recuperarContrasena', component: RecuperarContrasenaComponent},
   { path: 'cambioContrasena', component:  CambioContrasenaComponent},
 

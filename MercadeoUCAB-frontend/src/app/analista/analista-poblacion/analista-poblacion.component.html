@@ -26,8 +26,8 @@
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef></th>
           <mat-cell *matCellDef="let row">
-            <!-- <button mat-icon-button (click)="crearEstudio()">Realizar <mat-icon>build_circle</mat-icon></button> -->
-            <button mat-icon-button (click)="openModal(row._id)"><mat-icon>build_circle</mat-icon></button>
+            <button mat-icon-button (click)="crearEstudio()">Realizar <mat-icon>build_circle</mat-icon></button>
+            
           </mat-cell>
         </ng-container>
     
@@ -43,5 +43,5 @@
     
       <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
     </div>
-   
+    
 </html>

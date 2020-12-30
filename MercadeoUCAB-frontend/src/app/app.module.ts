@@ -72,6 +72,8 @@ import { PreguntaComponent } from './admin/pregunta/pregunta.component';
 import { AddPreguntaComponent } from './admin/pregunta/add-pregunta/add-pregunta.component';
 import { EditPreguntaComponent } from './admin/pregunta/edit-pregunta/edit-pregunta.component';
 import { PreguntasService } from './servicios/preguntas.service';
+import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analista-poblacion.component';
+import { EditarSolicitudComponent } from './analista/editar-solicitud/editar-solicitud.component';
 
 
 @NgModule({
@@ -118,7 +120,9 @@ import { PreguntasService } from './servicios/preguntas.service';
     RegistroEncuestadoComponent,
     PreguntaComponent,
     AddPreguntaComponent,
-    EditPreguntaComponent
+    EditPreguntaComponent,
+    AnalistaPoblacionComponent,
+    EditarSolicitudComponent
   ],
   imports: [
     RouterModule,
