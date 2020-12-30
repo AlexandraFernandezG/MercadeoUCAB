@@ -281,20 +281,20 @@ public class EntidadDto {
 		return estudioDto;
 	}
 	
-	protected EstudioLugarDto getEstudioLugarDto(long id) throws PruebaExcepcion {
-		EstudioLugarDto estudioLugarDto = new EstudioLugarDto();
-		DaoEstudioLugar daoEstudioLugar = new DaoEstudioLugar();
+	protected SolicitudEstudioLugarDto getEstudioLugarDto(long id) throws PruebaExcepcion {
+		SolicitudEstudioLugarDto solicitudEstudioLugarDto = new SolicitudEstudioLugarDto();
+		DaoSolicitudEstudioLugar daoSolicitudEstudioLugar = new DaoSolicitudEstudioLugar();
 		
-		EstudioLugar estudioLugar = daoEstudioLugar.find(id, EstudioLugar.class);
+		SolicitudEstudioLugar solicitudEstudioLugar = daoSolicitudEstudioLugar.find(id, SolicitudEstudioLugar.class);
 		
-		if (estudioLugar != null) {
-			estudioLugarDto.setId(estudioLugar.get_id());
-			estudioLugarDto.setEstatus(estudioLugar.get_estatus());
-			estudioLugarDto.setEstudioDto(this.getEstudioDto(estudioLugar.get_estudio().get_id()));
-			estudioLugarDto.setLugarDto(this.getLugarDtoMunicipio(estudioLugar.get_lugar().get_id()));
+		if (solicitudEstudioLugar != null) {
+			solicitudEstudioLugarDto.setId(solicitudEstudioLugar.get_id());
+			solicitudEstudioLugarDto.setEstatus(solicitudEstudioLugar.get_estatus());
+			solicitudEstudioLugarDto.setEstudioDto(this.getEstudioDto(solicitudEstudioLugar.get_estudio().get_id()));
+			solicitudEstudioLugarDto.setLugarDto(this.getLugarDtoMunicipio(solicitudEstudioLugar.get_lugar().get_id()));
 		}
 		
-		return estudioLugarDto;
+		return solicitudEstudioLugarDto;
 	}
 	
 	protected HijoDto getHijoDto(long id) throws PruebaExcepcion {

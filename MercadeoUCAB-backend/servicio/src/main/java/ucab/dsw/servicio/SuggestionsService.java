@@ -1,7 +1,6 @@
 package ucab.dsw.servicio;
 
 import ucab.dsw.accesodatos.*;
-import ucab.dsw.dtos.EstudioDto;
 import ucab.dsw.dtos.InformacionDto;
 import ucab.dsw.dtos.SolicitudEstudioDto;
 import ucab.dsw.dtos.SubcategoriaDto;
@@ -12,12 +11,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -28,13 +24,13 @@ import javax.ws.rs.core.MediaType;
 @Path( "/suggestions" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
-public class SuggestionsService extends AplicacionBase{
+public class SuggestionsService extends AplicacionBase {
 
     //Obtener estudios recomentados en base a una solicitud
     @GET
     @Path("/suggestionsEstudio")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Estudio> listarEstudiosRecomendados(SolicitudEstudioDto solicitudEstudioDto){
+    public List<Estudio> listarEstudiosRecomendados(SolicitudEstudioDto solicitudEstudioDto) throws Exception{
 
         /**
          * Este método filtra los estudios que tengan coincidencia con la
@@ -92,8 +88,8 @@ public class SuggestionsService extends AplicacionBase{
     public List<PreguntaEncuesta> listarPreguntasRecomendadas(SubcategoriaDto subcategoriaDto){
 
         /**
-         * Este método filtra las preguntas que tengan coinciendcia con el
-         * nombre de una subcategoria en especifico.
+         * Este método filtra las preguntas que hagan referencia a la subcategoria
+         * (Preguntas recomendadas).
          *
          * NOTA: Funciona, pero puede ser mejorado.
          */
