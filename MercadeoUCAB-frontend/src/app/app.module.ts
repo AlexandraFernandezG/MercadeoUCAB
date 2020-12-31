@@ -21,7 +21,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -72,6 +72,11 @@ import { PreguntaComponent } from './admin/pregunta/pregunta.component';
 import { AddPreguntaComponent } from './admin/pregunta/add-pregunta/add-pregunta.component';
 import { EditPreguntaComponent } from './admin/pregunta/edit-pregunta/edit-pregunta.component';
 import { PreguntasService } from './servicios/preguntas.service';
+import { EstudiosComponent } from './admin/estudios/estudios.component';
+import { AddEstudioComponent } from './admin/estudios/add-estudio/add-estudio.component';
+import { EditEstudioComponent } from './admin/estudios/edit-estudio/edit-estudio.component';
+import { PreguntasEstudioComponent } from './admin/estudios/preguntas-estudio/preguntas-estudio.component';
+import { DialogComponent } from './admin/estudios/dialog/dialog.component';
 
 
 @NgModule({
@@ -118,7 +123,12 @@ import { PreguntasService } from './servicios/preguntas.service';
     RegistroEncuestadoComponent,
     PreguntaComponent,
     AddPreguntaComponent,
-    EditPreguntaComponent
+    EditPreguntaComponent,
+    EstudiosComponent,
+    AddEstudioComponent,
+    EditEstudioComponent,
+    PreguntasEstudioComponent,
+    DialogComponent
   ],
   imports: [
     RouterModule,
@@ -144,7 +154,8 @@ import { PreguntasService } from './servicios/preguntas.service';
     MatToolbarModule,
     MatGridListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    FormsModule
   ],
   providers: [
     CategoriasService,
@@ -155,6 +166,7 @@ import { PreguntasService } from './servicios/preguntas.service';
     UsuariosService,
     ProductosService,
     PreguntasService
+
   ],
   bootstrap: [AppComponent],
   entryComponents: [

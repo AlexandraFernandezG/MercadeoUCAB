@@ -1,1 +1,18 @@
-<p>respuestas-encuesta works!</p>
+<br><br><br>
+<label id="example-radio-group-label" class="inicio">Selecciona tu estacion favorita:</label>
+<mat-radio-group
+  aria-labelledby="example-radio-group-label"
+  class="example-radio-group"
+  [(ngModel)]="favoriteSeason">
+  <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+    {{season}}
+  </mat-radio-button>
+</mat-radio-group>
+<div>Tu estacion favorita es: {{favoriteSeason}}</div>
+<br><br>
+<mat-form-field class="example-full-width">
+    <mat-label>Respuesta abierta</mat-label>
+    <textarea matInput placeholder="Ejemplo. Esto me hace sentir..."></textarea>
+</mat-form-field>
+
+  

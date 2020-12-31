@@ -23,6 +23,9 @@ import { ProductoComponent } from './cliente/producto/producto.component';
 import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 import { PreguntaComponent } from './admin/pregunta/pregunta.component';
+import { RespuestasEncuestaComponent } from './encuestado/respuestas-encuesta/respuestas-encuesta.component';
+import { EstudiosComponent } from './admin/estudios/estudios.component';
+import { PreguntasEstudioComponent } from './admin/estudios/preguntas-estudio/preguntas-estudio.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -35,6 +38,8 @@ const routes: Routes = [
   { path: 'admin/usuarios', component: UsuarioComponent},
   { path: 'admin/subcategorias', component: SubcategoriaComponent},
   { path: 'admin/preguntas', component: PreguntaComponent},
+  { path: 'admin/estudios', component: EstudiosComponent},
+  { path: 'admin/asignacionpreguntas', component: PreguntasEstudioComponent},
   { path: 'dashboard/usuarios', component: UsuarioComponent},
   { path: 'admin', component: AdminComponent },
   { path: 'cliente', component: ClienteComponent },
@@ -43,6 +48,7 @@ const routes: Routes = [
   { path: 'cliente/producto', component: ProductoComponent },
   { path: 'encuestado/estudios', component: EstudiosEncuestadoComponent },
   { path: 'encuestado/registro-encuestado', component: RegistroEncuestadoComponent },
+  { path: 'encuestado/respuestas-encuesta', component: RespuestasEncuestaComponent },
   { path: 'analista', component: AnalistaComponent },
   { path: 'analista/solicitudes', component: EstudiosAnalistaComponent },
   { path: 'analista/crearEncuesta', component: CrearEstudioComponent },
