@@ -21,6 +21,7 @@
     <class>ucab.dsw.entidades.RespuestaPregunta</class>
     <class>ucab.dsw.entidades.Rol</class>
     <class>ucab.dsw.entidades.SolicitudEstudio</class>
+    <class>ucab.dsw.entidades.SolicitudEstudioLugar</class>
     <class>ucab.dsw.entidades.Subcategoria</class>
     <class>ucab.dsw.entidades.Telefono</class>
     <class>ucab.dsw.entidades.Tipo</class>

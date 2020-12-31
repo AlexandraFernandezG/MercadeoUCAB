@@ -290,7 +290,7 @@ public class EntidadDto {
 		if (solicitudEstudioLugar != null) {
 			solicitudEstudioLugarDto.setId(solicitudEstudioLugar.get_id());
 			solicitudEstudioLugarDto.setEstatus(solicitudEstudioLugar.get_estatus());
-			solicitudEstudioLugarDto.setEstudioDto(this.getEstudioDto(solicitudEstudioLugar.get_estudio().get_id()));
+			solicitudEstudioLugarDto.setSolicitudestudioDto(this.getSolicitudEstudioDto(solicitudEstudioLugar.get_SolicitudEstudio().get_id()));
 			solicitudEstudioLugarDto.setLugarDto(this.getLugarDtoMunicipio(solicitudEstudioLugar.get_lugar().get_id()));
 		}
 		

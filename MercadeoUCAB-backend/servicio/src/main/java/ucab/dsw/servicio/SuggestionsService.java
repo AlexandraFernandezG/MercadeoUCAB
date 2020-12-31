@@ -1,9 +1,10 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.Response.EstudiosEncuestadoResponse;
+import ucab.dsw.Response.EstudiosResponse;
+import ucab.dsw.Response.PreguntasResponse;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.InformacionDto;
-import ucab.dsw.dtos.SolicitudEstudioDto;
-import ucab.dsw.dtos.SubcategoriaDto;
 import ucab.dsw.entidades.*;
 
 import java.text.SimpleDateFormat;
@@ -13,155 +14,148 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-/**
- * Este servicio puede ser mejorado.
- */
 
 @Path( "/suggestions" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class SuggestionsService extends AplicacionBase {
 
-    //Obtener estudios recomentados en base a una solicitud
     @GET
-    @Path("/suggestionsEstudio")
+    @Path("suggestionsPreguntasEstudio/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Estudio> listarEstudiosRecomendados(SolicitudEstudioDto solicitudEstudioDto) throws Exception{
+    public List<PreguntasResponse> listarPreguntasEstudioRecomendadas(@PathParam("id") long id) throws NullPointerException{
 
         /**
-         * Este método filtra los estudios que tengan coincidencia con la
-         * descripción de una solicitud
+         * Este método permite obtener preguntas sugeridas a través
+         * de un estudio seleccionado con correlación a un subcategoria (Se debe pasar el id del estudio)
          *
-         * NOTA: Funciona, pero puede ser mejorado.
+         * NOTA: Este método funciona correctamente.
          */
+
+        String SQL = null;
 
         try {
 
-            DaoEstudio daoEstudio = new DaoEstudio();
-            List<Estudio> listarEstudios = daoEstudio.findAll(Estudio.class);
-            List<Estudio> listarEstudiosSugeridos = new ArrayList<Estudio>();
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+            EntityManager entitymanager = factory.createEntityManager();
 
-            String descripcion_solicitud = solicitudEstudioDto.getDescripcion();
+            SQL = "SELECT pe._id as idPregunta, pe._descripcion as descripcion, pe._tipoPregunta as tipoPregunta, pe._estatus as estatus FROM PreguntaEncuesta as pe" +
+                    ", Estudio as e, PreguntaEstudio as pes WHERE e._id = pes._estudio._id and pes._preguntaEncuesta._id = pe._id and pe._subcategoria._id in " +
+                    "(SELECT sc._id FROM Subcategoria as sc, Producto as p, SolicitudEstudio as so, Estudio as e WHERE sc._id = p._subcategoria._id and p._id = so._producto._id and so._id = e._solicitudEstudio._id and e._id = :id)";
 
-            //Extraer cada palabra de la cadena de string
-            String[] palabras_solicitud = descripcion_solicitud.split("\\s+");
+            Query query = entitymanager.createQuery(SQL);
+            query.setParameter("id", id);
 
-            for (Estudio estudio : listarEstudios) {
+            List<Object[]> listaPreguntas = query.getResultList();
+            List<PreguntasResponse> listaPreguntasRecomendadas = new ArrayList<>(listaPreguntas.size());
 
-                String nombre_estudio = estudio.get_nombre();
-                String[] palabras_estudio = nombre_estudio.split("\\s+");
+            for (Object[] pre: listaPreguntas){
 
-                for (int i = 0; i < palabras_solicitud.length; i++) {
-
-                    for (int j = 0; j < palabras_estudio.length; j++) {
-
-                        if (palabras_solicitud[i].toLowerCase().equals(palabras_estudio[j].toLowerCase())) {
-
-                            listarEstudiosSugeridos.add(estudio);
-                        }
-                    }
-                }
+                listaPreguntasRecomendadas.add(new PreguntasResponse((long)pre[0], (String)pre[1], (String)pre[2], (String)pre[3]));
             }
 
-            List<Estudio> Noduplicados = listarEstudiosSugeridos.stream().distinct().collect(Collectors.toList());
+            return listaPreguntasRecomendadas;
 
-            return Noduplicados;
+        } catch (NullPointerException ex) {
 
-        } catch (Exception ex) {
-
-        String problema = ex.getMessage();
-        System.out.print(problema);
-        return null;
-
-        }
-
-    }
-
-    //Listar preguntas acorde a una subcategoria
-    @GET
-    @Path("/suggestionsPregunta")
-    @Produces( MediaType.APPLICATION_JSON )
-    public List<PreguntaEncuesta> listarPreguntasRecomendadas(SubcategoriaDto subcategoriaDto){
-
-        /**
-         * Este método filtra las preguntas que hagan referencia a la subcategoria
-         * (Preguntas recomendadas).
-         *
-         * NOTA: Funciona, pero puede ser mejorado.
-         */
-
-        try {
-
-            DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-            List<PreguntaEncuesta> listarPreguntas = daoPreguntaEncuesta.findAll(PreguntaEncuesta.class);
-            List<PreguntaEncuesta> listaPreguntasSugeridas = new ArrayList<PreguntaEncuesta>();
-
-            String nombre_subcategoria = subcategoriaDto.getNombre();
-
-            //Extraer cada plabra de la cadena de string
-            String[] palabras_subcategoria = nombre_subcategoria.split("\\s+");
-
-            for (PreguntaEncuesta preguntaEncuesta : listarPreguntas) {
-
-                String descripcion_pregunta = preguntaEncuesta.get_descripcion();
-                String[] palabras_pregunta = descripcion_pregunta.split("\\s+");
-
-                for (int i = 0; i < palabras_subcategoria.length; i++) {
-
-                    for (int j = 0; j < palabras_pregunta.length; j++) {
-
-                        if (palabras_subcategoria[i].toLowerCase().equals(palabras_pregunta[j].toLowerCase())) {
-
-                            listaPreguntasSugeridas.add(preguntaEncuesta);
-                        }
-                    }
-                }
-            }
-
-            List<PreguntaEncuesta> Noduplicados = listaPreguntasSugeridas.stream().distinct().collect(Collectors.toList());
-
-            return Noduplicados;
-
-        } catch (Exception ex) {
-
-            String problema = ex.getMessage();
-            System.out.print(problema);
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
             return null;
-
         }
+
     }
 
-    //Listar encuesta recomendada para el cliente.
     @GET
-    @Path("/suggestionsEstudiosEncuestado")
+    @Path("/suggestionsEstudio/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Estudio> listarEstudiosEncuestado(InformacionDto informacionDto){
+    public List<EstudiosResponse> listarEstudiosRecomendados(@PathParam("id") long id) throws NullPointerException{
+
+        /**
+         * Este metodo permite obtener los estudios recomendados en base a una
+         * solicitud de estudio (Estudios recomendados)
+         *
+         * NOTA: Aun falta por terminar.
+         */
+
+        String SQL = null;
+
+        DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
+        SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
+
+        try {
+
+            String genero = solicitudEstudio.get_genero();
+            //int edadMaxima = solicitudEstudio.get_edadMaxima();
+            //int edadMinima = solicitudEstudio.get_edadMinima();
+            String estadoCivil = solicitudEstudio.get_estadoCivil();
+            int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
+
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+            EntityManager entitymanager = factory.createEntityManager();
+
+            SQL = "SELECT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
+                    "FROM Estudio as e, Usuario as u, Informacion as inf " +
+                    "WHERE e._usuario._id = u._id and u._id = inf._usuario._id and " +
+                    "inf._genero = :genero or inf._estadoCivil = :estadoCivil or inf._cantidadPersonas = :cantidadPersonas";
+
+            Query query = entitymanager.createQuery(SQL);
+            query.setParameter("genero", genero);
+            query.setParameter("estadoCivil", estadoCivil);
+            query.setParameter("cantidadPersonas", cantidadPersonas);
+
+            List<Object[]> listaEstudios = query.getResultList();
+            List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
+
+            for (Object[] est: listaEstudios){
+
+                listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5]));
+            }
+
+            return listaEstudiosRecomendados;
+
+        } catch (NullPointerException ex) {
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+        }
+
+    }
+
+    //Listar estudios recomendado para el encuestado.
+    @GET
+    @Path("/suggestionsEstudiosEncuestado/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public List<EstudiosEncuestadoResponse> listarEstudiosEncuestado(@PathParam("id") long id) throws NullPointerException{
 
         /**
          * Este método filtra los estudios que hagan referencia a la persona
          * que vaya a realizar una encuesta (Estudios recomendados).
          *
-         * NOTA: Funciona, pero puede ser mejorado.
+         * NOTA: Aun falta terminar y acomodar
          */
 
-        //Lista del return
-        List<Estudio> listaEstudiosRecomendados = new ArrayList<Estudio>();
+        String SQL = null;
 
-        String genero = informacionDto.getGenero();
-        Date fecha_nacimiento = informacionDto.getFechaNacimiento();
-        String estadoCivil = informacionDto.getEstadoCivil();
-        String disponibilidadLinea = informacionDto.getDisponibilidadEnLinea();
-        int cantidad_personas = informacionDto.getCantidadPersonas();
+        DaoInformacion daoInformacion = new DaoInformacion();
+        Informacion informacion = daoInformacion.find(id, Informacion.class);
 
         try {
 
+            String genero = informacion.get_genero();
+            Date fechaNacimiento = informacion.get_fechaNacimiento();
+            String estadoCivil = informacion.get_estadoCivil();
+            int cantidadPersonas = informacion.get_cantidadPersonas();
+
             //Primero pasamos la fecha de nacimiento a string
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String fecha_nac = sdf.format(fecha_nacimiento);
+            String fecha_nac = sdf.format(fechaNacimiento);
 
             //Formato de la fecha para la operacion de la edad
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -176,69 +170,69 @@ public class SuggestionsService extends AplicacionBase {
             //Edad de la persona
             int edad = periodo.getYears();
 
-            //Realizar el match con la tabla solicitudEstudio
+            //Ahora hacemos el query para el match
 
-            DaoEstudio daoEstudio = new DaoEstudio();
-            DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
-            List<Estudio> listaEstudio = daoEstudio.findAll(Estudio.class);
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+            EntityManager entitymanager = factory.createEntityManager();
 
-            for (Estudio estudio: listaEstudio){
+            SQL = "SELECT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
+                    "FROM Estudio as e, SolicitudEstudio as se " +
+                    "WHERE e._solicitudEstudio._id = se._id and " +
+                    "se._genero = :genero or se._estadoCivil = :estadoCivil or se._cantidadPersonas = :cantidadPersonas or " +
+                    "(se._edadMaxima > :edad and se._edadMinima < :edad)";
 
-                long id_fk = estudio.get_solicitudEstudio().get_id();
-                SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id_fk, SolicitudEstudio.class);
+            Query query = entitymanager.createQuery(SQL);
+            query.setParameter("genero", genero);
+            query.setParameter("estadoCivil", estadoCivil);
+            query.setParameter("cantidadPersonas", cantidadPersonas);
+            query.setParameter("edad", edad);
 
-                if (solicitudEstudio.get_genero() != null) {
+            List<Object[]> listaEstudios = query.getResultList();
+            List<EstudiosEncuestadoResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
-                    if (solicitudEstudio.get_genero().equals(genero)) {
+            for (Object[] est: listaEstudios){
 
-                        listaEstudiosRecomendados.add(estudio);
-                    }
-                }
-
-                if(solicitudEstudio.get_edadMinima() != 0 && solicitudEstudio.get_edadMaxima() != 0) {
-
-                    if (edad > solicitudEstudio.get_edadMinima() && edad < solicitudEstudio.get_edadMaxima()) {
-
-                        listaEstudiosRecomendados.add(estudio);
-                    }
-                }
-
-                if (solicitudEstudio.get_estadoCivil() != null) {
-
-                    if (solicitudEstudio.get_estadoCivil().equals(estadoCivil)) {
-
-                        listaEstudiosRecomendados.add(estudio);
-                    }
-                }
-
-                if(solicitudEstudio.get_disponibilidadEnLinea() != null) {
-
-                    if (solicitudEstudio.get_disponibilidadEnLinea().equals(disponibilidadLinea)) {
-
-                        listaEstudiosRecomendados.add(estudio);
-                    }
-                }
-
-                if (solicitudEstudio.get_cantidadPersonas() == cantidad_personas){
-
-                    listaEstudiosRecomendados.add(estudio);
-                }
-
-                else {
-
-                    return null;
-                }
+                listaEstudiosRecomendados.add(new EstudiosEncuestadoResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5]));
             }
 
             return listaEstudiosRecomendados;
 
-        } catch (Exception ex) {
 
-            String problema = ex.getMessage();
-            System.out.print(problema);
+        } catch (NullPointerException ex) {
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
             return null;
-
         }
+
+
+    }
+
+    //Listar estudios recomendado para el cliente.
+    @GET
+    @Path("/suggestionsEstudiosEncuestado/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public List<Estudio> listarEstudiosCliente(@PathParam("id") long id) throws NullPointerException{
+
+        /**
+         * Este método filtra los estudios que hagan referencia a la persona
+         * que realizo una solicitud (Estudios recomendados).
+         *
+         * NOTA: Hay que hacer
+         */
+
+        try {
+
+
+
+        } catch (NullPointerException ex) {
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+        }
+
+        return null;
     }
 
 }
