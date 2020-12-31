@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EstudiosService } from '../../servicios/estudios.service';
 import { Estudio } from '../../modelos/estudio';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-estudios-encuestado',
@@ -9,15 +13,27 @@ import { Estudio } from '../../modelos/estudio';
 })
 export class EstudiosEncuestadoComponent implements OnInit {
   
-  estudios: Estudio[];
+  constructor( 
+    private estudiosService: EstudiosService, 
+    private dialog: MatDialog,
+    private _router: Router
+   ) { }
 
-  constructor( private estudiosService: EstudiosService ) { }
-
+  estudios: Estudio[];  
+  displayedColumns: string[] = ['_id', 'nombre',  '_estatus', 'acciones'];
+  dataSource: MatTableDataSource<Estudio>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit(): void {
-    this.estudiosService.getEstudios().subscribe(estudios => {
-      this.estudios = estudios;
-    });
     
+    this.estudiosService.getEstudios().subscribe(
+      estudios => { 
+        this.dataSource = new MatTableDataSource<Estudio>(estudios);
+        this.dataSource.paginator = this.paginator;
+      });
+    
+
+    this.estudiosService.getEstudios().subscribe(estudios => console.log(estudios));
+
   }
 
 }
