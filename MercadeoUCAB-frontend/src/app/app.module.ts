@@ -77,6 +77,8 @@ import { AddEstudioComponent } from './admin/estudios/add-estudio/add-estudio.co
 import { EditEstudioComponent } from './admin/estudios/edit-estudio/edit-estudio.component';
 import { PreguntasEstudioComponent } from './admin/estudios/preguntas-estudio/preguntas-estudio.component';
 import { DialogComponent } from './admin/estudios/dialog/dialog.component';
+import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analista-poblacion.component';
+import { EditarSolicitudComponent } from './analista/editar-solicitud/editar-solicitud.component';
 
 
 @NgModule({
@@ -128,7 +130,9 @@ import { DialogComponent } from './admin/estudios/dialog/dialog.component';
     AddEstudioComponent,
     EditEstudioComponent,
     PreguntasEstudioComponent,
-    DialogComponent
+    DialogComponent,
+    AnalistaPoblacionComponent,
+    EditarSolicitudComponent
   ],
   imports: [
     RouterModule,

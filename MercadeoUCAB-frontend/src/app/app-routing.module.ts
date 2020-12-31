@@ -26,6 +26,7 @@ import { PreguntaComponent } from './admin/pregunta/pregunta.component';
 import { RespuestasEncuestaComponent } from './encuestado/respuestas-encuesta/respuestas-encuesta.component';
 import { EstudiosComponent } from './admin/estudios/estudios.component';
 import { PreguntasEstudioComponent } from './admin/estudios/preguntas-estudio/preguntas-estudio.component';
+import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analista-poblacion.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -52,6 +53,7 @@ const routes: Routes = [
   { path: 'analista', component: AnalistaComponent },
   { path: 'analista/solicitudes', component: EstudiosAnalistaComponent },
   { path: 'analista/crearEncuesta', component: CrearEstudioComponent },
+  { path: 'analista/poblacion', component: AnalistaPoblacionComponent },
   { path: 'recuperarContrasena', component: RecuperarContrasenaComponent},
   { path: 'cambioContrasena', component:  CambioContrasenaComponent},
 

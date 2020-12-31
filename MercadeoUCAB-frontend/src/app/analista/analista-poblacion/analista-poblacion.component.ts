@@ -1,25 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Estudio } from '../../modelos/estudio';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { SolicitudEstudiosService } from 'src/app/servicios/solicitud-estudios.service';
 import { Solicitud } from 'src/app/modelos/solicitud';
-import { EditarSolicitudComponent } from '../editar-solicitud/editar-solicitud.component';
+import { SolicitudEstudiosService } from 'src/app/servicios/solicitud-estudios.service';
 
 @Component({
-  selector: 'app-estudios-analista',
-  templateUrl: './estudios-analista.component.html',
-  styleUrls: ['./estudios-analista.component.css']
+  selector: 'app-analista-poblacion',
+  templateUrl: './analista-poblacion.component.html',
+  styleUrls: ['./analista-poblacion.component.css']
 })
-export class EstudiosAnalistaComponent implements OnInit {
-
+export class AnalistaPoblacionComponent implements OnInit {
 
   constructor( 
     private solicitudService: SolicitudEstudiosService, 
-    private _router: Router,
-    private matDialog: MatDialog,
+    private _router: Router
     ) { }
 
   solicitudes: Solicitud[];  
@@ -38,15 +33,5 @@ export class EstudiosAnalistaComponent implements OnInit {
 
     this.solicitudService.getSolicitudes().subscribe(solicitudes => console.log(solicitudes));
   }
-  crearEstudio(): void {
-    this._router.navigate(['analista/crearEncuesta']);
-  }
 
-  openModal( id: number): void{
-    this.matDialog.open(EditarSolicitudComponent,
-      {
-        data: {id: id}
-      }
-    );
-  }
 }

@@ -45,5 +45,23 @@ export class SolicitudEstudiosService {
       catchError(this.handleError)
     );
   }
+
+  getSolicitud(id: number): Observable<Solicitud> {
+    console.log(id);
+    return this.http.get<Solicitud>(this.url + 'solicitudEstudio/consultarSolicitudEstudio/' + id)
+    .pipe(
+      tap(_ => console.log(`fetched categoria id=${id}`)),
+      catchError(this.handleError)
+    );
+  }
+
+  updateSolicitud(solicitud): Observable<Solicitud>{
+    console.log(solicitud);
+    return this.http.put<Solicitud>(this.url + 'solicitudEstudio/updateSolicitudEstudio/' + solicitud.id, JSON.stringify(solicitud), this.httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
   
 }
