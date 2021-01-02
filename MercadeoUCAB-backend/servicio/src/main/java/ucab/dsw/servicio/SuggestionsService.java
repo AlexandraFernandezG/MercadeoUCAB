@@ -4,7 +4,6 @@ import ucab.dsw.Response.EstudiosEncuestadoResponse;
 import ucab.dsw.Response.EstudiosResponse;
 import ucab.dsw.Response.PreguntasResponse;
 import ucab.dsw.accesodatos.*;
-import ucab.dsw.dtos.InformacionDto;
 import ucab.dsw.entidades.*;
 
 import java.text.SimpleDateFormat;
@@ -91,8 +90,6 @@ public class SuggestionsService extends AplicacionBase {
             if (solicitudEstudio != null) {
 
                 String genero = solicitudEstudio.get_genero();
-                //int edadMaxima = solicitudEstudio.get_edadMaxima();
-                //int edadMinima = solicitudEstudio.get_edadMinima();
                 String estadoCivil = solicitudEstudio.get_estadoCivil();
                 int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
 
@@ -114,7 +111,7 @@ public class SuggestionsService extends AplicacionBase {
 
                 for (Object[] est : listaEstudios) {
 
-                    listaEstudiosRecomendados.add(new EstudiosResponse((long) est[0], (String) est[1], (String) est[2], (Date) est[3], (Date) est[4], (String) est[5]));
+                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5]));
                 }
 
                 return listaEstudiosRecomendados;
