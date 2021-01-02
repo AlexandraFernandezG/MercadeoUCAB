@@ -11,9 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -80,7 +78,7 @@ public class SuggestionsService extends AplicacionBase {
          * Este metodo permite obtener los estudios recomendados en base a una
          * solicitud de estudio (Estudios recomendados)
          *
-         * NOTA: Aun falta por terminar.
+         * NOTA: Casi listo, faltaria mejorar.
          */
 
         String SQL = null;
@@ -90,34 +88,42 @@ public class SuggestionsService extends AplicacionBase {
 
         try {
 
-            String genero = solicitudEstudio.get_genero();
-            //int edadMaxima = solicitudEstudio.get_edadMaxima();
-            //int edadMinima = solicitudEstudio.get_edadMinima();
-            String estadoCivil = solicitudEstudio.get_estadoCivil();
-            int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
+            if (solicitudEstudio != null) {
 
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-            EntityManager entitymanager = factory.createEntityManager();
+                String genero = solicitudEstudio.get_genero();
+                //int edadMaxima = solicitudEstudio.get_edadMaxima();
+                //int edadMinima = solicitudEstudio.get_edadMinima();
+                String estadoCivil = solicitudEstudio.get_estadoCivil();
+                int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
 
-            SQL = "SELECT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
-                    "FROM Estudio as e, Usuario as u, Informacion as inf " +
-                    "WHERE e._usuario._id = u._id and u._id = inf._usuario._id and " +
-                    "inf._genero = :genero or inf._estadoCivil = :estadoCivil or inf._cantidadPersonas = :cantidadPersonas";
+                EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+                EntityManager entitymanager = factory.createEntityManager();
 
-            Query query = entitymanager.createQuery(SQL);
-            query.setParameter("genero", genero);
-            query.setParameter("estadoCivil", estadoCivil);
-            query.setParameter("cantidadPersonas", cantidadPersonas);
+                SQL = "SELECT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
+                        "FROM Estudio as e, Usuario as u, Informacion as inf " +
+                        "WHERE e._usuario._id = u._id and u._id = inf._usuario._id and " +
+                        "inf._genero = :genero or inf._estadoCivil = :estadoCivil or inf._cantidadPersonas = :cantidadPersonas";
 
-            List<Object[]> listaEstudios = query.getResultList();
-            List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
+                Query query = entitymanager.createQuery(SQL);
+                query.setParameter("genero", genero);
+                query.setParameter("estadoCivil", estadoCivil);
+                query.setParameter("cantidadPersonas", cantidadPersonas);
 
-            for (Object[] est: listaEstudios){
+                List<Object[]> listaEstudios = query.getResultList();
+                List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
-                listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5]));
+                for (Object[] est : listaEstudios) {
+
+                    listaEstudiosRecomendados.add(new EstudiosResponse((long) est[0], (String) est[1], (String) est[2], (Date) est[3], (Date) est[4], (String) est[5]));
+                }
+
+                return listaEstudiosRecomendados;
+
+            } else {
+
+                List<EstudiosResponse> vacio = new ArrayList<>();
+                return vacio;
             }
-
-            return listaEstudiosRecomendados;
 
         } catch (NullPointerException ex) {
 
@@ -136,9 +142,9 @@ public class SuggestionsService extends AplicacionBase {
 
         /**
          * Este método filtra los estudios que hagan referencia a la persona
-         * que vaya a realizar una encuesta (Estudios recomendados).
+         * que vaya a realizar una encuesta (Estudios recomendados para un encuestado).
          *
-         * NOTA: Aun falta terminar y acomodar
+         * NOTA: Este método funciona correctamente.
          */
 
         String SQL = null;
@@ -148,55 +154,63 @@ public class SuggestionsService extends AplicacionBase {
 
         try {
 
-            String genero = informacion.get_genero();
-            Date fechaNacimiento = informacion.get_fechaNacimiento();
-            String estadoCivil = informacion.get_estadoCivil();
-            int cantidadPersonas = informacion.get_cantidadPersonas();
+            if (informacion != null) {
 
-            //Primero pasamos la fecha de nacimiento a string
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String fecha_nac = sdf.format(fechaNacimiento);
+                String genero = informacion.get_genero();
+                Date fechaNacimiento = informacion.get_fechaNacimiento();
+                String estadoCivil = informacion.get_estadoCivil();
+                int cantidadPersonas = informacion.get_cantidadPersonas();
 
-            //Formato de la fecha para la operacion de la edad
-            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                //Primero pasamos la fecha de nacimiento a string
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String fecha_nac = sdf.format(fechaNacimiento);
 
-            //Parseamos la fecha y obtener la fecha actual.
-            LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
-            LocalDate ahora = LocalDate.now();
+                //Formato de la fecha para la operacion de la edad
+                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            //Calcular la edad
-            Period periodo = Period.between(fechaNac, ahora);
+                //Parseamos la fecha y obtener la fecha actual.
+                LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
+                LocalDate ahora = LocalDate.now();
 
-            //Edad de la persona
-            int edad = periodo.getYears();
+                //Calcular la edad
+                Period periodo = Period.between(fechaNac, ahora);
 
-            //Ahora hacemos el query para el match
+                //Edad de la persona
+                int edad = periodo.getYears();
 
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-            EntityManager entitymanager = factory.createEntityManager();
+                //Ahora hacemos el query para el match
 
-            SQL = "SELECT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
-                    "FROM Estudio as e, SolicitudEstudio as se " +
-                    "WHERE e._solicitudEstudio._id = se._id and " +
-                    "se._genero = :genero or se._estadoCivil = :estadoCivil or se._cantidadPersonas = :cantidadPersonas or " +
-                    "(se._edadMaxima > :edad and se._edadMinima < :edad)";
+                EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+                EntityManager entitymanager = factory.createEntityManager();
 
-            Query query = entitymanager.createQuery(SQL);
-            query.setParameter("genero", genero);
-            query.setParameter("estadoCivil", estadoCivil);
-            query.setParameter("cantidadPersonas", cantidadPersonas);
-            query.setParameter("edad", edad);
+                SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
+                        "FROM Estudio as e, SolicitudEstudio as se " +
+                        "WHERE e._solicitudEstudio._id = se._id and " +
+                        "se._genero = :genero or se._estadoCivil = :estadoCivil or se._cantidadPersonas = :cantidadPersonas or " +
+                        "(se._edadMinima <= :edad and se._edadMaxima > :edad)";
 
-            List<Object[]> listaEstudios = query.getResultList();
-            List<EstudiosEncuestadoResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
+                Query query = entitymanager.createQuery(SQL);
+                query.setParameter("genero", genero);
+                query.setParameter("estadoCivil", estadoCivil);
+                query.setParameter("cantidadPersonas", cantidadPersonas);
+                query.setParameter("edad", edad);
 
-            for (Object[] est: listaEstudios){
+                List<Object[]> listaEstudios = query.getResultList();
 
-                listaEstudiosRecomendados.add(new EstudiosEncuestadoResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5]));
+                List<EstudiosEncuestadoResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
+
+                for (Object[] est : listaEstudios) {
+
+                    listaEstudiosRecomendados.add(new EstudiosEncuestadoResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5]));
+                }
+
+                return listaEstudiosRecomendados;
+
+            } else {
+
+                List<EstudiosEncuestadoResponse> vacio = new ArrayList<>();
+                return vacio;
             }
-
-            return listaEstudiosRecomendados;
-
 
         } catch (NullPointerException ex) {
 
