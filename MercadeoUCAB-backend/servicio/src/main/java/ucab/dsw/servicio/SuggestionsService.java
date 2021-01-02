@@ -87,8 +87,6 @@ public class SuggestionsService extends AplicacionBase {
 
         try {
 
-            if (solicitudEstudio != null) {
-
                 String genero = solicitudEstudio.get_genero();
                 String estadoCivil = solicitudEstudio.get_estadoCivil();
                 int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
@@ -115,12 +113,6 @@ public class SuggestionsService extends AplicacionBase {
                 }
 
                 return listaEstudiosRecomendados;
-
-            } else {
-
-                List<EstudiosResponse> vacio = new ArrayList<>();
-                return vacio;
-            }
 
         } catch (NullPointerException ex) {
 
@@ -150,8 +142,6 @@ public class SuggestionsService extends AplicacionBase {
         Informacion informacion = daoInformacion.find(id, Informacion.class);
 
         try {
-
-            if (informacion != null) {
 
                 String genero = informacion.get_genero();
                 Date fechaNacimiento = informacion.get_fechaNacimiento();
@@ -202,12 +192,6 @@ public class SuggestionsService extends AplicacionBase {
                 }
 
                 return listaEstudiosRecomendados;
-
-            } else {
-
-                List<EstudiosEncuestadoResponse> vacio = new ArrayList<>();
-                return vacio;
-            }
 
         } catch (NullPointerException ex) {
 

@@ -1,6 +1,8 @@
 package ucab.dsw.servicio;
 
 import ucab.dsw.Response.RespuestasAbiertasResponse;
+import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
+import ucab.dsw.entidades.PreguntaEncuesta;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -29,11 +31,44 @@ public class ReportesService extends AplicacionBase {
          *
          * NOTA: Este metodo esta en proceso
          */
-        
+
+        String SQL = null;
+
+        DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+        PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
+
         try {
 
-            return null;
+            String tipoPregunta = preguntaEncuesta.get_tipoPregunta();
 
+            if(tipoPregunta.equals("Abierta")){
+
+                EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+                EntityManager entitymanager = factory.createEntityManager();
+
+                SQL = "SELECT re._id as id, re._respuestaAbierta as respuestaAbierta FROM Respuesta as re, PreguntaEstudio as pes, PreguntaEncuesta as pe " +
+                        "WHERE pe._id = pes._preguntaEncuesta._id and pes._id = re._preguntaEstudio._id and pe._tipoPregunta = :tipoPregunta and pe._id = :id";
+
+                Query query = entitymanager.createQuery(SQL);
+                query.setParameter("id", id);
+                query.setParameter("tipoPregunta", tipoPregunta);
+
+                List<Object[]> listaRespuestas = query.getResultList();
+
+                List<RespuestasAbiertasResponse> listaRespuestasAbiertas = new ArrayList<>(listaRespuestas.size());
+
+                for (Object[] res: listaRespuestas){
+
+                    listaRespuestasAbiertas.add(new RespuestasAbiertasResponse((long)res[0], (String)res[1]));
+                }
+
+                return listaRespuestasAbiertas;
+
+            } else {
+
+                List<RespuestasAbiertasResponse> vacio = new ArrayList<>();
+                return vacio;
+            }
 
         } catch (NullPointerException ex) {
 
