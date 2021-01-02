@@ -222,31 +222,48 @@ public class SuggestionsService extends AplicacionBase {
 
     }
 
-    //Listar estudios recomendado para el cliente.
-    @GET
-    @Path("/suggestionsEstudiosCliente/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    public List<Estudio> listarEstudiosCliente(@PathParam("id") long id) throws NullPointerException{
-
-        /**
-         * Este método filtra los estudios que hagan referencia a la persona
-         * que realizo una solicitud (Estudios recomendados).
-         *
-         * NOTA:
-         */
-
-        try {
-
-
-
-        } catch (NullPointerException ex) {
-
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
-        }
-
-        return null;
-    }
-
+    /**
+	 * Listar estudios recomendados para el cliente.
+	 *
+	 * Este método filtra los estudios que hagan referencia a la persona
+	 * que realizó una solicitud (Estudios recomendados).
+	 *
+	 * @param id ID del cliente que desea generar la solicitud.
+	 * @throws NullPointerException Generado por
+	 * @return Lista de estudios recomendados.
+	 */
+	@GET
+	@Path("/suggestionsEstudiosEncuestado/{id}")
+	@Produces( MediaType.APPLICATION_JSON )
+	public List<EstudiosResponse> listarEstudiosCliente(@PathParam("id") long id) throws NullPointerException{
+		List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>();
+		
+		// Búsqueda del usuario
+		UsuarioAPI servicio = new UsuarioAPI();
+		Usuario usuario = servicio.consultarUsuario(id);
+		String rol = usuario.get_rol().get_nombre();
+		String estatus = usuario.get_estatus();
+		
+		// El usuario debe tener rol de Cliente y estar activo.
+		boolean condicion = rol.equals("Cliente")
+			                    && estatus.equals("Activo");
+		
+		if (condicion) {
+			String SQL = null;
+			
+			
+			try {
+			
+			
+			
+			} catch (NullPointerException ex) {
+				
+				String mensaje = ex.getMessage();
+				System.out.print(mensaje);
+				return null;
+			}
+		}
+		
+		return listaEstudiosRecomendados;
+	}
 }

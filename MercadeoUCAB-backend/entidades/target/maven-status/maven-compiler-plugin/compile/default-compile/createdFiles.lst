@@ -13,7 +13,7 @@ ucab\dsw\entidades\Hijo.class
 ucab\dsw\entidades\Usuario.class
 ucab\dsw\entidades\ProductoPresentacionTipo.class
 ucab\dsw\entidades\EntidadBase.class
-ucab\dsw\entidades\EstudioLugar.class
+ucab\dsw\entidades\SolicitudEstudioLugar.class
 ucab\dsw\entidades\NivelAcademico.class
 ucab\dsw\entidades\Respuesta.class
 ucab\dsw\entidades\Categoria.class
