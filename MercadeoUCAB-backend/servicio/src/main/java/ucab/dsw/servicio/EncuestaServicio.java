@@ -1,14 +1,12 @@
 package ucab.dsw.servicio;
 
 import lombok.extern.java.Log;
+import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.accesodatos.DaoPreguntaEstudio;
 import ucab.dsw.accesodatos.DaoRespuesta;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.dtos.RespuestaDto;
-import ucab.dsw.entidades.PreguntaEstudio;
-import ucab.dsw.entidades.Respuesta;
-import ucab.dsw.entidades.RespuestaPregunta;
-import ucab.dsw.entidades.Usuario;
+import ucab.dsw.entidades.*;
 import ucab.dsw.response.EncuestaResponse;
 import ucab.dsw.response.EstudioEncuestadoResponse;
 import ucab.dsw.response.RespuestaPreguntaResponse;
@@ -142,6 +140,7 @@ public class EncuestaServicio {
             DaoRespuesta dao = new DaoRespuesta();
             DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
             DaoUsuario daoUsuario = new DaoUsuario();
+            DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
 
             for (RespuestaDto respuestaDto: respuestas) {
                 Respuesta respuesta = new Respuesta();
@@ -155,8 +154,9 @@ public class EncuestaServicio {
 
                 PreguntaEstudio preguntaEstudio = daoPreguntaEstudio.find(respuestaDto.getPreguntaEstudioDto().getId(), PreguntaEstudio.class);
                 Usuario usuario = daoUsuario.find(respuestaDto.getUsuarioDto().getId(), Usuario.class);
-
+                PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(preguntaEstudio.get_preguntaEncuesta().get_id(), PreguntaEncuesta.class);
                 respuesta.set_usuario(usuario);
+                preguntaEstudio.set_preguntaEncuesta(preguntaEncuesta);
                 respuesta.set_preguntaEstudio(preguntaEstudio);
 
                 Respuesta resul = dao.insert(respuesta);
