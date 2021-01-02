@@ -12,6 +12,7 @@ import { EditCategoriaComponent } from '../categoria/edit-categoria/edit-categor
 import { EditEstudioComponent } from './edit-estudio/edit-estudio.component';
 
 
+
 @Component({
   selector: 'app-estudio',
   templateUrl: './estudios.component.html',

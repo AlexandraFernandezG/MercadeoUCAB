@@ -1,6 +1,6 @@
 <h4>¿Cómo desea asignar las preguntas?</h4>
-<div>
-<button type="submit"  mat-raised-button color="primary">Buscar preguntas generales</button>
-</div>
-<br><br><br>    
-<button type="submit"  mat-raised-button color="primary">Buscar preguntas recomendadas</button>
+
+<button type="submit"  mat-raised-button color="primary" class="nav-link" [routerLink]="['admin/preguntas', data.id]" >Buscar preguntas generales</button>
+
+<br><br> 
+<button type="submit"  mat-raised-button color="accent">Buscar preguntas recomendadas</button>

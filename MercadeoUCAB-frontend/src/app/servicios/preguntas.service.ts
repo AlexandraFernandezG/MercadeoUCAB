@@ -61,6 +61,7 @@ export class PreguntasService {
     );
   }
 
+
     /// Error HandleError
     handleError(error): Observable<never> {
       let errorMessage = '';

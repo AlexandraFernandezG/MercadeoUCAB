@@ -10,6 +10,9 @@ import { AddPreguntaComponent } from './add-pregunta/add-pregunta.component';
 import { EditPreguntaComponent } from '../pregunta/edit-pregunta/edit-pregunta.component';
 import { Subcategoria, Subcategoria2 } from 'src/app/modelos/subcategoria';
 import { SubcategoriasService } from 'src/app/servicios/subcategorias.service';
+import { PreguntasEstudioService } from 'src/app/servicios/preguntasestudios.service';
+import { PreguntaEstudio, PreguntaEstudio2 } from 'src/app/modelos/pregunta_estudio';
+import { Estudio2 } from 'src/app/modelos/estudio';
 
 
 @Component({
@@ -24,6 +27,7 @@ export class PreguntaComponent implements OnInit {
 
   constructor(
     private service: PreguntasService,
+    private servicePreguntaEstudio: PreguntasEstudioService,
     private serviceSubcategoria: SubcategoriasService,
     public actRoute: ActivatedRoute,
     public dialog: MatDialog,
@@ -32,8 +36,11 @@ export class PreguntaComponent implements OnInit {
     private location: Location
   ) { }
   preguntaForm: FormGroup;
+  idestudio: number;
 
   ngOnInit(): void {
+    this.idestudio = +this.actRoute.snapshot.paramMap.get("id");
+    console.log(this.idestudio);
     this.service.getPreguntas()
     .subscribe(data => {this.preguntas = data;
     } );
@@ -50,6 +57,19 @@ export class PreguntaComponent implements OnInit {
         data: {id}
       }
     );
+  }
+
+  Agregar(pregunta: Pregunta):void {
+    const id = 1;
+    const estatus = 'Activo';
+    this.servicePreguntaEstudio.createPreguntaEstudio({
+     id,
+    estatus,
+    preguntaEncuestaDto: pregunta._id,
+    estudioDto: this.idestudio
+
+    } as PreguntaEstudio2).subscribe();
+    console.log(PreguntaEstudio);
   }
 
   deletepregunta( pregunta: Pregunta): void{

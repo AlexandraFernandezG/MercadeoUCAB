@@ -23,7 +23,8 @@ export class AddPreguntaComponent implements OnInit {
     private service: PreguntasService,
     private serviceSubcategoria: SubcategoriasService,
     public actRoute: ActivatedRoute,
-    public dialogRef: MatDialogRef<PreguntaComponent>
+    public dialogRef: MatDialogRef<PreguntaComponent>,
+    
     ) {}
 
     preguntaForm = this.fb.group({

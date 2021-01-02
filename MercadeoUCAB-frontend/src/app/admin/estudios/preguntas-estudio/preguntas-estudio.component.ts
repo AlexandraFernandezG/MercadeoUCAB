@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { CategoriasService } from 'src/app/servicios/categorias.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +6,8 @@ import { Location } from '@angular/common';
 import { Pregunta, Pregunta2 } from 'src/app/modelos/pregunta';
 import { PreguntasService } from 'src/app/servicios/preguntas.service';
 import { DialogComponent } from '../dialog/dialog.component';
+import { PreguntasEstudioService } from 'src/app/servicios/preguntasestudios.service';
+import { PreguntaEstudio, PreguntaEstudio2 } from 'src/app/modelos/pregunta_estudio';
 
 @Component({
   selector: 'app-preguntas-estudio',
@@ -15,9 +16,12 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class PreguntasEstudioComponent implements OnInit {
 
+  preguntasEstudios: PreguntaEstudio[];
+  preguntas: Pregunta[];
+  id: number;
 
   constructor(
-    private service: PreguntasService,
+    private service: PreguntasEstudioService,
     public actRoute: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
@@ -26,11 +30,18 @@ export class PreguntasEstudioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+      this.id= +this.actRoute.snapshot.paramMap.get("id");
+      this.service.getPreguntasEstudio(this.id)
+      .subscribe(data => {this.preguntas = data;
+      } );
   }
 
-  openModal(){
-    this.dialog.open(DialogComponent);
+  openModal(id: number):void{
+    this.dialog.open(DialogComponent,
+      {
+        data: {id: id}
+      }
+      );
   }
 
 }
