@@ -180,10 +180,10 @@ public class SuggestionsService extends AplicacionBase {
                 EntityManager entitymanager = factory.createEntityManager();
 
                 SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
-                        "FROM Estudio as e, SolicitudEstudio as se " +
-                        "WHERE e._solicitudEstudio._id = se._id and " +
-                        "se._genero = :genero or se._estadoCivil = :estadoCivil or se._cantidadPersonas = :cantidadPersonas or " +
-                        "(se._edadMinima <= :edad and se._edadMaxima > :edad)";
+                        "FROM Estudio as e " +
+                        "WHERE e._solicitudEstudio._id in (SELECT se._id FROM SolicitudEstudio as se " +
+                        "WHERE se._genero = :genero or se._estadoCivil = :estadoCivil or se._cantidadPersonas = :cantidadPersonas or " +
+                        "(se._edadMinima <= :edad and se._edadMaxima > :edad)) ";
 
                 Query query = entitymanager.createQuery(SQL);
                 query.setParameter("genero", genero);
