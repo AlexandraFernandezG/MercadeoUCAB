@@ -83,25 +83,27 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
 
     //Agregar una respuesta de pregunta
     @POST
-    @Path("/addRespuestaPregunta")
+    @Path("/addRespuestaPregunta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public RespuestaPreguntaDto addRespuestaPregunta(RespuestaPreguntaDto respuestaPreguntaDto){
+    public RespuestaPreguntaDto addRespuestaPregunta(@PathParam("id") long id, List<RespuestaPreguntaDto> respuestas){
 
         RespuestaPreguntaDto resultado = new RespuestaPreguntaDto();
 
         try {
 
             DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
-            RespuestaPregunta respuestaPregunta = new RespuestaPregunta();
             DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+            for (RespuestaPreguntaDto respuestaPreguntaDto : respuestas) {
 
-            respuestaPregunta.set_nombre(respuestaPreguntaDto.getNombre());
-            respuestaPregunta.set_estatus(respuestaPreguntaDto.getEstatus());
-            PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(respuestaPreguntaDto.getPreguntaEncuestaDto().getId(), PreguntaEncuesta.class);
-            respuestaPregunta.set_preguntaEncuesta(preguntaEncuesta);
-            RespuestaPregunta resul = daoRespuestaPregunta.insert(respuestaPregunta);
-            resultado.setId(resul.get_id());
+                RespuestaPregunta respuestaPregunta = new RespuestaPregunta();
+                respuestaPregunta.set_nombre(respuestaPreguntaDto.getNombre());
+                respuestaPregunta.set_estatus(respuestaPreguntaDto.getEstatus());
+                PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
+                respuestaPregunta.set_preguntaEncuesta(preguntaEncuesta);
+                RespuestaPregunta resul = daoRespuestaPregunta.insert(respuestaPregunta);
+                resultado.setId(resul.get_id());
+            }
 
         } catch (Exception ex){
 
@@ -109,9 +111,8 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
             System.out.print(mensaje);
         }
 
-            return resultado;
+        return resultado;
     }
-
     //Actualizar respuesta pregunta
     @PUT
     @Path("/updateRespuestaPregunta/{id}")
