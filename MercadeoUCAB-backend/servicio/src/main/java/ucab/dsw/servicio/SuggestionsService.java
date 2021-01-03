@@ -87,6 +87,8 @@ public class SuggestionsService extends AplicacionBase {
 
         try {
 
+            if(solicitudEstudio != null) {
+
                 String genero = solicitudEstudio.get_genero();
                 String estadoCivil = solicitudEstudio.get_estadoCivil();
                 int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
@@ -109,10 +111,15 @@ public class SuggestionsService extends AplicacionBase {
 
                 for (Object[] est : listaEstudios) {
 
-                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5]));
+                    listaEstudiosRecomendados.add(new EstudiosResponse((long) est[0], (String) est[1], (String) est[2], (Date) est[3], (Date) est[4], (String) est[5]));
                 }
 
                 return listaEstudiosRecomendados;
+
+            } else {
+
+                return null;
+            }
 
         } catch (NullPointerException ex) {
 
@@ -142,6 +149,8 @@ public class SuggestionsService extends AplicacionBase {
         Informacion informacion = daoInformacion.find(id, Informacion.class);
 
         try {
+
+            if(informacion != null) {
 
                 String genero = informacion.get_genero();
                 Date fechaNacimiento = informacion.get_fechaNacimiento();
@@ -188,10 +197,15 @@ public class SuggestionsService extends AplicacionBase {
 
                 for (Object[] est : listaEstudios) {
 
-                    listaEstudiosRecomendados.add(new EstudiosEncuestadoResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5]));
+                    listaEstudiosRecomendados.add(new EstudiosEncuestadoResponse((long) est[0], (String) est[1], (String) est[2], (Date) est[3], (Date) est[4], (String) est[5]));
                 }
 
                 return listaEstudiosRecomendados;
+
+            } else {
+
+                return null;
+            }
 
         } catch (NullPointerException ex) {
 
@@ -205,7 +219,7 @@ public class SuggestionsService extends AplicacionBase {
 
     //Listar estudios recomendado para el cliente.
     @GET
-    @Path("/suggestionsEstudiosEncuestado/{id}")
+    @Path("/suggestionsEstudiosCliente/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public List<Estudio> listarEstudiosCliente(@PathParam("id") long id) throws NullPointerException{
 
