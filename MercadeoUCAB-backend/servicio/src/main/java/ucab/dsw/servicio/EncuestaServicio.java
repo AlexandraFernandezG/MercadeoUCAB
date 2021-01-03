@@ -39,15 +39,15 @@ public class EncuestaServicio {
 
             String sqlQuery = "SELECT PE._id AS idPreguntaEncuesta, PE._descripcion AS descripcion , PE._tipoPregunta AS tipoPregunta," +
                     " PES._id AS idPreguntaEstudio FROM PreguntaEncuesta AS PE, PreguntaEstudio AS PES WHERE " +
-                    "PE._id = PES._preguntaEncuesta._id AND PES._estudio._id =: id " +
+                    "PE._id = PES._preguntaEncuesta._id AND PES._estudio._id =:id " +
                     "ORDER BY PE._id ";
             Query query = entitymanager.createQuery( sqlQuery);
             query.setParameter("id", id);
-            List<Object[]> preguntas_respuestas = query.getResultList();
+            List<Object[]> preguntasRespuestas = query.getResultList();
 
-            List<EncuestaResponse> ResponseListUpdate = new ArrayList<>(preguntas_respuestas.size());
+            List<EncuestaResponse> ResponseListUpdate = new ArrayList<>(preguntasRespuestas.size());
 
-            for (Object[] r : preguntas_respuestas) {
+            for (Object[] r : preguntasRespuestas) {
                 ResponseListUpdate.add(new EncuestaResponse((long)r[0], (String)r[1], (String)r[2], (long)r[3]));
             }
 
@@ -74,7 +74,7 @@ public class EncuestaServicio {
             String sqlQuery = "SELECT RP._preguntaEncuesta._id AS id, RP._nombre AS pregunta" +
                     " FROM PreguntaEncuesta AS PE, PreguntaEstudio AS PES, RespuestaPregunta AS RP WHERE " +
                     "PE._id = PES._preguntaEncuesta._id AND PE._id = RP._preguntaEncuesta._id AND " +
-                    "PES._estudio._id =: id " +
+                    "PES._estudio._id =:id " +
                     "ORDER BY PE._id";
             Query query = entitymanager.createQuery( sqlQuery );
             query.setParameter("id", id);
@@ -108,7 +108,7 @@ public class EncuestaServicio {
             String sqlQuery = "SELECT DISTINCT R._id AS idRespuesta, U._id AS idUsuario, U._correoelectronico AS correo," +
                     " U._nombre AS nombreUsuario FROM PreguntaEstudio AS PE, Respuesta AS R, Usuario U WHERE" +
                     " PE._estudio._id = R._preguntaEstudio._id AND R._usuario._id = U._id AND " +
-                    "U._rol._id = 4 AND PE._estudio._id =: id ";
+                    "U._rol._id = 4 AND PE._estudio._id =:id ";
             Query query = entitymanager.createQuery( sqlQuery);
             query.setParameter("id", id);
 
