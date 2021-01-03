@@ -80,22 +80,22 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
             return null;
         }
     }
-    
+
     //Agregar una respuesta de pregunta
     @POST
     @Path("/addRespuestaPregunta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
     public RespuestaPreguntaDto addRespuestaPregunta(@PathParam("id") long id, List<RespuestaPreguntaDto> respuestas){
-        
+
         RespuestaPreguntaDto resultado = new RespuestaPreguntaDto();
-        
+
         try {
-            
+
             DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
             DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
             for (RespuestaPreguntaDto respuestaPreguntaDto : respuestas) {
-                
+
                 RespuestaPregunta respuestaPregunta = new RespuestaPregunta();
                 respuestaPregunta.set_nombre(respuestaPreguntaDto.getNombre());
                 respuestaPregunta.set_estatus(respuestaPreguntaDto.getEstatus());
@@ -104,14 +104,14 @@ public class RespuestaPreguntaAPI extends AplicacionBase{
                 RespuestaPregunta resul = daoRespuestaPregunta.insert(respuestaPregunta);
                 resultado.setId(resul.get_id());
             }
-            
+
         } catch (Exception ex){
-            
+
             String mensaje = ex.getMessage();
             System.out.print(mensaje);
         }
-        
-        return resultado; // Devuelve la última respuesta de la lista.
+
+        return resultado;
     }
 
     //Actualizar respuesta pregunta
