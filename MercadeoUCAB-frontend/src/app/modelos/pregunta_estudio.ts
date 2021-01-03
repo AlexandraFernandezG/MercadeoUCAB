@@ -20,5 +20,13 @@ export class PreguntaEstudio2{
      ){}
      }
 
+export class PreguntaEstudio3{
+  constructor(
+    public idPreguntaEncuesta: number,
+    public pregunta: string,
+    public tipoPregunta: string,
+ ){}
+    }
+
 
 

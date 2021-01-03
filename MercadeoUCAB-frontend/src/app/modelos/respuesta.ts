@@ -17,14 +17,14 @@ export class Respuesta {
    }
 export class Respuesta2{
      constructor(
-       public id: number,
        public estatus: string,
-       public respuestaAbierta: string,
-       public escala: string,
-       public verdaderoFalso: string,
-       public respuestaSimple: string,
-       public respuestaMultiple: string,
        public usuarioDto: number,
-       public preguntaEstudioDto: number
+       public preguntaEstudioDto: number,
+       public id?: number,
+       public respuestaAbierta?: string,
+       public escala?: string,
+       public verdaderoFalso?: string,
+       public respuestaSimple?: string,
+       public respuestaMultiple?: string,
      ){}
      }

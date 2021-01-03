@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input'; 
+import { ActivatedRoute, Router } from '@angular/router';
+import { Pregunta, Pregunta2, PreguntaEncuesta } from 'src/app/modelos/pregunta';
+import { Respuesta, Respuesta2 } from 'src/app/modelos/respuesta';
+import { respuestaPregunta, respuestaPregunta2 } from 'src/app/modelos/respuestaPregunta';
+import { EncuestasService } from 'src/app/servicios/encuestas.service';
 
 @Component({
   selector: 'app-respuestas-encuesta',
@@ -10,12 +16,114 @@ import {MatInputModule} from '@angular/material/input';
 })
 export class RespuestasEncuestaComponent implements OnInit {
 
-  constructor() {
-   }
-  ngOnInit(): void {
+  preguntas: Pregunta[];
+  preguntas2: PreguntaEncuesta[];
 
-  }
+  constructor(
+    private service: EncuestasService
+  ) { }
+  
+  respuestas = <any>[];
+  respuestas2: Respuesta2[];
   favoriteSeason: string;
-  seasons: string[] = ['Invierno', 'Primavera', 'Verano', 'Otoño'];
+  escalas: number[] = [1, 2 , 3, 4, 5];
+  opcionesVF: string[] = ['Verdadero' , 'Falso'];
+  respuestasAso: respuestaPregunta[];
+  respuestasAso2: respuestaPregunta2[];
+  
+  ngOnInit(): void {
+    this.service.getPreguntasEncuesta(1)
+    .subscribe(data => {this.preguntas2 = data;
+      console.log(this.preguntas);
+    } );
+    this.service.getRespuestasAsociadas(1)
+    .subscribe(data => {this.respuestasAso2 = data;
+      console.log(this.respuestasAso);
+    } );
+  }
+
+
+  enviarRespuestas() {
+    let respuestas2: Respuesta2[] = [];
+    let h = 0;
+    for(let j = 0; j < this.respuestas.length; j++){
+      if (this.respuestas[j] === undefined){
+        this.respuestas.splice(j, 1);
+      }
+    }
+
+    for(let k = 0; k < this.preguntas2.length; k++){
+
+      if (this.preguntas2[k].tipoPregunta === 'Abierta') {
+
+        let resp: Respuesta2 = {
+          estatus: 'Activo',
+          respuestaAbierta: this.respuestas[h],
+          usuarioDto: 1,
+          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+        };
+        h++;
+
+        respuestas2.push(resp);
+      }
+
+      if (this.preguntas2[k].tipoPregunta === 'Seleccion Simple') {
+
+        let resp: Respuesta2 = {
+          estatus: 'Activo',
+          respuestaSimple: this.respuestas[h],
+          usuarioDto: 1,
+          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+        };
+        h++;
+
+        respuestas2.push(resp);
+      }
+
+      if (this.preguntas2[k].tipoPregunta === 'Verdadero o Falso') {
+
+        let resp: Respuesta2 = {
+          estatus: 'Activo',
+          verdaderoFalso: this.respuestas[h],
+          usuarioDto: 1,
+          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+        };
+        h++;
+
+        respuestas2.push(resp);
+      }
+
+      if ( this.preguntas2[k].tipoPregunta === 'Escala') {
+
+        let resp: Respuesta2 = {
+          estatus: 'Activo',
+          escala: this.respuestas[h],
+          usuarioDto: 1,
+          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+        };
+        h++;
+
+        respuestas2.push(resp);
+      }
+
+      if (this.preguntas2[k].tipoPregunta === 'Selección Múltiple'){
+          for (let i =0; i < this.respuestas.length; i++){
+            if ((this.respuestas[i].fkPregunta === this.preguntas2[k].idPreguntaEncuesta)){
+
+               let resp: Respuesta2= {
+                estatus: 'Activo',
+                respuestaMultiple: this.respuestas[i].pregunta,
+                usuarioDto: 1,
+                preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+              };
+              respuestas2.push(resp);
+            }
+          }
+        }
+    }
+    console.log(this.respuestas);
+    console.log(respuestas2);
+    this.service.addRespuesta(respuestas2);
+    }
 
 }

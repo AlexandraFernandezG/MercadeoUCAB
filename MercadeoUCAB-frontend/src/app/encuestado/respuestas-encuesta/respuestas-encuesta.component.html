@@ -1,18 +1,75 @@
-<br><br><br>
-<label id="example-radio-group-label" class="inicio">Selecciona tu estacion favorita:</label>
-<mat-radio-group
-  aria-labelledby="example-radio-group-label"
-  class="example-radio-group"
-  [(ngModel)]="favoriteSeason">
-  <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-    {{season}}
-  </mat-radio-button>
-</mat-radio-group>
-<div>Tu estacion favorita es: {{favoriteSeason}}</div>
 <br><br>
-<mat-form-field class="example-full-width">
-    <mat-label>Respuesta abierta</mat-label>
-    <textarea matInput placeholder="Ejemplo. Esto me hace sentir..."></textarea>
-</mat-form-field>
+<div class="container modern-form">
+  <div class="text-center">
+    <h4 style="color: #212529;font-size: 25px;">Responder Encuesta</h4>
+  </div>
+  <ng-container *ngFor="let pregunta of preguntas2; let i = index">
+    <div class="justify-content-md-center justify-content-lg-center modern-form__form-container"
+      style="padding-right: 250px;padding-left: 250px;">
+      <div class="shadow p-3 mb-5 bg-white rounded">
+        <form>
+          <div class="form-row row-cols-2 flex-row flex-grow-0 justify-content-center">
 
-  
+            <div class="col col-contact">
+              <p>Pregunta {{i+1}}</p>
+              <p>{{pregunta.descripcion+' '}}</p>
+              <mat-form-field *ngIf="pregunta.tipoPregunta == 'Abierta'">
+                <textarea matInput placeholder="Ej. Esto me hace sentir..." name="respuestas[i]"
+                  [(ngModel)]="respuestas[i]"></textarea>
+              </mat-form-field>
+
+              <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Verdadero o Falso'"
+                aria-labelledby="example-radio-group-label" class="example-radio-group" name="respuestas[i]"
+                [(ngModel)]="respuestas[i]">
+                <ng-container *ngFor="let opcion of opcionesVF">
+
+                  <mat-radio-button class="example-radio-button" [value]="opcion">
+                    {{opcion}}
+                  </mat-radio-button>
+
+                </ng-container>
+              </mat-radio-group>
+
+              <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Escala'" aria-labelledby="example-radio-group-label"
+                class="example-radio-group" name="respuestas[i]" [(ngModel)]="respuestas[i]">
+                <ng-container *ngFor="let escala of escalas">
+
+                  <mat-radio-button class="example-radio-button" [value]="escala">
+                    {{escala}}
+                  </mat-radio-button>
+                </ng-container>
+              </mat-radio-group>
+
+              <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Selección Simple'" aria-labelledby="example-radio-group-label"
+                class="example-radio-group" name="respuestas[i]" [(ngModel)]="respuestas[i]">
+                <ng-container *ngFor="let respuesta of respuestasAso2">
+                  <ng-container *ngIf="pregunta.idPreguntaEncuesta == respuesta.fkPregunta">
+                    <mat-radio-button class="example-radio-button" [value]="respuesta.pregunta">
+                      {{respuesta.pregunta}}
+                    </mat-radio-button>
+                  </ng-container>
+                </ng-container>
+              </mat-radio-group>
+
+              <mat-radio-group *ngIf = "pregunta.tipoPregunta == 'Selección Múltiple'">
+                <ng-container *ngFor="let respuesta of respuestasAso2">
+                  <li *ngIf = "pregunta.idPreguntaEncuesta == respuesta.fkPregunta">
+
+                    <mat-checkbox name="respuesta.pregunta" [(ngModel)] = "respuesta.pregunta">
+                      {{respuesta.pregunta}}
+
+                    </mat-checkbox>
+                  </li>
+                </ng-container>
+              </mat-radio-group>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+  <div>
+    <button type="submit" mat-raised-button color="primary" (click)="enviarRespuestas()">Enviar</button>
+  </div>
+</div>

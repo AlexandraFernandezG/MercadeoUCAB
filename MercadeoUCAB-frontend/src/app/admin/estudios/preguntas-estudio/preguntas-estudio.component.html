@@ -22,7 +22,7 @@
       <table id="dataTable" #dataTable class="table table-bordered table-hover" style="background-color: #FDF4E3;">
         <thead class="thead" style="background-color:rgba(84, 157, 252, 0.993); color: #FFFF;">
           <tr class="text-center">
-            <th scope="col">id</th>
+            <th scope="col">Numero</th>
             <th scope="col">Descripción</th>
             <th scope="col">Tipo de Pregunta</th>
             <th scope="col">Subcategoria que pertenece</th>
@@ -30,8 +30,8 @@
           </tr>
         </thead>
         <tbody class="tbody">
-          <tr *ngFor="let pregunta of preguntas">
-            <th class="text-center" scope="row">{{pregunta._id}}</th>
+          <tr *ngFor="let pregunta of preguntas; let i=index">
+            <th class="text-center" scope="row">{{i+1}}</th>
             <td class="text-center">{{pregunta._descripcion}}</td>
             <td class="text-center">{{pregunta._tipoPregunta}}</td>
             <td class="text-center">{{pregunta._subcategoria._nombre}}</td>

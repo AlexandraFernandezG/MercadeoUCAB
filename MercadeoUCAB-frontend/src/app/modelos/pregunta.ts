@@ -21,6 +21,26 @@ export class Pregunta2{
         public estatus: string,
      ){}
      }
+export class Pregunta3{
+   constructor(
+      public idPregunta: number,
+      public descripcionPregunta: string,
+      public tipoPregunta: string,
+      public estatusPregunta: string,
+   ){}
+   }
+
+export class  PreguntaEncuesta{
+      constructor(
+      public idPreguntaEncuesta: number,
+      public descripcion: string,
+      public tipoPregunta: string,
+      public estado?: string,
+      public subcategoriaDto?: number,
+      public usuarioDto?: number,
+      public idPreguntaEstudio?: number,
+      ){}
+    }
 
 
 

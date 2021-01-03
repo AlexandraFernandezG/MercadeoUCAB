@@ -4,14 +4,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap} from 'rxjs/operators';
 import { CategoriasService } from './categorias.service';
-import { respuestaPregunta2 } from '../modelos/respuestaPregunta';
+import { respuestaPregunta, respuestaPregunta2 } from '../modelos/respuestaPregunta';
 import { Estudio } from '../modelos/estudio';
-import { Pregunta, Pregunta3 } from '../modelos/pregunta';
+import { Pregunta, Pregunta3, PreguntaEncuesta } from '../modelos/pregunta';
+import { Respuesta2 } from '../modelos/respuesta';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PreguntasEstudioService {
+export class EncuestasService {
 
   preguntaEstudio: PreguntaEstudio[];
   estudio: Estudio[];
@@ -29,24 +30,27 @@ export class PreguntasEstudioService {
     })
   };
 
-  getPreguntasEstudio(id:number){
-    return this.http.get<Pregunta[]>(this.url + 'preguntasEstudio/listarPreguntasEstudio/' +  id);
+  getPreguntasEncuesta(id:number){
+    console.log("entre1");
+    return this.http.get<PreguntaEncuesta[]>(this.url + 'encuesta/preguntas/' +  id);
   }
 
-  getPreguntasSugeridasEstudio(id:number){
-    console.log('sugerencias');
-    return this.http.get<Pregunta3[]>(this.url + 'suggestions/suggestionsPreguntasEstudio/' +  id);
+  getRespuestasAsociadas(id:number){
+    console.log("entre2");
+    return this.http.get<any[]>(this.url + 'encuesta/respuestas/' +  id);
   }
 
-  createPreguntaEstudio(preguntaEstudio: PreguntaEstudio2): Observable<PreguntaEstudio2>{
-    console.log(preguntaEstudio);
+  addRespuesta(respuesta:Respuesta2[]){
     console.log('entre');
-    return this.http.post<PreguntaEstudio2>(this.url + 'preguntasEstudio/addPreguntaEstudio', JSON.stringify(preguntaEstudio), this.httpOptions)
-    .pipe(
-      tap((newpregunta: PreguntaEstudio2) => console.log(`added preguntaEstudio w/ id=${newpregunta.id}`)),
-      catchError(this.handleError)
+    return this.http.post(this.url +'encuesta/responder' , respuesta)
+    .subscribe(
+      response => {
+        console.log('guardar respuestas' + response);
+      },
+      error => console.log('Error al guardar respuestas' + error)
     );
   }
+
 
     /// Error HandleError
     handleError(error): Observable<never> {
