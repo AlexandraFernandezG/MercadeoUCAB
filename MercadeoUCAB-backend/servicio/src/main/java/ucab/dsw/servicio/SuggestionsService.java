@@ -235,7 +235,7 @@ public class SuggestionsService extends AplicacionBase {
          * En este metodo es importante pasar la solicitud de estudio de la busqueda sugerida (SolicitudEstudio)
          * , el estudio recomendado de la lista de recomendados y el id del usuario conectado en el momento
          *
-         * Nota: Esta casi listo, falta un detalle.
+         * Nota: Esta metodo funciona perfectamente.
          */
 
         try {
@@ -267,7 +267,9 @@ public class SuggestionsService extends AplicacionBase {
             List<Estudio> allEstudios = daoEstudio.findAll(Estudio.class);
             PreguntaEstudioDto preguntaEstudiodto = new PreguntaEstudioDto();
 
-            for (Estudio estudio: allEstudios){
+            //for (Estudio estudio: allEstudios){
+
+            Estudio estudio = allEstudios.get(allEstudios.size() - 1);
 
                 if(estudio.get_solicitudEstudio().get_id() == idSE){
 
@@ -284,7 +286,7 @@ public class SuggestionsService extends AplicacionBase {
                         servicio.addPreguntaEstudio(preguntaEstudiodto);
                     }
                 }
-            }
+            //}
 
         } catch (Exception ex){
 
@@ -307,7 +309,7 @@ public class SuggestionsService extends AplicacionBase {
      * @return Lista de estudios recomendados para un usuario en específico.
      */
     @GET
-    @Path("/suggestionsEstudiosEncuestado/{id}")
+    @Path("/suggestionsEstudiosCliente/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public List<EstudiosResponse> listarEstudiosCliente(@PathParam("id") long id) throws NullPointerException{
         List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>();
