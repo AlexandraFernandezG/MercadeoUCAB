@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatExpansionModule} from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -158,6 +159,7 @@ import { PreguntasSugeridasComponent } from './admin/preguntas-sugeridas/pregunt
     MatPaginatorModule,
     MatRadioModule,
     MatToolbarModule,
+    MatCheckboxModule,
     MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,

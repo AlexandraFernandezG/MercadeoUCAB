@@ -26,5 +26,6 @@ export class Respuesta2{
        public verdaderoFalso?: string,
        public respuestaSimple?: string,
        public respuestaMultiple?: string,
+       public completado?: boolean,
      ){}
      }

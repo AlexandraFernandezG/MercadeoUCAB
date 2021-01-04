@@ -6,7 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pregunta, Pregunta2, PreguntaEncuesta } from 'src/app/modelos/pregunta';
 import { Respuesta, Respuesta2 } from 'src/app/modelos/respuesta';
-import { respuestaPregunta, respuestaPregunta2 } from 'src/app/modelos/respuestaPregunta';
+import { respuestaPregunta, respuestaPregunta2, respuestaPregunta3 } from 'src/app/modelos/respuestaPregunta';
 import { EncuestasService } from 'src/app/servicios/encuestas.service';
 
 @Component({
@@ -24,12 +24,15 @@ export class RespuestasEncuestaComponent implements OnInit {
   ) { }
   
   respuestas = <any>[];
+  respuestasvf =<any>[];
+  respuestasescala=<any>[];
+  respuestassimple=<any>[];
   respuestas2: Respuesta2[];
   favoriteSeason: string;
   escalas: number[] = [1, 2 , 3, 4, 5];
   opcionesVF: string[] = ['Verdadero' , 'Falso'];
   respuestasAso: respuestaPregunta[];
-  respuestasAso2: respuestaPregunta2[];
+  respuestasAso2: respuestaPregunta3[];
   
   ngOnInit(): void {
     this.service.getPreguntasEncuesta(1)
@@ -65,29 +68,23 @@ export class RespuestasEncuestaComponent implements OnInit {
         h++;
 
         respuestas2.push(resp);
+        console.log('respuestaabierta h:', h);
+        console.log('respuestaabierta k:', k);
+        console.log('respuestaabierta:', resp);
       }
 
-      if (this.preguntas2[k].tipoPregunta === 'Seleccion Simple') {
-
-        let resp: Respuesta2 = {
-          estatus: 'Activo',
-          respuestaSimple: this.respuestas[h],
-          usuarioDto: 1,
-          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
-        };
-        h++;
-
-        respuestas2.push(resp);
-      }
 
       if (this.preguntas2[k].tipoPregunta === 'Verdadero o Falso') {
 
         let resp: Respuesta2 = {
           estatus: 'Activo',
-          verdaderoFalso: this.respuestas[h],
+          verdaderoFalso: this.respuestasvf[h],
           usuarioDto: 1,
           preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
         };
+        console.log('respuestavf h:', h);
+        console.log('respuestavf k:', k);
+        console.log('respuestavf:', resp);
         h++;
 
         respuestas2.push(resp);
@@ -97,26 +94,49 @@ export class RespuestasEncuestaComponent implements OnInit {
 
         let resp: Respuesta2 = {
           estatus: 'Activo',
-          escala: this.respuestas[h],
+          escala: this.respuestasescala[h],
           usuarioDto: 1,
           preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
         };
+        console.log('respuestaescala h:', h);
+        console.log('respuestaescala k:', k);
+        console.log('respuestaescala:', resp);
+        h++;
+
+        respuestas2.push(resp);
+      }
+
+      if (this.preguntas2[k].tipoPregunta === 'Selección Simple') {
+
+        let resp: Respuesta2 = {
+          estatus: 'Activo',
+          respuestaSimple: this.respuestassimple[h],
+          usuarioDto: 1,
+          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+        };
+        console.log('respuestaseleccions h:', h);
+        console.log('respuestaseleccions k:', k);
+        console.log('respuestaseleccions:', resp);
         h++;
 
         respuestas2.push(resp);
       }
 
       if (this.preguntas2[k].tipoPregunta === 'Selección Múltiple'){
-          for (let i =0; i < this.respuestas.length; i++){
-            if ((this.respuestas[i].fkPregunta === this.preguntas2[k].idPreguntaEncuesta)){
+          for (let i =0; i < this.respuestasAso2.length; i++){
+            if ((this.respuestasAso2[i].fkPregunta === this.preguntas2[k].idPreguntaEncuesta)
+               &&(this.respuestasAso2[i].completado === true)){
 
-               let resp: Respuesta2= {
+               let resp: Respuesta2 = {
                 estatus: 'Activo',
-                respuestaMultiple: this.respuestas[i].pregunta,
+                respuestaMultiple: this.respuestasAso2[i].pregunta,
                 usuarioDto: 1,
                 preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
               };
               respuestas2.push(resp);
+              console.log('respuestamultiple h:', h);
+              console.log('respuestamultiple k:', k);
+              console.log('respuestamultiple:', resp);
             }
           }
         }

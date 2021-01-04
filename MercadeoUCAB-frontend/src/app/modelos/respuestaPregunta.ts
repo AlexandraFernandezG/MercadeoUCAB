@@ -18,5 +18,16 @@ export class respuestaPregunta2{
      ){}
      }
 
+export class respuestaPregunta3{
+      constructor(
+         public pregunta: string,
+         public fkPregunta: number,
+         public id?: number,
+         public estatus?: string,
+         public completado?: boolean,
+      ){}
+      }
+ 
+
 
 

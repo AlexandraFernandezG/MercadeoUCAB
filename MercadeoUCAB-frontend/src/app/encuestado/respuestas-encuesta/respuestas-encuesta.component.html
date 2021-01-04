@@ -3,7 +3,7 @@
   <div class="text-center">
     <h4 style="color: #212529;font-size: 25px;">Responder Encuesta</h4>
   </div>
-  <ng-container *ngFor="let pregunta of preguntas2; let i = index">
+  <ng-container *ngFor="let pregunta of preguntas2; let in = index; let i=index">
     <div class="justify-content-md-center justify-content-lg-center modern-form__form-container"
       style="padding-right: 250px;padding-left: 250px;">
       <div class="shadow p-3 mb-5 bg-white rounded">
@@ -11,7 +11,7 @@
           <div class="form-row row-cols-2 flex-row flex-grow-0 justify-content-center">
 
             <div class="col col-contact">
-              <p>Pregunta {{i+1}}</p>
+              <p>Pregunta {{in+1}}</p>
               <p>{{pregunta.descripcion+' '}}</p>
               <mat-form-field *ngIf="pregunta.tipoPregunta == 'Abierta'">
                 <textarea matInput placeholder="Ej. Esto me hace sentir..." name="respuestas[i]"
@@ -19,8 +19,8 @@
               </mat-form-field>
 
               <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Verdadero o Falso'"
-                aria-labelledby="example-radio-group-label" class="example-radio-group" name="respuestas[i]"
-                [(ngModel)]="respuestas[i]">
+                aria-labelledby="example-radio-group-label" class="example-radio-group" name="respuestasvf[i]"
+                [(ngModel)]="respuestasvf[i]">
                 <ng-container *ngFor="let opcion of opcionesVF">
 
                   <mat-radio-button class="example-radio-button" [value]="opcion">
@@ -31,7 +31,7 @@
               </mat-radio-group>
 
               <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Escala'" aria-labelledby="example-radio-group-label"
-                class="example-radio-group" name="respuestas[i]" [(ngModel)]="respuestas[i]">
+                class="example-radio-group" name="respuestasescala[i]" [(ngModel)]="respuestasescala[i]">
                 <ng-container *ngFor="let escala of escalas">
 
                   <mat-radio-button class="example-radio-button" [value]="escala">
@@ -41,7 +41,7 @@
               </mat-radio-group>
 
               <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Selección Simple'" aria-labelledby="example-radio-group-label"
-                class="example-radio-group" name="respuestas[i]" [(ngModel)]="respuestas[i]">
+                class="example-radio-group" name="respuestassimple[i]" [(ngModel)]="respuestassimple[i]">
                 <ng-container *ngFor="let respuesta of respuestasAso2">
                   <ng-container *ngIf="pregunta.idPreguntaEncuesta == respuesta.fkPregunta">
                     <mat-radio-button class="example-radio-button" [value]="respuesta.pregunta">
@@ -51,15 +51,16 @@
                 </ng-container>
               </mat-radio-group>
 
-              <mat-radio-group *ngIf = "pregunta.tipoPregunta == 'Selección Múltiple'">
+              <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Selección Múltiple'" >
                 <ng-container *ngFor="let respuesta of respuestasAso2">
-                  <li *ngIf = "pregunta.idPreguntaEncuesta == respuesta.fkPregunta">
+                  <ul>
+                  <li *ngIf="pregunta.idPreguntaEncuesta == respuesta.fkPregunta">
 
-                    <mat-checkbox name="respuesta.pregunta" [(ngModel)] = "respuesta.pregunta">
+                    <mat-checkbox name="respuesta.completado" [(ngModel)]="respuesta.completado" ngDefaultControl >
                       {{respuesta.pregunta}}
-
                     </mat-checkbox>
                   </li>
+                </ul>
                 </ng-container>
               </mat-radio-group>
 

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap} from 'rxjs/operators';
 import { CategoriasService } from './categorias.service';
-import { respuestaPregunta, respuestaPregunta2 } from '../modelos/respuestaPregunta';
+import { respuestaPregunta, respuestaPregunta2, respuestaPregunta3 } from '../modelos/respuestaPregunta';
 import { Estudio } from '../modelos/estudio';
 import { Pregunta, Pregunta3, PreguntaEncuesta } from '../modelos/pregunta';
 import { Respuesta2 } from '../modelos/respuesta';
@@ -37,7 +37,7 @@ export class EncuestasService {
 
   getRespuestasAsociadas(id:number){
     console.log("entre2");
-    return this.http.get<any[]>(this.url + 'encuesta/respuestas/' +  id);
+    return this.http.get<respuestaPregunta3[]>(this.url + 'encuesta/respuestas/' +  id);
   }
 
   addRespuesta(respuesta:Respuesta2[]){
