@@ -49,10 +49,10 @@ export class LoginComponent implements OnInit {
           
           console.log('usuario:',this.user) ;
           console.log('Rol: ',this.user.rol) ;
-          if (this.user.rol === 'admin'){
+          if (this.user.rol === 'Administrador'){
             console.log ('Soy un administrador');
-            this.router.navigate(['/admin/categorias']);
-           localStorage.setItem('usuarioID', JSON.stringify(this.user._id));
+            this.router.navigate(['/admin']);
+            localStorage.setItem('usuarioID', JSON.stringify(this.user._id));
             localStorage.setItem('rol', JSON.stringify(this.user._fk_rol));
           }
           if (this.user.rol === 'Encuestado'){
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
           }
           if (this.user.rol === 'Cliente'){
             console.log('Soy un Cliente');
-            this.router.navigate(['/cliente/estudios']);
+            this.router.navigate(['/cliente']);
             localStorage.setItem('usuarioID', JSON.stringify(this.user._id));
             localStorage.setItem('rol', JSON.stringify(this.user.rol));
           }

@@ -100,7 +100,7 @@ export class SolicitudEstudioComponent implements OnInit {
     this.lugarService.getLugares().subscribe(lugaresData => {
       this.estados = lugaresData.filter(
         (obj) => {
-          if(obj._tipo == "estado"){
+          if(obj._tipo == "Estado"){
             return true;
           }
           return false;
@@ -111,7 +111,7 @@ export class SolicitudEstudioComponent implements OnInit {
     this.lugarService.getLugares().subscribe(lugaresData => {
       this.municipios = lugaresData.filter(
         (obj) => {
-          if(obj._tipo == "municipio"){
+          if(obj._tipo == "Municipio"){
             return true;
           }
           return false;
