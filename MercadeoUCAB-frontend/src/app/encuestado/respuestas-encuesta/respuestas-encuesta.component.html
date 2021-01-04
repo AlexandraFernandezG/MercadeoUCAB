@@ -19,8 +19,8 @@
               </mat-form-field>
 
               <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Verdadero o Falso'"
-                aria-labelledby="example-radio-group-label" class="example-radio-group" name="respuestasvf[i]"
-                [(ngModel)]="respuestasvf[i]">
+                aria-labelledby="example-radio-group-label" class="example-radio-group" name="respuestas[i]"
+                [(ngModel)]="respuestas[i]">
                 <ng-container *ngFor="let opcion of opcionesVF">
 
                   <mat-radio-button class="example-radio-button" [value]="opcion">
@@ -31,7 +31,7 @@
               </mat-radio-group>
 
               <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Escala'" aria-labelledby="example-radio-group-label"
-                class="example-radio-group" name="respuestasescala[i]" [(ngModel)]="respuestasescala[i]">
+                class="example-radio-group" name="respuestas[i]" [(ngModel)]="respuestas[i]">
                 <ng-container *ngFor="let escala of escalas">
 
                   <mat-radio-button class="example-radio-button" [value]="escala">
@@ -41,7 +41,7 @@
               </mat-radio-group>
 
               <mat-radio-group *ngIf="pregunta.tipoPregunta == 'Selección Simple'" aria-labelledby="example-radio-group-label"
-                class="example-radio-group" name="respuestassimple[i]" [(ngModel)]="respuestassimple[i]">
+                class="example-radio-group" name="respuestas[i]" [(ngModel)]="respuestas[i]">
                 <ng-container *ngFor="let respuesta of respuestasAso2">
                   <ng-container *ngIf="pregunta.idPreguntaEncuesta == respuesta.fkPregunta">
                     <mat-radio-button class="example-radio-button" [value]="respuesta.pregunta">

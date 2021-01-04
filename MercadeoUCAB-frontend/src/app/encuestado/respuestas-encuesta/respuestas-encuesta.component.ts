@@ -24,9 +24,6 @@ export class RespuestasEncuestaComponent implements OnInit {
   ) { }
   
   respuestas = <any>[];
-  respuestasvf =<any>[];
-  respuestasescala=<any>[];
-  respuestassimple=<any>[];
   respuestas2: Respuesta2[];
   favoriteSeason: string;
   escalas: number[] = [1, 2 , 3, 4, 5];
@@ -78,7 +75,7 @@ export class RespuestasEncuestaComponent implements OnInit {
 
         let resp: Respuesta2 = {
           estatus: 'Activo',
-          verdaderoFalso: this.respuestasvf[h],
+          verdaderoFalso: this.respuestas[h],
           usuarioDto: 1,
           preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
         };
@@ -94,7 +91,7 @@ export class RespuestasEncuestaComponent implements OnInit {
 
         let resp: Respuesta2 = {
           estatus: 'Activo',
-          escala: this.respuestasescala[h],
+          escala: this.respuestas[h],
           usuarioDto: 1,
           preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
         };
@@ -110,7 +107,7 @@ export class RespuestasEncuestaComponent implements OnInit {
 
         let resp: Respuesta2 = {
           estatus: 'Activo',
-          respuestaSimple: this.respuestassimple[h],
+          respuestaSimple: this.respuestas[h],
           usuarioDto: 1,
           preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
         };
