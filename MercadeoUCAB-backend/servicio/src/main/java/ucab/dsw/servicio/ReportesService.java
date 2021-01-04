@@ -22,15 +22,29 @@ import javax.ws.rs.core.MediaType;
 public class ReportesService extends AplicacionBase {
 
     @GET
-    @Path("respuestasPreguntaAbierta/{id}")
+    @Path("respuestasPregunta/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public List<RespuestasAbiertasResponse> listarRespuestasAbiertas(@PathParam("id") long id) throws NullPointerException{
+
+        try {
+
+            return null;
+
+        } catch (NullPointerException ex) {
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+
+        }
+    }
+
+
+    /*
+    @GET
+    @Path("/respuestasPreguntaAbierta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public List<RespuestasAbiertasResponse> listarRespuestasAbiertas(@PathParam("id") long id) throws NullPointerException {
-
-        /**
-         * Este método permite obtener las respuestas abiertas de una pregunta
-         *
-         * NOTA: Metodo secundario de emergencia
-         */
 
         String SQL = null;
 
@@ -76,7 +90,7 @@ public class ReportesService extends AplicacionBase {
             System.out.print(mensaje);
             return null;
         }
-    }
+    }*/
 
     @GET
     @Path("/porcentajeVF/{id}")
@@ -122,7 +136,7 @@ public class ReportesService extends AplicacionBase {
 
             //Obtener el porcentaje de verdadero
 
-            SQL_Verdadero = "SELECT 'Porcentaje :', COUNT(re._verdaderoFalso)*100/:contador_registros as Porcentaje FROM Respuesta as re, PreguntaEstudio as pe, Estudio as es " +
+            SQL_Verdadero = "SELECT COUNT(re._verdaderoFalso)*100/:contador_registros as Porcentaje FROM Respuesta as re, PreguntaEstudio as pe, Estudio as es " +
                     "WHERE es._id = pe._estudio._id and pe._id = re._preguntaEstudio._id and re._verdaderoFalso = 'Verdadero' and es._id = :id";
 
             Query query1 = entitymanager.createQuery(SQL_Verdadero);
@@ -133,7 +147,7 @@ public class ReportesService extends AplicacionBase {
 
             //Obtener el porcentaje falso
 
-            SQL_Falso = "SELECT 'Porcentaje: ', COUNT(re._verdaderoFalso)*100/:contador_registros as Porcentaje FROM Respuesta as re, PreguntaEstudio as pe, Estudio as es " +
+            SQL_Falso = "SELECT COUNT(re._verdaderoFalso)*100/:contador_registros as Porcentaje FROM Respuesta as re, PreguntaEstudio as pe, Estudio as es " +
                     "WHERE es._id = pe._estudio._id and pe._id = re._preguntaEstudio._id and re._verdaderoFalso = 'Falso' and es._id = :id";
 
             Query query2 = entitymanager.createQuery(SQL_Falso);

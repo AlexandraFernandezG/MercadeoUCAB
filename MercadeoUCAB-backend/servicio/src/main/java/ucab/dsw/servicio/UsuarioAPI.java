@@ -1,6 +1,7 @@
 package ucab.dsw.servicio;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import ucab.dsw.Response.UsuarioResponse;
 import ucab.dsw.accesodatos.DaoRol;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.directorioactivo.DirectorioActivo;
@@ -12,9 +13,14 @@ import ucab.dsw.entidades.Usuario;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.mail.MessagingException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path( "/usuario" )
@@ -43,7 +49,7 @@ public class UsuarioAPI extends AplicacionBase {
     @GET
     @Path("/consultarUsuario/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario consultarUsuario(@PathParam("id") long id) {
+    public Usuario consultarUsuario(@PathParam("id") long id) throws NullPointerException{
 
         DaoUsuario daoUsuario = new DaoUsuario();
 
@@ -57,6 +63,53 @@ public class UsuarioAPI extends AplicacionBase {
             return null;
         }
     }
+
+    @GET
+    @Path("/consultarUsuarioCorreo/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<UsuarioResponse> consultarUsuarioCorreo(@PathParam("email") String email) throws NullPointerException{
+
+        /**
+        * Este metodo permite obtener un usuario cuando le pasas un correo
+        *
+        *
+        * */
+
+        String SQL = null;
+
+        try {
+
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+            EntityManager entitymanager = factory.createEntityManager();
+
+            SQL = "SELECT u._id as idUsuario, u._nombre as nombre, u._codigoRecuperacion as codigoRecuperacion, u._correoelectronico as correo, u._estatus as estatus " +
+                    "FROM Usuario as u " +
+                    "WHERE u._correoelectronico = :email";
+
+            Query query = entitymanager.createQuery(SQL);
+            query.setParameter("email", email);
+
+            List<Object[]> listaUsuario = query.getResultList();
+
+            List<UsuarioResponse> listaUsuarioDefinitiva = new ArrayList<>(listaUsuario.size());
+
+            for (Object[] us: listaUsuario){
+
+                listaUsuarioDefinitiva.add(new UsuarioResponse((long)us[0], (String)us[1], (String)us[2], (String)us[3], (String)us[4]));
+            }
+
+            return listaUsuarioDefinitiva;
+
+        } catch (NullPointerException ex) {
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+        }
+
+
+    }
+
 
     @POST
     @Path("/addUsuario")

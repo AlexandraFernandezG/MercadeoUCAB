@@ -7,9 +7,9 @@ import ucab.dsw.accesodatos.DaoRespuesta;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.dtos.RespuestaDto;
 import ucab.dsw.entidades.*;
-import ucab.dsw.response.EncuestaResponse;
-import ucab.dsw.response.EstudioEncuestadoResponse;
-import ucab.dsw.response.RespuestaPreguntaResponse;
+import ucab.dsw.Response.EncuestaResponse;
+import ucab.dsw.Response.EstudioEncuestadoResponse;
+import ucab.dsw.Response.RespuestaPreguntaResponse;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

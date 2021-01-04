@@ -32,7 +32,7 @@ public class SuggestionsService extends AplicacionBase {
          * Este método permite obtener preguntas sugeridas a través
          * de un estudio seleccionado con correlación a un subcategoria (Se debe pasar el id del estudio)
          *
-         * NOTA: Este método funciona correctamente.
+         * NOTA: Este metodo funciona correctamente.
          */
 
         String SQL = null;
@@ -44,7 +44,8 @@ public class SuggestionsService extends AplicacionBase {
 
             SQL = "SELECT pe._id as idPregunta, pe._descripcion as descripcion, pe._tipoPregunta as tipoPregunta, pe._estatus as estatus FROM PreguntaEncuesta as pe" +
                     ", Estudio as e, PreguntaEstudio as pes WHERE e._id = pes._estudio._id and pes._preguntaEncuesta._id = pe._id and pe._subcategoria._id in " +
-                    "(SELECT sc._id FROM Subcategoria as sc, Producto as p, SolicitudEstudio as so, Estudio as e WHERE sc._id = p._subcategoria._id and p._id = so._producto._id and so._id = e._solicitudEstudio._id and e._id = :id)";
+                    "(SELECT sc._id FROM Subcategoria as sc, Producto as p, SolicitudEstudio as so, Estudio as e WHERE sc._id = p._subcategoria._id and p._id = so._producto._id and so._id = e._solicitudEstudio._id and e._id = :id and pe._id not in " +
+                    "(SELECT pes._preguntaEncuesta._id FROM PreguntaEstudio as pes, Estudio as e WHERE pes._estudio._id = e._id and e._id = :id))";
 
             Query query = entitymanager.createQuery(SQL);
             query.setParameter("id", id);
@@ -77,7 +78,7 @@ public class SuggestionsService extends AplicacionBase {
          * Este metodo permite obtener los estudios recomendados en base a una
          * solicitud de estudio (Estudios recomendados)
          *
-         * NOTA: Casi listo, faltaria mejorar.
+         * NOTA: Esta casi listo, falta detalles.
          */
 
         String SQL = null;
@@ -99,7 +100,9 @@ public class SuggestionsService extends AplicacionBase {
                 SQL = "SELECT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
                         "FROM Estudio as e, Usuario as u, Informacion as inf " +
                         "WHERE e._usuario._id = u._id and u._id = inf._usuario._id and " +
-                        "inf._genero = :genero or inf._estadoCivil = :estadoCivil or inf._cantidadPersonas = :cantidadPersonas";
+                        "inf._genero = :genero and " +
+                        "(inf._estadoCivil = :estadoCivil or inf._estadoCivil is null) and " +
+                        "(inf._cantidadPersonas = :cantidadPersonas or inf._cantidadPersonas is null)";
 
                 Query query = entitymanager.createQuery(SQL);
                 query.setParameter("genero", genero);
@@ -180,10 +183,12 @@ public class SuggestionsService extends AplicacionBase {
                 EntityManager entitymanager = factory.createEntityManager();
 
                 SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
-                        "FROM Estudio as e " +
-                        "WHERE e._solicitudEstudio._id in (SELECT se._id FROM SolicitudEstudio as se " +
-                        "WHERE se._genero = :genero or se._estadoCivil = :estadoCivil or se._cantidadPersonas = :cantidadPersonas or " +
-                        "(se._edadMinima <= :edad and se._edadMaxima > :edad)) ";
+                        "FROM Estudio as e, SolicitudEstudio as se " +
+                        "WHERE e._solicitudEstudio._id = se._id and " +
+                        "se._genero = :genero " +
+                        "and (se._estadoCivil = :estadoCivil or se._estadoCivil is null) " +
+                        "and (se._cantidadPersonas = :cantidadPersonas or se._cantidadPersonas is null) " +
+                        "and (se._edadMinima <= :edad and se._edadMaxima > :edad)";
 
                 Query query = entitymanager.createQuery(SQL);
                 query.setParameter("genero", genero);
@@ -227,7 +232,7 @@ public class SuggestionsService extends AplicacionBase {
          * Este método filtra los estudios que hagan referencia a la persona
          * que realizo una solicitud (Estudios recomendados).
          *
-         * NOTA: Hay que hacer
+         * NOTA:
          */
 
         try {
