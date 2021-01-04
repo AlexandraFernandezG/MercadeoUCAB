@@ -73,7 +73,7 @@ public class RespuestaPreguntaAPI_Test {
 			
 			// Respuesta 1 a insertar.
 			RespuestaPreguntaDto respuestaPreguntaDto1 = new RespuestaPreguntaDto();
-			respuestaPreguntaDto1.setNombre("No muy buena, la verdad");
+			respuestaPreguntaDto1.setNombre("SI");
 			respuestaPreguntaDto1.setEstatus("Inactivo");
 			respuestaPreguntaDto1.setPreguntaEncuestaDto(preguntaEncuestaDto);
 			
@@ -81,7 +81,7 @@ public class RespuestaPreguntaAPI_Test {
 			
 			// Respuesta 2 a insertar.
 			RespuestaPreguntaDto respuestaPreguntaDto2 = new RespuestaPreguntaDto();
-			respuestaPreguntaDto2.setNombre("¡La mejor!");
+			respuestaPreguntaDto2.setNombre("NO");
 			respuestaPreguntaDto2.setEstatus("Activo");
 			respuestaPreguntaDto2.setPreguntaEncuestaDto(preguntaEncuestaDto);
 			
