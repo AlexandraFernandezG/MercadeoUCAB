@@ -1,6 +1,5 @@
 ucab\dsw\dtos\MarcaDto.class
 ucab\dsw\dtos\OcupacionDto.class
-ucab\dsw\dtos\SolicitudEstudioLugarDto.class
 ucab\dsw\dtos\TipoDto.class
 ucab\dsw\dtos\PreguntaEncuestaDto.class
 ucab\dsw\dtos\DtoBase.class
@@ -16,6 +15,7 @@ ucab\dsw\dtos\MedioComunicacionDto.class
 ucab\dsw\dtos\NivelEconomicoDto.class
 ucab\dsw\dtos\ProductoPresentacionTipoDto.class
 ucab\dsw\dtos\EstudioDto.class
+ucab\dsw\dtos\EstudioLugarDto.class
 ucab\dsw\dtos\PresentacionDto.class
 ucab\dsw\dtos\UsuarioDto.class
 ucab\dsw\dtos\RespuestaDto.class

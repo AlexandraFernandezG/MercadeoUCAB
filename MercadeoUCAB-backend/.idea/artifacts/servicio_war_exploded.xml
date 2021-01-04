@@ -27,6 +27,7 @@
           <element id="archive" name="entidades-1.0-SNAPSHOT.jar">
             <element id="module-output" name="entidades" />
           </element>
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/com/apetoi/api/logic/dtos/1.0-SNAPSHOT/dtos-1.0-SNAPSHOT.jar" output-file-name="com.apetoi.api.logic-dtos-1.0-SNAPSHOT.jar" />
           <element id="library" level="project" name="Maven: com.thetransactioncompany:cors-filter:2.6" />
           <element id="library" level="project" name="Maven: com.thetransactioncompany:java-property-utils:1.9.1" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.10" />
@@ -35,7 +36,7 @@
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.11" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
-          <element id="archive" name="dtos-1.0-SNAPSHOT.jar">
+          <element id="archive" name="ucab.dsw-dtos-1.0-SNAPSHOT.jar">
             <element id="module-output" name="dtos" />
           </element>
           <element id="archive" name="excepciones-1.0-SNAPSHOT.jar">
