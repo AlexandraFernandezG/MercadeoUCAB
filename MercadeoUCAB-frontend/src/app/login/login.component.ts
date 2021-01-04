@@ -41,16 +41,18 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
   if (this.loginForm.valid) {
+      console.log('usuario:', this.usuario);
       this.service.login(this.usuario).subscribe( data  => {
         this.user = data;
-        console.log(data);
+        console.log('Data:',data);
         if (this.user.estado === 'success') {
-          console.log(this.user.correo) ;
-          console.log(this.user.rol) ;
-          if (this.user.rol === 'Administrador'){
+          
+          console.log('usuario:',this.user) ;
+          console.log('Rol: ',this.user.rol) ;
+          if (this.user.rol === 'admin'){
             console.log ('Soy un administrador');
             this.router.navigate(['/admin/categorias']);
-            localStorage.setItem('usuarioID', JSON.stringify(this.user._id));
+            localStorage.setItem('usuarioID', JSON.stringify(this.usuario.id));
             localStorage.setItem('rol', JSON.stringify(this.user._fk_rol));
           }
           if (this.user.rol === 'Encuestado'){

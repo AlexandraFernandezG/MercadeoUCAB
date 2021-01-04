@@ -28,6 +28,8 @@ import { EstudiosComponent } from './admin/estudios/estudios.component';
 import { PreguntasEstudioComponent } from './admin/estudios/preguntas-estudio/preguntas-estudio.component';
 import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analista-poblacion.component';
 import { PreguntasSugeridasComponent } from './admin/preguntas-sugeridas/preguntas-sugeridas.component';
+import { ResultadosComponent } from './cliente/resultados/resultados.component';
+import { EncuestadoComponent } from './encuestado/encuestado.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -50,6 +52,8 @@ const routes: Routes = [
   { path: 'cliente/estudios', component: EstudiosClienteComponent },
   { path: 'cliente/solicitar_estudio', component: SolicitudEstudioComponent },
   { path: 'cliente/producto', component: ProductoComponent },
+  { path: 'cliente/resultados', component: ResultadosComponent },
+  { path: 'encuestado', component: EncuestadoComponent },
   { path: 'encuestado/estudios', component: EstudiosEncuestadoComponent },
   { path: 'encuestado/registro-encuestado', component: RegistroEncuestadoComponent },
   { path: 'encuestado/respuestas-encuesta', component: RespuestasEncuestaComponent },

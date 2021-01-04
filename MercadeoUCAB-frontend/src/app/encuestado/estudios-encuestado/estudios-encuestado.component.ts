@@ -18,21 +18,22 @@ export class EstudiosEncuestadoComponent implements OnInit {
     private dialog: MatDialog,
     private _router: Router
    ) { }
-
+  
+  id: number = 4;
   estudios: Estudio[];  
   displayedColumns: string[] = ['_id', 'nombre',  '_estatus', 'acciones'];
   dataSource: MatTableDataSource<Estudio>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit(): void {
     
-    this.estudiosService.getEstudios().subscribe(
+    this.estudiosService.getEstudiosEncuestado(this.id).subscribe(
       estudios => { 
         this.dataSource = new MatTableDataSource<Estudio>(estudios);
         this.dataSource.paginator = this.paginator;
       });
     
 
-    this.estudiosService.getEstudios().subscribe(estudios => console.log(estudios));
+    this.estudiosService.getEstudiosEncuestado(this.id).subscribe(estudios => console.log(estudios));
 
   }
 

@@ -81,7 +81,7 @@ import { DialogComponent } from './admin/estudios/dialog/dialog.component';
 import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analista-poblacion.component';
 import { EditarSolicitudComponent } from './analista/editar-solicitud/editar-solicitud.component';
 import { PreguntasSugeridasComponent } from './admin/preguntas-sugeridas/preguntas-sugeridas.component';
-
+import { ResultadosComponent } from './cliente/resultados/resultados.component';
 
 @NgModule({
   declarations: [
@@ -135,7 +135,8 @@ import { PreguntasSugeridasComponent } from './admin/preguntas-sugeridas/pregunt
     DialogComponent,
     AnalistaPoblacionComponent,
     EditarSolicitudComponent,
-    PreguntasSugeridasComponent
+    PreguntasSugeridasComponent,
+    ResultadosComponent
   ],
   imports: [
     RouterModule,
