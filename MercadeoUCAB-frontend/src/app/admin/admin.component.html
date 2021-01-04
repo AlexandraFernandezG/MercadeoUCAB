@@ -3,6 +3,7 @@
     <br>
     <div id="wrapper">
         <!-- Bookmark form -->
+        <nav>
         <ul class="sidebar navbar-nav">
             <br>
             <button (click)="action()" class="btn btn-link btn-sm text-white text-right py-2" id="sidebarToggle">
@@ -19,7 +20,7 @@
             <li class="nav-item">
                 <div>
                     <div>
-                        <a class="nav-link" href="admin/categorias">
+                        <a class="nav-link" routerLink="categorias">
                             <i class="far fa-newspaper"></i>
                             <span class="ml-2">Gestión de Categorias</span></a>
                     </div>
@@ -28,7 +29,7 @@
             <li class="nav-item">
                 <div>
                     <div>
-                        <a class="nav-link" href="admin/subcategorias">
+                        <a class="nav-link" routerLink="subcategorias">
                             <i class="far fa-newspaper"></i>
                             <span class="ml-2">Gestión de Subcategorias</span></a>
                     </div>
@@ -37,7 +38,7 @@
             <li class="nav-item">
 
                 <div>
-                    <a class="nav-link" href="admin/marcas">
+                    <a class="nav-link" routerLink="marcas">
                         <i class="fab fa-android"></i>
                         <span class="ml-2">Gestión de Marcas</span></a>
                 </div>
@@ -46,7 +47,7 @@
             <li class="nav-item">
 
                 <div>
-                    <a class="nav-link" href="admin/tipos">
+                    <a class="nav-link" routerLink="tipos">
                         <i class="fas fa-percent"></i>
                         <span class="ml-2">Gestión de Tipos</span></a>
                 </div>
@@ -55,38 +56,40 @@
             <li class="nav-item">
 
                 <div>
-                    <a class="nav-link" href="admin/presentaciones">
+                    <a class="nav-link" routerLink="presentaciones">
                         <i class="fas fa-gifts"></i>
                         <span class="ml-2">Gestión de Presentaciones</span></a>
                 </div>              
             </li>
             <li class="nav-item">
                 <div>
-                    <a class="nav-link" href="admin/usuarios">
+                    <a class="nav-link" routerLink="usuarios">
                         <i class= "fas fa-users"></i>
                         <span class="ml-2">Gestión de Usuarios</span></a>
                 </div>              
             </li>
             <li class="nav-item">
                 <div>
-                    <a class="nav-link" href="admin/preguntas">
+                    <a class="nav-link" routerLink="preguntas">
                         <i class= "fas fa-question"></i>
                         <span class="ml-2">Gestión de Preguntas</span></a>
                 </div>              
             </li>
             <li class="nav-item">
                 <div>
-                    <a class="nav-link" href="admin/estudios">
+                    <a class="nav-link" routerLink="estudios">
                          <i class="fas fa-book-open"></i>
                         <span class="ml-2">Gestión de Estudios</span></a>
                 </div>              
             </li>
         </ul>
+        </nav>
         <div class="content">
             
         </div>
         <div id="content-wrapper">
             <router-outlet class='contenido'></router-outlet>
+            
             <div *ngIf="">
                 <h1 class="text-center mt-5">BIENVENIDO</h1>
 
