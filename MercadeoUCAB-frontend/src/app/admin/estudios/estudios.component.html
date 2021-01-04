@@ -35,8 +35,8 @@
           <tr *ngFor="let estudio of estudios">
             <th class="text-center" scope="row">{{estudio._id}}</th>
             <td class="text-center">{{estudio._nombre}}</td>
-            <td class="text-center">{{estudio._fechaInicio}}</td>
-            <td class="text-center">{{estudio._fechaFin}}</td>
+            <td class="text-center">{{estudio._fechaInicio | date: "dd/MM/yyyy"}}</td>
+            <td class="text-center">{{estudio._fechaFin | date: "dd/MM/yyyy"}}</td>
             <td class="text-center">{{estudio._estatus}}</td>  
             <td class="text-center">{{estudio._usuario._nombre}}</td>    
             <td>
