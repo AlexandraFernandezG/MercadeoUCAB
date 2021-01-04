@@ -82,6 +82,7 @@ import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analis
 import { EditarSolicitudComponent } from './analista/editar-solicitud/editar-solicitud.component';
 import { PreguntasSugeridasComponent } from './admin/preguntas-sugeridas/preguntas-sugeridas.component';
 import { ResultadosComponent } from './cliente/resultados/resultados.component';
+import { ListarsolicitudesComponent } from './admin/listarsolicitudes/listarsolicitudes.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +137,8 @@ import { ResultadosComponent } from './cliente/resultados/resultados.component';
     AnalistaPoblacionComponent,
     EditarSolicitudComponent,
     PreguntasSugeridasComponent,
-    ResultadosComponent
+    ResultadosComponent,
+    ListarsolicitudesComponent
   ],
   imports: [
     RouterModule,

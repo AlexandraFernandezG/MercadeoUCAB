@@ -14,27 +14,21 @@ import { Router } from '@angular/router';
 export class EstudiosEncuestadoComponent implements OnInit {
   
   constructor( 
-    private estudiosService: EstudiosService, 
+    private estudiosService: EstudiosService,
     private dialog: MatDialog,
     private _router: Router
    ) { }
   
   id: number = 4;
-  estudios: Estudio[];  
-  displayedColumns: string[] = ['_id', 'nombre',  '_estatus', 'acciones'];
-  dataSource: MatTableDataSource<Estudio>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  estudios: Estudio[];
+
   ngOnInit(): void {
-    
-    this.estudiosService.getEstudiosEncuestado(this.id).subscribe(
-      estudios => { 
-        this.dataSource = new MatTableDataSource<Estudio>(estudios);
-        this.dataSource.paginator = this.paginator;
-      });
-    
 
-    this.estudiosService.getEstudiosEncuestado(this.id).subscribe(estudios => console.log(estudios));
-
-  }
+      this.estudiosService.getEstudiosEncuestado(this.id)
+      .subscribe(data => {this.estudios = data;
+      } );
+    };
+  
+  //  this.estudiosService.getEstudiosEncuestado(this.id).subscribe(estudios => console.log(estudios));
 
 }

@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
           if (this.user.rol === 'admin'){
             console.log ('Soy un administrador');
             this.router.navigate(['/admin/categorias']);
-            localStorage.setItem('usuarioID', JSON.stringify(this.usuario.id));
+           localStorage.setItem('usuarioID', JSON.stringify(this.user._id));
             localStorage.setItem('rol', JSON.stringify(this.user._fk_rol));
           }
           if (this.user.rol === 'Encuestado'){

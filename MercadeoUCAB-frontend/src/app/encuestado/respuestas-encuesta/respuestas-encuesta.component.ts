@@ -59,7 +59,7 @@ export class RespuestasEncuestaComponent implements OnInit {
         let resp: Respuesta2 = {
           estatus: 'Activo',
           respuestaAbierta: this.respuestas[h],
-          usuarioDto: 1,
+          usuarioDto: 17,
           preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
         };
         h++;

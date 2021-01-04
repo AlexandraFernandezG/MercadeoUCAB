@@ -120,9 +120,9 @@ export class RegistroEncuestadoComponent implements OnInit {
       estadoCivil: this.registroForm.value.estadoCivil,
       disponibilidadEnLinea: this.registroForm.value.disponibilidadEnLinea,
       cantidadPersonas: this.registroForm.value.cantidadPersonas,
-      estatus: 'activo',
+      estatus: 'Activo',
       nivelEconomicoDto: this.registroForm.value.nivelEconomicoDto._id,
-      usuarioDto: 1,
+      usuarioDto: 17,
       lugarDto: this.registroForm.value.municipio._id,
       ocupacionDto: this.registroForm.value.ocupacionDto._id,
       nivelAcademicoDto: this.registroForm.value.nivelAcademicoDto._id

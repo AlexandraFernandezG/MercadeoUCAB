@@ -56,7 +56,7 @@ const routes: Routes = [
   { path: 'encuestado', component: EncuestadoComponent },
   { path: 'encuestado/estudios', component: EstudiosEncuestadoComponent },
   { path: 'encuestado/registro-encuestado', component: RegistroEncuestadoComponent },
-  { path: 'encuestado/respuestas-encuesta', component: RespuestasEncuestaComponent },
+  { path: 'encuestado/respuestas-encuesta/:id', component: RespuestasEncuestaComponent },
   { path: 'analista', component: AnalistaComponent },
   { path: 'analista/solicitudes', component: EstudiosAnalistaComponent },
   { path: 'analista/crearEncuesta', component: CrearEstudioComponent },

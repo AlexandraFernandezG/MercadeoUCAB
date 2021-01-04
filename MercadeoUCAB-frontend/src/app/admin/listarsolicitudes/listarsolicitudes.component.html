@@ -8,7 +8,7 @@
   <div class="row text-left mt-5">
     <div class="col-5">
       <div class="row">
-        <h2 id="Encabezado">Estudios</h2>
+        <h2 id="Encabezado">Solicitudes Estudios</h2>
         <a id="hand" class="btn"><i class="fas fa-retweet fa-lg" style="color:rgba(84, 157, 252, 0.993);"></i></a>
       </div>
     </div>
@@ -19,11 +19,13 @@
         <thead class="thead" style="background-color:rgba(84, 157, 252, 0.993); color: #FFFF;">
           <tr class="text-center">
             <th scope="col">id</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Fecha Inicio</th>
-            <th scope="col">Fecha Fin</th>
-            <th scope="col">Estatus</th>
-            <th scope="col">Responder encuesta</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Edad Maxima</th>
+            <th scope="col">Edad Minima</th>
+            <th scope="col">Estado Civil</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Producto</th>
           </tr>
         </thead>
         <tbody>
@@ -34,14 +36,25 @@
             <td class="text-center">{{estudio._fechaInicio | date: "dd/MM/yyyy"}}</td>
             <td class="text-center">{{estudio._fechaFin | date: "dd/MM/yyyy"}}</td>
             <td class="text-center">{{estudio._estatus}}</td>  
+            <td class="text-center">{{estudio._usuario._nombre}}</td>    
+            <td>
+              <div class="row">
+                <div align="center" class="col-sm-4">
+                  <a class="btn btn-primary text-white" style="cursor: pointer;" data-toggle="modal" data-target="#Modal" (click)="openEModal(estudio._id)"><i class="fas fa-pencil-alt"></i></a>
+                </div>
+                <div align="center" class="col-sm-4">
+                  <button type="submit" class="btn btn-danger" ><i class="fas fa-trash"></i></button>
+                </div>
+              </div>
+            </td>
             <td>
             <div align="center" class="col-sm-4">
-                 <button type="submit" class="btn btn-info" [routerLink]="['/encuestado/respuestas-encuesta', estudio._id]" ><i class="fas fa-check"></i></button>
-            </div>
-
+                 <button type="submit" class="btn btn-info" [routerLink]="['/admin/asignacionpreguntas', estudio._id]" ><i class="fas fa-plus"></i></button>
+              </div>
             </td>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
