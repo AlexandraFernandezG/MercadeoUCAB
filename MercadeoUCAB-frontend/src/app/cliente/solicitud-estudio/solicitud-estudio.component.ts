@@ -138,9 +138,9 @@ export class SolicitudEstudioComponent implements OnInit {
       generoHijos: this.solicitudForm.value.generoHijos,
       edadMinimaHijos: this.solicitudForm.value.edadMinimaHijos,
       edadMaximaHijos: this.solicitudForm.value.edadMaximaHijos,
-      estatus: 'activo',
+      estatus: 'Activo',
       nivelEconomicoDto: this.solicitudForm.value.nivelEconomicoDto._id,
-      usuarioDto: 1,
+      usuarioDto: 19,
       productoDto: this.solicitudForm.value.productoDto._id,
       ocupacionDto: this.solicitudForm.value.ocupacionDto._id,
       nivelAcademicoDto: this.solicitudForm.value.nivelAcademicoDto._id

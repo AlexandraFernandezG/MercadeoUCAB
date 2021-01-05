@@ -21,7 +21,7 @@ export class EstudiosClienteComponent implements OnInit {
     ) { }
 
   estudios: Estudio[];  
-  displayedColumns: string[] = ['_id', 'nombre',  '_estatus', 'acciones'];
+  displayedColumns: string[] = ['_id', 'nombre', '_fechaInicio','_fechaFin', '_estatus', 'acciones'];
   dataSource: MatTableDataSource<Estudio>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   
