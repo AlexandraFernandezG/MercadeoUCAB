@@ -26,8 +26,8 @@ export class EstudiosClienteComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   
   ngOnInit(): void {
-
-    this.estudiosService.getEstudios().subscribe(
+    let id = JSON.parse(localStorage.getItem('usuarioID'));
+    this.estudiosService.getEstudiosCliente(id).subscribe(
       estudios => { 
         this.dataSource = new MatTableDataSource<Estudio>(estudios);
         this.dataSource.paginator = this.paginator;

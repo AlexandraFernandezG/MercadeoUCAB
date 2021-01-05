@@ -29,11 +29,11 @@
         <tbody>
         <tbody class="tbody">
           <tr *ngFor="let estudio of estudios">
-            <th class="text-center" scope="row">{{estudio._id}}</th>
-            <td class="text-center">{{estudio._nombre}}</td>
-            <td class="text-center">{{estudio._fechaInicio | date: "dd/MM/yyyy"}}</td>
-            <td class="text-center">{{estudio._fechaFin | date: "dd/MM/yyyy"}}</td>
-            <td class="text-center">{{estudio._estatus}}</td>  
+            <th class="text-center" scope="row">{{estudio.idEstudio}}</th>
+            <td class="text-center">{{estudio.nombreEstudio}}</td>
+            <td class="text-center">{{estudio.fechaInicioEstudio | date: "dd/MM/yyyy"}}</td>
+            <td class="text-center">{{estudio.fechaFinEstudio | date: "dd/MM/yyyy"}}</td>
+            <td class="text-center">{{estudio.estatusEstudio}}</td>  
             <td>
             <div align="center" class="col-sm-4">
                  <button type="submit" class="btn btn-info" [routerLink]="['/encuestado/respuestas-encuesta', estudio._id]" ><i class="fas fa-check"></i></button>
