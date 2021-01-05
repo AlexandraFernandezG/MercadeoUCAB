@@ -1,5 +1,5 @@
-# DSW_Empresa2
-Repositorio Empresa 2 :office:
+# DSW_Empresa2  :office:
+![ScreenShot](https://raw.github.com/bismarckpm/DSW_EmpresaB/FASE1-000/MercadeoUCAB-frontend/src/assets/img/MercadeoUCAB-logon.png)
 
 #### Requisitos para la instalación
 Maquina con sistema operativo Windows, Linux o Mac
@@ -10,11 +10,13 @@ Dirigirse a la carpeta DSW_EmpresaB\MercadeoUCAB-frontend y ejecutar el siguient
 
      ng serve --o
 
+#### Documento ERS:
+[Documento ERS](https://github.com/bismarckpm/DSW_EmpresaB/blob/main/ERS.pdf)
+
 #### Desarrolladores :computer::
 
 - Emanuel Di Cristofaro  
 - Alexandra Fernández 
 - Valentina Figueroa
-- Angel Hidalgo
 - Carlos Ortiz
 - Gregg Spinetti
