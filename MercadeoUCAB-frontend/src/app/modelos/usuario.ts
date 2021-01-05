@@ -34,3 +34,11 @@ export class UsuarioLDAP {
         public rol: number
       ){}
 }
+export class UsuarioCorreo {
+  constructor(
+    public id: number,
+    public codigoRecuperacion: string,
+    public correo: string,
+    public estatus: string
+  ){}
+}

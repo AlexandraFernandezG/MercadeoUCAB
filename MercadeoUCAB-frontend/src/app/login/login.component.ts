@@ -3,6 +3,9 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { AuthenticationService } from 'src/app/servicios/auth.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { UsuariosService } from '../servicios/usuarios.service';
+import { Usuario, UsuarioCorreo } from '../modelos/usuario';
+import { useAnimation } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  usuarioLog: UsuarioCorreo;
   submitted = false;
   returnUrl: string;
   error: {};
@@ -21,6 +25,7 @@ export class LoginComponent implements OnInit {
   @Input() usuario = {correo: '', contrasena: '' };
   constructor(
     private service: AuthenticationService,
+    private serviceUsuario: UsuariosService,
     public actRoute: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
@@ -41,39 +46,31 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
   if (this.loginForm.valid) {
-      console.log('usuario:', this.usuario);
       this.service.login(this.usuario).subscribe( data  => {
         this.user = data;
-        console.log('Data:',data);
         if (this.user.estado === 'success') {
-          
-          console.log('usuario:',this.user) ;
-          console.log('Rol: ',this.user.rol) ;
+          this.serviceUsuario.getUsuarioCorreo(this.usuario.correo)
+            .subscribe( userData => {this.usuarioLog = userData;
+              localStorage.setItem('usuarioID', JSON.stringify(this.usuarioLog[0].id));
+              localStorage.setItem('rol', this.user.rol)
+            } );
           if (this.user.rol === 'Administrador'){
             console.log ('Soy un administrador');
             this.router.navigate(['/admin']);
-            localStorage.setItem('usuarioID', JSON.stringify(this.user._id));
-            localStorage.setItem('rol', JSON.stringify(this.user._fk_rol));
           }
           if (this.user.rol === 'Encuestado'){
             console.log('Soy un Encuestado');
             // Asignar ruta para el encuestado
             this.router.navigate(['encuestado/']);
-            localStorage.setItem('usuarioID', JSON.stringify(this.user._id));
-            localStorage.setItem('rol', JSON.stringify(this.user.rol));
           }
           if (this.user.rol === 'Analista'){
             console.log('Soy un  Analista');
             // Asignar ruta para el analista
             this.router.navigate(['/analista/']);
-            localStorage.setItem('usuarioID', JSON.stringify(this.user._id));
-            localStorage.setItem('rol', JSON.stringify(this.user.rol));
           }
           if (this.user.rol === 'Cliente'){
             console.log('Soy un Cliente');
             this.router.navigate(['/cliente']);
-            localStorage.setItem('usuarioID', JSON.stringify(this.user._id));
-            localStorage.setItem('rol', JSON.stringify(this.user.rol));
           }
         }else {
           window.alert('Usuario no registrado o Informacion Incorrecta');
