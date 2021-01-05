@@ -83,7 +83,7 @@ public class EncuestaServicio {
             List<RespuestaPreguntaResponse> ResponseListUpdate = new ArrayList<>(respuestas.size());
 
             for (Object[] r : respuestas) {
-                ResponseListUpdate.add(new RespuestaPreguntaResponse((Long)r[0], (String)r[1]));
+                ResponseListUpdate.add(new RespuestaPreguntaResponse((long)r[0], (String)r[1]));
             }
 
             return ResponseListUpdate;
@@ -116,7 +116,7 @@ public class EncuestaServicio {
             List<EstudioEncuestadoResponse> estudioUsuarioResponseListUpdate = new ArrayList<>(estudioUsuarioResponseList.size());
 
             for (Object[] r : estudioUsuarioResponseList) {
-                estudioUsuarioResponseListUpdate.add(new EstudioEncuestadoResponse((Long)r[1], (String)r[2], (String)r[3]));
+                estudioUsuarioResponseListUpdate.add(new EstudioEncuestadoResponse((long)r[1], (String)r[2], (String)r[3]));
             }
 
             return estudioUsuarioResponseListUpdate;

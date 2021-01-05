@@ -34,8 +34,8 @@ public class ReportesService extends AplicacionBase {
             EntityManager entitymanager = factory.createEntityManager();
 
 
-            String sqlQuery = "SELECT R._id AS idRespuestaAbierta, R._respuestaAbierta AS respuestaAbierta" +
-                    " FROM Respuesta AS R, PreguntaEstudio AS PES WHERE " +
+            String sqlQuery = "SELECT R._id AS idRespuestaAbierta, R._respuestaAbierta AS respuestaAbierta, PE._descripcion AS Pregunta" +
+                    " FROM Respuesta AS R, PreguntaEstudio AS PES, PreguntaEncuesta AS PE WHERE " +
                     "R._preguntaEstudio._id = PES._id AND R._respuestaAbierta IS NOT NULL AND " +
                     "PES._estudio._id =:id " +
                     "ORDER BY PES._id";
@@ -46,7 +46,7 @@ public class ReportesService extends AplicacionBase {
             List<RespuestasAbiertasResponse> ResponseListUpdate = new ArrayList<>(respuestas.size());
 
             for (Object[] r : respuestas) {
-                ResponseListUpdate.add(new RespuestasAbiertasResponse((Long)r[0], (String)r[1]));
+                ResponseListUpdate.add(new RespuestasAbiertasResponse((long)r[0], (String)r[1], (String)r[2]));
             }
 
             return ResponseListUpdate;
