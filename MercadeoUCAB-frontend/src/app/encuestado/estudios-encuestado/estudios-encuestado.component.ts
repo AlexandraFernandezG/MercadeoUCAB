@@ -31,14 +31,10 @@ export class EstudiosEncuestadoComponent implements OnInit {
 
   ngOnInit(): void {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
-      this.usuariosService.getInfoUsuario(id)
-        .subscribe(data => {this.infoEncuestado = data;
-          console.log(this.infoEncuestado);
-          this.estudiosService.getEstudiosEncuestado(this.infoEncuestado._id)
-          .subscribe(data => {this.estudios = data;
-            console.log(this.estudios);
-        }); 
-      });
+    this.estudiosService.getEstudiosEncuestado(id)
+      .subscribe(data => {this.estudios = data;
+      console.log(this.estudios);
+    });
       // console.log(this.infoEncuestado);
       // this.estudiosService.getEstudios()
       // .subscribe(data => {this.estudios = data;

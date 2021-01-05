@@ -46,7 +46,7 @@ public class SuggestionsService extends AplicacionBase {
             EntityManager entitymanager = factory.createEntityManager();
 
             SQL = "SELECT DISTINCT pe._id as idPregunta, pe._descripcion as descripcion, pe._tipoPregunta as tipoPregunta, pe._estatus as estatus FROM PreguntaEncuesta as pe" +
-                    ", Estudio as e, PreguntaEstudio as pes WHERE e._id = pes._estudio._id and pes._preguntaEncuesta._id = pe._id and pe._subcategoria._id in " +
+                    " WHERE pe._subcategoria._id in " +
                     "(SELECT sc._id FROM Subcategoria as sc, Producto as p, SolicitudEstudio as so, Estudio as e WHERE sc._id = p._subcategoria._id and p._id = so._producto._id and so._id = e._solicitudEstudio._id and e._id = :id and pe._id not in " +
                     "(SELECT pes._preguntaEncuesta._id FROM PreguntaEstudio as pes, Estudio as e WHERE pes._estudio._id = e._id and e._id = :id))";
 
@@ -100,9 +100,9 @@ public class SuggestionsService extends AplicacionBase {
                 EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
                 EntityManager entitymanager = factory.createEntityManager();
 
-                SQL = "SELECT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
-                        "FROM Estudio as e, Usuario as u, Informacion as inf " +
-                        "WHERE e._usuario._id = u._id and u._id = inf._usuario._id and " +
+                SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
+                        "FROM Estudio as e, Informacion as inf, SolicitudEstudio as se, MedioComunicacion as me " +
+                        "WHERE e._solicitudEstudio._id = se._id and se._id = me._solicitudEstudio._id and me._informacion._id = inf._id and " +
                         "inf._genero = :genero and " +
                         "(inf._estadoCivil = :estadoCivil or inf._estadoCivil is null) and " +
                         "(inf._cantidadPersonas = :cantidadPersonas or inf._cantidadPersonas is null)";
@@ -152,33 +152,43 @@ public class SuggestionsService extends AplicacionBase {
         String SQL = null;
 
         DaoInformacion daoInformacion = new DaoInformacion();
-        Informacion informacion = daoInformacion.find(id, Informacion.class);
+        List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
+        String genero = null;
+        Date fechaNacimiento = null;
+        String estadoCivil = null;
+        int cantidadPersonas = 0;
+        int edad = 0;
 
         try {
 
-            if(informacion != null) {
+                for (Informacion informacion: listaInformacion) {
 
-                String genero = informacion.get_genero();
-                Date fechaNacimiento = informacion.get_fechaNacimiento();
-                String estadoCivil = informacion.get_estadoCivil();
-                int cantidadPersonas = informacion.get_cantidadPersonas();
+                    if(informacion.get_usuario().get_id() == id) {
 
-                //Primero pasamos la fecha de nacimiento a string
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                String fecha_nac = sdf.format(fechaNacimiento);
+                        genero = informacion.get_genero();
+                        fechaNacimiento = informacion.get_fechaNacimiento();
+                        estadoCivil = informacion.get_estadoCivil();
+                        cantidadPersonas = informacion.get_cantidadPersonas();
 
-                //Formato de la fecha para la operacion de la edad
-                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        //Primero pasamos la fecha de nacimiento a string
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        String fecha_nac = sdf.format(fechaNacimiento);
 
-                //Parseamos la fecha y obtener la fecha actual.
-                LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
-                LocalDate ahora = LocalDate.now();
+                        //Formato de la fecha para la operacion de la edad
+                        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-                //Calcular la edad
-                Period periodo = Period.between(fechaNac, ahora);
+                        //Parseamos la fecha y obtener la fecha actual.
+                        LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
+                        LocalDate ahora = LocalDate.now();
 
-                //Edad de la persona
-                int edad = periodo.getYears();
+                        //Calcular la edad
+                        Period periodo = Period.between(fechaNac, ahora);
+
+                        //Edad de la persona
+                        edad = periodo.getYears();
+
+                    }
+                }
 
                 //Ahora hacemos el query para el match
 
@@ -210,10 +220,6 @@ public class SuggestionsService extends AplicacionBase {
 
                 return listaEstudiosRecomendados;
 
-            } else {
-
-                return null;
-            }
 
         } catch (NullPointerException ex) {
 
@@ -308,241 +314,46 @@ public class SuggestionsService extends AplicacionBase {
     @GET
     @Path("/suggestionsEstudiosCliente/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<EstudiosResponse> listarEstudiosCliente(@PathParam("id") long id) throws NullPointerException{
-        List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>();
-        // Para guardar los estudios ya devueltos por las consultas y, así, evitar repeticiones.
-        List<Long> idEstudios = new ArrayList<>();
+    public List<EstudiosResponse> listarEstudiosClientes(@PathParam("id") long id) throws NullPointerException{
 
+        /**
+         * En este metodo se permite obtener el estudio en base a un cliente.
+         *
+         * Nota: Este metodo funciona correctamente.
+         */
 
-        // Búsqueda del usuario
-        UsuarioAPI servicio = new UsuarioAPI();
-        Usuario usuario = servicio.consultarUsuario(id);
+        String SQL = null;
 
-        if (usuario != null) {
-            String rol = usuario.get_rol().get_nombre();
-            String estatus = usuario.get_estatus();
+        try {
 
-            // El usuario debe tener rol de Cliente y estar activo.
-            boolean esClienteActivo = rol.equals("Cliente")
-                    && estatus.equals("Activo");
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+            EntityManager entitymanager = factory.createEntityManager();
 
-            if (esClienteActivo) {
-                try {
-                    EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-                    EntityManager entitymanager = factory.createEntityManager();
+            SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
+                    "FROM Estudio as e, Usuario as u, SolicitudEstudio as se WHERE e._solicitudEstudio._id = se._id and " +
+                    "se._usuario._id = u._id and u._id = :id";
 
-                    // Construcción de consultas:
+            Query query = entitymanager.createQuery(SQL);
+            query.setParameter("id", id);
 
-                    /*
-                     * 1ra consulta: SOLICITUDES RECIENTES de un mismo cliente
-                     * Toma los últimos tres (3) estudios solicitados por el cliente
-                     * */
-                    String sqlSolicitudReciente =
-                            "SELECT e._id as idEstudio " +
-//							", e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, " +
-//							"e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
-//							", e._solicitudEstudio._id as idSolicitudEstudio, e._usuario._id as idUsuario " +
-                                    "FROM Usuario  u " +
-                                    "inner join SolicitudEstudio se on u._id = se._usuario._id " +
-                                    "inner join Estudio e on se._id = e._solicitudEstudio._id " +
-                                    "WHERE u._id = :id " +
-                                    "AND e._estatus = 'Activo' " +
-                                    "ORDER BY e._id DESC "
-                            ;
+            List<Object[]> listaEstudios = query.getResultList();
 
-                    // Ejecución de la consulta
-                    Query querySolicitudReciente = entitymanager.createQuery(sqlSolicitudReciente);
-                    // Estableciendo los parámetros de query
-                    querySolicitudReciente.setParameter("id", id);
+            List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
-                    // Obteniendo los resultados de la consulta
-                    List<Long> listaIdEstudiosSolicitudReciente = querySolicitudReciente.setMaxResults(3).getResultList();
+            for (Object[] eC: listaEstudios){
 
-                    // Agregar los estudios de la consulta anterior a atributo que será devuelto
-                    idEstudios.addAll(listaIdEstudiosSolicitudReciente);
-
-                    /*
-                     * 2da consulta: ESTUDIOS MÁS SOLICITADOS POR EL CLIENTE
-                     * Devuelve los tres estudios más solicitados por el cliente.
-                     * */
-                    // Búsqueda de los id de los estudios solicitados previamente por el cliente
-                    String sqlIdEstudiosMasSolicitados =
-                            "SELECT e._id as filtro " +
-                                    "FROM Usuario u " +
-                                    "inner join SolicitudEstudio se on u._id = se._usuario._id " +
-                                    "inner join Estudio e on se._id = e._solicitudEstudio._id " +
-                                    "WHERE u._id = :id " +
-                                    "AND e._estatus = 'Activo' " +
-                                    "AND  e._id NOT IN :estudios " +
-                                    "GROUP BY filtro " +
-                                    "ORDER BY count(filtro) DESC "
-                            ;
-
-                    // Ejecución de la consulta
-                    Query queryIdEstudiosMasSolicitados = entitymanager.createQuery(sqlIdEstudiosMasSolicitados);
-                    // Estableciendo los parámetros de query
-                    queryIdEstudiosMasSolicitados.setParameter("id", id);
-                    queryIdEstudiosMasSolicitados.setParameter("estudios", idEstudios);
-
-                    // Obteniendo los resultados de la consulta
-                    List<Long> listaIdEstudiosMasSolicitados = queryIdEstudiosMasSolicitados.setMaxResults(3).getResultList();
-
-                    // Agregar los nuevos ID obtenidos de la consulta anterior a la lista de id.
-                    for (long idEst: listaIdEstudiosMasSolicitados) {
-                        if (!idEstudios.contains(idEst)) {
-                            idEstudios.add(idEst);
-                        }
-                    }
-
-                    /*
-                     * 3ra consulta: Filtros de búsqueda
-                     * Devuelve los estudios más usados según los filtros:
-                     * marca, subcategoria, categoria, tipo, presentación
-                     * más solicitados en el sistema.
-                     * */
-
-                    // Obtención del id de los filtros
-
-                    // Marca
-                    String sqlIdMarcaMasSolicitada =
-                            "SELECT p._marca._id as filtro " +
-                                    "FROM SolicitudEstudio se " +
-                                    "inner join Producto p on se._producto._id = p._id " +
-                                    "GROUP BY filtro " +
-                                    "ORDER BY count(filtro) DESC"
-                            ;
-
-                    // Ejecución de la consulta
-                    Query queryIdMarcaMasSolicitada = entitymanager.createQuery(sqlIdMarcaMasSolicitada);
-
-                    // Obteniendo los resultados de la consulta
-                    long idMarcaMasSolicitada = queryIdMarcaMasSolicitada.getFirstResult();
-
-                    // Subcategoria
-                    String sqlIdSubcategoriaMasSolicitada =
-                            "SELECT p._subcategoria._id as filtro " +
-                                    "FROM SolicitudEstudio se " +
-                                    "inner join Producto p on se._producto._id = p._id " +
-                                    "GROUP BY filtro " +
-                                    "ORDER BY count(filtro) DESC"
-                            ;
-
-                    // Ejecución de la consulta
-                    Query queryIdSubcategoriaMasSolicitada = entitymanager.createQuery(sqlIdSubcategoriaMasSolicitada);
-
-                    // Obteniendo los resultados de la consulta
-                    long idSubcategoriaMasSolicitada = queryIdSubcategoriaMasSolicitada.getFirstResult();
-
-                    // Categoria
-                    String sqlIdCategoriaMasSolicitada =
-                            "SELECT s._categoria._id as filtro " +
-                                    "FROM SolicitudEstudio se " +
-                                    "inner join Producto p on se._producto._id = p._id " +
-                                    "inner join Subcategoria s on p._subcategoria._id = s._id " +
-                                    "GROUP BY filtro " +
-                                    "ORDER BY count(filtro) DESC"
-                            ;
-
-                    // Ejecución de la consulta
-                    Query queryIdCategoriaMasSolicitada = entitymanager.createQuery(sqlIdCategoriaMasSolicitada);
-
-                    // Obteniendo los resultados de la consulta
-                    long idCategoriaMasSolicitada = queryIdCategoriaMasSolicitada.getFirstResult();
-
-                    // Tipo
-                    String sqlIdTipoMasSolicitada =
-                            "SELECT ppt._tipo._id as filtro " +
-                                    "FROM SolicitudEstudio se " +
-                                    "inner join Producto p on se._producto._id = p._id " +
-                                    "inner join ProductoPresentacionTipo ppt on p._id = ppt._producto._id " +
-                                    "GROUP BY filtro " +
-                                    "ORDER BY count(filtro) DESC"
-                            ;
-
-                    // Ejecución de la consulta
-                    Query queryIdTipoMasSolicitada = entitymanager.createQuery(sqlIdTipoMasSolicitada);
-
-                    // Obteniendo los resultados de la consulta
-                    long idTipoMasSolicitada = queryIdTipoMasSolicitada.getFirstResult();
-
-                    // Presentacion
-                    String sqlIdPresentacionMasSolicitada =
-                            "SELECT ppt._presentacion._id as filtro " +
-                                    "FROM SolicitudEstudio se " +
-                                    "inner join Producto p on se._producto._id = p._id " +
-                                    "inner join ProductoPresentacionTipo ppt on p._id = ppt._producto._id " +
-                                    "GROUP BY filtro " +
-                                    "ORDER BY count(filtro) DESC"
-                            ;
-
-                    // Ejecución de la consulta
-                    Query queryIdPresentacionMasSolicitada = entitymanager.createQuery(sqlIdPresentacionMasSolicitada);
-
-                    // Obteniendo los resultados de la consulta
-                    long idPresentacionMasSolicitada = queryIdPresentacionMasSolicitada.getFirstResult();
-
-                    // Búsqueda de los id de los estudios de acuerdo a los filtros más solicitados
-                    String sqlIdEstudiosFiltros =
-                            "SELECT e._id as filtro " +
-                                    "FROM Estudio e " +
-                                    "inner join SolicitudEstudio se on se._id = e._solicitudEstudio._id " +
-                                    "inner join Producto p on se._producto._id = p._id " +
-                                    "inner join Subcategoria s on p._subcategoria._id = s._id " +
-                                    "inner join ProductoPresentacionTipo ppt on p._id = ppt._producto._id " +
-                                    "WHERE e._estatus = 'Activo' " +
-                                    "AND  e._id NOT IN :estudios " +
-                                    "AND (" +
-                                    "p._marca._id = :marca " +
-                                    "OR  p._subcategoria._id = :subcategoria " +
-                                    "OR  s._categoria._id = :categoria " +
-                                    "OR  ppt._tipo._id = :tipo " +
-                                    "OR  ppt._presentacion._id = :presentacion " +
-                                    ")" +
-                                    "GROUP BY filtro " +
-                                    "ORDER BY count(filtro) DESC "
-                            ;
-
-                    // Ejecución de la consulta
-                    Query queryIdEstudiosFiltros = entitymanager.createQuery(sqlIdEstudiosFiltros);
-                    // Estableciendo los parámetros de query
-                    queryIdEstudiosFiltros.setParameter("estudios", idEstudios);
-                    queryIdEstudiosFiltros.setParameter("marca", idMarcaMasSolicitada);
-                    queryIdEstudiosFiltros.setParameter("subcategoria", idSubcategoriaMasSolicitada);
-                    queryIdEstudiosFiltros.setParameter("categoria", idCategoriaMasSolicitada);
-                    queryIdEstudiosFiltros.setParameter("tipo", idTipoMasSolicitada);
-                    queryIdEstudiosFiltros.setParameter("presentacion", idPresentacionMasSolicitada);
-
-                    // Obteniendo los resultados de la consulta
-                    List<Long> listaIdEstudiosFiltros = queryIdEstudiosFiltros.setMaxResults(9).getResultList();
-
-                    // Agregar los nuevos ID obtenidos de la consulta anterior a la lista de id.
-                    for (long idEst: listaIdEstudiosFiltros) {
-                        if (!idEstudios.contains(idEst)) {
-                            idEstudios.add(idEst);
-                        }
-                    }
-
-                    // Generar la lista de estudios con los id de estudios obtenidos anteriormente.
-                    for (long idEst: idEstudios) {
-                        Estudio listaEstudiosMasSolicitados = new EstudioAPI().consultarEstudio(idEst);
-
-                        listaEstudiosRecomendados.add(new EstudiosResponse(
-                                listaEstudiosMasSolicitados.get_id(),
-                                listaEstudiosMasSolicitados.get_nombre(),
-                                listaEstudiosMasSolicitados.get_tipoInstrumento(),
-                                listaEstudiosMasSolicitados.get_fechaInicio(),
-                                listaEstudiosMasSolicitados.get_fechaFin(),
-                                listaEstudiosMasSolicitados.get_estatus()));
-                    }
-                } catch (NullPointerException ex) {
-
-                    String mensaje = ex.getMessage();
-                    System.out.print(mensaje);
-                    return null;
-                }
+                listaEstudiosRecomendados.add(new EstudiosResponse((long)eC[0], (String)eC[1], (String)eC[2], (Date)eC[3], (Date)eC[4], (String)eC[5]));
             }
-        }
 
-        return listaEstudiosRecomendados;
+            return listaEstudiosRecomendados;
+
+
+        } catch (NullPointerException ex) {
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+        }
     }
+
 }

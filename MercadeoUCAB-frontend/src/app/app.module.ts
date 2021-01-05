@@ -82,7 +82,10 @@ import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analis
 import { EditarSolicitudComponent } from './analista/editar-solicitud/editar-solicitud.component';
 import { PreguntasSugeridasComponent } from './admin/preguntas-sugeridas/preguntas-sugeridas.component';
 import { ResultadosComponent } from './cliente/resultados/resultados.component';
-//import { ListarsolicitudesComponent } from './admin/listarsolicitudes/listarsolicitudes.component';
+import { SolicitudesComponent } from './admin/solicitudes/solicitudes.component';
+import { SolicitudEstudiosService } from './servicios/solicitud-estudios.service';
+import { EstudiosService } from './servicios/estudios.service';
+import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-sugeridos.component';
 
 @NgModule({
   declarations: [
@@ -137,8 +140,9 @@ import { ResultadosComponent } from './cliente/resultados/resultados.component';
     AnalistaPoblacionComponent,
     EditarSolicitudComponent,
     PreguntasSugeridasComponent,
-    ResultadosComponent
-  //  ListarsolicitudesComponent
+    ResultadosComponent,
+    SolicitudesComponent,
+    EstudiosSugeridosComponent
   ],
   imports: [
     RouterModule,
@@ -176,7 +180,9 @@ import { ResultadosComponent } from './cliente/resultados/resultados.component';
     PresentacionesService,
     UsuariosService,
     ProductosService,
-    PreguntasService
+    PreguntasService,
+    SolicitudEstudiosService,
+    EstudiosService
 
   ],
   bootstrap: [AppComponent],
