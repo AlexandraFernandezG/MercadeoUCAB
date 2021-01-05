@@ -14,7 +14,7 @@ import java.util.List;
 
 public class HijoAPI_Test {
 	
-	//Listar todos los hijos (Esta forma fue realizada por Valentina)
+	//Listar todos los hijos
 	@Test
 	public void pruebaListarHijos(){
 		
@@ -30,7 +30,7 @@ public class HijoAPI_Test {
 		
 	}
 	
-	//Consultar un hijo (Esta forma fue realizada por Valentina)
+	//Consultar un hijo
 	@Test
 	public void pruebaConsultarHijo(){
 		

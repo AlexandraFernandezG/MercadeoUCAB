@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Usuario } from '../modelos/usuario';
+import { Usuario, UsuarioCorreo } from '../modelos/usuario';
 import { Usuario2 } from '../modelos/usuario';
 import { catchError, map, tap, retry } from 'rxjs/operators';
 
@@ -32,6 +32,15 @@ export class UsuariosService {
     return this.http.get<Usuario>(this.url + 'usuario/consultarUsuario/' + id)
     .pipe(
       tap(_ => console.log(`fetched usuario id=${id}`)),
+      catchError(this.handleError)
+    );
+  }
+
+  getUsuarioCorreo(correo: string): Observable<UsuarioCorreo> {
+    console.log(correo);
+    return this.http.get<UsuarioCorreo>(this.url + 'usuario/consultarUsuarioCorreo/' + correo)
+    .pipe(
+      tap(_ => console.log(`fetched usuario id=${correo}`)),
       catchError(this.handleError)
     );
   }

@@ -10,7 +10,7 @@ import ucab.dsw.servicio.ProductoAPI;
 
 public class ProductoAPI_Test {
 
-    //Listar todos los productos (Esta forma fue realizada por Valentina)
+    //Listar todos los productos
     @Test
     public void pruebaListarProductos(){
 
@@ -26,7 +26,7 @@ public class ProductoAPI_Test {
 
     }
 
-    //Consultar un producto (Esta forma fue realizada por Valentina)
+    //Consultar un producto
     @Test
     public void pruebaConsultarProducto(){
 
@@ -41,7 +41,7 @@ public class ProductoAPI_Test {
 
     }
 
-    //Listar productos activos (Esta forma fue realizada por Valentina)
+    //Listar productos activos
     @Test
     public void pruebaListarProductosActivos(){
 

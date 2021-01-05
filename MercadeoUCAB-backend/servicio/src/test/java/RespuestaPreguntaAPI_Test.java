@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RespuestaPreguntaAPI_Test {
 	
-	//Listar todos los RespuestaPregunta (Esta forma fue realizada por Valentina)
+	//Listar todos los RespuestaPregunta
 	@Test
 	public void pruebaListarRespuestaPreguntaPregunta(){
 		
@@ -25,7 +25,7 @@ public class RespuestaPreguntaAPI_Test {
 		
 	}
 	
-	//Consultar una Respuesta (Esta forma fue realizada por Valentina)
+	//Consultar una Respuesta
 	@Test
 	public void pruebaConsultarRespuestaPregunta(){
 		
@@ -43,7 +43,7 @@ public class RespuestaPreguntaAPI_Test {
 		
 	}
 	
-	//Listar Respuestas activas (Esta forma fue realizada por Valentina)
+	//Listar Respuestas activas
 	@Test
 	public void pruebaListarRespuestaPreguntasActivas(){
 		

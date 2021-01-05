@@ -54,7 +54,7 @@ public class RolAPI extends AplicacionBase{
     @Path("/addRol")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public RolDto addUsuario(RolDto rolDto)
+    public RolDto addRol(RolDto rolDto)
     {
         RolDto resultado = new RolDto();
         try {

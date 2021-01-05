@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class InformacionAPI_Test {
 
-    //Listar encuestados (Esta forma fue realizada por Valentina)
+    //Listar encuestados
     @Test
     public void pruebaListarInformacionEncuestado(){
 
@@ -28,7 +28,7 @@ public class InformacionAPI_Test {
 
     }
 
-    //Consultar un encuestado (Esta forma fue realizada por Valentina)
+    //Consultar un encuestado
     @Test
     public void pruebaConsultarEncuestado(){
 
@@ -44,7 +44,7 @@ public class InformacionAPI_Test {
 
     }
 
-    //Insertar una encuestado (Insertar en tabla informacion)
+    //Insertar una encuestado
 
     @Test
     public void pruebaInsertarEncuestado() throws Exception {
