@@ -1,0 +1,53 @@
+<br><br><br>
+
+<br><br><br>
+
+
+<div class="container">
+
+  <div class="row text-left mt-5">
+    <div class="col-5">
+      <div class="row">
+        <h2 id="Encabezado">Solicitudes</h2>
+        <a id="hand" class="btn"><i class="fas fa-retweet fa-lg" style="color:rgba(84, 157, 252, 0.993);"></i></a>
+      </div>
+    </div>
+
+
+    <div class="container" style="margin-bottom: 30px;">
+      <table id="dataTable" #dataTable class="table table-bordered table-hover" style="background-color: #FDF4E3;">
+        <thead class="thead" style="background-color:rgba(84, 157, 252, 0.993); color: #FFFF;">
+          <tr class="text-center">
+            <th scope="col">id</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Edad Minima</th>
+            <th scope="col">Edad Maxima</th>
+            <th scope="col">Estado Civil</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Crear el estudio</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tbody class="tbody">
+          <tr *ngFor="let solicitud of solicitudes">
+            <th class="text-center" scope="row">{{solicitud._id}}</th>
+            <td class="text-center">{{solicitud._descripcion}}</td>
+            <td class="text-center">{{solicitud._genero}}</td>
+            <td class="text-center">{{solicitud._edadMinima }}</td>
+            <td class="text-center">{{solicitud._edadMaxima}}</td> 
+            <td class="text-center">{{solicitud._estadoCivil}}</td>   
+            <td class="text-center">{{solicitud._usuario._nombre}}</td> 
+            <td class="text-center">{{solicitud._producto._nombre}}</td> 
+            <td>
+            <div align="center" class="col-sm-4">
+                 <button type="submit" class="btn btn-info" (click)="openModal(id)" ><i class="fas fa-plus"></i></button>
+              </div>
+            </td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

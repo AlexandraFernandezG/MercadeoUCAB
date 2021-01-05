@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Solicitud2 } from 'src/app/modelos/solicitud';
 
 @Component({
   selector: 'app-add-estudio',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddEstudioComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: Solicitud2,
+  ) { }
 
   ngOnInit(): void {
+    console.log(this.data.id);
   }
 
 }

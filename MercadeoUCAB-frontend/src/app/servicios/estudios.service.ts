@@ -29,6 +29,10 @@ export class EstudiosService {
     return this.http.get<Estudio[]>(this.url + 'suggestions/suggestionsEstudiosEncuestado/' + id);
   }
 
+  getEstudiosSugeridos(id:number):Observable<Estudio[]>{
+    return this.http.get<Estudio[]>(this.url + 'suggestions/suggestionsEstudio/' + id);
+  }
+
   getEstudio(id: number): Observable<Estudio> {
     console.log(id);
     return this.http.get<Estudio>(this.url + 'categoria/consultarCategoria/' + id)

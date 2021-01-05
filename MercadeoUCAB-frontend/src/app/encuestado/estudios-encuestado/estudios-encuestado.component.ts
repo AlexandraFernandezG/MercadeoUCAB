@@ -19,12 +19,16 @@ export class EstudiosEncuestadoComponent implements OnInit {
     private _router: Router
    ) { }
   
-  id: number = 4;
+  id: number = 17;
   estudios: Estudio[];
 
   ngOnInit(): void {
 
-      this.estudiosService.getEstudiosEncuestado(this.id)
+    /*  this.estudiosService.getEstudiosEncuestado(this.id)
+      .subscribe(data => {this.estudios = data;
+      } );*/
+
+      this.estudiosService.getEstudios()
       .subscribe(data => {this.estudios = data;
       } );
     };
