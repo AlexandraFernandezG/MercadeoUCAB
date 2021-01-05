@@ -46,7 +46,7 @@ public class SuggestionsService extends AplicacionBase {
             EntityManager entitymanager = factory.createEntityManager();
 
             SQL = "SELECT DISTINCT pe._id as idPregunta, pe._descripcion as descripcion, pe._tipoPregunta as tipoPregunta, pe._estatus as estatus FROM PreguntaEncuesta as pe" +
-                    ", Estudio as e, PreguntaEstudio as pes WHERE e._id = pes._estudio._id and pes._preguntaEncuesta._id = pe._id and pe._subcategoria._id in " +
+                    " WHERE pe._subcategoria._id in " +
                     "(SELECT sc._id FROM Subcategoria as sc, Producto as p, SolicitudEstudio as so, Estudio as e WHERE sc._id = p._subcategoria._id and p._id = so._producto._id and so._id = e._solicitudEstudio._id and e._id = :id and pe._id not in " +
                     "(SELECT pes._preguntaEncuesta._id FROM PreguntaEstudio as pes, Estudio as e WHERE pes._estudio._id = e._id and e._id = :id))";
 
@@ -152,33 +152,43 @@ public class SuggestionsService extends AplicacionBase {
         String SQL = null;
 
         DaoInformacion daoInformacion = new DaoInformacion();
-        Informacion informacion = daoInformacion.find(id, Informacion.class);
+        List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
+        String genero = null;
+        Date fechaNacimiento = null;
+        String estadoCivil = null;
+        int cantidadPersonas = 0;
+        int edad = 0;
 
         try {
 
-            if(informacion != null) {
+                for (Informacion informacion: listaInformacion) {
 
-                String genero = informacion.get_genero();
-                Date fechaNacimiento = informacion.get_fechaNacimiento();
-                String estadoCivil = informacion.get_estadoCivil();
-                int cantidadPersonas = informacion.get_cantidadPersonas();
+                    if(informacion.get_usuario().get_id() == id) {
 
-                //Primero pasamos la fecha de nacimiento a string
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                String fecha_nac = sdf.format(fechaNacimiento);
+                        genero = informacion.get_genero();
+                        fechaNacimiento = informacion.get_fechaNacimiento();
+                        estadoCivil = informacion.get_estadoCivil();
+                        cantidadPersonas = informacion.get_cantidadPersonas();
 
-                //Formato de la fecha para la operacion de la edad
-                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        //Primero pasamos la fecha de nacimiento a string
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        String fecha_nac = sdf.format(fechaNacimiento);
 
-                //Parseamos la fecha y obtener la fecha actual.
-                LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
-                LocalDate ahora = LocalDate.now();
+                        //Formato de la fecha para la operacion de la edad
+                        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-                //Calcular la edad
-                Period periodo = Period.between(fechaNac, ahora);
+                        //Parseamos la fecha y obtener la fecha actual.
+                        LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
+                        LocalDate ahora = LocalDate.now();
 
-                //Edad de la persona
-                int edad = periodo.getYears();
+                        //Calcular la edad
+                        Period periodo = Period.between(fechaNac, ahora);
+
+                        //Edad de la persona
+                        edad = periodo.getYears();
+
+                    }
+                }
 
                 //Ahora hacemos el query para el match
 
@@ -210,10 +220,6 @@ public class SuggestionsService extends AplicacionBase {
 
                 return listaEstudiosRecomendados;
 
-            } else {
-
-                return null;
-            }
 
         } catch (NullPointerException ex) {
 
