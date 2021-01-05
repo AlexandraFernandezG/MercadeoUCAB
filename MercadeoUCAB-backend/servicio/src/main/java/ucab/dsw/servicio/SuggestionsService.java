@@ -45,7 +45,7 @@ public class SuggestionsService extends AplicacionBase {
             EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
             EntityManager entitymanager = factory.createEntityManager();
 
-            SQL = "SELECT pe._id as idPregunta, pe._descripcion as descripcion, pe._tipoPregunta as tipoPregunta, pe._estatus as estatus FROM PreguntaEncuesta as pe" +
+            SQL = "SELECT DISTINCT pe._id as idPregunta, pe._descripcion as descripcion, pe._tipoPregunta as tipoPregunta, pe._estatus as estatus FROM PreguntaEncuesta as pe" +
                     ", Estudio as e, PreguntaEstudio as pes WHERE e._id = pes._estudio._id and pes._preguntaEncuesta._id = pe._id and pe._subcategoria._id in " +
                     "(SELECT sc._id FROM Subcategoria as sc, Producto as p, SolicitudEstudio as so, Estudio as e WHERE sc._id = p._subcategoria._id and p._id = so._producto._id and so._id = e._solicitudEstudio._id and e._id = :id and pe._id not in " +
                     "(SELECT pes._preguntaEncuesta._id FROM PreguntaEstudio as pes, Estudio as e WHERE pes._estudio._id = e._id and e._id = :id))";
@@ -235,7 +235,7 @@ public class SuggestionsService extends AplicacionBase {
          * En este metodo es importante pasar la solicitud de estudio de la busqueda sugerida (SolicitudEstudio)
          * , el estudio recomendado de la lista de recomendados y el id del usuario conectado en el momento
          *
-         * Nota: Esta casi listo, falta un detalle.
+         * Nota: Esta metodo funciona perfectamente.
          */
 
         try {
@@ -267,24 +267,26 @@ public class SuggestionsService extends AplicacionBase {
             List<Estudio> allEstudios = daoEstudio.findAll(Estudio.class);
             PreguntaEstudioDto preguntaEstudiodto = new PreguntaEstudioDto();
 
-            for (Estudio estudio: allEstudios){
+            //for (Estudio estudio: allEstudios){
 
-                if(estudio.get_solicitudEstudio().get_id() == idSE){
+            Estudio estudio = allEstudios.get(allEstudios.size() - 1);
 
-                    long idEN = estudio.get_id();
+            if(estudio.get_solicitudEstudio().get_id() == idSE){
 
-                    for (PreguntaEncuesta preguntaEncuesta: listaPreguntasRecomendado){
+                long idEN = estudio.get_id();
 
-                        long idPR = preguntaEncuesta.get_id();
-                        PreguntaEncuestaDto preguntaEncuesta_insert = new PreguntaEncuestaDto(idPR);
-                        preguntaEstudiodto.setPreguntaEncuestaDto(preguntaEncuesta_insert);
-                        EstudioDto estudio_insert = new EstudioDto(idEN);
-                        preguntaEstudiodto.setEstudioDto(estudio_insert);
-                        preguntaEstudiodto.setEstatus("Activo");
-                        servicio.addPreguntaEstudio(preguntaEstudiodto);
-                    }
+                for (PreguntaEncuesta preguntaEncuesta: listaPreguntasRecomendado){
+
+                    long idPR = preguntaEncuesta.get_id();
+                    PreguntaEncuestaDto preguntaEncuesta_insert = new PreguntaEncuestaDto(idPR);
+                    preguntaEstudiodto.setPreguntaEncuestaDto(preguntaEncuesta_insert);
+                    EstudioDto estudio_insert = new EstudioDto(idEN);
+                    preguntaEstudiodto.setEstudioDto(estudio_insert);
+                    preguntaEstudiodto.setEstatus("Activo");
+                    servicio.addPreguntaEstudio(preguntaEstudiodto);
                 }
             }
+            //}
 
         } catch (Exception ex){
 
@@ -307,7 +309,7 @@ public class SuggestionsService extends AplicacionBase {
      * @return Lista de estudios recomendados para un usuario en específico.
      */
     @GET
-    @Path("/suggestionsEstudiosEncuestado/{id}")
+    @Path("/suggestionsEstudiosCliente/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public List<EstudiosResponse> listarEstudiosCliente(@PathParam("id") long id) throws NullPointerException{
         List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>();

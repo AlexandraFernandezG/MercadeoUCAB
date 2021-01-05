@@ -1,12 +1,10 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.Response.ReporteMFResponse;
+import ucab.dsw.Response.ReporteVFResponse;
 import ucab.dsw.Response.RespuestasAbiertasResponse;
-import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
-import ucab.dsw.accesodatos.DaoPreguntaEstudio;
-import ucab.dsw.accesodatos.DaoRespuesta;
-import ucab.dsw.entidades.PreguntaEncuesta;
-import ucab.dsw.entidades.PreguntaEstudio;
-import ucab.dsw.entidades.Respuesta;
+import ucab.dsw.accesodatos.*;
+import ucab.dsw.entidades.*;
 
 import java.util.*;
 import javax.persistence.EntityManager;
@@ -26,15 +24,28 @@ public class ReportesService extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public List<RespuestasAbiertasResponse> listarRespuestasAbiertas(@PathParam("id") long id) throws NullPointerException{
 
-        /**
-         * Este método permite obtener las respuestas de las preguntas abiertas
-         *
-         * NOTA: Hay que realizar.
-         */
 
         try {
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+            EntityManager entitymanager = factory.createEntityManager();
 
-            return null;
+
+            String sqlQuery = "SELECT R._respuestaAbierta AS respuestaAbierta" +
+                    " FROM Respuesta AS R, PreguntaEstudio AS PES WHERE " +
+                    "R._preguntaEstudio._id = PES._id AND " +
+                    "PES._estudio._id =:id " +
+                    "ORDER BY PES._id";
+            Query query = entitymanager.createQuery( sqlQuery );
+            query.setParameter("id", id);
+
+            List<Object[]> respuestas = query.getResultList();
+            List<RespuestasAbiertasResponse> ResponseListUpdate = new ArrayList<>(respuestas.size());
+
+            for (Object[] r : respuestas) {
+                ResponseListUpdate.add(new RespuestasAbiertasResponse((Long)r[0], (String)r[1]));
+            }
+
+            return ResponseListUpdate;
 
         } catch (NullPointerException ex) {
 
@@ -48,13 +59,13 @@ public class ReportesService extends AplicacionBase {
     @GET
     @Path("/porcentajeVF/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Object[]> porcentajeVeraderosFalsos(@PathParam("id") long id) throws NullPointerException{
+    public List<ReporteVFResponse> porcentajeVeraderoFalso(@PathParam("id") long id) throws NullPointerException{
 
         /**
-         * Este método permite obtener un poncentaje de respuestas de verdadero y
-         * falso para un estudio.
+         * Este método permite obtener un poncentaje de respuestas de verdadero y falso
+         * para un estudio.
          *
-         * NOTA: Hay que acomodarlo separando ambos querys en dos metodos distintos
+         * NOTA: Este método funciona correctamente.
          */
 
         try {
@@ -64,6 +75,8 @@ public class ReportesService extends AplicacionBase {
             DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
             List<Respuesta> listaRespuestas = daoRespuesta.findAll(Respuesta.class);
             int contador_registros = 0;
+            int contador_verdaderos = 0;
+            int contador_falsos = 0;
 
             for (Respuesta respuesta: listaRespuestas){
 
@@ -72,49 +85,39 @@ public class ReportesService extends AplicacionBase {
                     long idRe = respuesta.get_preguntaEstudio().get_id();
                     PreguntaEstudio preguntaEstudio = daoPreguntaEstudio.find(idRe, PreguntaEstudio.class);
 
-                    if(preguntaEstudio.get_estudio().get_id() == id){
+                    if(preguntaEstudio.get_estudio().get_id() == id && respuesta.get_verdaderoFalso().equals("Verdadero")){
 
+                        contador_verdaderos = contador_verdaderos + 1;
+                        contador_registros = contador_registros + 1;
+                    }
+                    else if(preguntaEstudio.get_estudio().get_id() == id && respuesta.get_verdaderoFalso().equals("Falso")){
+
+                        contador_falsos = contador_falsos + 1;
                         contador_registros = contador_registros + 1;
                     }
                 }
             }
 
-            // Obtener el porcentaje de verdaderos y falsos de ese estudio
+            //Calcular los porcentajes de verdaderos y falsos
 
-            String SQL_Verdadero = null;
-            String SQL_Falso = null;
+            String porcentajeV = "Porcentaje Verdadero: ";
+            String porcentajeF = "Porcentaje Falso: ";
+            List<ReporteVFResponse> listaPorcentajes = new ArrayList<>();
 
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-            EntityManager entitymanager = factory.createEntityManager();
+            if (contador_registros != 0) {
 
-            //Obtener el porcentaje de verdadero
+                float porcentajeVerdadero = Math.round((contador_verdaderos * 100) / contador_registros);
+                float porcentajeFalso = Math.round((contador_falsos * 100) / contador_registros);
 
-            SQL_Verdadero = "SELECT COUNT(re._verdaderoFalso)*100/:contador_registros as Porcentaje FROM Respuesta as re, PreguntaEstudio as pe, Estudio as es " +
-                    "WHERE es._id = pe._estudio._id and pe._id = re._preguntaEstudio._id and re._verdaderoFalso = 'Verdadero' and es._id = :id";
+                listaPorcentajes.add(new ReporteVFResponse(porcentajeV, porcentajeVerdadero, porcentajeF, porcentajeFalso));
 
-            Query query1 = entitymanager.createQuery(SQL_Verdadero);
-            query1.setParameter("id", id);
-            query1.setParameter("contador_registros", contador_registros);
+            }
+            else {
 
-            List<Object[]> porcentajeVerdadero = query1.getResultList();
+                listaPorcentajes.add(new ReporteVFResponse(porcentajeV, 0, porcentajeF, 0));
+            }
 
-            //Obtener el porcentaje falso
-
-            SQL_Falso = "SELECT COUNT(re._verdaderoFalso)*100/:contador_registros as Porcentaje FROM Respuesta as re, PreguntaEstudio as pe, Estudio as es " +
-                    "WHERE es._id = pe._estudio._id and pe._id = re._preguntaEstudio._id and re._verdaderoFalso = 'Falso' and es._id = :id";
-
-            Query query2 = entitymanager.createQuery(SQL_Falso);
-            query2.setParameter("id", id);
-            query2.setParameter("contador_registros", contador_registros);
-
-            List<Object[]> porcentajeFalso = query2.getResultList();
-
-            List<Object[]> listaDefinitiva = new ArrayList<>();
-
-            listaDefinitiva.add(porcentajeVerdadero.get(0));
-            listaDefinitiva.add(porcentajeFalso.get(0));
-
-            return listaDefinitiva;
+            return listaPorcentajes;
 
         } catch (NullPointerException ex) {
 
@@ -126,4 +129,104 @@ public class ReportesService extends AplicacionBase {
 
     }
 
+    @GET
+    @Path("/porcentajeGenero/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public List<ReporteMFResponse> listarPorcentajesGenero(@PathParam("id") long id) throws NullPointerException{
+
+        try {
+
+            //Obtener las respuestas del estudio
+
+            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+            DaoRespuesta daoRespuesta = new DaoRespuesta();
+            List<Respuesta> allRespuesta = daoRespuesta.findAll(Respuesta.class);
+            List<PreguntaEstudio> allPreguntaEstudio = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
+            List<Respuesta> listaRespuestasEstudio = new ArrayList<>();
+
+            for (PreguntaEstudio preguntaEstudio: allPreguntaEstudio){
+
+                if (preguntaEstudio.get_estudio().get_id() == id){
+
+                    long idPE = preguntaEstudio.get_id();
+
+                    for (Respuesta respuesta: allRespuesta){
+
+                        if (respuesta.get_preguntaEstudio().get_id() == idPE){
+
+                            listaRespuestasEstudio.add(respuesta);
+                        }
+                    }
+
+                }
+            }
+
+            //Ahora calculamos la cantidad de personas por genero con las respuestas
+
+            DaoUsuario daoUsuario = new DaoUsuario();
+            DaoInformacion daoInformacion = new DaoInformacion();
+            List<Usuario> allUsuario = daoUsuario.findAll(Usuario.class);
+            List<Informacion> allInformacion = daoInformacion.findAll(Informacion.class);
+            int contador_registros = 0;
+            int contador_masculino = 0;
+            int contador_femenino = 0;
+
+            for (Respuesta respuesta: listaRespuestasEstudio){
+
+                long idU = respuesta.get_usuario().get_id();
+
+                for(Usuario usuario: allUsuario){
+
+                    if(usuario.get_id() == idU){
+
+                        for(Informacion informacion: allInformacion){
+
+                            if(informacion.get_usuario().get_id() == idU){
+
+                                if(informacion.get_genero().equals("Masculino")){
+
+                                    contador_registros = contador_registros + 1;
+                                    contador_masculino = contador_masculino + 1;
+                                }
+                                else if (informacion.get_genero().equals("Femenino")){
+
+                                    contador_registros = contador_registros + 1;
+                                    contador_femenino = contador_femenino + 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Calculamos los porcentajes
+
+            String porcentajeM = "Porcentaje Masculino: ";
+            String porcentajeF = "Porcentaje Femenino: ";
+            List<ReporteMFResponse> listaPorcentajes = new ArrayList<>();
+
+            if (contador_registros != 0){
+
+                float porcentajeMasculino = Math.round((contador_masculino * 100) / contador_registros);
+                float porcentajeFemenino = Math.round((contador_femenino * 100) / contador_registros);
+
+                listaPorcentajes.add(new ReporteMFResponse(porcentajeM, porcentajeMasculino, porcentajeF, porcentajeFemenino));
+
+            }
+            else {
+
+                listaPorcentajes.add(new ReporteMFResponse(porcentajeM, 0, porcentajeF, 0));
+            }
+
+            return listaPorcentajes;
+
+        } catch (NullPointerException ex) {
+
+            String mensaje = ex.getMessage();
+            System.out.print(mensaje);
+            return null;
+
+        }
+
+    }
 }
