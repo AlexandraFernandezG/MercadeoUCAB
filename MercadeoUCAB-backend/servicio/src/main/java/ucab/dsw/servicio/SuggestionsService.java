@@ -267,8 +267,6 @@ public class SuggestionsService extends AplicacionBase {
             List<Estudio> allEstudios = daoEstudio.findAll(Estudio.class);
             PreguntaEstudioDto preguntaEstudiodto = new PreguntaEstudioDto();
 
-            //for (Estudio estudio: allEstudios){
-
             Estudio estudio = allEstudios.get(allEstudios.size() - 1);
 
             if(estudio.get_solicitudEstudio().get_id() == idSE){
@@ -286,7 +284,6 @@ public class SuggestionsService extends AplicacionBase {
                     servicio.addPreguntaEstudio(preguntaEstudiodto);
                 }
             }
-            //}
 
         } catch (Exception ex){
 
