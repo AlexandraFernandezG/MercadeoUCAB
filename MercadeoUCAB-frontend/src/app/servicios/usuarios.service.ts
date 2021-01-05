@@ -4,6 +4,7 @@ import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { Usuario, UsuarioCorreo } from '../modelos/usuario';
 import { Usuario2 } from '../modelos/usuario';
 import { catchError, map, tap, retry } from 'rxjs/operators';
+import { RegistroEncuestado } from '../modelos/registro-encuestado';
 
 
 @Injectable({
@@ -84,16 +85,24 @@ export class UsuariosService {
   }
 
     /// Error HandleError
-    handleError(error): Observable<never> {
-      let errorMessage = '';
-      if (error.error instanceof ErrorEvent) {
-        errorMessage = error.error.message;
-      } else {
-        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      }
-      window.alert(errorMessage);
-      return throwError(errorMessage);
-   }
+  handleError(error): Observable<never> {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = error.error.message;
+    } else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    window.alert(errorMessage);
+    return throwError(errorMessage);
+  }
+
+  getInfoUsuario(id: number): Observable<RegistroEncuestado>{
+    return this.http.get<RegistroEncuestado>(this.url + 'informacion/consultarInformacion/' + id)
+    .pipe(
+      tap(_ => console.log(`fetched usuario id=${id}`)),
+      catchError(this.handleError)
+    );
+  }
 
 }
 
