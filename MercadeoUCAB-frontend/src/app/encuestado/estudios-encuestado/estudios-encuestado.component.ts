@@ -24,9 +24,9 @@ export class EstudiosEncuestadoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    /*  this.estudiosService.getEstudiosEncuestado(this.id)
+     /* this.estudiosService.getEstudiosEncuestado(this.id)
       .subscribe(data => {this.estudios = data;
-      } );*/
+      } )*/
 
       this.estudiosService.getEstudios()
       .subscribe(data => {this.estudios = data;
