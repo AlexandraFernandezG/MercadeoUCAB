@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import ucab.dsw.Response.RespuestaPreguntaResponse;
 import ucab.dsw.Response.RespuestasAbiertasResponse;
 import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.accesodatos.DaoPreguntaEstudio;
@@ -22,19 +23,32 @@ import javax.ws.rs.core.MediaType;
 public class ReportesService extends AplicacionBase {
 
     @GET
-    @Path("respuestasPregunta/{id}")
+    @Path("respuestasPreguntasAbiertas/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public List<RespuestasAbiertasResponse> listarRespuestasAbiertas(@PathParam("id") long id) throws NullPointerException{
 
-        /**
-         * Este método permite obtener las respuestas de las preguntas abiertas
-         *
-         * NOTA: Hay que realizar.
-         */
 
         try {
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+            EntityManager entitymanager = factory.createEntityManager();
 
-            return null;
+
+            String sqlQuery = "SELECT R._respuestaAbierta AS respuestaAbierta" +
+                    " FROM Respuesta AS R, PreguntaEstudio AS PES WHERE " +
+                    "R._preguntaEstudio._id = PES._id AND " +
+                    "PES._estudio._id =:id " +
+                    "ORDER BY PES._id";
+            Query query = entitymanager.createQuery( sqlQuery );
+            query.setParameter("id", id);
+
+            List<Object[]> respuestas = query.getResultList();
+            List<RespuestasAbiertasResponse> ResponseListUpdate = new ArrayList<>(respuestas.size());
+
+            for (Object[] r : respuestas) {
+                ResponseListUpdate.add(new RespuestasAbiertasResponse((Long)r[0], (String)r[1]));
+            }
+
+            return ResponseListUpdate;
 
         } catch (NullPointerException ex) {
 
@@ -125,5 +139,4 @@ public class ReportesService extends AplicacionBase {
         }
 
     }
-
 }
