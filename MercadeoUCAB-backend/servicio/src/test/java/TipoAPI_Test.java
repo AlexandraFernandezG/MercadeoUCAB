@@ -6,7 +6,7 @@ import ucab.dsw.entidades.Tipo;
 
 public class TipoAPI_Test {
 
-    //Listar todos los tipos (Esta forma fue realizada por Valentina)
+    //Listar todos los tipos
     @Test
     public void pruebaListarTipos(){
 
@@ -22,7 +22,7 @@ public class TipoAPI_Test {
 
     }
 
-    //Consultar un Tipo (Esta forma fue realizada por Valentina)
+    //Consultar un Tipo
     @Test
     public void pruebaConsultarTipo(){
 
@@ -37,7 +37,7 @@ public class TipoAPI_Test {
 
     }
 
-    //Listar tipos activos (Esta forma fue realizada por Valentina)
+    //Listar tipos activos
     @Test
     public void pruebaListarTiposActivos(){
 

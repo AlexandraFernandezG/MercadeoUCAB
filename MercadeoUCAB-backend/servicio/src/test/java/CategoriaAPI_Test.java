@@ -10,7 +10,7 @@ import ucab.dsw.entidades.Categoria;
 
 public class CategoriaAPI_Test {
 
-    //Listar Categorias (Esta forma fue realizada por Valentina)
+    //Listar Categorias
     @Test
     public void pruebaListarCategorias(){
 
@@ -26,7 +26,7 @@ public class CategoriaAPI_Test {
 
     }
 
-    //Listar subcategorias de categoria (Esta forma fue realizada por Valentina)
+    //Listar subcategorias de categoria
     @Test
     public void pruebaListarSubcategoriasCategoria(){
 
@@ -42,7 +42,7 @@ public class CategoriaAPI_Test {
 
     }
 
-    //Consultar una Categoria (Esta forma fue realizada por Valentina)
+    //Consultar una Categoria
     @Test
     public void pruebaConsultarCategoria(){
 

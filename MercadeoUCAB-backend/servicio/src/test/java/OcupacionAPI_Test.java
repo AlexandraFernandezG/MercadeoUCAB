@@ -5,7 +5,7 @@ import ucab.dsw.entidades.Ocupacion;
 
 public class OcupacionAPI_Test {
 
-    //Listar todos las ocupaciones (Esta forma fue realizada por Valentina)
+    //Listar todos las ocupaciones
     @Test
     public void pruebaListarOcupaciones(){
 
@@ -21,7 +21,7 @@ public class OcupacionAPI_Test {
 
     }
 
-    //Consultar una ocupacion (Esta forma fue realizada por Valentina)
+    //Consultar una ocupacion
     @Test
     public void pruebaConsultarOcupacion(){
 

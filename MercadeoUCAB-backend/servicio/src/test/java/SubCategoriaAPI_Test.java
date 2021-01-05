@@ -6,7 +6,7 @@ import ucab.dsw.entidades.Subcategoria;
 
 public class SubCategoriaAPI_Test {
 
-    //Listar todos las subcategorias (Esta forma fue realizada por Valentina)
+    //Listar todos las subcategorias
     @Test
     public void pruebaListarSubcategorias(){
 
@@ -22,7 +22,7 @@ public class SubCategoriaAPI_Test {
 
     }
 
-    //Consultar una subcategoria (Esta forma fue realizada por Valentina)
+    //Consultar una subcategoria
     @Test
     public void pruebaConsultarSubcategoria(){
 
@@ -37,7 +37,7 @@ public class SubCategoriaAPI_Test {
 
     }
 
-    //Listar subcategorias activas (Esta forma fue realizada por Valentina)
+    //Listar subcategorias activas
     @Test
     public void pruebaListarSubcategoriasActivas(){
 
