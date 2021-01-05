@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class SolicitudEstudioAPI_Test {
 
-    //Listar todas las solicitudes (Esta forma fue realizada por Valentina)
+    //Listar todas las solicitudes
     @Test
     public void pruebaListarSolicitudes(){
 
@@ -27,7 +27,7 @@ public class SolicitudEstudioAPI_Test {
 
     }
 
-    //Consultar una solicitud (Esta forma fue realizada por Valentina)
+    //Consultar una solicitud
     @Test
     public void pruebaConsultarSolicitud(){
 
@@ -42,7 +42,7 @@ public class SolicitudEstudioAPI_Test {
 
     }
 
-    //Listar solicitudes activas (Esta forma fue realizada por Valentina)
+    //Listar solicitudes activas
     @Test
     public void pruebaListarSolicitudesActivas(){
 

@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class EstudioAPI_Test {
 
-    //Listar todos los estudios (Esta forma fue realizada por Valentina)
+    //Listar todos los estudios
     @Test
     public void pruebaListarEstudios(){
 
@@ -28,7 +28,7 @@ public class EstudioAPI_Test {
 
     }
 
-    //Consultar un Estudio (Esta forma fue realizada por Valentina)
+    //Consultar un Estudio
     @Test
     public void pruebaConsultarEstudio(){
 
@@ -43,7 +43,7 @@ public class EstudioAPI_Test {
 
     }
 
-    //Listar estudios activos (Esta forma fue realizada por Valentina)
+    //Listar estudios activos
     @Test
     public void pruebaListarEstudiosActivos(){
 

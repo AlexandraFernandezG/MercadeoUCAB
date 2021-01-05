@@ -6,7 +6,7 @@ import ucab.dsw.dtos.PreguntaEstudioDto;
 
 public class PreguntasEstudioAPI_Test {
 
-    //Listar preguntas de un estudio (Esta forma fue realizada por Valentina)
+    //Listar preguntas de un estudio
     @Test
     public void pruebaListarPreguntasEstudio(){
 

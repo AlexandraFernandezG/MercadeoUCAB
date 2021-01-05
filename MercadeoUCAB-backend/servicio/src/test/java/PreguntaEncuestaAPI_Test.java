@@ -7,7 +7,7 @@ import ucab.dsw.entidades.PreguntaEncuesta;
 
 public class PreguntaEncuestaAPI_Test {
 
-    //Listar todos las preguntas (Esta forma fue realizada por Valentina)
+    //Listar todos las preguntas
     @Test
     public void pruebaListarPreguntaEncuesta(){
 
@@ -23,7 +23,7 @@ public class PreguntaEncuestaAPI_Test {
 
     }
 
-    //Consultar una pregunta (Esta forma fue realizada por Valentina)
+    //Consultar una pregunta
     @Test
     public void pruebaConsultarPreguntaEncuesta(){
 
@@ -38,7 +38,7 @@ public class PreguntaEncuestaAPI_Test {
 
     }
 
-    //Listar Preguntas activas (Esta forma fue realizada por Valentina)
+    //Listar Preguntas activas
     @Test
     public void pruebaListarPreguntasEncuestaActivas(){
 

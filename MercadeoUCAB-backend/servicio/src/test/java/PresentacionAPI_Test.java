@@ -6,7 +6,7 @@ import ucab.dsw.entidades.Presentacion;
 
 public class PresentacionAPI_Test {
 
-    //Listar todas las presentaciones (Esta forma fue realizada por Valentina)
+    //Listar todas las presentaciones
     @Test
     public void pruebaListarPresentaciones(){
 
@@ -22,7 +22,7 @@ public class PresentacionAPI_Test {
 
     }
 
-    //Consultar una presentacion (Esta forma fue realizada por Valentina)
+    //Consultar una presentacion
     @Test
     public void pruebaConsultarPresentacion(){
 
@@ -39,7 +39,7 @@ public class PresentacionAPI_Test {
 
     }
 
-    // Listar presentaciones activas (Esta forma fue realizada por Valentina)
+    // Listar presentaciones activas
     @Test
     public void pruebaListarPresentacionesActivas(){
 

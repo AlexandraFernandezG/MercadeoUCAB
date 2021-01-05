@@ -8,7 +8,7 @@ import ucab.dsw.entidades.Tipo;
 
 public class RespuestaAPI_Test {
 
-    //Listar todas las respuestas (Esta forma fue realizada por Valentina)
+    //Listar todas las respuestas
     @Test
     public void pruebaListarRespuestas(){
 
@@ -24,7 +24,7 @@ public class RespuestaAPI_Test {
 
     }
 
-    //Consultar una respuesta (Esta forma fue realizada por Valentina)
+    //Consultar una respuesta
     @Test
     public void pruebaConsultarRespuesta(){
 
@@ -39,7 +39,7 @@ public class RespuestaAPI_Test {
 
     }
 
-    //Listar respuestas activas (Esta forma fue realizada por Valentina)
+    //Listar respuestas activas
     @Test
     public void pruebaListarRespuestasActivas(){
 
