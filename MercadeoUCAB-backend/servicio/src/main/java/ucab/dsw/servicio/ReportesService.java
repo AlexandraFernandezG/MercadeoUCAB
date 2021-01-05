@@ -34,7 +34,7 @@ public class ReportesService extends AplicacionBase {
             EntityManager entitymanager = factory.createEntityManager();
 
 
-            String sqlQuery = "SELECT R._respuestaAbierta AS respuestaAbierta" +
+            String sqlQuery = "SELECT R._id AS idRespuestaAbierta, R._respuestaAbierta AS respuestaAbierta" +
                     " FROM Respuesta AS R, PreguntaEstudio AS PES WHERE " +
                     "R._preguntaEstudio._id = PES._id AND R._respuestaAbierta IS NOT NULL AND " +
                     "PES._estudio._id =:id " +
