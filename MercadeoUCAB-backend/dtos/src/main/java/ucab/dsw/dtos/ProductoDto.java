@@ -1,10 +1,10 @@
 package ucab.dsw.dtos;
 
 public class ProductoDto extends DtoBase{
-    
+
     private String _nombre;
     private String _descripcion;
-    private UsuarioDto _usuario;
+    private UsuarioDto _usuarioDto;
     private SubcategoriaDto _subcategoriaDto;
     private MarcaDto _marcaDto;
 
@@ -16,19 +16,17 @@ public class ProductoDto extends DtoBase{
         return _descripcion;
     }
 
-
-    public UsuarioDto getUsuario() {
-        return _usuario;
+    public UsuarioDto getUsuarioDto() {
+        return _usuarioDto;
     }
 
-    public SubcategoriaDto getSubcategoria() {
+    public SubcategoriaDto getSubcategoriaDto() {
         return _subcategoriaDto;
     }
 
-    public MarcaDto getMarca() {
+    public MarcaDto getMarcaDto() {
         return _marcaDto;
     }
-
 
     public void setNombre(String _nombre) {
         this._nombre = _nombre;
@@ -38,15 +36,15 @@ public class ProductoDto extends DtoBase{
         this._descripcion = _descripcion;
     }
 
-    public void setUsuario(UsuarioDto _usuario) {
-        this._usuario = _usuario;
+    public void setUsuarioDto(UsuarioDto _usuario) {
+        this._usuarioDto = _usuario;
     }
 
-    public void setSubcategoria(SubcategoriaDto _subcategoria) {
+    public void setSubcategoriaDto(SubcategoriaDto _subcategoria) {
         this._subcategoriaDto = _subcategoria;
     }
 
-    public void setMarca(MarcaDto _marca) {
+    public void setMarcaDto(MarcaDto _marca) {
         this._marcaDto = _marca;
     }
 
@@ -61,5 +59,5 @@ public class ProductoDto extends DtoBase{
     public ProductoDto (){
         super();
     }
-    
+
 }

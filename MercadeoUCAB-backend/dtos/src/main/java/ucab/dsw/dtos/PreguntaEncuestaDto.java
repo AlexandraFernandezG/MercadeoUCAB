@@ -7,35 +7,35 @@ public class PreguntaEncuestaDto extends DtoBase {
     private UsuarioDto _usuarioDto;
     private SubcategoriaDto _subcategoriaDto;
 
-    public String get_descripcion() {
+    public String getDescripcion() {
         return _descripcion;
     }
 
-    public void set_descripcion(String _descripcion) {
+    public void setDescripcion(String _descripcion) {
         this._descripcion = _descripcion;
     }
 
-    public SubcategoriaDto get_subcategoriaDto() {
+    public SubcategoriaDto getSubcategoriaDto() {
         return _subcategoriaDto;
     }
 
-    public void set_subcategoriaDto(SubcategoriaDto _subcategoriaDto) {
+    public void setSubcategoriaDto(SubcategoriaDto _subcategoriaDto) {
         this._subcategoriaDto = _subcategoriaDto;
     }
 
-    public String get_tipoPregunta() {
+    public String getTipoPregunta() {
         return _tipoPregunta;
     }
 
-    public void set_tipoPregunta(String _tipoPregunta) {
+    public void setTipoPregunta(String _tipoPregunta) {
         this._tipoPregunta = _tipoPregunta;
     }
 
-    public UsuarioDto get_usuarioDto() {
+    public UsuarioDto getUsuarioDto() {
         return _usuarioDto;
     }
 
-    public void set_usuarioDto(UsuarioDto _usuarioDto) {
+    public void setUsuarioDto(UsuarioDto _usuarioDto) {
         this._usuarioDto = _usuarioDto;
     }
 

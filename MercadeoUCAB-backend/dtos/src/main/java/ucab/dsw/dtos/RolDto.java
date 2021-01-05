@@ -4,11 +4,11 @@ public class RolDto extends DtoBase{
 
     private String _nombre;
 
-    public String get_nombre() {
+    public String getNombre() {
         return _nombre;
     }
 
-    public void set_nombre(String _nombre) {
+    public void setNombre(String _nombre) {
         this._nombre = _nombre;
     }
 
@@ -16,9 +16,6 @@ public class RolDto extends DtoBase{
         super(id);
     }
 
-    public RolDto (String estatus) throws Exception {
-        super(estatus);
-    }
 
     public RolDto (){
         super();

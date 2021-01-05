@@ -25,30 +25,31 @@ public class MedioComunicacion extends EntidadBase{
     
     //Getters, Setters, y otros metodos.
 
-    public String getTipoDeMedio() {
-        return _tipoDeMedio;
-    }
 
-    public Informacion getInformacion() {
-        return _informacion;
-    }
-
-    public SolicitudEstudio getSolicitudEstudio() {
+    public SolicitudEstudio get_solicitudEstudio() {
         return _solicitudEstudio;
     }
 
-    public void setTipoDeMedio(String _tipoDeMedio) {
-        this._tipoDeMedio = _tipoDeMedio;
+    public void set_solicitudEstudio(SolicitudEstudio _solicitudEstudio) {
+        this._solicitudEstudio = _solicitudEstudio;
     }
 
-    public void setInformacion(Informacion _informacion) {
+    public Informacion get_informacion() {
+        return _informacion;
+    }
+
+    public void set_informacion(Informacion _informacion) {
         this._informacion = _informacion;
     }
 
-    public void setSolicitudEstudio(SolicitudEstudio _solicitudEstudio) {
-        this._solicitudEstudio = _solicitudEstudio;
+    public String get_tipoDeMedio() {
+        return _tipoDeMedio;
     }
-    
+
+    public void set_tipoDeMedio(String _tipoDeMedio) {
+        this._tipoDeMedio = _tipoDeMedio;
+    }
+
     public MedioComunicacion (long id){
         super(id);
     }

@@ -1,6 +1,7 @@
 package ucab.dsw.accesodatos;
 
 import ucab.dsw.entidades.Hijo;
+
 import javax.persistence.EntityManager;
 
 public class DaoHijo extends Dao<Hijo>{

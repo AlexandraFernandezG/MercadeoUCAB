@@ -1,7 +1,7 @@
 package ucab.dsw.dtos;
 
 public class SubcategoriaDto extends DtoBase{
-    
+
     private String _nombre;
     private String _descripcion;
     private CategoriaDto _categoriaDto;
@@ -41,5 +41,5 @@ public class SubcategoriaDto extends DtoBase{
     public SubcategoriaDto (){
         super();
     }
-    
+
 }
