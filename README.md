@@ -11,7 +11,7 @@ Dirigirse a la carpeta DSW_EmpresaB\MercadeoUCAB-frontend y ejecutar el siguient
      ng serve --o
 
 #### Documento ERS:
-[Documento ERS](https://github.com/bismarckpm/DSW_EmpresaB/blob/ce43dbd29d18d3151e75867ad6fcbab6ae7d3c44/ERS.pdf)
+[Documento ERS](https://github.com/bismarckpm/DSW_EmpresaB/blob/c8afab1c8ff44b27700819d0b1930395960cb352/ERS.pdf)
 
 #### Desarrolladores :computer::
 
