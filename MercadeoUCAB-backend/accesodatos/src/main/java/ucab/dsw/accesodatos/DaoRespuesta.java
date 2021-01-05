@@ -11,5 +11,4 @@ public class DaoRespuesta extends Dao<Respuesta>{
     public DaoRespuesta (){
         super (_handler);
     }
-
 }
