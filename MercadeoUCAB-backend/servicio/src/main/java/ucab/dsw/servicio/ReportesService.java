@@ -36,7 +36,7 @@ public class ReportesService extends AplicacionBase {
 
             String sqlQuery = "SELECT R._respuestaAbierta AS respuestaAbierta" +
                     " FROM Respuesta AS R, PreguntaEstudio AS PES WHERE " +
-                    "R._preguntaEstudio._id = PES._id AND " +
+                    "R._preguntaEstudio._id = PES._id AND R._respuestaAbierta IS NOT NULL AND " +
                     "PES._estudio._id =:id " +
                     "ORDER BY PES._id";
             Query query = entitymanager.createQuery( sqlQuery );
