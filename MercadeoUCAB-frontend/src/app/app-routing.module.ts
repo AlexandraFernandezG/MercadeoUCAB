@@ -50,7 +50,7 @@ const routes: Routes = [
       { path: 'preguntassugeridas/:id', component: PreguntasSugeridasComponent},
       { path: 'solicitudes', component: SolicitudesComponent},
       { path: 'estudios', component: EstudiosComponent},
-      { path: 'estudiossugeridos/:id', component: EstudiosSugeridosComponent},
+      { path: 'estudiossugeridos', component: EstudiosSugeridosComponent},
       { path: 'asignacionpreguntas/:id', component: PreguntasEstudioComponent},
       { path: '', pathMatch: 'prefix', redirectTo: 'categorias'},
     ]
