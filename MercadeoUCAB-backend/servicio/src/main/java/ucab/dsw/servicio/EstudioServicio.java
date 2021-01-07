@@ -103,6 +103,7 @@ public class EstudioServicio extends AplicacionBase {
             estudio.set_tipoInstrumento(estudioDto.getTipoInstrumento());
             estudio.set_fechaInicio(estudioDto.getFechaInicio());
             estudio.set_fechaFin(estudioDto.getFechaFin());
+            estudio.set_estado(estudioDto.getEstado());
             estudio.set_estatus(estudioDto.getEstatus());
             SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(estudioDto.getSolicitudEstudioDto().getId(), SolicitudEstudio.class);
             Usuario usuario = daoUsuario.find(estudioDto.getUsuarioDto().getId(), Usuario.class);
@@ -142,6 +143,7 @@ public class EstudioServicio extends AplicacionBase {
                 estudio_modificar.set_tipoInstrumento(estudioDto.getTipoInstrumento());
                 estudio_modificar.set_fechaInicio(estudioDto.getFechaInicio());
                 estudio_modificar.set_fechaFin(estudioDto.getFechaFin());
+                estudio_modificar.set_estado(estudioDto.getEstado());
                 estudio_modificar.set_estatus(estudioDto.getEstatus());
                 daoEstudio.update(estudio_modificar);
 

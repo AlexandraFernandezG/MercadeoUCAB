@@ -13,4 +13,20 @@ public class RespuestaPreguntaResponse {
         this.fkPregunta = fkPregunta;
         this.pregunta = pregunta;
     }
+
+    public long getFkPregunta() {
+        return fkPregunta;
+    }
+
+    public void setFkPregunta(long fkPregunta) {
+        this.fkPregunta = fkPregunta;
+    }
+
+    public String getPregunta() {
+        return pregunta;
+    }
+
+    public void setPregunta(String pregunta) {
+        this.pregunta = pregunta;
+    }
 }

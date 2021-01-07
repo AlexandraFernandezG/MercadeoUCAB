@@ -43,6 +43,9 @@ public class SolicitudEstudio extends EntidadBase{
     @Column ( name = "edadMaximaHijos")
     private int _edadMaximaHijos;
 
+    @Column ( name = "estado")
+    private String _estado;
+
     //Relaciones
     
     @ManyToOne
@@ -66,7 +69,6 @@ public class SolicitudEstudio extends EntidadBase{
     private NivelAcademico _nivelAcademico;
     
     //Getters, Setters, y otros metodos.
-
 
     public String get_descripcion() {
         return _descripcion;
@@ -156,6 +158,14 @@ public class SolicitudEstudio extends EntidadBase{
         this._edadMaximaHijos = _edadMaximaHijos;
     }
 
+    public String get_estado() {
+        return _estado;
+    }
+
+    public void set_estado(String _estado) {
+        this._estado = _estado;
+    }
+
     public Usuario get_usuario() {
         return _usuario;
     }
@@ -222,6 +232,7 @@ public class SolicitudEstudio extends EntidadBase{
                 ", _generoHijos='" + _generoHijos + '\'' +
                 ", _edadMinimaHijos=" + _edadMinimaHijos +
                 ", _edadMaximaHijos=" + _edadMaximaHijos +
+                ", _estado='" + _estado + '\'' +
                 ", _usuario=" + _usuario +
                 ", _nivelEconomico=" + _nivelEconomico +
                 ", _producto=" + _producto +

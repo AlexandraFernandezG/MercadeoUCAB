@@ -6,6 +6,8 @@ import ucab.dsw.entidades.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -34,6 +36,36 @@ public class ProductoServicio extends AplicacionBase{
             return null;
         }
     }
+
+    /**
+     * Este método permite obtener los productos solamente del cliente
+     * @author Emanuel Di Cristofaro
+     * @param id El id del cliente.
+     */
+    @GET
+    @Path("/consultarProductosCliente/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response consultarProductosCliente(@PathParam("id") long id){
+
+        JsonObject dataObject;
+
+        try {
+
+            String mensaje = "En proceso";
+
+            return Response.status(Response.Status.OK).entity(mensaje).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+    }
+
 
     //Consultar un producto
     @GET

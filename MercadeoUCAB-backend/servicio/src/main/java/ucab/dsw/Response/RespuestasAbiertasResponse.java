@@ -16,4 +16,28 @@ public class RespuestasAbiertasResponse {
         this.respuestaAbierta = respuestaAbierta;
         this.pregunta = pregunta;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getRespuestaAbierta() {
+        return respuestaAbierta;
+    }
+
+    public void setRespuestaAbierta(String respuestaAbierta) {
+        this.respuestaAbierta = respuestaAbierta;
+    }
+
+    public String getPregunta() {
+        return pregunta;
+    }
+
+    public void setPregunta(String pregunta) {
+        this.pregunta = pregunta;
+    }
 }

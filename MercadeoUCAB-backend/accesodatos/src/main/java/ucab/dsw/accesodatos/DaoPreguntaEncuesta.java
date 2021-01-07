@@ -37,4 +37,44 @@ public class DaoPreguntaEncuesta extends Dao<PreguntaEncuesta>{
 
     }
 
+    public List<Object[]> obtenerPreguntasAbiertas(long id){
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+        EntityManager entitymanager = factory.createEntityManager();
+
+
+        String sqlQuery = "SELECT R._id AS idRespuestaAbierta, R._respuestaAbierta AS respuestaAbierta, PE._descripcion AS Pregunta" +
+                " FROM Respuesta AS R, PreguntaEstudio AS PES, PreguntaEncuesta AS PE WHERE " +
+                "R._preguntaEstudio._id = PES._id AND R._respuestaAbierta IS NOT NULL AND PE._id = PES._preguntaEncuesta._id AND " +
+                "PES._estudio._id =:id " +
+                "ORDER BY PES._id";
+
+        Query query = entitymanager.createQuery( sqlQuery );
+        query.setParameter("id", id);
+
+        List<Object[]> respuestas = query.getResultList();
+
+        return respuestas;
+
+    }
+
+    public List<Object[]> listarPreguntas(long id){
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+        EntityManager entitymanager = factory.createEntityManager();
+
+
+        String sqlQuery = "SELECT PE._id AS idPreguntaEncuesta, PE._descripcion AS descripcion , PE._tipoPregunta AS tipoPregunta," +
+                " PES._id AS idPreguntaEstudio FROM PreguntaEncuesta AS PE, PreguntaEstudio AS PES WHERE " +
+                "PE._id = PES._preguntaEncuesta._id AND PES._estudio._id =:id " +
+                "ORDER BY PE._id ";
+
+        Query query = entitymanager.createQuery( sqlQuery);
+        query.setParameter("id", id);
+
+        List<Object[]> preguntasRespuestas = query.getResultList();
+
+        return preguntasRespuestas;
+    }
+
 }

@@ -1,7 +1,5 @@
 package ucab.dsw.dtos;
 
-import java.util.Date;
-
 public class SolicitudEstudioDto extends DtoBase{
 
     private String _descripcion;
@@ -15,6 +13,7 @@ public class SolicitudEstudioDto extends DtoBase{
     private String _generoHijos;
     private int _edadMinimaHijos;
     private int _edadMaximaHijos;
+    private String _estado;
     private UsuarioDto _usuarioDto;
     private NivelEconomicoDto _nivelEconomicoDto;
     private ProductoDto _productoDto;
@@ -109,6 +108,14 @@ public class SolicitudEstudioDto extends DtoBase{
 
     public void setEdadMaximaHijos(int _edadMaximaHijos) {
         this._edadMaximaHijos = _edadMaximaHijos;
+    }
+
+    public String getEstado() {
+        return _estado;
+    }
+
+    public void setEstado(String _estado) {
+        this._estado = _estado;
     }
 
     public UsuarioDto getUsuarioDto() {

@@ -32,7 +32,9 @@ public class Estudio extends EntidadBase{
     @Column( name = "fechaFin" )
     private Date _fechaFin;
 
-    
+    @Column ( name = "estado")
+    private String _estado;
+
     //Relaciones
     
     @ManyToOne
@@ -44,7 +46,6 @@ public class Estudio extends EntidadBase{
     private SolicitudEstudio _solicitudEstudio;
     
     //Getters, Setters, y otros metodos.
-
 
     public String get_nombre() {
         return _nombre;
@@ -78,6 +79,14 @@ public class Estudio extends EntidadBase{
         this._fechaFin = _fechaFin;
     }
 
+    public String get_estado() {
+        return _estado;
+    }
+
+    public void set_estado(String _estado) {
+        this._estado = _estado;
+    }
+
     public Usuario get_usuario() {
         return _usuario;
     }
@@ -102,6 +111,10 @@ public class Estudio extends EntidadBase{
         super(estatus);
     }
 
+    public Estudio(){
+        super();
+    }
+
     @Override
     public String toString() {
         return "Estudio{" +
@@ -109,12 +122,9 @@ public class Estudio extends EntidadBase{
                 ", _tipoInstrumento='" + _tipoInstrumento + '\'' +
                 ", _fechaInicio=" + _fechaInicio +
                 ", _fechaFin=" + _fechaFin +
+                ", _estado='" + _estado + '\'' +
                 ", _usuario=" + _usuario +
                 ", _solicitudEstudio=" + _solicitudEstudio +
                 '}';
     }
-
-    public Estudio(){
-        super();
-    } 
 }

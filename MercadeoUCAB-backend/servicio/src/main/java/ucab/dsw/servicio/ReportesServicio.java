@@ -1,72 +1,87 @@
 package ucab.dsw.servicio;
 
-import ucab.dsw.response.ReporteMFResponse;
-import ucab.dsw.response.ReporteVFResponse;
 import ucab.dsw.response.RespuestasAbiertasResponse;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.entidades.*;
 
 import java.util.*;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path( "/reportes" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class ReportesServicio extends AplicacionBase {
 
+    /**
+     * Este reporte permite obtener solo las respuestas de las preguntas abiertas.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @param id id del estudio seleccionado por el administrador o el analista para obtener las preguntas.
+     */
     @GET
     @Path("respuestasPregunta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<RespuestasAbiertasResponse> listarRespuestasAbiertas(@PathParam("id") long id) throws NullPointerException{
+    public Response listarRespuestasAbiertas(@PathParam("id") long id) {
 
+        DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+        JsonObject dataObject;
+        JsonArrayBuilder respuestasArrayJson = Json.createArrayBuilder();
 
         try {
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-            EntityManager entitymanager = factory.createEntityManager();
 
+            List<Object[]> respuestas = daoPreguntaEncuesta.obtenerPreguntasAbiertas(id);
 
-            String sqlQuery = "SELECT R._id AS idRespuestaAbierta, R._respuestaAbierta AS respuestaAbierta, PE._descripcion AS Pregunta" +
-                    " FROM Respuesta AS R, PreguntaEstudio AS PES, PreguntaEncuesta AS PE WHERE " +
-                    "R._preguntaEstudio._id = PES._id AND R._respuestaAbierta IS NOT NULL AND PE._id = PES._preguntaEncuesta._id AND " +
-                    "PES._estudio._id =:id " +
-                    "ORDER BY PES._id";
-            Query query = entitymanager.createQuery( sqlQuery );
-            query.setParameter("id", id);
-
-            List<Object[]> respuestas = query.getResultList();
             List<RespuestasAbiertasResponse> ResponseListUpdate = new ArrayList<>(respuestas.size());
 
             for (Object[] r : respuestas) {
                 ResponseListUpdate.add(new RespuestasAbiertasResponse((long)r[0], (String)r[1], (String)r[2]));
             }
 
-            return ResponseListUpdate;
+            for (RespuestasAbiertasResponse rar: ResponseListUpdate){
 
-        } catch (NullPointerException ex) {
+                JsonObject respuesta = Json.createObjectBuilder()
+                        .add("id", rar.getId())
+                        .add("descripcion", rar.getPregunta())
+                        .add("tipoPregunta", rar.getRespuestaAbierta()).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+                respuestasArrayJson.add(respuesta);
+            }
 
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Preguntas recomendadas", respuestasArrayJson).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
+    /**
+     * Este método permite obtener un poncentaje de respuestas de verdadero y falso
+     * para un estudio.
+     * @author Emanuel Di Cristofaro
+     * @param id id del estudio seleccionado por el administrador o el analista para obtener las estadisticas.
+     * @throws NullPointerException si hay algun problema en el analisis
+     */
     @GET
     @Path("/porcentajeVF/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<ReporteVFResponse> porcentajeVeraderoFalso(@PathParam("id") long id) throws NullPointerException{
+    public Response porcentajeVeraderoFalso(@PathParam("id") long id) throws NullPointerException{
 
-        /**
-         * Este método permite obtener un poncentaje de respuestas de verdadero y falso
-         * para un estudio.
-         *
-         * NOTA: Este método funciona correctamente.
-         */
+        JsonObject dataObject;
 
         try {
 
@@ -99,40 +114,62 @@ public class ReportesServicio extends AplicacionBase {
             }
 
             //Calcular los porcentajes de verdaderos y falsos
-
-            String porcentajeV = "Porcentaje Verdadero: ";
-            String porcentajeF = "Porcentaje Falso: ";
-            List<ReporteVFResponse> listaPorcentajes = new ArrayList<>();
+            float porcentajeVerdadero = 0;
+            float porcentajeFalso = 0;
 
             if (contador_registros != 0) {
 
-                float porcentajeVerdadero = Math.round((contador_verdaderos * 100) / contador_registros);
-                float porcentajeFalso = Math.round((contador_falsos * 100) / contador_registros);
-
-                listaPorcentajes.add(new ReporteVFResponse(porcentajeV, porcentajeVerdadero, porcentajeF, porcentajeFalso));
+                porcentajeVerdadero = Math.round((contador_verdaderos * 100) / contador_registros);
+                porcentajeFalso = Math.round((contador_falsos * 100) / contador_registros);
 
             }
-            else {
 
-                listaPorcentajes.add(new ReporteVFResponse(porcentajeV, 0, porcentajeF, 0));
-            }
+            JsonObject dataAnalisis = Json.createObjectBuilder()
+                    .add("Porcentaje Verdadero", porcentajeVerdadero)
+                    .add("Porcentaje Falso", porcentajeFalso).build();
 
-            return listaPorcentajes;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Preguntas recomendadas", dataAnalisis).build();
+
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha podido ejecutar el analisis " + ex.getMessage())
+                    .add("codigo", 400).build();
 
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
 
+    /**
+     * Este método permite obtener un poncentaje de respuestas segun los generos del encuestado
+     * para un estudio.
+     * @author Emanuel Di Cristofaro
+     * @param id id del estudio seleccionado por el administrador o el analista para obtener las estadisticas.
+     * @throws NullPointerException si hay algun problema en el analisis
+     */
     @GET
     @Path("/porcentajeGenero/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<ReporteMFResponse> listarPorcentajesGenero(@PathParam("id") long id) throws NullPointerException{
+    public Response listarPorcentajesGenero(@PathParam("id") long id) throws NullPointerException{
+
+        JsonObject dataObject;
 
         try {
 
@@ -200,32 +237,44 @@ public class ReportesServicio extends AplicacionBase {
             }
 
             //Calculamos los porcentajes
+            float porcentajeMasculino = 0;
+            float porcentajeFemenino = 0;
 
-            String porcentajeM = "Porcentaje Masculino: ";
-            String porcentajeF = "Porcentaje Femenino: ";
-            List<ReporteMFResponse> listaPorcentajes = new ArrayList<>();
+            if (contador_registros != 0) {
 
-            if (contador_registros != 0){
-
-                float porcentajeMasculino = Math.round((contador_masculino * 100) / contador_registros);
-                float porcentajeFemenino = Math.round((contador_femenino * 100) / contador_registros);
-
-                listaPorcentajes.add(new ReporteMFResponse(porcentajeM, porcentajeMasculino, porcentajeF, porcentajeFemenino));
+                porcentajeMasculino = Math.round((contador_masculino * 100) / contador_registros);
+                porcentajeFemenino = Math.round((contador_femenino * 100) / contador_registros);
 
             }
-            else {
 
-                listaPorcentajes.add(new ReporteMFResponse(porcentajeM, 0, porcentajeF, 0));
-            }
+            JsonObject dataAnalisis = Json.createObjectBuilder()
+                    .add("Porcentaje Hombres", porcentajeMasculino)
+                    .add("Porcentaje Mujeres", porcentajeFemenino).build();
 
-            return listaPorcentajes;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Preguntas recomendadas", dataAnalisis).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha podido ejecutar el analisis " + ex.getMessage())
+                    .add("codigo", 400).build();
 
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }

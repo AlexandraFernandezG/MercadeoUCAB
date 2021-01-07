@@ -1,7 +1,6 @@
 package ucab.dsw.servicio;
 
 import lombok.extern.java.Log;
-import ucab.dsw.response.EstudiosEncuestadoResponse;
 import ucab.dsw.response.EstudiosResponse;
 import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.accesodatos.*;
@@ -16,10 +15,6 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.json.*;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -30,6 +25,20 @@ import javax.ws.rs.core.Response;
 @Consumes( MediaType.APPLICATION_JSON )
 public class SugerenciasServicio extends AplicacionBase {
 
+
+    /**
+     * Este método permite transformar la fecha de date a string debido a una exigencia del Json
+     * @author Emanuel Di Cristofaro
+     * @param fecha Parsear la fecha de date a string para poder enviar el Json.
+     */
+    public String devolverFecha(Date fecha){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha_nac = sdf.format(fecha);
+
+        return fecha_nac;
+    }
+
     /**
      * Este método permite obtener las preguntas recomendadas en base a un estudio seleccionado
      * @author Emanuel Di Cristofaro
@@ -38,7 +47,7 @@ public class SugerenciasServicio extends AplicacionBase {
     @GET
     @Path("/preguntasEstudio/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response listarPreguntasEstudioRecomendadas(@PathParam("id") long id){
+    public Response listarPreguntasEstudioRecomendadas(@PathParam("id") long id) {
 
         JsonObject dataObject;
 
@@ -79,7 +88,7 @@ public class SugerenciasServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 500).build();
+                    .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
@@ -89,82 +98,91 @@ public class SugerenciasServicio extends AplicacionBase {
      * Este método permite obtener una lista de estudios recomendados acorde a una solicitud de estudio
      * @author Emanuel Di Cristofaro
      * @param id id de la solicitud de estudio para recomendar estudios.
+     * @throws NullPointerException si no se encuentra la solicitud de estudio
      */
     @GET
     @Path("/solicitudEstudio/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<EstudiosResponse> listarEstudiosRecomendados(@PathParam("id") long id) throws NullPointerException{
+    public Response listarEstudiosRecomendados(@PathParam("id") long id) {
 
-
-        String SQL = null;
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
+        DaoEstudio daoEstudio = new DaoEstudio();
+        JsonObject dataObject;
+        JsonArrayBuilder estudiosArrayJson = Json.createArrayBuilder();
 
         try {
 
             SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
 
-            if(solicitudEstudio != null) {
-
                 String genero = solicitudEstudio.get_genero();
                 String estadoCivil = solicitudEstudio.get_estadoCivil();
                 int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
 
-                EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-                EntityManager entitymanager = factory.createEntityManager();
-
-                SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
-                        "FROM Estudio as e, Informacion as inf, SolicitudEstudio as se, MedioComunicacion as me " +
-                        "WHERE e._solicitudEstudio._id = se._id and se._id = me._solicitudEstudio._id and me._informacion._id = inf._id and " +
-                        "inf._genero = :genero and " +
-                        "(inf._estadoCivil = :estadoCivil or inf._estadoCivil is null) and " +
-                        "(inf._cantidadPersonas = :cantidadPersonas or inf._cantidadPersonas is null)";
-
-                Query query = entitymanager.createQuery(SQL);
-                query.setParameter("genero", genero);
-                query.setParameter("estadoCivil", estadoCivil);
-                query.setParameter("cantidadPersonas", cantidadPersonas);
-
-                List<Object[]> listaEstudios = query.getResultList();
+                List<Object[]> listaEstudios = daoEstudio.listaEstudiosSolicitud(genero, estadoCivil, cantidadPersonas);
                 List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
                 for (Object[] est : listaEstudios) {
 
-                    listaEstudiosRecomendados.add(new EstudiosResponse((long) est[0], (String) est[1], (String) est[2], (Date) est[3], (Date) est[4], (String) est[5]));
+                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5], (String)est[6]));
                 }
 
-                return listaEstudiosRecomendados;
+                for (EstudiosResponse er: listaEstudiosRecomendados){
 
-            } else {
+                    JsonObject estudio = Json.createObjectBuilder()
+                            .add("id", er.getIdEstudio())
+                            .add("nombre", er.getNombreEstudio())
+                            .add("tipoInstrumento", er.getTipoInstrumentoEstudio())
+                            .add("fechaInicio", devolverFecha(er.getFechaInicioEstudio()))
+                            .add("fechaFin", devolverFecha(er.getFechaFinEstudio()))
+                            .add("estado", er.getEstadoEstudio())
+                            .add("estatus", er.getEstatusEstudio()).build();
 
-                return null;
-            }
+                    estudiosArrayJson.add(estudio);
+                }
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Operacion realizada con éxito")
+                        .add("codigo", 200)
+                        .add("Estudios recomendados", estudiosArrayJson).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
 
         } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la solicitud " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
 
-    //Listar estudios recomendado para el encuestado.
+    /**
+     * Este método permite obtener los estudios recomendados partiendo de un encuestado
+     * @author Emanuel Di Cristofaro
+     * @param id id del usuario Encuestado que permite obtener los estudios recomendados
+     */
     @GET
-    @Path("/suggestionsEstudiosEncuestado/{id}")
+    @Path("/estudiosEncuestado/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<EstudiosEncuestadoResponse> listarEstudiosEncuestado(@PathParam("id") long id) throws NullPointerException{
-
-        /**
-         * Este método filtra los estudios que hagan referencia a la persona
-         * que vaya a realizar una encuesta (Estudios recomendados para un encuestado).
-         *
-         * NOTA: Este método funciona correctamente.
-         */
-
-        String SQL = null;
+    public Response listarEstudiosEncuestado(@PathParam("id") long id) {
 
         DaoInformacion daoInformacion = new DaoInformacion();
-        List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
+        DaoEstudio daoEstudio = new DaoEstudio();
+        JsonObject dataObject;
+        JsonArrayBuilder estudiosArrayJson = Json.createArrayBuilder();
         String genero = null;
         Date fechaNacimiento = null;
         String estadoCivil = null;
@@ -172,6 +190,8 @@ public class SugerenciasServicio extends AplicacionBase {
         int edad = 0;
 
         try {
+
+            List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
 
                 for (Informacion informacion: listaInformacion) {
 
@@ -202,64 +222,68 @@ public class SugerenciasServicio extends AplicacionBase {
                     }
                 }
 
-                //Ahora hacemos el query para el match
+                List<Object[]> listaEstudios = daoEstudio.listarEstudiosEncuestado(genero, estadoCivil, cantidadPersonas, edad);
 
-                EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-                EntityManager entitymanager = factory.createEntityManager();
-
-                SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
-                        "FROM Estudio as e, SolicitudEstudio as se " +
-                        "WHERE e._solicitudEstudio._id = se._id and " +
-                        "se._genero = :genero " +
-                        "and (se._estadoCivil = :estadoCivil or se._estadoCivil is null) " +
-                        "and (se._cantidadPersonas = :cantidadPersonas or se._cantidadPersonas is null) " +
-                        "and (se._edadMinima <= :edad and se._edadMaxima > :edad)";
-
-                Query query = entitymanager.createQuery(SQL);
-                query.setParameter("genero", genero);
-                query.setParameter("estadoCivil", estadoCivil);
-                query.setParameter("cantidadPersonas", cantidadPersonas);
-                query.setParameter("edad", edad);
-
-                List<Object[]> listaEstudios = query.getResultList();
-
-                List<EstudiosEncuestadoResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
+                List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
                 for (Object[] est : listaEstudios) {
 
-                    listaEstudiosRecomendados.add(new EstudiosEncuestadoResponse((long) est[0], (String) est[1], (String) est[2], (Date) est[3], (Date) est[4], (String) est[5]));
+                    listaEstudiosRecomendados.add(new EstudiosResponse((long) est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5], (String)est[6]));
                 }
 
-                return listaEstudiosRecomendados;
+            for (EstudiosResponse er: listaEstudiosRecomendados){
 
+                JsonObject estudio = Json.createObjectBuilder()
+                        .add("id", er.getIdEstudio())
+                        .add("nombre", er.getNombreEstudio())
+                        .add("tipoInstrumento", er.getTipoInstrumentoEstudio())
+                        .add("fechaInicio", devolverFecha(er.getFechaInicioEstudio()))
+                        .add("fechaFin", devolverFecha(er.getFechaFinEstudio()))
+                        .add("estado", er.getEstadoEstudio())
+                        .add("estatus", er.getEstatusEstudio()).build();
 
-        } catch (NullPointerException ex) {
+                estudiosArrayJson.add(estudio);
+            }
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Estudios recomendados", estudiosArrayJson).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
-
 
     }
 
+    /**
+     * Este método permite duplicar un estudio recomendado en base a una solicitud.
+     * @author Emanuel Di Cristofaro
+     * @param idSE: Es el id de la solicitud de estudio inicial
+     * @param idE: Es el id del estudio recomendado seleccionado
+     * @param idU: Es el id del usuario para el estudio (En este caso el analista o al admin)
+     * @throws NullPointerException si no se encuentra el estudio recomendado
+     */
     @POST
     @Path("/insertarEstudioRecomendado/{idSE}/{idE}/{idU}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public void insertarEstudioRecomendado(@PathParam("idSE") long idSE, @PathParam("idE") long idE, @PathParam("idU") long idU) throws Exception{
+    public Response insertarEstudioRecomendado(@PathParam("idSE") long idSE, @PathParam("idE") long idE, @PathParam("idU") long idU) throws Exception{
 
-        /**
-         * En este metodo es importante pasar la solicitud de estudio de la busqueda sugerida (SolicitudEstudio)
-         * , el estudio recomendado de la lista de recomendados y el id del usuario conectado en el momento
-         *
-         * Nota: Esta metodo funciona perfectamente.
-         */
+        JsonObject dataObject;
+        DaoEstudio daoEstudio = new DaoEstudio();
 
         try {
 
             //Encontrar el estudio recomendado
-            DaoEstudio daoEstudio = new DaoEstudio();
             Estudio estudio_recomendado = daoEstudio.find(idE, Estudio.class);
             Estudio estudio_nuevo = new Estudio();
 
@@ -267,6 +291,7 @@ public class SugerenciasServicio extends AplicacionBase {
             estudio_nuevo.set_tipoInstrumento(estudio_recomendado.get_tipoInstrumento());
             estudio_nuevo.set_fechaInicio(estudio_recomendado.get_fechaInicio());
             estudio_nuevo.set_fechaFin(estudio_recomendado.get_fechaFin());
+            estudio_nuevo.set_estado(estudio_recomendado.get_estado());
             estudio_nuevo.set_estatus(estudio_recomendado.get_estatus());
             SolicitudEstudio solicitudEstudio = new SolicitudEstudio(idSE);
             estudio_nuevo.set_solicitudEstudio(solicitudEstudio);
@@ -303,68 +328,99 @@ public class SugerenciasServicio extends AplicacionBase {
                 }
             }
 
-        } catch (Exception ex){
+            JsonObject estudioRecomendado = Json.createObjectBuilder()
+                    .add("nombre", estudio_recomendado.get_nombre())
+                    .add("tipoInstrumento", estudio_recomendado.get_tipoInstrumento())
+                    .add("fechaInicio", devolverFecha(estudio_recomendado.get_fechaInicio()))
+                    .add("fechaFin", devolverFecha(estudio_recomendado.get_fechaInicio()))
+                    .add("estado", estudio_recomendado.get_estado())
+                    .add("estatus", estudio_recomendado.get_estatus()).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "El estudio se ha insertado correctamente")
+                    .add("codigo", 200)
+                    .add("Estudios recomendados", estudioRecomendado).build();
+
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el estudio " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
 
     /**
-     * Listar estudios recomendados para el cliente.
-     *
-     * Este método busca los estudios recientemente solicitados por un cliente,
-     * los estudios más solicitados por él, y los estudios con la marca, la
-     * subcategoría, la categoría, el tipo y/o la presentación más solicitadas
-     * del sistema.
-     *
-     * @param id ID del cliente que desea generar la solicitud.
-     * @throws NullPointerException Error
-     * @return Lista de estudios recomendados para un usuario en específico.
+     * Este método permite obtener los estudios recomendados partiendo de un cliente
+     * @author Emanuel Di Cristofaro
+     * @param id id del usuario Cliente que permite obtener los estudios recomendados
      */
     @GET
-    @Path("/suggestionsEstudiosCliente/{id}")
+    @Path("/estudiosCliente/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<EstudiosResponse> listarEstudiosClientes(@PathParam("id") long id) throws NullPointerException{
+    public Response listarEstudiosCliente(@PathParam("id") long id) throws NullPointerException{
 
-        /**
-         * En este metodo se permite obtener el estudio en base a un cliente.
-         *
-         * Nota: Este metodo funciona correctamente.
-         */
-
-        String SQL = null;
+        DaoEstudio daoEstudio = new DaoEstudio();
+        JsonObject dataObject;
+        JsonArrayBuilder estudiosArrayJson = Json.createArrayBuilder();
 
         try {
 
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-            EntityManager entitymanager = factory.createEntityManager();
-
-            SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estatus as estatus " +
-                    "FROM Estudio as e, Usuario as u, SolicitudEstudio as se WHERE e._solicitudEstudio._id = se._id and " +
-                    "se._usuario._id = u._id and u._id = :id";
-
-            Query query = entitymanager.createQuery(SQL);
-            query.setParameter("id", id);
-
-            List<Object[]> listaEstudios = query.getResultList();
+            List<Object[]> listaEstudios = daoEstudio.listarEstudiosClientes(id);
 
             List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
             for (Object[] eC: listaEstudios){
 
-                listaEstudiosRecomendados.add(new EstudiosResponse((long)eC[0], (String)eC[1], (String)eC[2], (Date)eC[3], (Date)eC[4], (String)eC[5]));
+                listaEstudiosRecomendados.add(new EstudiosResponse((long)eC[0], (String)eC[1], (String)eC[2], (Date)eC[3], (Date)eC[4], (String)eC[5], (String)eC[6]));
             }
 
-            return listaEstudiosRecomendados;
+            for (EstudiosResponse er: listaEstudiosRecomendados){
+
+                JsonObject estudio = Json.createObjectBuilder()
+                        .add("id", er.getIdEstudio())
+                        .add("nombre", er.getNombreEstudio())
+                        .add("tipoInstrumento", er.getTipoInstrumentoEstudio())
+                        .add("fechaInicio", devolverFecha(er.getFechaInicioEstudio()))
+                        .add("fechaFin", devolverFecha(er.getFechaFinEstudio()))
+                        .add("estado", er.getEstadoEstudio())
+                        .add("estatus", er.getEstatusEstudio()).build();
+
+                estudiosArrayJson.add(estudio);
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Estudios recomendados", estudiosArrayJson).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
 
 
-        } catch (NullPointerException ex) {
+        } catch (Exception ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 

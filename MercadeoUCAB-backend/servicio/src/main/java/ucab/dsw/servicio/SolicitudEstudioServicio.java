@@ -111,6 +111,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
             solicitudEstudio.set_generoHijos(solicitudEstudioDto.getGeneroHijos());
             solicitudEstudio.set_edadMinimaHijos(solicitudEstudioDto.getEdadMinimaHijos());
             solicitudEstudio.set_edadMaximaHijos(solicitudEstudioDto.getEdadMaximaHijos());
+            solicitudEstudio.set_estado(solicitudEstudioDto.getEstado());
             solicitudEstudio.set_estatus(solicitudEstudioDto.getEstatus());
             NivelEconomico nivelEconomico = daoNivelEconomico.find(solicitudEstudioDto.getNivelEconomicoDto().getId(), NivelEconomico.class);
             Usuario usuario = daoUsuario.find(solicitudEstudioDto.getUsuarioDto().getId(), Usuario.class);
@@ -216,6 +217,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
                 solicitudEstudio_modificar.set_generoHijos(solicitudEstudioDto.getGeneroHijos());
                 solicitudEstudio_modificar.set_edadMinimaHijos(solicitudEstudioDto.getEdadMinimaHijos());
                 solicitudEstudio_modificar.set_edadMaximaHijos(solicitudEstudioDto.getEdadMaximaHijos());
+                solicitudEstudio_modificar.set_estado(solicitudEstudioDto.getEstado());
                 solicitudEstudio_modificar.set_estatus(solicitudEstudioDto.getEstatus());
                 daoSolicitudEstudio.update(solicitudEstudio_modificar);
 
