@@ -340,7 +340,7 @@ public class SugerenciasServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "El estudio se ha insertado correctamente")
                     .add("codigo", 200)
-                    .add("Estudios recomendados", estudioRecomendado).build();
+                    .add("Estudio recomendado", estudioRecomendado).build();
 
 
             return Response.status(Response.Status.OK).entity(dataObject).build();

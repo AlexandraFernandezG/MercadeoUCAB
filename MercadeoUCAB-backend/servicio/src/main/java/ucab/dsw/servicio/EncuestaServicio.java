@@ -68,7 +68,7 @@ public class EncuestaServicio {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Operacion realizada con éxito")
                     .add("codigo", 200)
-                    .add("Preguntas recomendadas", preguntasArrayJson).build();
+                    .add("Preguntas", preguntasArrayJson).build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
@@ -122,7 +122,7 @@ public class EncuestaServicio {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Operacion realizada con éxito")
                     .add("codigo", 200)
-                    .add("Preguntas recomendadas", respuestasArrayJson).build();
+                    .add("Respuestas", respuestasArrayJson).build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
 

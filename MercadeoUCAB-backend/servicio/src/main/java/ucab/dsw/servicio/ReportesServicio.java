@@ -54,7 +54,7 @@ public class ReportesServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Operacion realizada con éxito")
                     .add("codigo", 200)
-                    .add("Preguntas recomendadas", respuestasArrayJson).build();
+                    .add("Respuestas Abiertas", respuestasArrayJson).build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
@@ -131,7 +131,7 @@ public class ReportesServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Operacion realizada con éxito")
                     .add("codigo", 200)
-                    .add("Preguntas recomendadas", dataAnalisis).build();
+                    .add("Porcentajes", dataAnalisis).build();
 
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
@@ -254,7 +254,7 @@ public class ReportesServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Operacion realizada con éxito")
                     .add("codigo", 200)
-                    .add("Preguntas recomendadas", dataAnalisis).build();
+                    .add("Porcentajes", dataAnalisis).build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
