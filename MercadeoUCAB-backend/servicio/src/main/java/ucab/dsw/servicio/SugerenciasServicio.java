@@ -33,10 +33,19 @@ public class SugerenciasServicio extends AplicacionBase {
      */
     public String devolverFecha(Date fecha){
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String fecha_nac = sdf.format(fecha);
+        String fecha_estudio = "";
 
-        return fecha_nac;
+        if(fecha != null) {
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            fecha_estudio = sdf.format(fecha);
+
+        } else {
+
+            fecha_estudio = "";
+        }
+
+        return fecha_estudio;
     }
 
     /**
@@ -123,7 +132,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
                 for (Object[] est : listaEstudios) {
 
-                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5], (String)est[6]));
+                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
                 }
 
                 for (EstudiosResponse er: listaEstudiosRecomendados){
@@ -132,8 +141,8 @@ public class SugerenciasServicio extends AplicacionBase {
                             .add("id", er.getIdEstudio())
                             .add("nombre", er.getNombreEstudio())
                             .add("tipoInstrumento", er.getTipoInstrumentoEstudio())
-                            .add("fechaInicio", devolverFecha(er.getFechaInicioEstudio()))
-                            .add("fechaFin", devolverFecha(er.getFechaFinEstudio()))
+                            .add("fechaInicio", er.getFechaInicioEstudio())
+                            .add("fechaFin", er.getFechaFinEstudio())
                             .add("estado", er.getEstadoEstudio())
                             .add("estatus", er.getEstatusEstudio()).build();
 
@@ -152,7 +161,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la solicitud " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -228,7 +237,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
                 for (Object[] est : listaEstudios) {
 
-                    listaEstudiosRecomendados.add(new EstudiosResponse((long) est[0], (String)est[1], (String)est[2], (Date)est[3], (Date)est[4], (String)est[5], (String)est[6]));
+                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
                 }
 
             for (EstudiosResponse er: listaEstudiosRecomendados){
@@ -237,8 +246,8 @@ public class SugerenciasServicio extends AplicacionBase {
                         .add("id", er.getIdEstudio())
                         .add("nombre", er.getNombreEstudio())
                         .add("tipoInstrumento", er.getTipoInstrumentoEstudio())
-                        .add("fechaInicio", devolverFecha(er.getFechaInicioEstudio()))
-                        .add("fechaFin", devolverFecha(er.getFechaFinEstudio()))
+                        .add("fechaInicio", er.getFechaInicioEstudio())
+                        .add("fechaFin", er.getFechaFinEstudio())
                         .add("estado", er.getEstadoEstudio())
                         .add("estatus", er.getEstatusEstudio()).build();
 
@@ -349,7 +358,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el estudio " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -388,7 +397,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
             for (Object[] eC: listaEstudios){
 
-                listaEstudiosRecomendados.add(new EstudiosResponse((long)eC[0], (String)eC[1], (String)eC[2], (Date)eC[3], (Date)eC[4], (String)eC[5], (String)eC[6]));
+                listaEstudiosRecomendados.add(new EstudiosResponse((long)eC[0], (String)eC[1], (String)eC[2], devolverFecha((Date)eC[3]), devolverFecha((Date)eC[4]), (String)eC[5], (String)eC[6]));
             }
 
             for (EstudiosResponse er: listaEstudiosRecomendados){
@@ -397,8 +406,8 @@ public class SugerenciasServicio extends AplicacionBase {
                         .add("id", er.getIdEstudio())
                         .add("nombre", er.getNombreEstudio())
                         .add("tipoInstrumento", er.getTipoInstrumentoEstudio())
-                        .add("fechaInicio", devolverFecha(er.getFechaInicioEstudio()))
-                        .add("fechaFin", devolverFecha(er.getFechaFinEstudio()))
+                        .add("fechaInicio", er.getFechaInicioEstudio())
+                        .add("fechaFin", er.getFechaFinEstudio())
                         .add("estado", er.getEstadoEstudio())
                         .add("estatus", er.getEstatusEstudio()).build();
 

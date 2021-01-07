@@ -12,12 +12,12 @@ public class EstudiosResponse {
     private long idEstudio;
     private String nombreEstudio;
     private String tipoInstrumentoEstudio;
-    private Date fechaInicioEstudio;
-    private Date fechaFinEstudio;
+    private String fechaInicioEstudio;
+    private String fechaFinEstudio;
     private String estadoEstudio;
     private String estatusEstudio;
 
-    public EstudiosResponse(long idEstudio, String nombreEstudio, String tipoInstrumentoEstudio, Date fechaInicioEstudio, Date fechaFinEstudio, String estadoEstudio, String estatusEstudio) {
+    public EstudiosResponse(long idEstudio, String nombreEstudio, String tipoInstrumentoEstudio, String fechaInicioEstudio, String fechaFinEstudio, String estadoEstudio, String estatusEstudio) {
         this.idEstudio = idEstudio;
         this.nombreEstudio = nombreEstudio;
         this.tipoInstrumentoEstudio = tipoInstrumentoEstudio;
@@ -51,19 +51,19 @@ public class EstudiosResponse {
         this.tipoInstrumentoEstudio = tipoInstrumentoEstudio;
     }
 
-    public Date getFechaInicioEstudio() {
+    public String getFechaInicioEstudio() {
         return fechaInicioEstudio;
     }
 
-    public void setFechaInicioEstudio(Date fechaInicioEstudio) {
+    public void setFechaInicioEstudio(String fechaInicioEstudio) {
         this.fechaInicioEstudio = fechaInicioEstudio;
     }
 
-    public Date getFechaFinEstudio() {
+    public String getFechaFinEstudio() {
         return fechaFinEstudio;
     }
 
-    public void setFechaFinEstudio(Date fechaFinEstudio) {
+    public void setFechaFinEstudio(String fechaFinEstudio) {
         this.fechaFinEstudio = fechaFinEstudio;
     }
 

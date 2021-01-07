@@ -51,3 +51,5 @@ INSERT INTO informacion VALUES (null, 25849302, 'Gregg', null, 'Spinetti', 'Guti
 INSERT INTO solicitud_estudio VALUES (null, 'Pizzas raras', 'femenino', 35, 20, null, null, null, null ,null, null, null, 'Activo', null, 1, 2, null, null);
 
 INSERT INTO estudio VALUES (null, 'Pizzas raras parte 2', 'Encuesta', '2021-03-01', '2021-04-02', 'Activo', 3, 2);
+
+INSERT INTO medio_comunicacion VALUES (null, 'Computadora', 'Activo', 2, 1);

@@ -3,10 +3,13 @@ package ucab.dsw.servicio;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.ProductoDto;
 import ucab.dsw.entidades.*;
+import ucab.dsw.response.EstudiosResponse;
+import ucab.dsw.response.ProductoResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +41,7 @@ public class ProductoServicio extends AplicacionBase{
     }
 
     /**
-     * Este método permite obtener los productos solamente del cliente
+     * Este método permite obtener los productos de un cliente.
      * @author Emanuel Di Cristofaro
      * @param id El id del cliente.
      */
@@ -48,12 +51,37 @@ public class ProductoServicio extends AplicacionBase{
     public Response consultarProductosCliente(@PathParam("id") long id){
 
         JsonObject dataObject;
+        JsonArrayBuilder productosArrayJson = Json.createArrayBuilder();
+        DaoProducto daoProducto = new DaoProducto();
 
         try {
 
-            String mensaje = "En proceso";
+            List<Object[]> listaProductos = daoProducto.listarProductosCliente(id);
 
-            return Response.status(Response.Status.OK).entity(mensaje).build();
+            List<ProductoResponse> listaProductosCliente = new ArrayList<>(listaProductos.size());
+
+            for (Object[] pc: listaProductos){
+
+                listaProductosCliente.add(new ProductoResponse((long)pc[0], (String)pc[1], (String)pc[2], (String)pc[3]));
+            }
+
+            for (ProductoResponse lpc: listaProductosCliente){
+
+                JsonObject producto = Json.createObjectBuilder()
+                        .add("id", lpc.getIdProducto())
+                        .add("nombre", lpc.getNombreProducto())
+                        .add("descripcion", lpc.getDescripcionProducto())
+                        .add("estatus", lpc.getEstatusProducto()).build();
+
+                productosArrayJson.add(producto);
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Productos del cliente", productosArrayJson).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (Exception ex) {
 
@@ -65,7 +93,6 @@ public class ProductoServicio extends AplicacionBase{
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
-
 
     //Consultar un producto
     @GET
