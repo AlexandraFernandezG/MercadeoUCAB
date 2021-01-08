@@ -1,8 +1,10 @@
 package ucab.dsw.servicio;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.ProductoDto;
 import ucab.dsw.entidades.*;
+import ucab.dsw.excepciones.PruebaExcepcion;
 import ucab.dsw.response.EstudiosResponse;
 import ucab.dsw.response.ProductoResponse;
 
@@ -11,6 +13,7 @@ import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -21,22 +24,52 @@ import javax.ws.rs.core.MediaType;
 @Consumes( MediaType.APPLICATION_JSON )
 public class ProductoServicio extends AplicacionBase{
 
-    //Listar productos
+    /**
+     * Este método permite obtener todos los productos.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de productos y en tal caso obtener una excepcion si aplica.
+     */
     @GET
     @Path("/allProductos")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Producto> listarProductos() throws NullPointerException{
+    public Response listarProductos() {
 
+        JsonObject dataObject;
+        JsonArrayBuilder productosArrayJson = Json.createArrayBuilder();
         DaoProducto daoProducto = new DaoProducto();
 
         try {
-            return daoProducto.findAll(Producto.class);
 
-        } catch (NullPointerException ex){
+            List<Producto> listaProductos = daoProducto.findAll(Producto.class);
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            for(Producto pro: listaProductos){
+
+                JsonObject producto = Json.createObjectBuilder()
+                        .add("id", pro.get_id())
+                        .add("nombre", pro.get_nombre())
+                        .add("descripcion", pro.get_descripcion())
+                        .add("estatus", pro.get_estatus()).build();
+
+                productosArrayJson.add(producto);
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Todos los productos", productosArrayJson).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
@@ -94,34 +127,76 @@ public class ProductoServicio extends AplicacionBase{
         }
     }
 
-    //Consultar un producto
+    /**
+     * Este método permite obtener un producto.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el  producto consultado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id del producto que se quiere consultar
+     *
+     */
     @GET
     @Path("/consultarProducto/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Producto consultarProducto(@PathParam("id") long id) throws NullPointerException{
+    public Response consultarProducto(@PathParam("id") long id) {
 
+        JsonObject dataObject;
         DaoProducto daoProducto = new DaoProducto();
 
         try {
-            return daoProducto.find(id, Producto.class);
 
-        } catch (NullPointerException ex){
+            Producto producto_consultado = daoProducto.find(id, Producto.class);
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            JsonObject producto = Json.createObjectBuilder()
+                    .add("id", producto_consultado.get_id())
+                    .add("nombre", producto_consultado.get_nombre())
+                    .add("descripcion", producto_consultado.get_descripcion())
+                    .add("estatus", producto_consultado.get_estatus()).build();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Producto consultado", producto).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
-    //Mostrar productos activos
+    /**
+     * Este método permite obtener todos los productos activos.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de productos activos y en tal caso obtener una excepcion si aplica.
+     */
     @GET
     @Path("/mostrarProductosActivos")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Producto> productosActivos() throws NullPointerException{
+    public Response productosActivos() {
 
         DaoProducto daoProducto = new DaoProducto();
         List<Producto> listaProducto = daoProducto.findAll(Producto.class);
         List<Producto> listaProductosActivos = new ArrayList<Producto>();
+        JsonObject dataObject;
+        JsonArrayBuilder productosArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -131,23 +206,56 @@ public class ProductoServicio extends AplicacionBase{
                     listaProductosActivos.add(producto);
                 }
             }
-            return listaProductosActivos;
 
-        } catch (NullPointerException ex){
+            for(Producto pro: listaProductosActivos){
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+                JsonObject producto = Json.createObjectBuilder()
+                        .add("id", pro.get_id())
+                        .add("nombre", pro.get_nombre())
+                        .add("descripcion", pro.get_descripcion())
+                        .add("estatus", pro.get_estatus()).build();
+
+                productosArrayJson.add(producto);
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Todos los productos activos", productosArrayJson).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
-    //Agregar un producto
+    /**
+     * Este método permite insertar un producto
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el producto insertado y en tal caso obtener una excepcion si aplica.
+     * @throws PruebaExcepcion esta excepcion permite obtener errores generales.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un producto duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param productoDto el objeto producto que el sistema desea insertar o crear.
+     *
+     */
     @POST
     @Path("/addProducto")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public ProductoDto addProducto(ProductoDto productoDto){
+    public Response addProducto(ProductoDto productoDto){
 
+        JsonObject dataObject;
         ProductoDto resultado = new ProductoDto();
 
         try {
@@ -169,70 +277,165 @@ public class ProductoServicio extends AplicacionBase{
             Producto resul = daoProducto.insert(producto);
             resultado.setId(resul.get_id());
 
-        } catch (Exception ex){
+            JsonObject producto_insertado = Json.createObjectBuilder()
+                    .add("nombre", productoDto.getNombre())
+                    .add("descripcion", productoDto.getDescripcion())
+                    .add("estatus", productoDto.getEstatus()).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operacion realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Producto insertado", producto_insertado).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje","El producto ya se encuentra registado")
+                    .add("codigo",500).build();
+
+            System.out.println(dataObject);
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-            return resultado;
     }
 
-    //Actualizar Producto
+    /**
+     * Este método permite modificar un producto
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el producto modificado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un producto duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param productoDto el objeto producto que el sistema desea modificar.
+     * @param id el id del producto que se desee modificar.
+     */
     @PUT
     @Path("/updateProducto/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarProducto(@PathParam("id") long id, ProductoDto productoDto){
 
+        JsonObject dataObject;
         DaoProducto daoProducto = new DaoProducto();
-        Producto producto_modificar = daoProducto.find(id, Producto.class);
-
-        if (producto_modificar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
 
             try {
+
+                Producto producto_modificar = daoProducto.find(id, Producto.class);
 
                 producto_modificar.set_nombre(productoDto.getNombre());
                 producto_modificar.set_descripcion(productoDto.getDescripcion());
                 producto_modificar.set_estatus(productoDto.getEstatus());
                 daoProducto.update(producto_modificar);
 
-            } catch (Exception ex){
+                JsonObject producto_modifica = Json.createObjectBuilder()
+                        .add("nombre", productoDto.getNombre())
+                        .add("descripcion", productoDto.getDescripcion())
+                        .add("estatus", productoDto.getEstatus()).build();
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Operacion realizada con éxito")
+                        .add("codigo", 200)
+                        .add("Producto modificado", producto_modifica).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (PersistenceException | DatabaseException ex){
+
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","error")
+                        .add("mensaje","El producto ya se encuentra registado")
+                        .add("codigo",500).build();
+
+                System.out.println(dataObject);
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(producto_modificar).build();
 
     }
 
-    // Eliminar un producto
+    /**
+     * Este método permite obtener un producto.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el producto modificado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un producto duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id del producto que se desee modificar.
+     */
     @DELETE
     @Path("/deleteProducto/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response deleteProducto(@PathParam("id") long id){
 
+        JsonObject dataObject;
         DaoProducto daoProducto = new DaoProducto();
-        Producto producto_eliminar = daoProducto.find(id, Producto.class);
-
-        if(producto_eliminar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
 
             try {
 
+                Producto producto_eliminar = daoProducto.find(id, Producto.class);
                 daoProducto.delete(producto_eliminar);
 
-            } catch (Exception ex){
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Operacion realizada con éxito")
+                        .add("codigo", 200).build();
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (PersistenceException | DatabaseException ex){
+
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","error")
+                        .add("mensaje","El producto ya se encuentra registado")
+                        .add("codigo",500).build();
+
+                System.out.println(dataObject);
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(producto_eliminar).build();
 
     }
 }

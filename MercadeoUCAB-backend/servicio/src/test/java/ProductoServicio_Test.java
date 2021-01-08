@@ -7,109 +7,133 @@ import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.Producto;
 import ucab.dsw.servicio.ProductoServicio;
 
+import javax.ws.rs.core.Response;
+
 public class ProductoServicio_Test {
 
-    //Listar todos los productos
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarProductos
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarProductos(){
 
         ProductoServicio servicio = new ProductoServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarProductos().size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
-
+        Response respuesta = servicio.listarProductos();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
     }
 
-    //Consultar un producto
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarProductosClient
+     * @author Emanuel Di Cristofaro
+     */
+    @Test
+    public void pruebaConsultarProductosCliente(){
+
+        ProductoServicio servicio = new ProductoServicio();
+        Response respuesta = servicio.consultarProductosCliente(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
+    }
+
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarProducto
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaConsultarProducto(){
 
         ProductoServicio servicio = new ProductoServicio();
-        Producto producto_buscar = servicio.consultarProducto(1);
-
-        try {
-            Assertions.assertEquals(1, producto_buscar.get_id());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage());
-        }
-
+        Response respuesta = servicio.consultarProducto(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
     }
 
-    //Listar productos activos
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarProductosActivos
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarProductosActivos(){
 
-        try {
-            Assertions.assertNotNull(new ProductoServicio().productosActivos());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage(), e.getCause());
-        }
+        ProductoServicio servicio = new ProductoServicio();
+        Response respuesta = servicio.productosActivos();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
     }
 
-    //Prueba para insertar un Producto
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarProducto
+     * @author Emanuel Di Cristofaro
+     */
     @Test
-    public void pruebaInsertarProducto() throws Exception {
+    public void pruebaInsertarProducto() {
 
         ProductoServicio servicio = new ProductoServicio();
 
         try {
+
             ProductoDto productoDto = new ProductoDto();
 
-            productoDto.setNombre("");
-            productoDto.setDescripcion("");
+            productoDto.setNombre("Pizzas Bob");
+            productoDto.setDescripcion("Pizzas bob el constructor");
             productoDto.setEstatus("Activo");
             //Revisar los ID de los registros de la BD
-            UsuarioDto usuarioDto = new UsuarioDto(1);
-            SubcategoriaDto subcategoriaDto = new SubcategoriaDto(1);
+            UsuarioDto usuarioDto = new UsuarioDto(2);
+            SubcategoriaDto subcategoriaDto = new SubcategoriaDto(2);
             MarcaDto marcaDto = new MarcaDto(1);
             productoDto.setUsuarioDto(usuarioDto);
             productoDto.setSubcategoriaDto(subcategoriaDto);
             productoDto.setMarcaDto(marcaDto);
-            ProductoDto resultado = servicio.addProducto(productoDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response resultado = servicio.addProducto(productoDto);
+            Assert.assertEquals(resultado.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
+
             Assertions.fail(e.getMessage(), e.getCause());
         }
 
     }
 
-    //Modificar el producto
+    /**
+     * Prueba unitaria para verificar el funcionamiento del ModificarProducto
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaModificarProducto(){
 
         ProductoServicio servicio = new ProductoServicio();
 
         try {
+
             ProductoDto productoDto = new ProductoDto();
 
-            productoDto.setNombre("");
-            productoDto.setDescripcion("");
+            productoDto.setNombre("Pizzas Bob");
+            productoDto.setDescripcion("Pizzas deliciosas");
             productoDto.setEstatus("Activo");
             //Revisar los ID de los registros de la BD
-            servicio.modificarProducto(1, productoDto);
+            Response resultado = servicio.modificarProducto(4, productoDto);
+            Assert.assertEquals(resultado.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
+
             Assertions.fail(e.getMessage(), e.getCause());
         }
 
 
     }
 
-    //Eliminar el producto
+    /**
+     * Prueba unitaria para verificar el funcionamiento del EliminarProducto
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaEliminarProducto(){
 
         ProductoServicio servicio = new ProductoServicio();
 
         try {
+
             //Revisar los ID de los registros de la BD
-            servicio.deleteProducto(1);
+            Response resultado = servicio.deleteProducto(4);
+            Assert.assertEquals(resultado.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
