@@ -9,89 +9,92 @@ import ucab.dsw.dtos.CategoriaDto;
 import ucab.dsw.entidades.Categoria;
 import ucab.dsw.servicio.CategoriaServicio;
 
+import javax.ws.rs.core.Response;
+
 public class CategoriaServicio_Test {
 
-    //Listar Categorias
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarCategorias
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarCategorias(){
 
         CategoriaServicio servicio = new CategoriaServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarCategorias().size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.listarCategorias();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Listar subcategorias de categoria
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarSubcategoriasCategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarSubcategoriasCategoria(){
 
         CategoriaServicio servicio = new CategoriaServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarSubcategoriasDeCategoria(1).size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.listarSubcategoriasDeCategoria(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Consultar una Categoria
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarCategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaConsultarCategoria(){
 
         CategoriaServicio servicio = new CategoriaServicio();
-        Categoria categoria_buscar = servicio.consultarCategoria(1);
-
-        try {
-            Assertions.assertEquals(1, categoria_buscar.get_id());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.consultarCategoria(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Listar categorias activas
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarCategorias
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarCategoriasActivas(){
 
-        try {
-            Assertions.assertNotNull(new CategoriaServicio().categoriasActivas());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage(), e.getCause());
-        }
+        CategoriaServicio servicio = new CategoriaServicio();
+        Response respuesta = servicio.categoriasActivas();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
+
     }
 
-    // Esta prueba permite insertar una categoria a la BD
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarCategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaInsertarCategoria() {
 
         CategoriaServicio servicio = new CategoriaServicio();
 
         try {
+
             CategoriaDto categoriaDto = new CategoriaDto();
 
             categoriaDto.setNombre("Jabones express");
             categoriaDto.setDescripcion("Jabones rapidos");
             categoriaDto.setEstatus("Inactivo");
-            CategoriaDto resultado = servicio.addCategoria(categoriaDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response respuesta = servicio.addCategoria(categoriaDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
         }
     }
 
-    //Modificar estatus de la categoria
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarEstatusCategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
-    public void pruebaModificarEstatusCategoria() throws Exception {
+    public void pruebaModificarEstatusCategoria() {
 
         CategoriaServicio servicio = new CategoriaServicio();
 
@@ -100,16 +103,20 @@ public class CategoriaServicio_Test {
             CategoriaDto categoriaDto = new CategoriaDto();
             categoriaDto.setEstatus("Activo");
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.modificarEstatusCategoria(1, categoriaDto);
+            Response respuesta = servicio.modificarEstatusCategoria(2, categoriaDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
         }
     }
 
-    // Este prueba permite modificar los campos de un registro
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarCategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
-    public void pruebaModificarCategoria() throws Exception {
+    public void pruebaModificarCategoria() {
 
         CategoriaServicio servicio = new CategoriaServicio();
 
@@ -119,7 +126,8 @@ public class CategoriaServicio_Test {
             categoriaDto.setDescripcion("Perros calientes de arandanos");
             categoriaDto.setEstatus("Activo");
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.modificarCategoria(1, categoriaDto);
+            Response respuesta = servicio.modificarCategoria(2, categoriaDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -127,15 +135,19 @@ public class CategoriaServicio_Test {
 
     }
 
-    // Esta prueba permite eliminar una categoria
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método EliminarCategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
-    public void pruebaEliminarCategoria() throws Exception {
+    public void pruebaEliminarCategoria() {
 
         CategoriaServicio servicio = new CategoriaServicio();
 
         try {
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.eliminarCategoria(1);
+            Response respuesta = servicio.eliminarCategoria(2);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

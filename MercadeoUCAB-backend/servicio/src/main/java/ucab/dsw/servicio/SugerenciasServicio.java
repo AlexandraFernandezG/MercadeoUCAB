@@ -85,7 +85,7 @@ public class SugerenciasServicio extends AplicacionBase {
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Preguntas recomendadas", preguntasArrayJson).build();
 
@@ -150,7 +150,7 @@ public class SugerenciasServicio extends AplicacionBase {
                 }
 
                 dataObject = Json.createObjectBuilder()
-                        .add("estado", "Operacion realizada con éxito")
+                        .add("estado", "Operación realizada con éxito")
                         .add("codigo", 200)
                         .add("Estudios recomendados", estudiosArrayJson).build();
 
@@ -255,7 +255,7 @@ public class SugerenciasServicio extends AplicacionBase {
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Estudios recomendados", estudiosArrayJson).build();
 
@@ -415,7 +415,7 @@ public class SugerenciasServicio extends AplicacionBase {
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Estudios recomendados", estudiosArrayJson).build();
 

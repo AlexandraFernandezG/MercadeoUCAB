@@ -7,16 +7,11 @@ import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
 import ucab.dsw.response.EncuestaResponse;
 import ucab.dsw.response.EstudioEncuestadoResponse;
-import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.response.RespuestaPreguntaResponse;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -67,7 +62,7 @@ public class EncuestaServicio {
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Preguntas", preguntasArrayJson).build();
 
@@ -121,7 +116,7 @@ public class EncuestaServicio {
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Respuestas", respuestasArrayJson).build();
 
@@ -174,7 +169,7 @@ public class EncuestaServicio {
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Encuestados", encuestadosArrayJson).build();
 
@@ -236,7 +231,7 @@ public class EncuestaServicio {
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200).build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();

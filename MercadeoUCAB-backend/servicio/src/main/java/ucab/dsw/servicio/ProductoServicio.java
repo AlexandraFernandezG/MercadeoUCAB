@@ -27,8 +27,8 @@ public class ProductoServicio extends AplicacionBase{
     /**
      * Este método permite obtener todos los productos.
      * @author Emanuel Di Cristofaro
-     * @return Este metodo retorna un objeto de tipo Json con el
-     * arreglo de productos y en tal caso obtener una excepcion si aplica.
+     * @return Este método retorna un objeto de tipo Json con el
+     * arreglo de productos y en tal caso obtener una excepción si aplica.
      */
     @GET
     @Path("/allProductos")
@@ -55,7 +55,7 @@ public class ProductoServicio extends AplicacionBase{
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Todos los productos", productosArrayJson).build();
 
@@ -110,7 +110,7 @@ public class ProductoServicio extends AplicacionBase{
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Productos del cliente", productosArrayJson).build();
 
@@ -155,7 +155,7 @@ public class ProductoServicio extends AplicacionBase{
                     .add("estatus", producto_consultado.get_estatus()).build();
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Producto consultado", producto).build();
 
@@ -165,7 +165,7 @@ public class ProductoServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -219,7 +219,7 @@ public class ProductoServicio extends AplicacionBase{
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Todos los productos activos", productosArrayJson).build();
 
@@ -283,7 +283,7 @@ public class ProductoServicio extends AplicacionBase{
                     .add("estatus", productoDto.getEstatus()).build();
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Producto insertado", producto_insertado).build();
 
@@ -293,10 +293,8 @@ public class ProductoServicio extends AplicacionBase{
 
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
-                    .add("mensaje","El producto ya se encuentra registado")
+                    .add("mensaje",ex.getMessage())
                     .add("codigo",500).build();
-
-            System.out.println(dataObject);
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
@@ -304,7 +302,7 @@ public class ProductoServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -356,7 +354,7 @@ public class ProductoServicio extends AplicacionBase{
                         .add("estatus", productoDto.getEstatus()).build();
 
                 dataObject = Json.createObjectBuilder()
-                        .add("estado", "Operacion realizada con éxito")
+                        .add("estado", "Operación realizada con éxito")
                         .add("codigo", 200)
                         .add("Producto modificado", producto_modifica).build();
 
@@ -366,10 +364,8 @@ public class ProductoServicio extends AplicacionBase{
 
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
-                        .add("mensaje","El producto ya se encuentra registado")
+                        .add("mensaje",ex.getMessage())
                         .add("codigo",500).build();
-
-                System.out.println(dataObject);
 
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
@@ -377,7 +373,7 @@ public class ProductoServicio extends AplicacionBase{
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                        .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -387,14 +383,14 @@ public class ProductoServicio extends AplicacionBase{
     }
 
     /**
-     * Este método permite obtener un producto.
+     * Este método permite eliminar un producto.
      * @author Emanuel Di Cristofaro
      * @return Este metodo retorna un objeto de tipo Json con el
-     * con el producto modificado y en tal caso obtener una excepcion si aplica.
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
      * @throws PersistenceException si se inserta un producto duplicado.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
-     * @param id el id del producto que se desee modificar.
+     * @param id el id del producto que se desee eliminar.
      */
     @DELETE
     @Path("/deleteProducto/{id}")
@@ -410,7 +406,7 @@ public class ProductoServicio extends AplicacionBase{
                 daoProducto.delete(producto_eliminar);
 
                 dataObject = Json.createObjectBuilder()
-                        .add("estado", "Operacion realizada con éxito")
+                        .add("estado", "Operación realizada con éxito")
                         .add("codigo", 200).build();
 
                 return Response.status(Response.Status.OK).entity(dataObject).build();
@@ -419,10 +415,8 @@ public class ProductoServicio extends AplicacionBase{
 
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
-                        .add("mensaje","El producto ya se encuentra registado")
+                        .add("mensaje",ex.getMessage())
                         .add("codigo",500).build();
-
-                System.out.println(dataObject);
 
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
@@ -430,7 +424,7 @@ public class ProductoServicio extends AplicacionBase{
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                        .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();

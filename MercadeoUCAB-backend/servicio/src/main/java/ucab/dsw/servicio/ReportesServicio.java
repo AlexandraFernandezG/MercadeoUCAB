@@ -52,7 +52,7 @@ public class ReportesServicio extends AplicacionBase {
             }
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Respuestas Abiertas", respuestasArrayJson).build();
 
@@ -129,7 +129,7 @@ public class ReportesServicio extends AplicacionBase {
                     .add("Porcentaje Falso", porcentajeFalso).build();
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Porcentajes", dataAnalisis).build();
 
@@ -252,7 +252,7 @@ public class ReportesServicio extends AplicacionBase {
                     .add("Porcentaje Mujeres", porcentajeFemenino).build();
 
             dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operacion realizada con éxito")
+                    .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
                     .add("Porcentajes", dataAnalisis).build();
 
