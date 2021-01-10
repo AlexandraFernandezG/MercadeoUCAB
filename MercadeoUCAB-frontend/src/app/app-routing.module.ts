@@ -63,13 +63,13 @@ const routes: Routes = [
   { path: 'cliente/resultados', component: ResultadosComponent },
   { path: 'encuestado', component: EncuestadoComponent },
   { path: 'encuestado/estudios', component: EstudiosEncuestadoComponent },
-  { path: 'encuestado/registro-encuestado', component: RegistroEncuestadoComponent },
   { path: 'encuestado/respuestas-encuesta/:id', component: RespuestasEncuestaComponent },
   { path: 'analista', component: AnalistaComponent },
   { path: 'analista/solicitudes', component: EstudiosAnalistaComponent },
   { path: 'analista/crearEncuesta', component: CrearEstudioComponent },
   { path: 'analista/poblacion', component: AnalistaPoblacionComponent },
   { path: 'recuperarContrasena', component: RecuperarContrasenaComponent},
+  { path: 'registroEncuestado', component: RegistroEncuestadoComponent },
   { path: 'cambioContrasena', component:  CambioContrasenaComponent},
 
   { path: '', redirectTo: 'login', pathMatch: 'full' }
