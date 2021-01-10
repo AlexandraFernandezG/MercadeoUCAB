@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { RegistroEncuestado } from 'src/app/modelos/registro-encuestado';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { identifierModuleUrl } from '@angular/compiler';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-estudios-encuestado',
@@ -28,11 +29,18 @@ export class EstudiosEncuestadoComponent implements OnInit {
   otro: number;
   estudios: Estudio[];
   infoEncuestado: RegistroEncuestado;
+  displayedColumns: string[] = ['nombre', 'fechaInicio', 'fechaFin','estatus', 'acciones'];
+  dataSource: MatTableDataSource<Estudio>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.estudiosService.getEstudiosEncuestado(id)
-      .subscribe(data => {this.estudios = data;
+      .subscribe(data => {
+        this.dataSource = new MatTableDataSource<Estudio>(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       console.log(this.estudios);
     });
       // console.log(this.infoEncuestado);

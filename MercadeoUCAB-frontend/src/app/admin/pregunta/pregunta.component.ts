@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { CategoriasService } from 'src/app/servicios/categorias.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +13,9 @@ import { SubcategoriasService } from 'src/app/servicios/subcategorias.service';
 import { PreguntasEstudioService } from 'src/app/servicios/preguntasestudios.service';
 import { PreguntaEstudio, PreguntaEstudio2 } from 'src/app/modelos/pregunta_estudio';
 import { Estudio2 } from 'src/app/modelos/estudio';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({
@@ -37,12 +40,19 @@ export class PreguntaComponent implements OnInit {
   ) { }
   preguntaForm: FormGroup;
   idestudio: number;
+  displayedColumns: string[] = ['descripcion', 'tipoPregunta', 'subCategoria','estatus', 'acciones'];
+  dataSource: MatTableDataSource<Pregunta>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
     this.idestudio = +this.actRoute.snapshot.paramMap.get("id");
     console.log(this.idestudio);
     this.service.getPreguntas()
-    .subscribe(data => {this.preguntas = data;
+    .subscribe(data => {
+      this.dataSource = new MatTableDataSource<Pregunta>(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     } );
   }
 

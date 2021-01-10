@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddUsuarioComponent } from './add-usuario/add-usuario.component';
@@ -9,6 +9,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Rol } from 'src/app/modelos/rol';
 import { RolesService } from 'src/app/servicios/roles.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 
 
@@ -34,9 +37,17 @@ export class UsuarioComponent implements OnInit {
     private location: Location
   ) { }
   usuarioForm: FormGroup;
+  displayedColumns: string[] = ['nombre', 'correo', 'rol','estatus', 'acciones'];
+  dataSource: MatTableDataSource<Usuario>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   ngOnInit() {
     this.service.getUsuarios()
-    .subscribe(data => {this.usuarios = data;
+    .subscribe(data => {
+      this.dataSource = new MatTableDataSource<Usuario>(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     } );
     this.servicerol.getRoles().subscribe(rol => {this.roles = rol;
     } );

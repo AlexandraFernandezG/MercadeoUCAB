@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { CategoriasService } from 'src/app/servicios/categorias.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Categoria, Categoria2 } from 'src/app/modelos/categoria';
@@ -10,6 +10,9 @@ import { EstudiosService } from 'src/app/servicios/estudios.service';
 import { AddEstudioComponent } from './add-estudio/add-estudio.component';
 import { EditCategoriaComponent } from '../categoria/edit-categoria/edit-categoria.component';
 import { EditEstudioComponent } from './edit-estudio/edit-estudio.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 
@@ -31,10 +34,18 @@ export class EstudiosComponent implements OnInit {
     private location: Location
   ) { }
   estudioForm: FormGroup;
+  displayedColumns: string[] = ['nombre', 'fechaInicio', 'fechaFin', 'usuario',
+    'estatus', 'acciones'];
+  dataSource: MatTableDataSource<Estudio>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
     this.service.getEstudios()
-    .subscribe(data => {this.estudios = data;
+    .subscribe(data => {
+      this.dataSource = new MatTableDataSource<Estudio>(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     } );
   }
 

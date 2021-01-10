@@ -17,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
@@ -164,6 +165,7 @@ import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     MatRadioModule,
     MatToolbarModule,
     MatCheckboxModule,

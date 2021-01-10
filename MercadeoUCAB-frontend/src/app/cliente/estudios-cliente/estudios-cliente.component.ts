@@ -6,6 +6,7 @@ import { SolicitudEstudioComponent } from '../solicitud-estudio/solicitud-estudi
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-estudios-cliente',
@@ -24,6 +25,7 @@ export class EstudiosClienteComponent implements OnInit {
   displayedColumns: string[] = ['_id', 'nombre', '_fechaInicio','_fechaFin', '_estatus', 'acciones'];
   dataSource: MatTableDataSource<Estudio>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   
   ngOnInit(): void {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
@@ -31,6 +33,7 @@ export class EstudiosClienteComponent implements OnInit {
       estudios => { 
         this.dataSource = new MatTableDataSource<Estudio>(estudios);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
     
 

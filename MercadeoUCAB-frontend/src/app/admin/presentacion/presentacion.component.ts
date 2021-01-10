@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { PresentacionesService } from 'src/app/servicios/presentaciones.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddPresentacionComponent } from './add-presentacion/add-presentacion.component';
@@ -7,6 +7,9 @@ import { Presentacion, Presentacion2 } from 'src/app/modelos/presentacion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 
 
@@ -30,9 +33,17 @@ export class PresentacionComponent implements OnInit {
     private location: Location
   ) { }
   presentacionForm: FormGroup;
+  displayedColumns: string[] = ['nombre', 'descripcion','estatus', 'acciones'];
+  dataSource: MatTableDataSource<Presentacion>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   ngOnInit() {
     this.service.getPresentaciones()
-    .subscribe(data => {this.presentaciones = data;
+    .subscribe(data => {
+      this.dataSource = new MatTableDataSource<Presentacion>(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     } );
 
   }
