@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UsuariosService } from '../servicios/usuarios.service';
 import { Usuario, UsuarioCorreo } from '../modelos/usuario';
 import { useAnimation } from '@angular/animations';
+import { NotificationsService } from 'angular2-notifications'
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private service: AuthenticationService,
     private serviceUsuario: UsuariosService,
+    private servicenotifications: NotificationsService,
     public actRoute: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
@@ -44,8 +46,27 @@ export class LoginComponent implements OnInit {
    // this.logout();
   }
 
+  onSucess(message){
+    this.servicenotifications.success('Exitoso', message, {
+      position: ['bottom', 'right'],
+      timeOut: 5000,
+      animate: 'fade',
+      showProgressBar: true,
+      })
+  }
+
+  onError(message){
+    this.servicenotifications.error('¡Algo falló!', message, {
+      position: ['bottom', 'right'],
+      timeOut: 5000,
+      animate: 'fade',
+      showProgressBar: true,
+      });
+  }
+
   onLogin() {
   if (this.loginForm.valid) {
+      console.log('entre1');
       this.service.login(this.usuario).subscribe( data  => {
         this.user = data;
         if (this.user.estado === 'success') {
@@ -56,24 +77,37 @@ export class LoginComponent implements OnInit {
             } );
           if (this.user.rol === 'Administrador'){
             console.log ('Soy un administrador');
-            this.router.navigate(['/admin']);
+            this.onSucess('Inicio sesión exitoso');
+            setTimeout(() => {
+              this.router.navigate(['/admin']);
+            },2000);
           }
           if (this.user.rol === 'Encuestado'){
             console.log('Soy un Encuestado');
             // Asignar ruta para el encuestado
-            this.router.navigate(['encuestado/']);
+            this.onSucess('Inicio sesión exitoso');
+            setTimeout(() => {
+              this.router.navigate(['encuestado/']);
+            },2000);
           }
           if (this.user.rol === 'Analista'){
             console.log('Soy un  Analista');
             // Asignar ruta para el analista
-            this.router.navigate(['/analista/']);
+            this.onSucess('Inicio sesión exitoso');
+            setTimeout(() => {
+              this.router.navigate(['/analista/']);
+            },2000);
           }
           if (this.user.rol === 'Cliente'){
             console.log('Soy un Cliente');
-            this.router.navigate(['/cliente']);
+            this.onSucess('Inicio sesión exitoso');
+            setTimeout(() => {
+              this.router.navigate(['/cliente']);
+            },2000);
           }
+
         }else {
-          window.alert('Usuario no registrado o Informacion Incorrecta');
+         // window.alert('Usuario no registrado o Informacion Incorrecta');
         }
       });
 
