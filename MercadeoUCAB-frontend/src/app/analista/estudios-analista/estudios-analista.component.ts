@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { SolicitudEstudiosService } from 'src/app/servicios/solicitud-estudios.service';
 import { Solicitud } from 'src/app/modelos/solicitud';
 import { EditarSolicitudComponent } from '../editar-solicitud/editar-solicitud.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-estudios-analista',
@@ -26,6 +27,7 @@ export class EstudiosAnalistaComponent implements OnInit {
   displayedColumns: string[] = ['id', 'descripcion', 'acciones'];
   dataSource: MatTableDataSource<Solicitud>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   
   ngOnInit(): void {
 
@@ -33,6 +35,7 @@ export class EstudiosAnalistaComponent implements OnInit {
       solicitudes => { 
         this.dataSource = new MatTableDataSource<Solicitud>(solicitudes);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
     
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { CategoriasService } from 'src/app/servicios/categorias.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Categoria, Categoria2 } from 'src/app/modelos/categoria';
@@ -10,6 +10,9 @@ import { SubcategoriasService } from 'src/app/servicios/subcategorias.service';
 import { AddSubcategoriaComponent } from './add-subcategoria/add-subcategoria.component';
 import { EditCategoriaComponent } from '../categoria/edit-categoria/edit-categoria.component';
 import { EditSubcategoriaComponent } from './edit-subcategoria/edit-subcategoria.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({
@@ -32,10 +35,17 @@ export class SubcategoriaComponent implements OnInit {
     private location: Location
   ) { }
   subcategoriaForm: FormGroup;
+  displayedColumns: string[] = ['nombre', 'descripcion','estatus', 'acciones'];
+  dataSource: MatTableDataSource<Subcategoria>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
     this.service.getSubcategorias()
-    .subscribe(data => {this.subcategorias = data;
+    .subscribe(data => {
+      this.dataSource = new MatTableDataSource<Subcategoria>(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     } );
     this.serviceCategoria.getCategorias()
     .subscribe(catego => {this.categorias = catego;

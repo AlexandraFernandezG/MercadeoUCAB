@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Solicitud } from 'src/app/modelos/solicitud';
@@ -21,6 +22,7 @@ export class AnalistaPoblacionComponent implements OnInit {
   displayedColumns: string[] = ['id', 'descripcion', 'acciones'];
   dataSource: MatTableDataSource<Solicitud>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   
   ngOnInit(): void {
 
@@ -28,6 +30,7 @@ export class AnalistaPoblacionComponent implements OnInit {
       solicitudes => { 
         this.dataSource = new MatTableDataSource<Solicitud>(solicitudes);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
     
 

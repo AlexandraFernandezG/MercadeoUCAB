@@ -17,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
@@ -165,6 +166,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     MatRadioModule,
     MatToolbarModule,
     MatCheckboxModule,
@@ -192,7 +194,8 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     SolicitudEstudioComponent,
     CategoriaComponent,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    AddEstudioComponent
     ]
 })
 export class AppModule { }

@@ -1,22 +1,20 @@
 package ucab.dsw.servicio;
 
 import lombok.extern.java.Log;
-import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
-import ucab.dsw.accesodatos.DaoPreguntaEstudio;
-import ucab.dsw.accesodatos.DaoRespuesta;
-import ucab.dsw.accesodatos.DaoUsuario;
+import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.RespuestaDto;
 import ucab.dsw.entidades.*;
-import ucab.dsw.Response.EncuestaResponse;
-import ucab.dsw.Response.EstudioEncuestadoResponse;
-import ucab.dsw.Response.RespuestaPreguntaResponse;
+import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.response.EncuestaResponse;
+import ucab.dsw.response.EstudioEncuestadoResponse;
+import ucab.dsw.response.RespuestaPreguntaResponse;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,115 +24,183 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class EncuestaServicio {
 
+    /**
+     * Este método permite obtener las preguntas de una encuesta
+     * @author Gregg Spinetti y Emanuel Di Cristofaro
+     * @param id
+     */
     @GET
     @Path("/preguntas/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public List<EncuestaResponse> obtenerPreguntaEncuesta(@PathParam("id") long id) throws Exception {
+    public Response obtenerPreguntaEncuesta(@PathParam("id") long id) throws Exception {
+
+        DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+        JsonObject dataObject;
+        JsonArrayBuilder preguntasArrayJson = Json.createArrayBuilder();
 
         try {
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-            EntityManager entitymanager = factory.createEntityManager();
 
-
-            String sqlQuery = "SELECT PE._id AS idPreguntaEncuesta, PE._descripcion AS descripcion , PE._tipoPregunta AS tipoPregunta," +
-                    " PES._id AS idPreguntaEstudio FROM PreguntaEncuesta AS PE, PreguntaEstudio AS PES WHERE " +
-                    "PE._id = PES._preguntaEncuesta._id AND PES._estudio._id =:id " +
-                    "ORDER BY PE._id ";
-            Query query = entitymanager.createQuery( sqlQuery);
-            query.setParameter("id", id);
-            List<Object[]> preguntasRespuestas = query.getResultList();
+            List<Object[]> preguntasRespuestas = daoPreguntaEncuesta.listarPreguntas(id);
 
             List<EncuestaResponse> ResponseListUpdate = new ArrayList<>(preguntasRespuestas.size());
 
             for (Object[] r : preguntasRespuestas) {
+
                 ResponseListUpdate.add(new EncuestaResponse((long)r[0], (String)r[1], (String)r[2], (long)r[3]));
             }
 
-            return ResponseListUpdate;
-        }catch (Exception e){
+            for (EncuestaResponse er: ResponseListUpdate){
 
-            throw  new Exception(e);
+                JsonObject pregunta = Json.createObjectBuilder()
+                        .add("id", er.getIdPreguntaEncuesta())
+                        .add("descripcion", er.getDescripcion())
+                        .add("tipoPregunta", er.getTipoPregunta())
+                        .add("idEstudio", er.getIdPreguntaEstudio()).build();
 
+                preguntasArrayJson.add(pregunta);
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operación realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Preguntas", preguntasArrayJson).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
 
+    /**
+     * Este método permite obtener las respuestas de las preguntas de una encuesta
+     * @author Gregg Spinetti y Emanuel Di Cristofaro
+     * @param id
+     */
     @GET
     @Path("/respuestas/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public List<RespuestaPreguntaResponse> obtenerRespuestaEncuesta(@PathParam("id") long id) throws Exception {
+    public Response obtenerRespuestaEncuesta(@PathParam("id") long id) throws Exception {
+
+        DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
+        JsonObject dataObject;
+        JsonArrayBuilder respuestasArrayJson = Json.createArrayBuilder();
 
         try {
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-            EntityManager entitymanager = factory.createEntityManager();
 
-
-            String sqlQuery = "SELECT RP._preguntaEncuesta._id AS id, RP._nombre AS pregunta" +
-                    " FROM PreguntaEncuesta AS PE, PreguntaEstudio AS PES, RespuestaPregunta AS RP WHERE " +
-                    "PE._id = PES._preguntaEncuesta._id AND PE._id = RP._preguntaEncuesta._id AND " +
-                    "PES._estudio._id =:id " +
-                    "ORDER BY PE._id";
-            Query query = entitymanager.createQuery( sqlQuery );
-            query.setParameter("id", id);
-            List<Object[]> respuestas = query.getResultList();
+            List<Object[]> respuestas = daoRespuestaPregunta.listaRespuestaEncuesta(id);
 
             List<RespuestaPreguntaResponse> ResponseListUpdate = new ArrayList<>(respuestas.size());
 
             for (Object[] r : respuestas) {
+
                 ResponseListUpdate.add(new RespuestaPreguntaResponse((Long)r[0], (String)r[1]));
             }
 
-            return ResponseListUpdate;
-        }catch (Exception e){
+            for (RespuestaPreguntaResponse rpr: ResponseListUpdate){
 
-            throw  new Exception(e);
+                JsonObject pregunta = Json.createObjectBuilder()
+                        .add("fkPregunta", rpr.getFkPregunta())
+                        .add("pregunta", rpr.getPregunta()).build();
 
+                respuestasArrayJson.add(pregunta);
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operación realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Respuestas", respuestasArrayJson).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
-
     }
 
+    /**
+     * Este método permite obtener los encuestados
+     * @author Gregg Spinetti y Emanuel Di Cristofaro
+     * @param id
+     */
     @GET
     @Path("/listar/encuestados/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public List<EstudioEncuestadoResponse> getAllByRespuesta(@PathParam("id") long id) throws Exception {
+    public Response getAllByRespuesta(@PathParam("id") long id) throws Exception {
+
+        DaoUsuario daoUsuario = new DaoUsuario();
+        JsonObject dataObject;
+        JsonArrayBuilder encuestadosArrayJson = Json.createArrayBuilder();
 
         try {
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-            EntityManager entitymanager = factory.createEntityManager();
 
-            String sqlQuery = "SELECT DISTINCT R._id AS idRespuesta, U._id AS idUsuario, U._correoelectronico AS correo," +
-                    " U._nombre AS nombreUsuario FROM PreguntaEstudio AS PE, Respuesta AS R, Usuario U WHERE" +
-                    " PE._estudio._id = R._preguntaEstudio._id AND R._usuario._id = U._id AND " +
-                    "U._rol._id = 4 AND PE._estudio._id =:id ";
-            Query query = entitymanager.createQuery( sqlQuery);
-            query.setParameter("id", id);
+            List<Object[]> estudioUsuarioResponseList = daoUsuario.listarEncuestados(id);
 
-            List<Object[]> estudioUsuarioResponseList = query.getResultList();
             List<EstudioEncuestadoResponse> estudioUsuarioResponseListUpdate = new ArrayList<>(estudioUsuarioResponseList.size());
 
             for (Object[] r : estudioUsuarioResponseList) {
                 estudioUsuarioResponseListUpdate.add(new EstudioEncuestadoResponse((Long)r[1], (String)r[2], (String)r[3]));
             }
 
-            return estudioUsuarioResponseListUpdate;
+            for (EstudioEncuestadoResponse eer: estudioUsuarioResponseListUpdate){
 
-        }
-        catch (Exception e){
+                JsonObject usuario = Json.createObjectBuilder()
+                        .add("id", eer.getIdUsuario())
+                        .add("correo", eer.getCorreo())
+                        .add("nombreUsuario", eer.getNombreUsuario()).build();
 
-            throw  new Exception(e);
+                encuestadosArrayJson.add(usuario);
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operación realizada con éxito")
+                    .add("codigo", 200)
+                    .add("Encuestados", encuestadosArrayJson).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
 
+    /**
+     * Este método permite registrar una lista de respuestas en una encuesta
+     * @author Gregg Spinetti y Emanuel Di Cristofaro
+     * @param respuestas la lista de respuestas seleccionada en la encuesta
+     */
     @POST
     @Path( "/responder" )
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public RespuestaDto addRespuesta(List<RespuestaDto> respuestas) {
+    public Response addRespuesta(List<RespuestaDto> respuestas) throws PruebaExcepcion {
+
+        JsonObject dataObject;
         RespuestaDto resultado = new RespuestaDto();
+
         try
         {
             DaoRespuesta dao = new DaoRespuesta();
@@ -161,15 +227,34 @@ public class EncuestaServicio {
 
                 Respuesta resul = dao.insert(respuesta);
                 resultado.setId(resul.get_id());
+
             }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Operación realizada con éxito")
+                    .add("codigo", 200).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha podido ejecutar la operación " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-        catch ( Exception ex )
-        {
-            String problema = ex.getMessage();
-        }
-        return  resultado;
     }
-
-
 }
 

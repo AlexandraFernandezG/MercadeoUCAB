@@ -9,6 +9,7 @@ public class EstudioDto extends DtoBase {
     private String _tipoInstrumento;
     private Date _fechaInicio;
     private Date _fechaFin;
+    private String _estado;
     private SolicitudEstudioDto _solicitudEstudioDto;
     private UsuarioDto _usuarioDto;
 
@@ -58,6 +59,14 @@ public class EstudioDto extends DtoBase {
 
     public void setFechaFin(Date _fechaFin) {
         this._fechaFin = _fechaFin;
+    }
+
+    public String getEstado() {
+        return _estado;
+    }
+
+    public void setEstado(String _estado) {
+        this._estado = _estado;
     }
 
     public EstudioDto (long id) throws Exception{

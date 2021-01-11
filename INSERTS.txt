@@ -1,0 +1,55 @@
+INSERT INTO categoria VALUES (null, 'Comida Rapida', 'comida poco saludable', 'Activo');
+
+INSERT INTO subcategoria VALUES (null, 'Perros calientes', 'Sabores extravagantes', 'Activo', 1);
+INSERT INTO subcategoria VALUES (null, 'Pizzas', 'Sabores extravagantes', 'Activo', 1);
+
+INSERT INTO rol VALUES (null, 'Administrador', 'Activo');
+INSERT INTO rol VALUES (null, 'Cliente', 'Activo');
+INSERT INTO rol VALUES (null, 'Encuestado', 'Activo');
+INSERT INTO rol VALUES (null, 'Analista', 'Activo');
+
+INSERT INTO usuario VALUES (null, 'EmanuelDriver', 'emadicris@hotmail.com', null, 'Activo', 1);
+INSERT INTO usuario VALUES (null, 'Wachiminga', 'alexandra@hotmail.com', null, 'Activo', 2);
+INSERT INTO usuario VALUES (null, 'Grejg', 'greggspinetti@hotmail.com', null, 'Activo', 3);
+
+INSERT INTO marca VALUES (null, 'FastFood', 'Comidas rapidas con sabores extravagantes', 'Activo');
+
+INSERT INTO producto VALUES (null, 'Rogdogs', 'Perros calientes', 'Activo', 1, 1, 1);
+INSERT INTO producto VALUES (null, 'Pizzaoar', 'Pizzas', 'Activo', 1, 2, 1);
+
+INSERT INTO solicitud_estudio VALUES (null, 'Perros calientes raros', null, 35, 20, null, null, null, null ,null, null, null, 'En Proceso', 'Activo', null, 2, 1, null, null);
+INSERT INTO solicitud_estudio VALUES (null, 'Pizzas raras', null, 35, 20, null, null, null, null ,null, null, null, 'Completado', 'Activo', null, 2, 2, null, null);
+
+INSERT INTO estudio VALUES (null, 'Perros calientes', 'Encuesta', '2021-03-01', null, 'En proceso', 'Activo', 1, 1);
+INSERT INTO estudio VALUES (null, 'Pizzas', 'Encuesta', '2021-03-01', '2021-04-02', 'Completado', 'Activo', 2, 1);
+
+INSERT INTO pregunta_encuesta VALUES (null, 'Te gustan los hot dogs raros?', 'Abierta', 'Activa', 3, 1);
+INSERT INTO pregunta_encuesta VALUES (null, 'Odias los hot dogs raros?', 'Abierta', 'Activa', 3, 1);
+INSERT INTO pregunta_encuesta VALUES (null, 'Te gustan las pizzas raras?', 'Abierta', 'Activa', 3, 2);
+INSERT INTO pregunta_encuesta VALUES (null, 'Odias las pizzas raras?', 'Abierta', 'Activa', 3, 2);
+
+INSERT INTO preguntas_estudio VALUES (null, 'Activo', 1, 1);
+INSERT INTO preguntas_estudio VALUES (null, 'Activo', 1, 2);
+INSERT INTO preguntas_estudio VALUES (null, 'Activo', 2, 3);
+INSERT INTO preguntas_estudio VALUES (null, 'Activo', 2, 4);
+
+
+INSERT INTO rol VALUES (null, 'Cliente', 'Activo');
+
+INSERT INTO usuario VALUES (null, 'MariaNunk', 'mariaNunk@correo.com', null, 'Activo', 2);
+INSERT INTO usuario VALUES (null, 'JuanNunk', 'juanNunk@correo.com', null, 'Activo', 2);
+INSERT INTO usuario VALUES (null, 'AntonioNunk', 'AntonioNunk@correo.com', null, 'Activo', 2);
+
+INSERT INTO lugar VALUES (null, 'Venezuela', 'Pais', 'Baja', 'Activo', null);
+
+INSERT INTO ocupacion VALUES (null, 'Medico', 'Activo');
+INSERT INTO nivel_academico VALUES (null, 'Ingeniero', 'Activo');
+INSERT INTO nivel_economico VALUES (null, 'Alto', 'Activo');
+
+INSERT INTO informacion VALUES (null, 25849302, 'Gregg', null, 'Spinetti', 'Gutierrez', 'Masculino', '1995-03-02', 'Casado', 'Si', 3, 'Activo', 1,1,1,1,3);
+
+INSERT INTO solicitud_estudio VALUES (null, 'Pizzas raras', 'femenino', 35, 20, null, null, null, null ,null, null, null, 'Activo', null, 1, 2, null, null);
+
+INSERT INTO estudio VALUES (null, 'Pizzas raras parte 2', 'Encuesta', '2021-03-01', '2021-04-02', 'Activo', 3, 2);
+
+INSERT INTO medio_comunicacion VALUES (null, 'Computadora', 'Activo', 2, 1);

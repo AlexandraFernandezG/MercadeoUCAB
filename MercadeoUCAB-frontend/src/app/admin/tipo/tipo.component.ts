@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { TiposService } from 'src/app/servicios/tipos.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddTipoComponent } from './add-tipo/add-tipo.component';
@@ -7,6 +7,9 @@ import { Tipo, Tipo2 } from 'src/app/modelos/tipo';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 
 
@@ -30,9 +33,17 @@ export class TipoComponent implements OnInit {
     private location: Location
   ) { }
   tipoForm: FormGroup;
+  displayedColumns: string[] = ['nombre', 'descripcion','estatus', 'acciones'];
+  dataSource: MatTableDataSource<Tipo>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   ngOnInit() {
     this.service.getTipos()
-    .subscribe(data => {this.tipos = data;
+    .subscribe(data => {
+      this.dataSource = new MatTableDataSource<Tipo>(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     } );
 
   }

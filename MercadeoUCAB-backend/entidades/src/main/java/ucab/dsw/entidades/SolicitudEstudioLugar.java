@@ -3,7 +3,7 @@ package ucab.dsw.entidades;
 import javax.persistence.*;
 
 @Entity
-@Table( name = "solicitudestudio_lugar")
+@Table( name = "solicitud_estudio_lugar")
 public class SolicitudEstudioLugar extends EntidadBase {
 
     //Relaciones

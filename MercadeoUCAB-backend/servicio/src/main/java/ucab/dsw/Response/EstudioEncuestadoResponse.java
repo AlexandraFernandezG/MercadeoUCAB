@@ -1,4 +1,4 @@
-package ucab.dsw.Response;
+package ucab.dsw.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +13,30 @@ public class EstudioEncuestadoResponse {
     public EstudioEncuestadoResponse(long idUsuario, String correo, String nombreUsuario) {
         this.idUsuario = idUsuario;
         this.correo = correo;
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
 }

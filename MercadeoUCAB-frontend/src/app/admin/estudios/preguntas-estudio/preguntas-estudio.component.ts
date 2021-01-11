@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,6 +8,8 @@ import { PreguntasService } from 'src/app/servicios/preguntas.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { PreguntasEstudioService } from 'src/app/servicios/preguntasestudios.service';
 import { PreguntaEstudio, PreguntaEstudio2 } from 'src/app/modelos/pregunta_estudio';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-preguntas-estudio',
@@ -29,10 +31,16 @@ export class PreguntasEstudioComponent implements OnInit {
     private location: Location
   ) { }
 
+  displayedColumns: string[] = ['descripcion', 'tipoPregunta', 'subCategoria','estatus'];
+  dataSource: MatTableDataSource<Pregunta>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   ngOnInit(): void {
       this.id= +this.actRoute.snapshot.paramMap.get("id");
       this.service.getPreguntasEstudio(this.id)
-      .subscribe(data => {this.preguntas = data;
+      .subscribe(data => {
+        this.dataSource = new MatTableDataSource<Pregunta>(data);
+        this.dataSource.paginator = this.paginator;
       } );
   }
 
