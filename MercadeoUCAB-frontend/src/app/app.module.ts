@@ -192,7 +192,8 @@ import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-
     SolicitudEstudioComponent,
     CategoriaComponent,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    AddEstudioComponent
     ]
 })
 export class AppModule { }

@@ -1,0 +1,13 @@
+.mat-form-field{
+    margin: 10px;
+}
+div.pageHeader{
+    margin: 0px 40px;
+}
+.fill-remaining-space{
+    flex: 1 1 auto;
+}
+button{
+    margin-right: 20px;
+    flex: 1 1 auto;
+}

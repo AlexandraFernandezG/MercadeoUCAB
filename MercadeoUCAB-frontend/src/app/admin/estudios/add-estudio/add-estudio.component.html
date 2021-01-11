@@ -1,6 +1,56 @@
-<h4>Se ha detectado que existen estudios con la misma poblacion, seleccione una opcion: </h4>
+<!-- <h4>Se ha detectado que existen estudios con la misma poblacion, seleccione una opcion: </h4>
 
 <button type="submit"  mat-raised-button color="primary" class="nav-link" [routerLink]="['admin/estudiossugeridos']">Crear estudio usando plantilla</button>
 
 <br><br> 
-<button type="submit"  mat-raised-button color="accent" >Crear estudio manualmente</button>
+<button type="submit"  mat-raised-button color="accent" >Crear estudio manualmente</button> -->
+<div class="pageHeader">
+	<mat-toolbar>
+		<span class="fill-remaining-space"></span>
+		<span>Generar Estudio</span>
+		<span class="fill-remaining-space"></span>
+	</mat-toolbar>
+</div>
+<form novalidate [formGroup]="estudioForm" name="estudioForm" (ngSubmit)="addEstudio()"> 
+
+
+	  <div class="col1">
+
+		<mat-form-field class="full-width" appearance="fill">
+			<mat-label>Nombre</mat-label>
+			<input formControlName="nombre"  matInput/>
+		</mat-form-field>
+	
+		<mat-form-field class="full-width" appearance="fill">
+		  <mat-label>Instrumento</mat-label>
+		  <input formControlName="instrumento"  matInput/>
+		</mat-form-field>
+	
+		<mat-form-field appearance="fill">
+			<mat-label>Estudio Abierto Hasta:</mat-label>
+			<input matInput [matDatepicker]="picker" formControlName="fechaFin">
+			<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+			<mat-datepicker #picker></mat-datepicker>
+		</mat-form-field>
+	   
+		<mat-form-field class="full-width" appearance="fill">
+		  <mat-label>Analista</mat-label>
+		  <mat-select formControlName="analista" atInput>
+			<mat-option *ngFor="let usuario of usuarios" [value]="analista._id">
+			  {{usuario._nombre}}
+			</mat-option>
+		  </mat-select>
+		</mat-form-field>
+
+	  </div>
+
+
+	
+	<button  mat-raised-button color="primary" type="submit" [disabled]="estudioForm.invalid">
+		Enviar
+	</button> 
+	<button  mat-raised-button color="warn">
+		Cancelar
+	</button> 
+  
+</form>
