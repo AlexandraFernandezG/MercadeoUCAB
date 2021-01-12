@@ -88,6 +88,7 @@ import { SolicitudEstudiosService } from './servicios/solicitud-estudios.service
 import { EstudiosService } from './servicios/estudios.service';
 import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-sugeridos.component';
 import { SolicitudesPendientesComponent } from './cliente/solicitudes-pendientes/solicitudes-pendientes.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   declarations: [
@@ -174,7 +175,8 @@ import { SolicitudesPendientesComponent } from './cliente/solicitudes-pendientes
     MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [
     CategoriasService,

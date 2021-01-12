@@ -1,27 +1,35 @@
-<form [formGroup]="cambioContrasenaForm" novalidate> 
-
-  <h4>Cambio Contraseña:</h4>
-    <div class="form-group">
-      <mat-form-field class="full-width" appaerance="outline">
-        <mat-label>Contraseña:</mat-label>
-        <input formControlName="contrasena" matInput [type]= "'hide' ? 'password': 'text'"  matInput required />
-        <mat-error *ngIf="cambioContrasenaForm.get('contrasena').errors?.required" >
-            Falta llenar el campo
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="form-group">
-      <mat-form-field class="full-width" appaerance="outline">
-        <mat-label>Repita la Contraseña:</mat-label>
-        <input formControlName="contrasena2" matInput [type]= "'hide' ? 'password': 'text'"  matInput required />
-         <mat-error *ngIf="cambioContrasenaForm.get('contrasena2').errors?.required">
-            Falta llenar el campo
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-  <button type="submit"  mat-raised-button color="primary"  (click)="cambiarPassword(usuario)">Cambiar Contraseña</button>
-</form>
-
-
+<div class="container" style="margin-top: 100px">
+  <mat-card style="max-width: 720px" class="mx-auto">
+    <form [formGroup]="cambioContrasenaForm" novalidate> 
+  
+      <mat-card-title>Cambio Contraseña</mat-card-title>
+      <div class="">
+        <div class="form-group">
+          <mat-form-field class="w-100" appaerance="outline">
+            <mat-label>Nueva contraseña:</mat-label>
+            <input formControlName="contrasena" matInput [type]= "'hide' ? 'password': 'text'"  matInput required />
+            <mat-error *ngIf="cambioContrasenaForm.get('contrasena').errors?.required" >
+                Falta llenar el campo
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="w-100" appaerance="outline">
+            <mat-label>Repita la Contraseña:</mat-label>
+            <input formControlName="contrasena2" matInput [type]= "'hide' ? 'password': 'text'"  matInput required />
+             <mat-error *ngIf="cambioContrasenaForm.get('contrasena2').errors?.required">
+                Falta llenar el campo
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex mx-auto">
+      <div style="margin-left: auto; margin-right: auto">
+        <button  type="submit" mat-raised-button color="primary"  (click)="cambiarPassword(usuario)">Cambiar Contraseña</button>
+      </div>
+        
+      </div>
+    </form> 
+  </mat-card>
+  </div>   
   

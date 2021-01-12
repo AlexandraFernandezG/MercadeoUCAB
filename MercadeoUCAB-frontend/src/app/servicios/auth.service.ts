@@ -26,10 +26,10 @@ export class AuthenticationService {
 login(usuario): Observable<Usuario2[]>{
 
   return  this.http.post<Usuario2[]>(this.url + 'login/ldap', JSON.stringify(usuario), this.httpOptions)
-  .pipe(
-   retry(1),
-   catchError(this.handleError)
- )
+ // .pipe(
+ //  retry(1),
+  // catchError(this.handleError)
+// )
 }
 
 logout() {
