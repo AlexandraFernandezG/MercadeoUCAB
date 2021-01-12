@@ -32,11 +32,17 @@ import { ResultadosComponent } from './cliente/resultados/resultados.component';
 import { EncuestadoComponent } from './encuestado/encuestado.component';
 import { SolicitudesComponent } from './admin/solicitudes/solicitudes.component';
 import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-sugeridos.component';
+import { SolicitudesPendientesComponent } from './cliente/solicitudes-pendientes/solicitudes-pendientes.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'dashboard', component: DashboardComponent},
   { path: 'dashboard/marcas', component: MarcaComponent},
+  { path: 'dashboard/usuarios', component: UsuarioComponent },
+  { path: 'recuperarContrasena', component: RecuperarContrasenaComponent},
+  { path: 'cambioContrasena', component:  CambioContrasenaComponent},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
   { path: 'admin', component: AdminComponent,
     children: [
       { path: 'categorias', component: CategoriaComponent},
@@ -52,27 +58,38 @@ const routes: Routes = [
       { path: 'estudios', component: EstudiosComponent},
       { path: 'estudiossugeridos', component: EstudiosSugeridosComponent},
       { path: 'asignacionpreguntas/:id', component: PreguntasEstudioComponent},
-      { path: '', pathMatch: 'prefix', redirectTo: 'categorias'},
+      { path: '', pathMatch: 'prefix', redirectTo: 'solicitudes'},
     ]
   },
-  { path: 'dashboard/usuarios', component: UsuarioComponent},
-  { path: 'cliente', component: ClienteComponent },
-  { path: 'cliente/estudios', component: EstudiosClienteComponent },
-  { path: 'cliente/solicitar_estudio', component: SolicitudEstudioComponent },
-  { path: 'cliente/producto', component: ProductoComponent },
-  { path: 'cliente/resultados', component: ResultadosComponent },
-  { path: 'encuestado', component: EncuestadoComponent },
-  { path: 'encuestado/estudios', component: EstudiosEncuestadoComponent },
-  { path: 'encuestado/registro-encuestado', component: RegistroEncuestadoComponent },
-  { path: 'encuestado/respuestas-encuesta/:id', component: RespuestasEncuestaComponent },
-  { path: 'analista', component: AnalistaComponent },
-  { path: 'analista/solicitudes', component: EstudiosAnalistaComponent },
-  { path: 'analista/crearEncuesta', component: CrearEstudioComponent },
-  { path: 'analista/poblacion', component: AnalistaPoblacionComponent },
-  { path: 'recuperarContrasena', component: RecuperarContrasenaComponent},
-  { path: 'cambioContrasena', component:  CambioContrasenaComponent},
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: 'cliente', component: ClienteComponent, 
+    children: [
+      { path: 'estudios', component: EstudiosClienteComponent },
+      { path: 'solicitar_estudio', component: SolicitudEstudioComponent },
+      { path: 'producto', component: ProductoComponent },
+      { path: 'resultados', component: ResultadosComponent },
+      { path: 'solicitudes', component: SolicitudesPendientesComponent },
+      { path: '', pathMatch: 'prefix', redirectTo: 'estudios'},
+    ]
+  },
+  
+  { path: 'encuestado', component: EncuestadoComponent,
+    children: [
+      { path: 'estudios', component: EstudiosEncuestadoComponent },
+      { path: 'registro-encuestado', component: RegistroEncuestadoComponent },
+      { path: 'respuestas-encuesta/:id', component: RespuestasEncuestaComponent },
+      { path: '', pathMatch: 'prefix', redirectTo: 'estudios'},
+    ]
+  },
+  
+  { path: 'analista', component: AnalistaComponent,
+    children: [
+      { path: 'solicitudes', component: EstudiosAnalistaComponent },
+      { path: 'crearEncuesta', component: CrearEstudioComponent },
+      { path: 'poblacion', component: AnalistaPoblacionComponent },
+      { path: '', pathMatch: 'prefix', redirectTo: 'solicitudes'},
+    ]
+  },
 ];
 
 @NgModule({

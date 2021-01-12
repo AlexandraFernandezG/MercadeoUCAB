@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-
+declare var $;
 
 @Component({
   selector: 'app-cliente',
@@ -16,5 +16,9 @@ export class ClienteComponent implements OnInit {
   }
   solicitarEstudio(): void {
     this._router.navigate(['/cliente/solicitar_estudio']);
+  }
+  action() {
+    $('body').toggleClass('sidebar-toggled');
+    $('.sidebar').toggleClass('toggled');
   }
 }

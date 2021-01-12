@@ -1,1 +1,47 @@
-<app-estudios-cliente></app-estudios-cliente>
+<body>
+    <br>
+    <br>
+    <div id="wrapper">
+        <!-- Bookmark form -->
+        <nav>
+        <ul class="sidebar navbar-nav">
+            <br>
+            <button (click)="action()" class="btn btn-link btn-sm text-white text-right py-2" id="sidebarToggle">
+                <br>
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+
+            <li class="nav-item pt-3">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span class="ml-2">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <div>
+                    <a class="nav-link" routerLink="estudios">
+                         <i class="fas fa-book-open"></i>
+                        <span class="ml-2">Mis Estudios</span></a>
+                </div>              
+            </li>
+            <li class="nav-item">
+                <div>
+                    <a class="nav-link" routerLink="solicitudes">
+                         <i class="fas fa-book-open"></i>
+                        <span class="ml-2">Solicitudes Pendientes</span></a>
+                </div>              
+            </li>
+            <li class="nav-item">
+                <div>
+                    <a class="nav-link" routerLink="">
+                        <i class= "fas fa-users"></i>
+                        <span class="ml-2">Opciones</span></a>
+                </div>              
+            </li>
+        </ul>
+        </nav>
+        <div id="content-wrapper">
+            <router-outlet class='contenido'></router-outlet>
+        </div>
+    </div>
+</body>

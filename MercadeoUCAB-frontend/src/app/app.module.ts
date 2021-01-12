@@ -87,6 +87,7 @@ import { SolicitudesComponent } from './admin/solicitudes/solicitudes.component'
 import { SolicitudEstudiosService } from './servicios/solicitud-estudios.service';
 import { EstudiosService } from './servicios/estudios.service';
 import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-sugeridos.component';
+import { SolicitudesPendientesComponent } from './cliente/solicitudes-pendientes/solicitudes-pendientes.component';
 
 @NgModule({
   declarations: [
@@ -143,7 +144,8 @@ import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-
     PreguntasSugeridasComponent,
     ResultadosComponent,
     SolicitudesComponent,
-    EstudiosSugeridosComponent
+    EstudiosSugeridosComponent,
+    SolicitudesPendientesComponent
   ],
   imports: [
     RouterModule,

@@ -1,12 +1,12 @@
 <div class="container">
 
-  <div class="row text-left mt-5">
-    <div class="col-5">
-      <div class="row">
-        <h2 id="Encabezado">Estudios</h2>
-        <a id="hand" class="btn"><i class="fas fa-retweet fa-lg" style="color:rgba(84, 157, 252, 0.993);"></i></a>
-      </div>
-    </div>
+  <div class="pageHeader">
+    <mat-toolbar>
+      <span class="fill-remaining-space"></span>
+      <span>Estudios</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+  </div>
 
 
     <!-- <div class="container" style="margin-bottom: 30px;">
@@ -38,43 +38,40 @@
         </tbody>
       </table>
     </div> -->
-    <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" matSort>
-    
-        <!-- Name Column -->
-        <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-          <td mat-cell *matCellDef="let element"> {{element.nombreEstudio}} </td>
-        </ng-container>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
 
-        <ng-container matColumnDef="fechaInicio">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Inicio </th>
-          <td mat-cell *matCellDef="let element"> {{element.fechaInicioEstudio | date: "dd/MM/yyyy"}} </td>
-        </ng-container>
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombreEstudio}} </td>
+      </ng-container>
 
-         <ng-container matColumnDef="fechaFin">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Fin </th>
-          <td mat-cell *matCellDef="let element"> {{element.fechaFinEstudio | date: "dd/MM/yyyy"}} </td>
-        </ng-container> 
+      <ng-container matColumnDef="fechaInicio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Inicio </th>
+        <td mat-cell *matCellDef="let element"> {{element.fechaInicioEstudio | date: "dd/MM/yyyy"}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="estatus">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-          <td mat-cell *matCellDef="let element"> {{element.estatusEstudio}} </td>
-        </ng-container>
+       <ng-container matColumnDef="fechaFin">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Fin </th>
+        <td mat-cell *matCellDef="let element"> {{element.fechaFinEstudio | date: "dd/MM/yyyy"}} </td>
+      </ng-container> 
+
+      <ng-container matColumnDef="estatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+        <td mat-cell *matCellDef="let element"> {{element.estatusEstudio}} </td>
+      </ng-container>
     
-        
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <mat-cell *matCellDef="let row">
-            <button mat-icon-button [routerLink]="['/encuestado/respuestas-encuesta', row._id]"><mat-icon>launch</mat-icon></button>
-          </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button [routerLink]="['/encuestado/respuestas-encuesta', row._id]"><mat-icon>launch</mat-icon></button>
+        </mat-cell>
+      </ng-container>
     
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    
-      <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
-    </div>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
   </div>
+  
 </div>

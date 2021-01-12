@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var $;
+
 @Component({
   selector: 'app-analista',
   templateUrl: './analista.component.html',
@@ -11,5 +13,8 @@ export class AnalistaComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  action() {
+    $('body').toggleClass('sidebar-toggled');
+    $('.sidebar').toggleClass('toggled');
+  }
 }
