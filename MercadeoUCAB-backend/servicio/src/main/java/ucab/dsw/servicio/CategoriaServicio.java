@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import com.google.gson.Gson;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoCategoria;
 import ucab.dsw.accesodatos.DaoSubcategoria;
@@ -43,23 +44,10 @@ public class CategoriaServicio extends AplicacionBase {
 
             List<Categoria> listaCategorias = categoriaDao.findAll(Categoria.class);
 
-            for(Categoria ca: listaCategorias){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaCategorias);
 
-                JsonObject categoria = Json.createObjectBuilder()
-                        .add("id", ca.get_id())
-                        .add("nombre", ca.get_nombre())
-                        .add("descripcion", ca.get_descripcion())
-                        .add("estatus", ca.get_estatus()).build();
-
-                categoriasArrayJson.add(categoria);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Todas las categorias", categoriasArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -209,7 +197,10 @@ public class CategoriaServicio extends AplicacionBase {
                 }
             }
 
-            for(Subcategoria sub: listaSubcategorias){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaSubcategorias);
+
+            /*for(Subcategoria sub: listaSubcategorias){
 
                 JsonObject subcategoria = Json.createObjectBuilder()
                         .add("id", sub.get_id())
@@ -223,9 +214,9 @@ public class CategoriaServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Operación realizada con éxito")
                     .add("codigo", 200)
-                    .add("Todas las subcategorias", subcategoriasArrayJson).build();
+                    .add("Todas las subcategorias", subcategoriasArrayJson).build();*/
 
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
