@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import com.google.gson.Gson;
 import lombok.extern.java.Log;
 import ucab.dsw.response.EstudiosResponse;
 import ucab.dsw.response.PreguntasResponse;
@@ -35,15 +36,15 @@ public class SugerenciasServicio extends AplicacionBase {
 
         String fecha_estudio = "";
 
-        if(fecha != null) {
+            if (fecha != null) {
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            fecha_estudio = sdf.format(fecha);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                fecha_estudio = sdf.format(fecha);
 
-        } else {
+            } else {
 
-            fecha_estudio = "";
-        }
+                fecha_estudio = "";
+            }
 
         return fecha_estudio;
     }
@@ -65,7 +66,6 @@ public class SugerenciasServicio extends AplicacionBase {
             DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
             List<Object[]> listaPreguntas = daoPreguntaEncuesta.listarPreguntasEstudio(id);
             List<PreguntasResponse> listaPreguntasRecomendadas = new ArrayList<>(listaPreguntas.size());
-            JsonArrayBuilder preguntasArrayJson = Json.createArrayBuilder();
 
             for (Object[] pre: listaPreguntas){
 
@@ -73,23 +73,10 @@ public class SugerenciasServicio extends AplicacionBase {
 
             }
 
-            for (PreguntasResponse pr: listaPreguntasRecomendadas){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaPreguntasRecomendadas);
 
-                JsonObject pregunta = Json.createObjectBuilder()
-                        .add("id", pr.getIdPregunta())
-                        .add("descripcion", pr.getDescripcionPregunta())
-                        .add("tipoPregunta", pr.getTipoPregunta())
-                        .add("estatus", pr.getEstatusPregunta()).build();
-
-                preguntasArrayJson.add(pregunta);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Preguntas recomendadas", preguntasArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
 
         } catch (Exception ex) {
@@ -117,7 +104,6 @@ public class SugerenciasServicio extends AplicacionBase {
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
         DaoEstudio daoEstudio = new DaoEstudio();
         JsonObject dataObject;
-        JsonArrayBuilder estudiosArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -135,26 +121,10 @@ public class SugerenciasServicio extends AplicacionBase {
                     listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
                 }
 
-                for (EstudiosResponse er: listaEstudiosRecomendados){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaEstudiosRecomendados);
 
-                    JsonObject estudio = Json.createObjectBuilder()
-                            .add("id", er.getIdEstudio())
-                            .add("nombre", er.getNombreEstudio())
-                            .add("tipoInstrumento", er.getTipoInstrumentoEstudio())
-                            .add("fechaInicio", er.getFechaInicioEstudio())
-                            .add("fechaFin", er.getFechaFinEstudio())
-                            .add("estado", er.getEstadoEstudio())
-                            .add("estatus", er.getEstatusEstudio()).build();
-
-                    estudiosArrayJson.add(estudio);
-                }
-
-                dataObject = Json.createObjectBuilder()
-                        .add("estado", "Operación realizada con éxito")
-                        .add("codigo", 200)
-                        .add("Estudios recomendados", estudiosArrayJson).build();
-
-                return Response.status(Response.Status.OK).entity(dataObject).build();
+                return Response.status(Response.Status.OK).entity(jsonData).build();
 
 
         } catch (NullPointerException ex) {
@@ -191,7 +161,6 @@ public class SugerenciasServicio extends AplicacionBase {
         DaoInformacion daoInformacion = new DaoInformacion();
         DaoEstudio daoEstudio = new DaoEstudio();
         JsonObject dataObject;
-        JsonArrayBuilder estudiosArrayJson = Json.createArrayBuilder();
         String genero = null;
         Date fechaNacimiento = null;
         String estadoCivil = null;
@@ -240,26 +209,10 @@ public class SugerenciasServicio extends AplicacionBase {
                     listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
                 }
 
-            for (EstudiosResponse er: listaEstudiosRecomendados){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaEstudiosRecomendados);
 
-                JsonObject estudio = Json.createObjectBuilder()
-                        .add("id", er.getIdEstudio())
-                        .add("nombre", er.getNombreEstudio())
-                        .add("tipoInstrumento", er.getTipoInstrumentoEstudio())
-                        .add("fechaInicio", er.getFechaInicioEstudio())
-                        .add("fechaFin", er.getFechaFinEstudio())
-                        .add("estado", er.getEstadoEstudio())
-                        .add("estatus", er.getEstatusEstudio()).build();
-
-                estudiosArrayJson.add(estudio);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Estudios recomendados", estudiosArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -288,6 +241,7 @@ public class SugerenciasServicio extends AplicacionBase {
     public Response insertarEstudioRecomendado(@PathParam("idSE") long idSE, @PathParam("idE") long idE, @PathParam("idU") long idU) throws Exception{
 
         JsonObject dataObject;
+        EstudioDto resultado = new EstudioDto();
         DaoEstudio daoEstudio = new DaoEstudio();
 
         try {
@@ -308,7 +262,8 @@ public class SugerenciasServicio extends AplicacionBase {
             estudio_nuevo.set_usuario(usuario);
 
             //Insertar nuevo estudio
-            daoEstudio.insert(estudio_nuevo);
+            Estudio resul = daoEstudio.insert(estudio_nuevo);
+            resultado.setId(resul.get_id());
 
             //Obtener las preguntas del estudio recomendado
             PreguntasEstudioServicio servicio = new PreguntasEstudioServicio();
@@ -337,22 +292,7 @@ public class SugerenciasServicio extends AplicacionBase {
                 }
             }
 
-            JsonObject estudioRecomendado = Json.createObjectBuilder()
-                    .add("nombre", estudio_recomendado.get_nombre())
-                    .add("tipoInstrumento", estudio_recomendado.get_tipoInstrumento())
-                    .add("fechaInicio", devolverFecha(estudio_recomendado.get_fechaInicio()))
-                    .add("fechaFin", devolverFecha(estudio_recomendado.get_fechaInicio()))
-                    .add("estado", estudio_recomendado.get_estado())
-                    .add("estatus", estudio_recomendado.get_estatus()).build();
-
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "El estudio se ha insertado correctamente")
-                    .add("codigo", 200)
-                    .add("Estudio recomendado", estudioRecomendado).build();
-
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (NullPointerException ex) {
 
@@ -387,7 +327,6 @@ public class SugerenciasServicio extends AplicacionBase {
 
         DaoEstudio daoEstudio = new DaoEstudio();
         JsonObject dataObject;
-        JsonArrayBuilder estudiosArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -400,26 +339,10 @@ public class SugerenciasServicio extends AplicacionBase {
                 listaEstudiosRecomendados.add(new EstudiosResponse((long)eC[0], (String)eC[1], (String)eC[2], devolverFecha((Date)eC[3]), devolverFecha((Date)eC[4]), (String)eC[5], (String)eC[6]));
             }
 
-            for (EstudiosResponse er: listaEstudiosRecomendados){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaEstudiosRecomendados);
 
-                JsonObject estudio = Json.createObjectBuilder()
-                        .add("id", er.getIdEstudio())
-                        .add("nombre", er.getNombreEstudio())
-                        .add("tipoInstrumento", er.getTipoInstrumentoEstudio())
-                        .add("fechaInicio", er.getFechaInicioEstudio())
-                        .add("fechaFin", er.getFechaFinEstudio())
-                        .add("estado", er.getEstadoEstudio())
-                        .add("estatus", er.getEstatusEstudio()).build();
-
-                estudiosArrayJson.add(estudio);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Estudios recomendados", estudiosArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
 
         } catch (Exception ex) {

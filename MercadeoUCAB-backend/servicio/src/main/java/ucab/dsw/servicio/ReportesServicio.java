@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import com.google.gson.Gson;
 import ucab.dsw.response.RespuestasAbiertasResponse;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.entidades.*;
@@ -29,7 +30,6 @@ public class ReportesServicio extends AplicacionBase {
 
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         JsonObject dataObject;
-        JsonArrayBuilder respuestasArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -41,22 +41,10 @@ public class ReportesServicio extends AplicacionBase {
                 ResponseListUpdate.add(new RespuestasAbiertasResponse((long)r[0], (String)r[1], (String)r[2]));
             }
 
-            for (RespuestasAbiertasResponse rar: ResponseListUpdate){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(ResponseListUpdate);
 
-                JsonObject respuesta = Json.createObjectBuilder()
-                        .add("id", rar.getId())
-                        .add("descripcion", rar.getPregunta())
-                        .add("tipoPregunta", rar.getRespuestaAbierta()).build();
-
-                respuestasArrayJson.add(respuesta);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Respuestas Abiertas", respuestasArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -128,19 +116,13 @@ public class ReportesServicio extends AplicacionBase {
                     .add("Porcentaje Verdadero", porcentajeVerdadero)
                     .add("Porcentaje Falso", porcentajeFalso).build();
 
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Porcentajes", dataAnalisis).build();
-
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(dataAnalisis).build();
 
         } catch (NullPointerException ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha podido ejecutar el analisis " + ex.getMessage())
+                    .add("excepcion", "No se ha podido ejecutar el análisis " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -251,18 +233,13 @@ public class ReportesServicio extends AplicacionBase {
                     .add("Porcentaje Hombres", porcentajeMasculino)
                     .add("Porcentaje Mujeres", porcentajeFemenino).build();
 
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Porcentajes", dataAnalisis).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(dataAnalisis).build();
 
         } catch (NullPointerException ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha podido ejecutar el analisis " + ex.getMessage())
+                    .add("excepcion", "No se ha podido ejecutar el análisis " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();

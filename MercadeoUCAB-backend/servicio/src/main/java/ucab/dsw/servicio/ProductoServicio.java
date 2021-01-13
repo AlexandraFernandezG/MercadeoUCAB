@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import com.google.gson.Gson;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.ProductoDto;
@@ -36,30 +37,16 @@ public class ProductoServicio extends AplicacionBase{
     public Response listarProductos() {
 
         JsonObject dataObject;
-        JsonArrayBuilder productosArrayJson = Json.createArrayBuilder();
         DaoProducto daoProducto = new DaoProducto();
 
         try {
 
             List<Producto> listaProductos = daoProducto.findAll(Producto.class);
 
-            for(Producto pro: listaProductos){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaProductos);
 
-                JsonObject producto = Json.createObjectBuilder()
-                        .add("id", pro.get_id())
-                        .add("nombre", pro.get_nombre())
-                        .add("descripcion", pro.get_descripcion())
-                        .add("estatus", pro.get_estatus()).build();
-
-                productosArrayJson.add(producto);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Todos los productos", productosArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -84,7 +71,6 @@ public class ProductoServicio extends AplicacionBase{
     public Response consultarProductosCliente(@PathParam("id") long id){
 
         JsonObject dataObject;
-        JsonArrayBuilder productosArrayJson = Json.createArrayBuilder();
         DaoProducto daoProducto = new DaoProducto();
 
         try {
@@ -98,23 +84,10 @@ public class ProductoServicio extends AplicacionBase{
                 listaProductosCliente.add(new ProductoResponse((long)pc[0], (String)pc[1], (String)pc[2], (String)pc[3]));
             }
 
-            for (ProductoResponse lpc: listaProductosCliente){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaProductosCliente);
 
-                JsonObject producto = Json.createObjectBuilder()
-                        .add("id", lpc.getIdProducto())
-                        .add("nombre", lpc.getNombreProducto())
-                        .add("descripcion", lpc.getDescripcionProducto())
-                        .add("estatus", lpc.getEstatusProducto()).build();
-
-                productosArrayJson.add(producto);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Productos del cliente", productosArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -148,18 +121,10 @@ public class ProductoServicio extends AplicacionBase{
 
             Producto producto_consultado = daoProducto.find(id, Producto.class);
 
-            JsonObject producto = Json.createObjectBuilder()
-                    .add("id", producto_consultado.get_id())
-                    .add("nombre", producto_consultado.get_nombre())
-                    .add("descripcion", producto_consultado.get_descripcion())
-                    .add("estatus", producto_consultado.get_estatus()).build();
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(producto_consultado);
 
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Producto consultado", producto).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (NullPointerException ex) {
 
@@ -196,7 +161,6 @@ public class ProductoServicio extends AplicacionBase{
         List<Producto> listaProducto = daoProducto.findAll(Producto.class);
         List<Producto> listaProductosActivos = new ArrayList<Producto>();
         JsonObject dataObject;
-        JsonArrayBuilder productosArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -207,23 +171,10 @@ public class ProductoServicio extends AplicacionBase{
                 }
             }
 
-            for(Producto pro: listaProductosActivos){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaProductosActivos);
 
-                JsonObject producto = Json.createObjectBuilder()
-                        .add("id", pro.get_id())
-                        .add("nombre", pro.get_nombre())
-                        .add("descripcion", pro.get_descripcion())
-                        .add("estatus", pro.get_estatus()).build();
-
-                productosArrayJson.add(producto);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Todos los productos activos", productosArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -277,23 +228,13 @@ public class ProductoServicio extends AplicacionBase{
             Producto resul = daoProducto.insert(producto);
             resultado.setId(resul.get_id());
 
-            JsonObject producto_insertado = Json.createObjectBuilder()
-                    .add("nombre", productoDto.getNombre())
-                    .add("descripcion", productoDto.getDescripcion())
-                    .add("estatus", productoDto.getEstatus()).build();
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Producto insertado", producto_insertado).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
-                    .add("mensaje",ex.getMessage())
+                    .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
@@ -348,23 +289,13 @@ public class ProductoServicio extends AplicacionBase{
                 producto_modificar.set_estatus(productoDto.getEstatus());
                 daoProducto.update(producto_modificar);
 
-                JsonObject producto_modifica = Json.createObjectBuilder()
-                        .add("nombre", productoDto.getNombre())
-                        .add("descripcion", productoDto.getDescripcion())
-                        .add("estatus", productoDto.getEstatus()).build();
-
-                dataObject = Json.createObjectBuilder()
-                        .add("estado", "Operación realizada con éxito")
-                        .add("codigo", 200)
-                        .add("Producto modificado", producto_modifica).build();
-
-                return Response.status(Response.Status.OK).entity(dataObject).build();
+                return Response.status(Response.Status.OK).entity(producto_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
-                        .add("mensaje",ex.getMessage())
+                        .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
                 return Response.status(Response.Status.OK).entity(dataObject).build();
@@ -405,17 +336,13 @@ public class ProductoServicio extends AplicacionBase{
                 Producto producto_eliminar = daoProducto.find(id, Producto.class);
                 daoProducto.delete(producto_eliminar);
 
-                dataObject = Json.createObjectBuilder()
-                        .add("estado", "Operación realizada con éxito")
-                        .add("codigo", 200).build();
-
-                return Response.status(Response.Status.OK).entity(dataObject).build();
+                return Response.status(Response.Status.OK).entity(producto_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
-                        .add("mensaje",ex.getMessage())
+                        .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
                 return Response.status(Response.Status.OK).entity(dataObject).build();

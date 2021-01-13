@@ -150,7 +150,7 @@ public class SubCategoriaServicio extends AplicacionBase{
             System.out.print(mensaje);
         }
 
-        return  resultado;
+        return resultado;
     }
 
     //Actualizar una subcategoria

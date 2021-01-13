@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import com.google.gson.Gson;
 import lombok.extern.java.Log;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.RespuestaDto;
@@ -33,11 +34,10 @@ public class EncuestaServicio {
     @Path("/preguntas/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response obtenerPreguntaEncuesta(@PathParam("id") long id) throws Exception {
+    public Response obtenerPreguntaEncuesta(@PathParam("id") long id) {
 
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         JsonObject dataObject;
-        JsonArrayBuilder preguntasArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -50,23 +50,10 @@ public class EncuestaServicio {
                 ResponseListUpdate.add(new EncuestaResponse((long)r[0], (String)r[1], (String)r[2], (long)r[3]));
             }
 
-            for (EncuestaResponse er: ResponseListUpdate){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(ResponseListUpdate);
 
-                JsonObject pregunta = Json.createObjectBuilder()
-                        .add("id", er.getIdPreguntaEncuesta())
-                        .add("descripcion", er.getDescripcion())
-                        .add("tipoPregunta", er.getTipoPregunta())
-                        .add("idEstudio", er.getIdPreguntaEstudio()).build();
-
-                preguntasArrayJson.add(pregunta);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Preguntas", preguntasArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -89,11 +76,10 @@ public class EncuestaServicio {
     @Path("/respuestas/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response obtenerRespuestaEncuesta(@PathParam("id") long id) throws Exception {
+    public Response obtenerRespuestaEncuesta(@PathParam("id") long id) {
 
         DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
         JsonObject dataObject;
-        JsonArrayBuilder respuestasArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -106,21 +92,10 @@ public class EncuestaServicio {
                 ResponseListUpdate.add(new RespuestaPreguntaResponse((Long)r[0], (String)r[1]));
             }
 
-            for (RespuestaPreguntaResponse rpr: ResponseListUpdate){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(ResponseListUpdate);
 
-                JsonObject pregunta = Json.createObjectBuilder()
-                        .add("fkPregunta", rpr.getFkPregunta())
-                        .add("pregunta", rpr.getPregunta()).build();
-
-                respuestasArrayJson.add(pregunta);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Respuestas", respuestasArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -142,11 +117,10 @@ public class EncuestaServicio {
     @Path("/listar/encuestados/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response getAllByRespuesta(@PathParam("id") long id) throws Exception {
+    public Response getAllByRespuesta(@PathParam("id") long id) {
 
         DaoUsuario daoUsuario = new DaoUsuario();
         JsonObject dataObject;
-        JsonArrayBuilder encuestadosArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -158,22 +132,10 @@ public class EncuestaServicio {
                 estudioUsuarioResponseListUpdate.add(new EstudioEncuestadoResponse((Long)r[1], (String)r[2], (String)r[3]));
             }
 
-            for (EstudioEncuestadoResponse eer: estudioUsuarioResponseListUpdate){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(estudioUsuarioResponseList);
 
-                JsonObject usuario = Json.createObjectBuilder()
-                        .add("id", eer.getIdUsuario())
-                        .add("correo", eer.getCorreo())
-                        .add("nombreUsuario", eer.getNombreUsuario()).build();
-
-                encuestadosArrayJson.add(usuario);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Encuestados", encuestadosArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -196,7 +158,7 @@ public class EncuestaServicio {
     @Path( "/responder" )
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response addRespuesta(List<RespuestaDto> respuestas) throws PruebaExcepcion {
+    public Response addRespuesta(List<RespuestaDto> respuestas) {
 
         JsonObject dataObject;
         RespuestaDto resultado = new RespuestaDto();
@@ -230,11 +192,7 @@ public class EncuestaServicio {
 
             }
 
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PruebaExcepcion ex) {
 

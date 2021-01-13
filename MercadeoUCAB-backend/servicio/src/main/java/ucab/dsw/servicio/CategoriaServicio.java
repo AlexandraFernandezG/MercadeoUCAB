@@ -37,7 +37,6 @@ public class CategoriaServicio extends AplicacionBase {
     public Response listarCategorias() {
 
         JsonObject dataObject;
-        JsonArrayBuilder categoriasArrayJson = Json.createArrayBuilder();
         DaoCategoria categoriaDao = new DaoCategoria();
 
         try {
@@ -73,7 +72,7 @@ public class CategoriaServicio extends AplicacionBase {
     @GET
     @Path ("/consultarCategoria/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response consultarCategoria(@PathParam("id") long id) throws NullPointerException {
+    public Response consultarCategoria(@PathParam("id") long id) {
 
         JsonObject dataObject;
         DaoCategoria categoriaDao = new DaoCategoria();
@@ -82,18 +81,10 @@ public class CategoriaServicio extends AplicacionBase {
 
             Categoria categoria_consultada = categoriaDao.find(id, Categoria.class);
 
-            JsonObject categoria = Json.createObjectBuilder()
-                    .add("id", categoria_consultada.get_id())
-                    .add("nombre", categoria_consultada.get_nombre())
-                    .add("descripcion", categoria_consultada.get_descripcion())
-                    .add("estatus", categoria_consultada.get_estatus()).build();
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(categoria_consultada);
 
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Categoria consultada", categoria).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (NullPointerException ex) {
 
@@ -130,7 +121,6 @@ public class CategoriaServicio extends AplicacionBase {
         List<Categoria> listaCategorias = daoCategoria.findAll(Categoria.class);
         List<Categoria> listaCategoriasActivas = new ArrayList<Categoria>();
         JsonObject dataObject;
-        JsonArrayBuilder categoriasArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -141,23 +131,10 @@ public class CategoriaServicio extends AplicacionBase {
                 }
             }
 
-            for(Categoria ca: listaCategorias){
+            Gson gson = new Gson();
+            String jsonData = gson.toJson(listaCategorias);
 
-                JsonObject categoria = Json.createObjectBuilder()
-                        .add("id", ca.get_id())
-                        .add("nombre", ca.get_nombre())
-                        .add("descripcion", ca.get_descripcion())
-                        .add("estatus", ca.get_estatus()).build();
-
-                categoriasArrayJson.add(categoria);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Todas las categorias activas", categoriasArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(jsonData).build();
 
         } catch (Exception ex) {
 
@@ -186,7 +163,6 @@ public class CategoriaServicio extends AplicacionBase {
         List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
         List<Subcategoria> listaSubcategoriasCategoria = new ArrayList<Subcategoria>();
         JsonObject dataObject;
-        JsonArrayBuilder subcategoriasArrayJson = Json.createArrayBuilder();
 
         try {
 
@@ -199,22 +175,6 @@ public class CategoriaServicio extends AplicacionBase {
 
             Gson gson = new Gson();
             String jsonData = gson.toJson(listaSubcategorias);
-
-            /*for(Subcategoria sub: listaSubcategorias){
-
-                JsonObject subcategoria = Json.createObjectBuilder()
-                        .add("id", sub.get_id())
-                        .add("nombre", sub.get_nombre())
-                        .add("descripcion", sub.get_descripcion())
-                        .add("estatus", sub.get_estatus()).build();
-
-                subcategoriasArrayJson.add(subcategoria);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Todas las subcategorias", subcategoriasArrayJson).build();*/
 
             return Response.status(Response.Status.OK).entity(jsonData).build();
 
@@ -263,23 +223,13 @@ public class CategoriaServicio extends AplicacionBase {
             Categoria resul = dao.insert(categoria);
             resultado.setId(resul.get_id());
 
-            JsonObject categoria_insertada = Json.createObjectBuilder()
-                    .add("nombre", categoriaDto.getNombre())
-                    .add("descripcion", categoriaDto.getDescripcion())
-                    .add("estatus", categoriaDto.getEstatus()).build();
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Categoria insertada", categoria_insertada).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
-                    .add("mensaje",ex.getMessage())
+                    .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
@@ -356,23 +306,13 @@ public class CategoriaServicio extends AplicacionBase {
                     }
                 }
 
-                JsonObject categoria_modificada = Json.createObjectBuilder()
-                        .add("nombre", categoriaDto.getNombre())
-                        .add("descripcion", categoriaDto.getDescripcion())
-                        .add("estatus", categoriaDto.getEstatus()).build();
-
-                dataObject = Json.createObjectBuilder()
-                        .add("estado", "Operación realizada con éxito")
-                        .add("codigo", 200)
-                        .add("Categoria insertada", categoria_modificada).build();
-
-                return Response.status(Response.Status.OK).entity(dataObject).build();
+                return Response.status(Response.Status.OK).entity(categoria_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
-                        .add("mensaje",ex.getMessage())
+                        .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
                 return Response.status(Response.Status.OK).entity(dataObject).build();
@@ -417,23 +357,13 @@ public class CategoriaServicio extends AplicacionBase {
                 categoria_modificar.set_estatus(categoriaDto.getEstatus());
                 dao.update(categoria_modificar);
 
-                JsonObject categoria_modificada = Json.createObjectBuilder()
-                        .add("nombre", categoriaDto.getNombre())
-                        .add("descripcion", categoriaDto.getDescripcion())
-                        .add("estatus", categoriaDto.getEstatus()).build();
-
-                dataObject = Json.createObjectBuilder()
-                        .add("estado", "Operación realizada con éxito")
-                        .add("codigo", 200)
-                        .add("Categoria insertada", categoria_modificada).build();
-
-                return Response.status(Response.Status.OK).entity(dataObject).build();
+                return Response.status(Response.Status.OK).entity(categoria_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
-                        .add("mensaje",ex.getMessage())
+                        .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
                 return Response.status(Response.Status.OK).entity(dataObject).build();
@@ -473,17 +403,13 @@ public class CategoriaServicio extends AplicacionBase {
                 Categoria categoria_eliminar = dao.find(id, Categoria.class);
                 dao.delete(categoria_eliminar);
 
-                dataObject = Json.createObjectBuilder()
-                        .add("estado", "Operación realizada con éxito")
-                        .add("codigo", 200).build();
-
-                return Response.status(Response.Status.OK).entity(dataObject).build();
+                return Response.status(Response.Status.OK).entity(categoria_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
-                        .add("mensaje",ex.getMessage())
+                        .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
                 return Response.status(Response.Status.OK).entity(dataObject).build();
