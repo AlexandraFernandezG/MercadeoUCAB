@@ -182,10 +182,9 @@ public class CategoriaServicio extends AplicacionBase {
      * con la categoria insertada y en tal caso obtener una excepcion si aplica.
      * @throws PruebaExcepcion esta excepcion permite obtener errores generales.
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
-     * @throws PersistenceException si se inserta un producto duplicado.
+     * @throws PersistenceException si se inserta una categoria duplicada.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
      * @param categoriaDto el objeto categoria que el sistema desea insertar o crear.
-     *
      */
     @POST
     @Path("/addCategoria")
@@ -246,7 +245,7 @@ public class CategoriaServicio extends AplicacionBase {
      * @return Este metodo retorna un objeto de tipo Json con el
      * con la categoria modificada y en tal caso obtener una excepcion si aplica.
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
-     * @throws PersistenceException si se inserta un producto duplicado.
+     * @throws PersistenceException si se modifica una categoria duplicada.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
      * @param categoriaDto el objeto categoria que el sistema desea modificar.
      * @param id el id de la categoria a modificar

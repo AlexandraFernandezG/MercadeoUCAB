@@ -5,27 +5,29 @@ import ucab.dsw.dtos.PreguntaEncuestaDto;
 import ucab.dsw.dtos.PreguntaEstudioDto;
 import ucab.dsw.servicio.PreguntasEstudioServicio;
 
+import javax.ws.rs.core.Response;
+
 public class PreguntasEstudioServicio_Test {
 
-    //Listar preguntas de un estudio
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarPreguntasEstudio
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarPreguntasEstudio(){
 
         PreguntasEstudioServicio servicio = new PreguntasEstudioServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarPreguntasEstudio(1).size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.listarPreguntasEstudio(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    // Esta prueba permite insertar la relacion Pregunta estudios
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarPreguntasEstudio
+     * @author Emanuel Di Cristofaro
+     */
     @Test
-    public void pruebaInsertarPreguntasEstudio() throws Exception {
+    public void pruebaInsertarPreguntasEstudio()  {
 
         PreguntasEstudioServicio servicio = new PreguntasEstudioServicio();
 
@@ -38,8 +40,8 @@ public class PreguntasEstudioServicio_Test {
             PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto(1);
             preguntaEstudioDto.setEstudioDto(estudioDto);
             preguntaEstudioDto.setPreguntaEncuestaDto(preguntaEncuestaDto);
-            PreguntaEstudioDto resultado = servicio.addPreguntaEstudio(preguntaEstudioDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response respuesta = servicio.addPreguntaEstudio(preguntaEstudioDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -47,25 +49,33 @@ public class PreguntasEstudioServicio_Test {
 
     }
 
-    // Esta prueba permite actualizar el estatus de Pregunta estudio
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarEstatusPreguntaEstudio
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaModificarEstatusPreguntaEstudio(){
 
         PreguntasEstudioServicio servicio = new PreguntasEstudioServicio();
 
         try {
+
             PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto();
 
             preguntaEstudioDto.setEstatus("Inactivo");
             // Estas mosca con los ID de la base de datos
-            servicio.modificarEstatusPreguntaEstudio(1, preguntaEstudioDto);
+            Response respuesta = servicio.modificarEstatusPreguntaEstudio(1, preguntaEstudioDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
         }
     }
 
-    // Esta prueba permite eliminar una preguntaEstudio
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método EliminarPreguntaEstudio
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaEliminarPreguntaEstudio(){
 
@@ -73,7 +83,8 @@ public class PreguntasEstudioServicio_Test {
 
         try {
             // Estas mosca con los ID de la base de datos
-            servicio.eliminarEstudioPreguntaEstudio(1);
+            Response respuesta = servicio.eliminarEstudioPreguntaEstudio(1);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

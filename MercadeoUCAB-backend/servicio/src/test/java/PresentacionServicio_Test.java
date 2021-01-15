@@ -4,57 +4,54 @@ import ucab.dsw.dtos.PresentacionDto;
 import ucab.dsw.entidades.Presentacion;
 import ucab.dsw.servicio.PresentacionServicio;
 
+import javax.ws.rs.core.Response;
+
 public class PresentacionServicio_Test {
 
-    //Listar todas las presentaciones
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarPresentaciones
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarPresentaciones(){
 
         PresentacionServicio servicio = new PresentacionServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarPresentaciones().size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.listarPresentaciones();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Consultar una presentacion
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarPresentacion
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaConsultarPresentacion(){
 
         PresentacionServicio servicio = new PresentacionServicio();
-        Presentacion presentacion_buscar = servicio.consultarPresentacion(1);
-
-        try {
-            Assertions.assertEquals(1, presentacion_buscar.get_id());
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.consultarPresentacion(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    // Listar presentaciones activas
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarPresentacionesActivas
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarPresentacionesActivas(){
 
-        try {
-            Assertions.assertNotNull(new PresentacionServicio().presentacionesActivas());
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage(), e.getCause());
-        }
+        PresentacionServicio servicio = new PresentacionServicio();
+        Response respuesta = servicio.presentacionesActivas();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
     }
 
-    // Prueba insertar una presentacion
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarPresentacion
+     * @author Emanuel Di Cristofaro
+     */
     @Test
-    public void pruebaInsertarPresentacion() throws Exception {
+    public void pruebaInsertarPresentacion() {
 
         PresentacionServicio servicio = new PresentacionServicio();
 
@@ -64,8 +61,8 @@ public class PresentacionServicio_Test {
             presentacionDto.setNombre("");
             presentacionDto.setDescripcion("");
             presentacionDto.setEstatus("Activo");
-            PresentacionDto resultado = servicio.addPresentacion(presentacionDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response respuesta = servicio.addPresentacion(presentacionDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -73,7 +70,10 @@ public class PresentacionServicio_Test {
 
     }
 
-    // Prueba para modificar presentacion
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarPresentacion
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaModificarPresentacion(){
 
@@ -86,7 +86,8 @@ public class PresentacionServicio_Test {
             presentacionDto.setDescripcion("");
             presentacionDto.setEstatus("Activo");
             // Estar mosca con los id de la bd
-            servicio.updatePresentacion(1, presentacionDto);
+            Response respuesta = servicio.updatePresentacion(1, presentacionDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -94,7 +95,10 @@ public class PresentacionServicio_Test {
 
     }
 
-    // Prueba para eliminar presentacion
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método EliminarPresentacion
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaEliminarPresentacion(){
 
@@ -102,7 +106,8 @@ public class PresentacionServicio_Test {
 
         try {
             // Estar mosca con los id de la bd
-            servicio.eliminarPresentacion(1);
+            Response respuesta = servicio.eliminarPresentacion(1);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

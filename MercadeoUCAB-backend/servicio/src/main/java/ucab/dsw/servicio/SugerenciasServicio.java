@@ -257,13 +257,25 @@ public class SugerenciasServicio extends AplicacionBase {
             resultado.setId(resul.get_id());
 
             //Obtener las preguntas del estudio recomendado
-            PreguntasEstudioServicio servicio = new PreguntasEstudioServicio();
+            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+            List<PreguntaEstudio> listaEstudioPregunta = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
+            List<PreguntaEncuesta> listaPreguntasEstudio = new ArrayList<PreguntaEncuesta>();
 
-            List<PreguntaEncuesta> listaPreguntasRecomendado = servicio.listarPreguntasEstudio(idE);
+            for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
+
+                if (preguntaEstudio.get_estudio().get_id() == idE) {
+
+                    long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
+                    DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+                    PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
+                    listaPreguntasEstudio.add(preguntaEncuesta);
+                }
+            }
 
             //Insertar las preguntas recomendadas en el nuevo estudio
             List<Estudio> allEstudios = daoEstudio.findAll(Estudio.class);
             PreguntaEstudioDto preguntaEstudiodto = new PreguntaEstudioDto();
+            ucab.dsw.servicio.PreguntasEstudioServicio servicio = new ucab.dsw.servicio.PreguntasEstudioServicio();
 
             Estudio estudio = allEstudios.get(allEstudios.size() - 1);
 
@@ -271,7 +283,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
                 long idEN = estudio.get_id();
 
-                for (PreguntaEncuesta preguntaEncuesta: listaPreguntasRecomendado){
+                for (PreguntaEncuesta preguntaEncuesta: listaPreguntasEstudio){
 
                     long idPR = preguntaEncuesta.get_id();
                     PreguntaEncuestaDto preguntaEncuesta_insert = new PreguntaEncuestaDto(idPR);

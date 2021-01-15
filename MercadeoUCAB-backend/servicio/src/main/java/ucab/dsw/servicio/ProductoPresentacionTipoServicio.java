@@ -17,8 +17,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-/* Esta api esta en revision y puede ser cambiada */
-
 @Path( "/ProductoPresentacionTipo" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
