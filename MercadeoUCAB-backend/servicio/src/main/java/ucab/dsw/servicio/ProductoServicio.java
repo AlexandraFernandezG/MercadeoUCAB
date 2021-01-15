@@ -1,6 +1,5 @@
 package ucab.dsw.servicio;
 
-import com.google.gson.Gson;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.ProductoDto;
@@ -43,10 +42,7 @@ public class ProductoServicio extends AplicacionBase{
 
             List<Producto> listaProductos = daoProducto.findAll(Producto.class);
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaProductos);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(listaProductos).build();
 
         } catch (Exception ex) {
 
@@ -84,10 +80,7 @@ public class ProductoServicio extends AplicacionBase{
                 listaProductosCliente.add(new ProductoResponse((long)pc[0], (String)pc[1], (String)pc[2], (String)pc[3]));
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaProductosCliente);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(listaProductosCliente).build();
 
         } catch (Exception ex) {
 
@@ -121,10 +114,7 @@ public class ProductoServicio extends AplicacionBase{
 
             Producto producto_consultado = daoProducto.find(id, Producto.class);
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(producto_consultado);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(producto_consultado).build();
 
         } catch (NullPointerException ex) {
 
@@ -171,10 +161,7 @@ public class ProductoServicio extends AplicacionBase{
                 }
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaProductosActivos);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(listaProductosActivos).build();
 
         } catch (Exception ex) {
 

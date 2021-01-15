@@ -1,13 +1,11 @@
 package ucab.dsw.servicio;
 
-import com.google.gson.Gson;
 import ucab.dsw.response.RespuestasAbiertasResponse;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.entidades.*;
 
 import java.util.*;
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -41,10 +39,7 @@ public class ReportesServicio extends AplicacionBase {
                 ResponseListUpdate.add(new RespuestasAbiertasResponse((long)r[0], (String)r[1], (String)r[2]));
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(ResponseListUpdate);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(ResponseListUpdate).build();
 
         } catch (Exception ex) {
 

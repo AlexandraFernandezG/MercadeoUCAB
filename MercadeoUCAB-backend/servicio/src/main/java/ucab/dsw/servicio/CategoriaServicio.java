@@ -1,17 +1,14 @@
 package ucab.dsw.servicio;
 
-import com.google.gson.Gson;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoCategoria;
 import ucab.dsw.accesodatos.DaoSubcategoria;
 import ucab.dsw.dtos.CategoriaDto;
 import ucab.dsw.entidades.Categoria;
-import ucab.dsw.entidades.Producto;
 import ucab.dsw.entidades.Subcategoria;
 import ucab.dsw.excepciones.PruebaExcepcion;
 
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
@@ -43,10 +40,7 @@ public class CategoriaServicio extends AplicacionBase {
 
             List<Categoria> listaCategorias = categoriaDao.findAll(Categoria.class);
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaCategorias);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(listaCategorias).build();
 
         } catch (Exception ex) {
 
@@ -81,10 +75,7 @@ public class CategoriaServicio extends AplicacionBase {
 
             Categoria categoria_consultada = categoriaDao.find(id, Categoria.class);
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(categoria_consultada);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(categoria_consultada).build();
 
         } catch (NullPointerException ex) {
 
@@ -131,10 +122,7 @@ public class CategoriaServicio extends AplicacionBase {
                 }
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaCategorias);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(listaCategoriasActivas).build();
 
         } catch (Exception ex) {
 
@@ -173,10 +161,7 @@ public class CategoriaServicio extends AplicacionBase {
                 }
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaSubcategorias);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(listaSubcategoriasCategoria).build();
 
         } catch (Exception ex) {
 

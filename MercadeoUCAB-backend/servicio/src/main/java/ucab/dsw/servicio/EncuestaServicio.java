@@ -1,6 +1,5 @@
 package ucab.dsw.servicio;
 
-import com.google.gson.Gson;
 import lombok.extern.java.Log;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.RespuestaDto;
@@ -11,7 +10,6 @@ import ucab.dsw.response.EstudioEncuestadoResponse;
 import ucab.dsw.response.RespuestaPreguntaResponse;
 
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -50,10 +48,7 @@ public class EncuestaServicio {
                 ResponseListUpdate.add(new EncuestaResponse((long)r[0], (String)r[1], (String)r[2], (long)r[3]));
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(ResponseListUpdate);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(ResponseListUpdate).build();
 
         } catch (Exception ex) {
 
@@ -92,10 +87,7 @@ public class EncuestaServicio {
                 ResponseListUpdate.add(new RespuestaPreguntaResponse((Long)r[0], (String)r[1]));
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(ResponseListUpdate);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(ResponseListUpdate).build();
 
         } catch (Exception ex) {
 
@@ -132,10 +124,7 @@ public class EncuestaServicio {
                 estudioUsuarioResponseListUpdate.add(new EstudioEncuestadoResponse((Long)r[1], (String)r[2], (String)r[3]));
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(estudioUsuarioResponseList);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(estudioUsuarioResponseListUpdate).build();
 
         } catch (Exception ex) {
 

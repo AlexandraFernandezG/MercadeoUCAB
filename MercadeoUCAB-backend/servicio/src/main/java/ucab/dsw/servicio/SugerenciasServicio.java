@@ -1,6 +1,5 @@
 package ucab.dsw.servicio;
 
-import com.google.gson.Gson;
 import lombok.extern.java.Log;
 import ucab.dsw.response.EstudiosResponse;
 import ucab.dsw.response.PreguntasResponse;
@@ -73,10 +72,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaPreguntasRecomendadas);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(listaPreguntasRecomendadas).build();
 
 
         } catch (Exception ex) {
@@ -121,10 +117,8 @@ public class SugerenciasServicio extends AplicacionBase {
                     listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
                 }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaEstudiosRecomendados);
 
-                return Response.status(Response.Status.OK).entity(jsonData).build();
+                return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
 
 
         } catch (NullPointerException ex) {
@@ -209,10 +203,7 @@ public class SugerenciasServicio extends AplicacionBase {
                     listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
                 }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaEstudiosRecomendados);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
 
         } catch (Exception ex) {
 
@@ -238,7 +229,7 @@ public class SugerenciasServicio extends AplicacionBase {
     @Path("/insertarEstudioRecomendado/{idSE}/{idE}/{idU}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response insertarEstudioRecomendado(@PathParam("idSE") long idSE, @PathParam("idE") long idE, @PathParam("idU") long idU) throws Exception{
+    public Response insertarEstudioRecomendado(@PathParam("idSE") long idSE, @PathParam("idE") long idE, @PathParam("idU") long idU) {
 
         JsonObject dataObject;
         EstudioDto resultado = new EstudioDto();
@@ -323,7 +314,7 @@ public class SugerenciasServicio extends AplicacionBase {
     @GET
     @Path("/estudiosCliente/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response listarEstudiosCliente(@PathParam("id") long id) throws NullPointerException{
+    public Response listarEstudiosCliente(@PathParam("id") long id) {
 
         DaoEstudio daoEstudio = new DaoEstudio();
         JsonObject dataObject;
@@ -339,10 +330,7 @@ public class SugerenciasServicio extends AplicacionBase {
                 listaEstudiosRecomendados.add(new EstudiosResponse((long)eC[0], (String)eC[1], (String)eC[2], devolverFecha((Date)eC[3]), devolverFecha((Date)eC[4]), (String)eC[5], (String)eC[6]));
             }
 
-            Gson gson = new Gson();
-            String jsonData = gson.toJson(listaEstudiosRecomendados);
-
-            return Response.status(Response.Status.OK).entity(jsonData).build();
+            return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
 
 
         } catch (Exception ex) {
