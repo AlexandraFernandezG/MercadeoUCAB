@@ -5,40 +5,40 @@ import ucab.dsw.dtos.RolDto;
 import ucab.dsw.entidades.Rol;
 import ucab.dsw.servicio.RolServicio;
 
+import javax.ws.rs.core.Response;
+
 public class RolServicio_Test {
 
-    //Listar Roles
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarRoles
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarRoles(){
 
         RolServicio servicio = new RolServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarRoles().size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.listarRoles();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Consultar un rol
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarRol
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaConsultarRol(){
 
         RolServicio servicio = new RolServicio();
-        Rol rol_buscar = servicio.consultarRol(1);
-
-        try {
-            Assertions.assertEquals(1, rol_buscar.get_id());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.consultarRol(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Permite insertar un rol
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarRol
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaInsertarRol(){
 
@@ -49,15 +49,18 @@ public class RolServicio_Test {
             RolDto rolDto = new RolDto();
             rolDto.setNombre("Administrador");
             rolDto.setEstatus("Activo");
-            RolDto resultado = servicio.addRol(rolDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response respuesta = servicio.addRol(rolDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
         }
     }
 
-    //Modificar rol
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarRol
+     * @author Gregg Spinetti y Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaModificarRol(){
 
@@ -69,14 +72,18 @@ public class RolServicio_Test {
             RolDto rolDto = new RolDto();
             rolDto.setNombre("Administrador");
             rolDto.setEstatus("Activo");
-            servicio.updateRol(1, rolDto);
+            Response respuesta = servicio.updateRol(1, rolDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
         }
     }
 
-    //Eliminar un rol
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método EliminarRol
+     * @author Gregg Spinetti y Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaEliminarRol(){
 
@@ -84,7 +91,8 @@ public class RolServicio_Test {
 
         try {
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.deleteRol(1);
+            Response respuesta = servicio.deleteRol(1);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

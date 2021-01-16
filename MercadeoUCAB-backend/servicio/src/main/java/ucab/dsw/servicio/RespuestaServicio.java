@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoPreguntaEstudio;
 import ucab.dsw.accesodatos.DaoRespuesta;
 import ucab.dsw.accesodatos.DaoUsuario;
@@ -7,9 +8,13 @@ import ucab.dsw.dtos.RespuestaDto;
 import ucab.dsw.entidades.PreguntaEstudio;
 import ucab.dsw.entidades.Respuesta;
 import ucab.dsw.entidades.Usuario;
+import ucab.dsw.excepciones.PruebaExcepcion;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -20,53 +25,97 @@ import javax.ws.rs.core.MediaType;
 @Consumes( MediaType.APPLICATION_JSON )
 public class RespuestaServicio extends AplicacionBase{
 
-    // Listar respuestas
+    /**
+     * Este método permite obtener todas las respuestas.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de respuestas y en tal caso obtener una excepción si aplica.
+     */
     @GET
     @Path("/allRespuesta")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Respuesta> listarRespuestas() throws NullPointerException {
+    public Response listarRespuestas() {
+
         DaoRespuesta daoRespuesta = new DaoRespuesta();
+        JsonObject dataObject;
 
         try {
-            return daoRespuesta.findAll(Respuesta.class);
 
-        } catch (NullPointerException ex){
+            List<Respuesta> listaRespuestas = daoRespuesta.findAll(Respuesta.class);
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            return Response.status(Response.Status.OK).entity(listaRespuestas).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
 
     }
 
-    // Consultar una respuesta
+    /**
+     * Este método permite obtener una respuesta.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la respuesta consultada y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id de la respuesta que se quiere consultar.
+     */
     @GET
     @Path("/consultarRespuesta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Respuesta consultarRespuesta(@PathParam("id") long id) throws NullPointerException {
+    public Response consultarRespuesta(@PathParam("id") long id)  {
+
         DaoRespuesta daoRespuesta = new DaoRespuesta();
+        JsonObject dataObject;
 
         try {
-            return daoRespuesta.find(id, Respuesta.class);
 
-        } catch (NullPointerException ex){
+            Respuesta respuesta = daoRespuesta.find(id, Respuesta.class);
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            return Response.status(Response.Status.OK).entity(respuesta).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la respuesta: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
 
-    //Mostrar respuestas activas
+    /**
+     * Este método permite obtener todas las categorias activas.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de categorias activas y en tal caso obtener una excepcion si aplica.
+     */
     @GET
     @Path("/mostrarRespuestasActivas")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Respuesta> respuestasActivas() throws NullPointerException{
+    public Response respuestasActivas() {
 
         DaoRespuesta daoRespuesta = new DaoRespuesta();
         List<Respuesta> listaRespuesta = daoRespuesta.findAll(Respuesta.class);
         List<Respuesta> listaRespuestaActivas = new ArrayList<Respuesta>();
+        JsonObject dataObject;
 
         try {
 
@@ -77,24 +126,39 @@ public class RespuestaServicio extends AplicacionBase{
                 }
             }
 
-            return listaRespuestaActivas;
+            return Response.status(Response.Status.OK).entity(listaRespuestaActivas).build();
 
-        } catch (NullPointerException ex){
+        } catch (Exception ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
-    //Agregar una respuesta
+    /**
+     * Este método permite insertar una respuesta
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la respuesta insertada y en tal caso obtener una excepcion si aplica.
+     * @throws PruebaExcepcion esta excepcion permite obtener errores generales.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta una respuesta duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param respuestaDto el objeto respuesta que el sistema desea insertar o crear.
+     */
     @POST
     @Path("/addRespuesta")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public RespuestaDto addRespuesta(RespuestaDto respuestaDto){
+    public Response addRespuesta(RespuestaDto respuestaDto){
 
         RespuestaDto resultado = new RespuestaDto();
+        JsonObject dataObject;
 
         try {
 
@@ -116,16 +180,49 @@ public class RespuestaServicio extends AplicacionBase{
             Respuesta resul = daoRespuesta.insert(respuesta);
             resultado.setId(resul.get_id());
 
-        } catch (Exception ex){
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la respuesta: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-            return resultado;
     }
 
-    //Actualizar respuesta
+    /**
+     * Este método permite modificar una respuesta
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la respuesta modificada y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se modifica una categoria duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param respuestaDto el objeto respuesta que el sistema desea modificar.
+     * @param id el id de la respuesta a modificar
+     */
     @PUT
     @Path("/updateRespuesta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -134,11 +231,7 @@ public class RespuestaServicio extends AplicacionBase{
 
         DaoRespuesta daoRespuesta = new DaoRespuesta();
         Respuesta respuesta_modificar = daoRespuesta.find(id, Respuesta.class);
-
-        if(respuesta_modificar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
             try {
 
@@ -150,16 +243,40 @@ public class RespuestaServicio extends AplicacionBase{
                 respuesta_modificar.set_estatus(respuestaDto.getEstatus());
                 daoRespuesta.update(respuesta_modificar);
 
-            } catch (Exception ex){
+                return Response.status(Response.Status.OK).entity(respuesta_modificar).build();
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+            } catch (PersistenceException | DatabaseException ex){
+
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","error")
+                        .add("mensaje", ex.getMessage())
+                        .add("codigo",500).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado la respuesta: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(respuesta_modificar).build();
 
     }
 
-    //Eliminar una respuesta
+    /**
+     * Este método permite eliminar una respuesta
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un producto duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id de la respuesta a eliminar
+     */
     @DELETE
     @Path("/deleteRespuesta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -167,22 +284,32 @@ public class RespuestaServicio extends AplicacionBase{
 
         DaoRespuesta daoRespuesta = new DaoRespuesta();
         Respuesta respuesta_eliminar = daoRespuesta.find(id, Respuesta.class);
-
-        if (respuesta_eliminar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
             try {
 
                 daoRespuesta.delete(respuesta_eliminar);
+                return Response.status(Response.Status.OK).entity(respuesta_eliminar).build();
 
-            } catch (Exception ex){
+            } catch (PersistenceException | DatabaseException ex){
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","error")
+                        .add("mensaje", ex.getMessage())
+                        .add("codigo",500).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado la respuesta: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(respuesta_eliminar).build();
 
     }
 

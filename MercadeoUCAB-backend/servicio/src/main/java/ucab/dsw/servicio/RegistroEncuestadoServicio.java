@@ -1,26 +1,48 @@
 package ucab.dsw.servicio;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.directorioactivo.DirectorioActivo;
 import ucab.dsw.dtos.InformacionDto;
 import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.*;
+import ucab.dsw.excepciones.PruebaExcepcion;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 
 @Path( "/registro" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class RegistroEncuestadoServicio extends AplicacionBase {
+
+    /**
+     * Este método permite insertar un encuestado
+     * @author Gregg Spinetti y Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el encuestado insertado y en tal caso obtener una excepcion si aplica.
+     * @throws PruebaExcepcion esta excepcion permite obtener errores generales.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta una categoria duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param usuarioDto el objeto usuario que se desee insertar.
+     * @param informacionDto el objeto informacion que se desee insertar.
+     */
     @POST
     @Path("/nuevoEncuestado")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public UsuarioDto addEncuestado(UsuarioDto usuarioDto, InformacionDto informacionDto) {
+    public Response addEncuestado(UsuarioDto usuarioDto, InformacionDto informacionDto) {
+
         UsuarioDto resultado = new UsuarioDto();
+        JsonObject dataObject;
+
         try {
 
             DaoUsuario dao = new DaoUsuario();
@@ -37,7 +59,6 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
             resultado.setId(resul.get_id());
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.addEntryToLdap(usuarioDto);
-
 
             //Insertar la información del encuestado
 
@@ -68,17 +89,36 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
             Informacion resulInformacion = daoInformacion.insert(informacion);
             resultado.setId(resulInformacion.get_id());
 
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
-        } catch (javax.persistence.PersistenceException ex) {
-            String problema = ex.getMessage();
-            System.out.print("Usuario ya registrado");
+        } catch (PersistenceException | DatabaseException ex){
 
-        } catch (Exception ex) {
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
 
-            String problema = ex.getMessage();
-            System.out.print(problema);
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el usuario: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-        return resultado;
     }
 
 

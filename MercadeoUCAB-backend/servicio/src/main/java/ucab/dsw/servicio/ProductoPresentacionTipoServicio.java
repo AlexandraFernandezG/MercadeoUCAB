@@ -1,5 +1,6 @@
 package ucab.dsw.servicio;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoPresentacion;
 import ucab.dsw.accesodatos.DaoProducto;
 import ucab.dsw.accesodatos.DaoProductoPresentacionTipo;
@@ -9,9 +10,13 @@ import ucab.dsw.entidades.Presentacion;
 import ucab.dsw.entidades.Producto;
 import ucab.dsw.entidades.ProductoPresentacionTipo;
 import ucab.dsw.entidades.Tipo;
+import ucab.dsw.excepciones.PruebaExcepcion;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
@@ -22,15 +27,24 @@ import javax.ws.rs.core.MediaType;
 @Consumes( MediaType.APPLICATION_JSON )
 public class ProductoPresentacionTipoServicio extends AplicacionBase{
 
-    //Obtener el o los tipos de un producto
+    /**
+     * Este método permite obtener los tipos de un producto.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el o los tipos de un producto y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id del producto que se quiere consultar
+     *
+     */
     @GET
     @Path("/productoTipoLista/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Tipo> listarTiposProducto(@PathParam("id") long id) throws NullPointerException {
+    public Response listarTiposProducto(@PathParam("id") long id)  {
 
         DaoProductoPresentacionTipo dao = new DaoProductoPresentacionTipo();
         List<ProductoPresentacionTipo> listaProductoPT = dao.findAll(ProductoPresentacionTipo.class);
         List<Tipo> listaTiposProducto = new ArrayList<Tipo>();
+        JsonObject dataObject;
 
         try {
 
@@ -45,26 +59,47 @@ public class ProductoPresentacionTipoServicio extends AplicacionBase{
                 }
             }
 
-            return listaTiposProducto;
+            return Response.status(Response.Status.OK).entity(listaTiposProducto).build();
 
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
 
-    //Obtener la o las presentaciones de un producto
+    /**
+     * Este método permite obtener las presentaciones de un producto.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la o las presentaciones de un producto y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id del producto que se quiere consultar
+     *
+     */
     @GET
     @Path("/productoPresentacionLista/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Presentacion> listarPresentacionesProducto(@PathParam("id") long id) throws NullPointerException {
+    public Response listarPresentacionesProducto(@PathParam("id") long id) {
 
         DaoProductoPresentacionTipo dao = new DaoProductoPresentacionTipo();
         List<ProductoPresentacionTipo> listaProductoPT = dao.findAll(ProductoPresentacionTipo.class);
         List<Presentacion> listaPresentacionProducto = new ArrayList<Presentacion>();
+        JsonObject dataObject;
 
         try {
 
@@ -79,25 +114,48 @@ public class ProductoPresentacionTipoServicio extends AplicacionBase{
                 }
             }
 
-            return listaPresentacionProducto;
+            return Response.status(Response.Status.OK).entity(listaPresentacionProducto).build();
 
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
 
-    //Agregar el tipo y la presentacion a un producto
+    /**
+     * Este método permite insertar la relacion producto presentacion tipo.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la relacion insertada y en tal caso obtener una excepcion si aplica.
+     * @throws PruebaExcepcion esta excepcion permite obtener errores generales.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta una relacion duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param productoPresentacionTipoDto el objeto de relacion que el sistema desea insertar o crear.
+     */
     @POST
     @Path("/addProductoPresentacionTipo")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public ProductoPresentacionTipoDto addProductoPresentacionTipo(ProductoPresentacionTipoDto productoPresentacionTipoDto){
+    public Response addProductoPresentacionTipo(ProductoPresentacionTipoDto productoPresentacionTipoDto){
 
         ProductoPresentacionTipoDto resultado = new ProductoPresentacionTipoDto();
+        JsonObject dataObject;
 
         try {
 
@@ -117,15 +175,49 @@ public class ProductoPresentacionTipoServicio extends AplicacionBase{
             ProductoPresentacionTipo resul = dao.insert(productoPresentacionTipo);
             resultado.setId(resul.get_id());
 
-        } catch (Exception ex){
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la relacion: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-        return resultado;
     }
 
-    //Actualizar el estatus de la tabla
+    /**
+     * Este método permite modificar el estatus de la relacion
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la relacion modificada y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se modifica una relacion duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param productoPresentacionTipoDto el objeto relacion que el sistema desea modificar.
+     * @param id el id de la relacion a modificar
+     */
     @PUT
     @Path("/updateProductoPresentacionTipo/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -134,26 +226,47 @@ public class ProductoPresentacionTipoServicio extends AplicacionBase{
 
            DaoProductoPresentacionTipo dao = new DaoProductoPresentacionTipo();
            ProductoPresentacionTipo productoPresentacionTipo_modificar = dao.find(id, ProductoPresentacionTipo.class);
-
-           if (productoPresentacionTipo_modificar == null){
-
-               return Response.status(Response.Status.NOT_FOUND).build();
-           }
+           JsonObject dataObject;
 
            try {
 
                productoPresentacionTipo_modificar.set_estatus(productoPresentacionTipoDto.getEstatus());
                dao.update(productoPresentacionTipo_modificar);
 
-           } catch (Exception ex){
+               return Response.status(Response.Status.OK).entity(productoPresentacionTipo_modificar).build();
 
-               return Response.status(Response.Status.EXPECTATION_FAILED).build();
+           } catch (PersistenceException | DatabaseException ex){
+
+               dataObject= Json.createObjectBuilder()
+                       .add("estado","error")
+                       .add("mensaje", ex.getMessage())
+                       .add("codigo",500).build();
+
+               return Response.status(Response.Status.OK).entity(dataObject).build();
+
+           } catch (NullPointerException ex) {
+
+               dataObject = Json.createObjectBuilder()
+                       .add("estado", "Error")
+                       .add("excepcion", "No se ha encontrado la relacion: " + ex.getMessage())
+                       .add("codigo", 400).build();
+
+               return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
            }
 
-        return Response.ok().entity(productoPresentacionTipo_modificar).build();
     }
 
-    //Eliminar la relacion
+    /**
+     * Este método permite eliminar la relacion
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se elimina una relacion duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id de la relacion a elminar.
+     */
     @DELETE
     @Path("/deleteProductoPresentacionTipo/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -161,21 +274,32 @@ public class ProductoPresentacionTipoServicio extends AplicacionBase{
 
         DaoProductoPresentacionTipo dao = new DaoProductoPresentacionTipo();
         ProductoPresentacionTipo productoPresentacionTipo_eliminar = dao.find(id, ProductoPresentacionTipo.class);
-
-        if (productoPresentacionTipo_eliminar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
         try {
 
             dao.delete(productoPresentacionTipo_eliminar);
 
-        } catch (Exception ex){
+            return Response.status(Response.Status.OK).entity(productoPresentacionTipo_eliminar).build();
 
-            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la relacion: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-        return Response.ok().entity(productoPresentacionTipo_eliminar).build();
     }
 }

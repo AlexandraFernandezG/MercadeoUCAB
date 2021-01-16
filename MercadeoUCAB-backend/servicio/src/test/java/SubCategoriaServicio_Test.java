@@ -5,51 +5,64 @@ import ucab.dsw.dtos.SubcategoriaDto;
 import ucab.dsw.entidades.Subcategoria;
 import ucab.dsw.servicio.SubCategoriaServicio;
 
+import javax.ws.rs.core.Response;
+
 public class SubCategoriaServicio_Test {
 
-    //Listar todos las subcategorias
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarSubcategorias
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarSubcategorias(){
 
         SubCategoriaServicio servicio = new SubCategoriaServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarSubCategorias().size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.listarSubCategorias();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Consultar una subcategoria
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarSubcategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaConsultarSubcategoria(){
 
         SubCategoriaServicio servicio = new SubCategoriaServicio();
-        Subcategoria subcategoria_buscar = servicio.consultarSubCategoria(1);
-
-        try {
-            Assertions.assertEquals(1, subcategoria_buscar.get_id());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.consultarSubCategoria(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Listar subcategorias activas
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarSubcategoriasActivas
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarSubcategoriasActivas(){
 
-        try {
-            Assertions.assertNotNull(new SubCategoriaServicio().subcategoriasActivas());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage(), e.getCause());
-        }
+        SubCategoriaServicio servicio = new SubCategoriaServicio();
+        Response respuesta = servicio.subcategoriasActivas();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
     }
 
-    // Esta prueba permite insertar una subcategoria
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarSubcategoriasPreguntas
+     * @author Emanuel Di Cristofaro
+     */
+    @Test
+    public void pruebaListarSubcategoriasPreguntas(){
+
+        SubCategoriaServicio servicio = new SubCategoriaServicio();
+        Response respuesta = servicio.listarPreguntasSubcategoria(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
+    }
+
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarSubCategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaInsertarSubCategoria() throws Exception{
 
@@ -64,15 +77,18 @@ public class SubCategoriaServicio_Test {
             // Recuerden que deben ver los id de los registros en la BD
             CategoriaDto categoriaDto = new CategoriaDto(1);
             subcategoriaDto.setCategoriaDto(categoriaDto);
-            SubcategoriaDto resultado = servicio.addSubCategoria(subcategoriaDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response respuesta = servicio.addSubCategoria(subcategoriaDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
         }
     }
 
-    // Esta prueba permite modificar una subcategoria
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarSubCategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaModificarSubCategoria(){
 
@@ -84,7 +100,8 @@ public class SubCategoriaServicio_Test {
             subcategoriaDto.setDescripcion("Para diversion de los chicos");
             subcategoriaDto.setEstatus("Activo");
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.modificarSubCategoria(3, subcategoriaDto);
+            Response respuesta = servicio.modificarSubCategoria(3, subcategoriaDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -92,7 +109,10 @@ public class SubCategoriaServicio_Test {
 
     }
 
-    //Esta prueba permite eliminar una subcategoria
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método EliminarSubCategoria
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaEliminarSubCategoria(){
 
@@ -100,7 +120,8 @@ public class SubCategoriaServicio_Test {
 
         try {
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.eliminarSubCategoria(1);
+            Response respuesta = servicio.eliminarSubCategoria(1);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

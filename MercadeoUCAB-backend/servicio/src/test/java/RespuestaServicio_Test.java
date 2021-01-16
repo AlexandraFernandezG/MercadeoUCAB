@@ -6,55 +6,54 @@ import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.Respuesta;
 import ucab.dsw.servicio.RespuestaServicio;
 
+import javax.ws.rs.core.Response;
+
 public class RespuestaServicio_Test {
 
-    //Listar todas las respuestas
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarRespuestas
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarRespuestas(){
 
         RespuestaServicio servicio = new RespuestaServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarRespuestas().size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.listarRespuestas();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Consultar una respuesta
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarRespuesta
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaConsultarRespuesta(){
 
         RespuestaServicio servicio = new RespuestaServicio();
-        Respuesta respuesta_buscar = servicio.consultarRespuesta(1);
-
-        try {
-            Assertions.assertEquals(1, respuesta_buscar.get_id());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.consultarRespuesta(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Listar respuestas activas
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarRespuestasActivas
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarRespuestasActivas(){
 
-        try {
-            Assertions.assertNotNull(new RespuestaServicio().respuestasActivas());
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage(), e.getCause());
-        }
+        RespuestaServicio servicio = new RespuestaServicio();
+        Response respuesta = servicio.respuestasActivas();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
     }
 
-    // Prueba insertar una respuesta
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarRespuesta
+     * @author Emanuel Di Cristofaro
+     */
     @Test
-    public void pruebaInsertarRespuesta() throws Exception {
+    public void pruebaInsertarRespuesta() {
 
         RespuestaServicio servicio = new RespuestaServicio();
 
@@ -72,8 +71,8 @@ public class RespuestaServicio_Test {
             UsuarioDto usuarioDto = new UsuarioDto(1);
             respuestaDto.setPreguntaEstudioDto(preguntaEstudioDto);
             respuestaDto.setUsuarioDto(usuarioDto);
-            RespuestaDto resultado = servicio.addRespuesta(respuestaDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response respuesta = servicio.addRespuesta(respuestaDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -81,7 +80,10 @@ public class RespuestaServicio_Test {
 
     }
 
-    // Prueba actualizar estatus
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarRespuesta
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaModificarRespuesta(){
 
@@ -97,22 +99,28 @@ public class RespuestaServicio_Test {
             respuestaDto.setRespuestaMultiple("");
             respuestaDto.setEstatus("Activo");
             //Estar mosca con los ID de la BD
-            servicio.updateRespuesta(1, respuestaDto);
+            Response respuesta = servicio.updateRespuesta(1, respuestaDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
         }
     }
 
-    // Prueba eliminar una respuesta
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método EliminarRespuesta
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaEliminarRespuesta(){
 
         RespuestaServicio servicio = new RespuestaServicio();
 
         try {
+
             //Estar mosca con los ID de la BD
-            servicio.eliminarRespuesta(1);
+            Response respuesta = servicio.eliminarRespuesta(1);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
