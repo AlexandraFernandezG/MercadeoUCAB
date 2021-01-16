@@ -6,6 +6,8 @@ import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.servicio.PreguntaEncuestaServicio;
 
+import javax.ws.rs.core.Response;
+
 public class PreguntaEncuestaServicio_Test {
 
     //Listar todos las preguntas
@@ -50,7 +52,10 @@ public class PreguntaEncuestaServicio_Test {
         }
     }
 
-    // Esta prueba permite insertar una Pregunta a la BD
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarPregunta
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaInsertarPregunta() throws Exception{
 
@@ -67,8 +72,8 @@ public class PreguntaEncuestaServicio_Test {
             SubcategoriaDto subcategoriaDto = new SubcategoriaDto(1);
             preguntaEncuestaDto.setUsuarioDto(usuarioDto);
             preguntaEncuestaDto.setSubcategoriaDto(subcategoriaDto);
-            PreguntaEncuestaDto resultado = servicio.addPreguntaEncuesta(preguntaEncuestaDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response respuesta = servicio.addPreguntaEncuesta(preguntaEncuestaDto);
+            Assert.assertEquals(respuesta.getStatus(), Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
