@@ -4,51 +4,52 @@ import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.SolicitudEstudio;
 import ucab.dsw.servicio.SolicitudEstudioServicio;
 
+import javax.ws.rs.core.Response;
+
 public class SolicitudEstudioServicio_Test {
 
-    //Listar todas las solicitudes
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarSolicitudess
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarSolicitudes(){
 
         SolicitudEstudioServicio servicio = new SolicitudEstudioServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarSolicitudes().size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.listarSolicitudes();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Consultar una solicitud
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarSolicitud
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaConsultarSolicitud(){
 
         SolicitudEstudioServicio servicio = new SolicitudEstudioServicio();
-        SolicitudEstudio solicitudEstudio_buscar = servicio.consultarSolicitud(1);
-
-        try {
-            Assertions.assertEquals(1, solicitudEstudio_buscar.get_id());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.consultarSolicitud(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Listar solicitudes activas
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarSolicitudesActivas
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarSolicitudesActivas(){
 
-        try {
-            Assertions.assertNotNull(new SolicitudEstudioServicio().mostrarSolicitudesActivas());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage(), e.getCause());
-        }
+        SolicitudEstudioServicio servicio = new SolicitudEstudioServicio();
+        Response respuesta = servicio.mostrarSolicitudesActivas();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
     }
 
-    //Esta prueba nos permite insertar una solicitud
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarSolicitud
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaInsertarSolicitud() throws Exception {
 
@@ -91,15 +92,18 @@ public class SolicitudEstudioServicio_Test {
             NivelEconomicoDto nivelEconomicoDto = new NivelEconomicoDto(1);
             solicitudEstudioDto.setNivelEconomicoDto(nivelEconomicoDto);
 
-            SolicitudEstudioDto resultado = servicio.addSolicitudEstudio(solicitudEstudioDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response respuesta = servicio.addSolicitudEstudio(solicitudEstudioDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
         }
     }
 
-    //Prueba actualizar estatus de una solicitud
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarEstatusSolicitud
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaModificarEstatusSolicitud(){
 
@@ -110,14 +114,18 @@ public class SolicitudEstudioServicio_Test {
 
             solicitudEstudioDto.setEstatus("Inactivo");
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.modificarEstatusSolicitudEstudio(2, solicitudEstudioDto);
+            Response respuesta = servicio.modificarEstatusSolicitudEstudio(2, solicitudEstudioDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
         }
     }
 
-    //Prueba actualizar una solicitud
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarSolicitud
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaModificarSolicitud(){
 
@@ -139,7 +147,8 @@ public class SolicitudEstudioServicio_Test {
             solicitudEstudioDto.setEdadMaximaHijos(0);
             solicitudEstudioDto.setEstatus("Activo");
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.modificarSolicitudEstudio(2, solicitudEstudioDto);
+            Response respuesta = servicio.modificarSolicitudEstudio(2, solicitudEstudioDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -147,6 +156,10 @@ public class SolicitudEstudioServicio_Test {
 
     }
 
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método EliminarSolicitud
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaEliminarSolicitud(){
 
@@ -154,7 +167,8 @@ public class SolicitudEstudioServicio_Test {
 
         try {
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.eliminarSolicitudEstudio(2);
+            Response respuesta = servicio.eliminarSolicitudEstudio(2);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

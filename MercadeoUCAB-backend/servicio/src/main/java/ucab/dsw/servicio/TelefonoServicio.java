@@ -1,13 +1,18 @@
 package ucab.dsw.servicio;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.accesodatos.DaoTelefono;
 import ucab.dsw.dtos.TelefonoDto;
 import ucab.dsw.entidades.Informacion;
 import ucab.dsw.entidades.Telefono;
+import ucab.dsw.excepciones.PruebaExcepcion;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -18,50 +23,100 @@ import javax.ws.rs.core.MediaType;
 @Consumes( MediaType.APPLICATION_JSON )
 public class TelefonoServicio extends AplicacionBase{
 
-    //Listar telefonos
+    /**
+     * Este método permite obtener todas los telefonos.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de telefonos y en tal caso obtener una excepción si aplica.
+     */
     @GET
     @Path("/allTelefono")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Telefono> listarTelefonos() throws NullPointerException{
+    public Response listarTelefonos() {
+
         DaoTelefono daoTelefono = new DaoTelefono();
+        JsonObject dataObject;
 
         try {
-            return daoTelefono.findAll(Telefono.class);
 
-        } catch (NullPointerException ex){
+            List<Telefono> listaTelefonos = daoTelefono.findAll(Telefono.class);
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            return Response.status(Response.Status.OK).entity(listaTelefonos).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
-    //Consultar un telefono
+    /**
+     * Este método permite obtener un telefono.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el telefono consultado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id del telefono que se quiere consultar.
+     *
+     */
     @GET
     @Path("/consultarTelefono/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Telefono consultarTelefono(@PathParam("id") long id) throws NullPointerException{
+    public Response consultarTelefono(@PathParam("id") long id) {
+
         DaoTelefono daoTelefono = new DaoTelefono();
+        JsonObject dataObject;
 
         try {
-            return daoTelefono.find(id, Telefono.class);
 
-        } catch (NullPointerException ex){
+            Telefono telefono = daoTelefono.find(id, Telefono.class);
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            return Response.status(Response.Status.OK).entity(telefono).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el telofono: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
-    //Agregar un telefono
+    /**
+     * Este método permite insertar un telefono
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con e telefono insertado y en tal caso obtener una excepcion si aplica.
+     * @throws PruebaExcepcion esta excepcion permite obtener errores generales.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un telefono duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param telefonoDto el objeto telefono que el sistema desea insertar o crear.
+     */
     @POST
     @Path("/addTelefono")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public TelefonoDto addTelefono(TelefonoDto telefonoDto){
+    public Response addTelefono(TelefonoDto telefonoDto){
 
         TelefonoDto resultado = new TelefonoDto();
+        JsonObject dataObject;
 
         try {
 
@@ -76,16 +131,49 @@ public class TelefonoServicio extends AplicacionBase{
             Telefono resul = daoTelefono.insert(telefono);
             resultado.setId(resul.get_id());
 
-        } catch (Exception ex){
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el telefono: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-            return resultado;
     }
 
-    //Actualizar un telefono
+    /**
+     * Este método permite modificar un telefono
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el telofono modificado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta una telofono duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param telefonoDto el objeto telefono que el sistema desea modificar.
+     * @param id el id del telefono a modificar
+     */
     @PUT
     @Path("/updateTelefono/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -94,11 +182,7 @@ public class TelefonoServicio extends AplicacionBase{
 
         DaoTelefono daoTelefono = new DaoTelefono();
         Telefono telefono_modificar = daoTelefono.find(id, Telefono.class);
-
-        if (telefono_modificar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
         try {
             telefono_modificar.set_numero(telefonoDto.getNumero());
@@ -106,16 +190,40 @@ public class TelefonoServicio extends AplicacionBase{
     
             daoTelefono.update(telefono_modificar);
 
-        } catch (Exception ex){
+            return Response.status(Response.Status.OK).entity(telefono_modificar).build();
 
-            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el telefono: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-        return Response.ok().entity(telefono_modificar).build();
 
     }
 
-    //Eliminar telefono
+    /**
+     * Este método permite eliminar un telefono
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un telefono duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id del telefono a eliminar
+     */
     @DELETE
     @Path("/deleteTelefono/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -123,22 +231,33 @@ public class TelefonoServicio extends AplicacionBase{
 
         DaoTelefono daoTelefono = new DaoTelefono();
         Telefono telefono_eliminar = daoTelefono.find(id, Telefono.class);
-
-        if (telefono_eliminar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
             try {
 
                 daoTelefono.delete(telefono_eliminar);
 
-            } catch (Exception ex){
+                return Response.status(Response.Status.OK).entity(telefono_eliminar).build();
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+            } catch (PersistenceException | DatabaseException ex){
+
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","error")
+                        .add("mensaje", ex.getMessage())
+                        .add("codigo",500).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado el telefono: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(telefono_eliminar).build();
 
     }
 

@@ -4,55 +4,54 @@ import ucab.dsw.dtos.TipoDto;
 import ucab.dsw.entidades.Tipo;
 import ucab.dsw.servicio.TipoServicio;
 
+import javax.ws.rs.core.Response;
+
 public class TipoServicio_Test {
 
-    //Listar todos los tipos
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarTipos
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarTipos(){
 
         TipoServicio servicio = new TipoServicio();
-
-        try {
-            Assertions.assertTrue(servicio.listarTipos().size() > 0);
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.listarTipos();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Consultar un Tipo
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarTipo
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaConsultarTipo(){
 
         TipoServicio servicio = new TipoServicio();
-        Tipo tipo_buscar = servicio.consultarTipo(1);
-
-        try {
-            Assertions.assertEquals(1, tipo_buscar.get_id());
-        } catch (Exception e) {
-            Assertions.fail(e.getMessage());
-        }
+        Response respuesta = servicio.consultarTipo(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Listar tipos activos
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarTiposActivos
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarTiposActivos(){
 
-        try {
-            Assertions.assertNotNull(new TipoServicio().tiposActivos());
-
-        } catch (Exception e) {
-
-            Assertions.fail(e.getMessage(), e.getCause());
-        }
+        TipoServicio servicio = new TipoServicio();
+        Response respuesta = servicio.tiposActivos();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
     }
 
-    //Agregar un tipo
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarTipo
+     * @author Emanuel Di Cristofaro
+     */
     @Test
-    public void pruebaInsertarTipo() throws Exception {
+    public void pruebaInsertarTipo() {
 
         TipoServicio servicio = new TipoServicio();
 
@@ -62,8 +61,8 @@ public class TipoServicio_Test {
             tipoDto.setNombre("");
             tipoDto.setDescripcion("");
             tipoDto.setEstatus("Activo");
-            TipoDto resultado = servicio.addTipo(tipoDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response respuesta = servicio.addTipo(tipoDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -71,7 +70,10 @@ public class TipoServicio_Test {
 
     }
 
-    //Modificar tipo
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarTipo
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaModificarTipo(){
 
@@ -84,7 +86,8 @@ public class TipoServicio_Test {
             tipoDto.setDescripcion("");
             tipoDto.setEstatus("Activo");
             // Estar pendiente con los ID registrados en la BD
-            servicio.updateTipo(1, tipoDto);
+            Response respuesta = servicio.updateTipo(1, tipoDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -92,7 +95,10 @@ public class TipoServicio_Test {
 
     }
 
-    //Eliminar tipo
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método EliminarTipo
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaEliminarTipo(){
 
@@ -100,7 +106,8 @@ public class TipoServicio_Test {
 
         try {
             // Estar pendiente con los ID registrados en la BD
-            servicio.eliminarTipo(1);
+            Response respuesta = servicio.eliminarTipo(1);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

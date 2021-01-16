@@ -5,58 +5,55 @@ import ucab.dsw.dtos.RespuestaPreguntaDto;
 import ucab.dsw.entidades.RespuestaPregunta;
 import ucab.dsw.servicio.RespuestaPreguntaServicio;
 
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RespuestaPreguntaServicio_Test {
-	
-	//Listar todos los RespuestaPregunta
+
+	/**
+	 * Prueba unitaria para verificar el funcionamiento del método ListarRespuestaPreguntaPregunta
+	 * @author Emanuel Di Cristofaro
+	 */
 	@Test
 	public void pruebaListarRespuestaPreguntaPregunta(){
 		
 		RespuestaPreguntaServicio servicio = new RespuestaPreguntaServicio();
-		
-		try {
-			Assertions.assertTrue(servicio.listarRespuestas().size() > 0);
-			
-		} catch (Exception e) {
-			
-			Assertions.fail(e.getMessage());
-		}
+		Response respuesta = servicio.listarRespuestas();
+		Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 		
 	}
-	
-	//Consultar una Respuesta
+
+	/**
+	 * Prueba unitaria para verificar el funcionamiento del método ConsultarRespuestaPregunta
+	 * @author Emanuel Di Cristofaro
+	 */
 	@Test
 	public void pruebaConsultarRespuestaPregunta(){
 		
 		RespuestaPreguntaServicio servicio = new RespuestaPreguntaServicio();
-		RespuestaPregunta respuestaPregunta_buscar = servicio.encontrarRespuestaPregunta(1);
-		
-		try {
-			
-			Assertions.assertEquals(1, respuestaPregunta_buscar.get_id());
-			
-		} catch (Exception e) {
-			
-			Assertions.fail(e.getMessage());
-		}
+		Response respuesta = servicio.encontrarRespuestaPregunta(1);
+		Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 		
 	}
-	
-	//Listar Respuestas activas
+
+	/**
+	 * Prueba unitaria para verificar el funcionamiento del método ListarRespuestaPreguntasActivas
+	 * @author Emanuel Di Cristofaro
+	 */
 	@Test
 	public void pruebaListarRespuestaPreguntasActivas(){
-		
-		try {
-			Assertions.assertNotNull(new RespuestaPreguntaServicio().respuestasActivas());
-		} catch (Exception e) {
-			Assertions.fail(e.getMessage(), e.getCause());
-		}
+
+		RespuestaPreguntaServicio servicio = new RespuestaPreguntaServicio();
+		Response respuesta = servicio.respuestasActivas();
+		Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 	}
-	
-	
-	// Esta prueba permite insertar una Respuesta a la BD
+
+
+	/**
+	 * Prueba unitaria para verificar el funcionamiento del método InsertarRespuestaPregunta
+	 * @author Emanuel Di Cristofaro y Gregg Spinetti
+	 */
 	@Test
 	public void pruebaInsertarRespuestaPregunta() throws Exception{
 		
@@ -89,16 +86,18 @@ public class RespuestaPreguntaServicio_Test {
 			listaRespuestasPreguntaDto.add(respuestaPreguntaDto2); // Agregando la respuesta 2 a la lista.
 			
 			// Prueba
-			RespuestaPreguntaDto resultado = servicio.addRespuestaPregunta(idPreguntaEncuesta, listaRespuestasPreguntaDto);
-			long idError = 0; // Valor al que no debe ser igual el ID del resultado obtenido, ya que significaría error.
-			Assert.assertNotEquals(resultado.getId(), idError);
+			Response respuesta = servicio.addRespuestaPregunta(idPreguntaEncuesta, listaRespuestasPreguntaDto);
+			Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 			
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
 	}
-	
-	// Esta prueba permite modificar una Respuesta
+
+	/**
+	 * Prueba unitaria para verificar el funcionamiento del método ModificarRespuestaPregunta
+	 * @author Emanuel Di Cristofaro
+	 */
 	@Test
 	public void pruebaModificarRespuestaPregunta(){
 		
@@ -109,14 +108,18 @@ public class RespuestaPreguntaServicio_Test {
 			respuestaPreguntaDto.setNombre("No muy buena la verdad");
 			respuestaPreguntaDto.setEstatus("Activo");
 			// Recuerden que deben ver los id de los registros en la BD
-			servicio.modificarRespuestaPregunta(1, respuestaPreguntaDto);
+			Response respuesta = servicio.modificarRespuestaPregunta(1, respuestaPreguntaDto);
+			Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 			
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
 	}
-	
-	// Esta prueba permite eliminar una Respuesta
+
+	/**
+	 * Prueba unitaria para verificar el funcionamiento del método EliminarRespuestaPregunta
+	 * @author Emanuel Di Cristofaro
+	 */
 	@Test
 	public void pruebaEliminarRespuestaPregunta(){
 		
@@ -124,7 +127,8 @@ public class RespuestaPreguntaServicio_Test {
 		
 		try {
 			//Estar pendiente con el ID en Base de datos
-			servicio.eliminarRespuestaPregunta(1);
+			Response respuesta = servicio.eliminarRespuestaPregunta(1);
+			Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 			
 		}catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
