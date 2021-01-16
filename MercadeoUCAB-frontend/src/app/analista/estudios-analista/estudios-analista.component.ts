@@ -8,6 +8,7 @@ import { SolicitudEstudiosService } from 'src/app/servicios/solicitud-estudios.s
 import { Solicitud } from 'src/app/modelos/solicitud';
 import { EditarSolicitudComponent } from '../editar-solicitud/editar-solicitud.component';
 import { MatSort } from '@angular/material/sort';
+import { EstudiosService } from 'src/app/servicios/estudios.service';
 
 @Component({
   selector: 'app-estudios-analista',
@@ -16,40 +17,26 @@ import { MatSort } from '@angular/material/sort';
 })
 export class EstudiosAnalistaComponent implements OnInit {
 
+  estudios:any[];
 
-  constructor( 
-    private solicitudService: SolicitudEstudiosService, 
-    private _router: Router,
-    private matDialog: MatDialog,
+  constructor(
+    private service: EstudiosService,
     ) { }
 
-  solicitudes: Solicitud[];  
-  displayedColumns: string[] = ['id', 'descripcion', 'acciones'];
-  dataSource: MatTableDataSource<Solicitud>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  
   ngOnInit(): void {
+   
+    this.service.getEstudios();
+  }
 
-    this.solicitudService.getSolicitudes().subscribe(
-      solicitudes => { 
-        this.dataSource = new MatTableDataSource<Solicitud>(solicitudes);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
+  edit(id){
+   
+  }
+
+  result(id){
     
-
-    this.solicitudService.getSolicitudes().subscribe(solicitudes => console.log(solicitudes));
-  }
-  crearEstudio(): void {
-    this._router.navigate(['analista/crearEncuesta']);
   }
 
-  openModal( id: number): void{
-    this.matDialog.open(EditarSolicitudComponent,
-      {
-        data: {id: id}
-      }
-    );
+  deleted(id){
+  
   }
 }

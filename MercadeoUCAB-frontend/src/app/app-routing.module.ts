@@ -87,6 +87,7 @@ const routes: Routes = [
       { path: 'solicitudes', component: EstudiosAnalistaComponent },
       { path: 'crearEncuesta', component: CrearEstudioComponent },
       { path: 'poblacion', component: AnalistaPoblacionComponent },
+      { path: 'resultados', component: ResultadosComponent},
       { path: '', pathMatch: 'prefix', redirectTo: 'solicitudes'},
     ]
   },
