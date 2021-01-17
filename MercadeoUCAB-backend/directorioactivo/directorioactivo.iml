@@ -5,7 +5,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="directorioactivo" />
+          <factory-entry name="directorioactivo" value="5c8b0945-874d-4a1c-8169-afcb828c254b" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
