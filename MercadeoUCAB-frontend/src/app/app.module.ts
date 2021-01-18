@@ -82,13 +82,13 @@ import { DialogComponent } from './admin/estudios/dialog/dialog.component';
 import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analista-poblacion.component';
 import { EditarSolicitudComponent } from './analista/editar-solicitud/editar-solicitud.component';
 import { PreguntasSugeridasComponent } from './admin/preguntas-sugeridas/preguntas-sugeridas.component';
-import { ResultadosComponent } from './cliente/resultados/resultados.component';
 import { SolicitudesComponent } from './admin/solicitudes/solicitudes.component';
 import { SolicitudEstudiosService } from './servicios/solicitud-estudios.service';
 import { EstudiosService } from './servicios/estudios.service';
 import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-sugeridos.component';
 import { SolicitudesPendientesComponent } from './cliente/solicitudes-pendientes/solicitudes-pendientes.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { ResultadosComponent } from './analista/resultados/resultados.component';
 
 @NgModule({
   declarations: [

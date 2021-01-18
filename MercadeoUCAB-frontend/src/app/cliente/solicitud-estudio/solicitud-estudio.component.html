@@ -1,170 +1,155 @@
-<div class="pageHeader">
-  <mat-toolbar>
-    <span class="fill-remaining-space"></span>
-    <span>Solicitud de Estudios</span>
-    <span class="fill-remaining-space"></span>
-  </mat-toolbar>
-</div>
-<form novalidate [formGroup]="solicitudForm" name="solicitudForm" (ngSubmit)="onSubmit()"> 
-
-  <mat-form-field class="full-width" appearance="fill">
-    <mat-label>Producto</mat-label>
-    <mat-select formControlName="productoDto"  matInput required>
-      <mat-option *ngFor="let producto of productos" [value]="producto">
-        {{producto._nombre}}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="solicitudForm.get('productoDto').errors?.required">
-      Campo requerido
-    </mat-error>
-  </mat-form-field>
-
-  <div class="descripcion-input">
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Descripción</mat-label>
-      <input formControlName="descripcion"  matInput required />
-      <mat-error *ngIf="solicitudForm.get('descripcion').errors?.required">
-        Campo requerido
-      </mat-error>
-    </mat-form-field>
+<div class="container" style="margin-top: 25px">
+  <div class="d-flex justify-content-center">
+    <h1>Solicitud de Estudios</h1>
   </div>
-
-  <div class="edadMinima-input">
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Edad Mínima</mat-label>
-      <input type="number" formControlName="edadMinima" matInput required/>
-        <mat-error *ngIf="solicitudForm.get('edadMinima').errors?.required">
-          Campo requerido
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Edad Máxima</mat-label>
-      <input type="number" formControlName="edadMaxima" matInput required/>
-        <mat-error *ngIf="solicitudForm.get('edadMaxima').errors?.required">
-          Campo requerido
-        </mat-error>
-    </mat-form-field>
-  </div>
-  
-  <div>
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Genero</mat-label>
-      <mat-select formControlName="genero" matInput>
-        <mat-option value="Masculino">Masculino</mat-option>
-        <mat-option value="Femenino">Femenino</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Estado Civil</mat-label>
-      <mat-select formControlName="estadoCivil" matInput>
-        <mat-option value="soltero">Soltero/a</mat-option>
-        <mat-option value="casado">Casado/a</mat-option>
-        <mat-option value="divorciado">Divorciado/a</mat-option>
-        <mat-option value="viudo">Viudo/a</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>    
-  
-  <div class="lugar-input">
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Estado</mat-label>
-      <mat-select formControlName="estado" atInput required>
-        <mat-option *ngFor="let estado of estados" [value]="estado._id">
-          {{estado._nombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Municipio</mat-label>
-      <mat-select formControlName="municipio" matInput required>
-        <mat-option *ngFor="let municipio of municipios" [value]="municipio._id">
-          {{municipio._nombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="nivelEconomico">
-  
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Nivel Económico</mat-label>
-      <mat-select formControlName="nivelEconomicoDto" matInput>
-        <mat-option *ngFor="let nivelEconomico of nivelEconomicoArray" [value]="nivelEconomico">
-          {{ nivelEconomico._descripcion }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Disponibilidad en Línea</mat-label>
+  <form class="w-100" novalidate [formGroup]="solicitudForm" name="solicitudForm" (ngSubmit)="onSubmit()"> 
+    <h2>Producto</h2>
+    <div id="productoGrup" class="form-row">
+      <div class="d-flex flex-column col-lg-5">
+        <label>Seleccione el producto.</label>
+        <mat-form-field class="w-75 mt-0" appearance="fill">
+          <mat-label>Seleccionar producto</mat-label>
+          <mat-select formControlName="productoDto"  matInput required>
+            <mat-option *ngFor="let producto of productos" [value]="producto">
+              {{producto._nombre}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="solicitudForm.get('productoDto').errors?.required">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-column col-lg-7">
+        <label class="">Ingrese la descripción del estudio.</label>
+        <mat-form-field class="w-75 mt-0" appearance="fill">
+          <mat-label>Descripción del estudio</mat-label>
+          <input formControlName="descripcion" matInput required />
+          <mat-error *ngIf="solicitudForm.get('descripcion').errors?.required">
+            Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr style="border-top: 1px solid blue;">
+    <h2>Datos demográficos</h2>
+    <div class="d-flex flex-wrap">
+      <div id="limites-de-edades-grupo" class="mr-4">
+        <h3 class="mb-0">Ingrese la edad mínima y máxima del estudio.</h3>
+        <div class="form-row">
+          <mat-form-field class="w-50 mt-0" appearance="fill" style="max-width: 125px">
+            <mat-label>Mínima</mat-label>
+            <input type="number" formControlName="edadMinima" matInput min="0" required/>
+              <mat-error *ngIf="solicitudForm.get('edadMinima').errors?.required">
+                Campo requerido
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-50 mt-0" appearance="fill" style="max-width: 125px">
+            <mat-label>Máxima</mat-label>
+            <input type="number" formControlName="edadMaxima" matInput min="0" required/>
+              <mat-error *ngIf="solicitudForm.get('edadMaxima').errors?.required">
+                Campo requerido
+              </mat-error>
+          </mat-form-field>
+        </div>          
+      </div>
+      <div id="genero-grupo" class="mr-4">
+        <h3 class="mb-0">Ingrese el género de la población a encuestar.</h3>
+        <mat-form-field class="w-75 mt-0" appearance="fill" style="max-width: 200px">
+          <mat-label>Género</mat-label>
+          <mat-select formControlName="genero" matInput>
+            <mat-option value="Masculino">Masculino</mat-option>
+            <mat-option value="Femenino">Femenino</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div id="edo-civil-grupo" class="mr-4">
+        <h3 class="mb-0">Ingrese el estado civil del estudio.</h3>
+        <mat-form-field class="w-75 mt-0" appearance="fill" style="max-width: 200px">
+          <mat-label>Estado civil</mat-label>
+          <mat-select formControlName="estadoCivil" matInput>
+            <mat-option value="soltero">Soltero/a</mat-option>
+            <mat-option value="casado">Casado/a</mat-option>
+            <mat-option value="divorciado">Divorciado/a</mat-option>
+            <mat-option value="viudo">Viudo/a</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div id="direccion-grupo" class="mr-4">
+        <h3 class="mb-0">Ingrese Estado y Municipio que abarcará el estudio.</h3>
+        <mat-form-field class="w-50 mt-0" appearance="fill" style="max-width: 200px">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado" atInput required>
+            <mat-option *ngFor="let estado of estados" [value]="estado._id">
+              {{estado._nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-50 mt-0" appearance="fill" style="max-width: 200px">
+          <mat-label>Municipio</mat-label>
+          <mat-select formControlName="municipio" matInput required>
+            <mat-option *ngFor="let municipio of municipios" [value]="municipio._id">
+              {{municipio._nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div id="nivel-economico-grupo" class="mr-4">
+        <h3 class="mb-0">Nivel económico de la población.</h3>
+        <mat-form-field class="w-75 mt-0" appearance="fill" style="max-width: 200px">
+          <mat-label>Nivel económico</mat-label>
+          <mat-select formControlName="nivelEconomicoDto" matInput>
+            <mat-option *ngFor="let nivelEconomico of nivelEconomicoArray" [value]="nivelEconomico">
+              {{ nivelEconomico._descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div id="nivel-academico-grupo" class="mr-4">
+        <h3 class="mb-0">Nivel académico de la población.</h3>
+        <mat-form-field class="w-75 mt-0" appearance="fill" style="max-width: 200px">
+          <mat-label>Nivel académico</mat-label>
+          <mat-select formControlName="nivelAcademicoDto" matInput>
+            <mat-option *ngFor="let nivelAcademico of nivelAcademicoArray" [value]="nivelAcademico">
+              {{ nivelAcademico._descripcion }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div id="ocupacion-grupo" class="mr-4">
+        <h3 class="mb-0">Ocupación de la población.</h3>
+        <mat-form-field class="w-75 mt-0" appearance="fill" style="max-width: 200px">
+          <mat-label>Ocupación</mat-label>
+          <mat-select formControlName="ocupacionDto" matInput>
+            <mat-option *ngFor="let ocupacion of ocupaciones" [value]="ocupacion">
+              {{ocupacion._nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div id="cantidad-personas-grupo">
+          <h3 class="mb-0">Cantidad de personas con quien vive.</h3>
+          <mat-form-field class="w-75 mt-0" appearance="fill" style="max-width: 125px">
+            <mat-label>Cantidad</mat-label>
+            <input type="number" formControlName="cantidadPersonas" min="0" matInput/>
+          </mat-form-field>
+      </div>
+    </div>
+    <hr style="border-top: 1px solid blue;">
+    <h2>Disponibilidad en línea</h2>
+    <h3 class="mb-0">Indique si se desea que se responda a través de la aplicación.</h3>
+    <mat-form-field class="w-50 mt-0" appearance="fill" style="max-width: 200px">
+      <mat-label>Disponibilidad en línea</mat-label>
       <mat-select formControlName="disponibilidadEnLinea" matInput>
         <mat-option value="si">Si</mat-option>
         <mat-option value="no">No</mat-option>
       </mat-select>
     </mat-form-field>
-    
-  </div>
 
-  <mat-form-field class="full-width" appearance="fill">
-    <mat-label>Nivel Académico</mat-label>
-    <mat-select formControlName="nivelAcademicoDto" matInput>
-      <mat-option *ngFor="let nivelAcademico of nivelAcademicoArray" [value]="nivelAcademico">
-        {{ nivelAcademico._descripcion }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-      
-  <mat-form-field class="full-width" appearance="fill">
-    <mat-label>Ocupación</mat-label>
-    <mat-select formControlName="ocupacionDto" matInput>
-      <mat-option *ngFor="let ocupacion of ocupaciones" [value]="ocupacion">
-        {{ocupacion._nombre}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <div class="cantidadPersonas">
-  
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Nº de Personas</mat-label>
-      <input type="number" formControlName="cantidadPersonas" matInput/>
-    </mat-form-field>
-    
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Nº de Hijos</mat-label>
-      <input type="number" formControlName="cantidadHijos" matInput/>
-    </mat-form-field>
-    
-  </div>
-  <div class="datosHijos">
-
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Genero Hijo</mat-label>
-      <mat-select formControlName="generoHijos" matInput>
-        <mat-option value="Masculino">Masculino</mat-option>
-        <mat-option value="Femenino">Femenino</mat-option>
-      </mat-select>
-    </mat-form-field>
-  
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Edad Mínima Hijo/a</mat-label>
-      <input type="number" formControlName="edadMinimaHijos" matInput/>
-    </mat-form-field>
-
-    <mat-form-field class="full-width" appearance="fill">
-      <mat-label>Edad Máxima Hijo/a</mat-label>
-      <input type="number" formControlName="edadMaximaHijos" matInput/>
-    </mat-form-field>
-    
-  </div>
-
-  <div></div>
-
-  <button  mat-raised-button color="primary" type="submit" [disabled]="solicitudForm.invalid">
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-secondary btn-lg" type="submit" [disabled]="solicitudForm.invalid">
       Enviar
-  </button> 
+      </button>
 
-</form>
+    </div>
+  </form>
+</div>

@@ -28,11 +28,11 @@ import { EstudiosComponent } from './admin/estudios/estudios.component';
 import { PreguntasEstudioComponent } from './admin/estudios/preguntas-estudio/preguntas-estudio.component';
 import { AnalistaPoblacionComponent } from './analista/analista-poblacion/analista-poblacion.component';
 import { PreguntasSugeridasComponent } from './admin/preguntas-sugeridas/preguntas-sugeridas.component';
-import { ResultadosComponent } from './cliente/resultados/resultados.component';
 import { EncuestadoComponent } from './encuestado/encuestado.component';
 import { SolicitudesComponent } from './admin/solicitudes/solicitudes.component';
 import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-sugeridos.component';
 import { SolicitudesPendientesComponent } from './cliente/solicitudes-pendientes/solicitudes-pendientes.component';
+import { ResultadosComponent } from './analista/resultados/resultados.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -67,7 +67,6 @@ const routes: Routes = [
       { path: 'estudios', component: EstudiosClienteComponent },
       { path: 'solicitar_estudio', component: SolicitudEstudioComponent },
       { path: 'producto', component: ProductoComponent },
-      { path: 'resultados', component: ResultadosComponent },
       { path: 'solicitudes', component: SolicitudesPendientesComponent },
       { path: '', pathMatch: 'prefix', redirectTo: 'estudios'},
     ]
