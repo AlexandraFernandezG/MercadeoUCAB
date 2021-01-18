@@ -1,4 +1,5 @@
 package ucab.dsw.servicio;
+import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.accesodatos.DaoRespuestaPregunta;
 import ucab.dsw.accesodatos.DaoSubcategoria;
@@ -11,6 +12,9 @@ import ucab.dsw.entidades.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -84,14 +88,24 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
         }
     }
 
-    //Agregar una pregunta
+    /**
+     * Este método permite insertar una pregunta.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * la pregunta insertada y en tal caso obtener una excepción si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @throws PersistenceException si se inserta una pregunta duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param preguntaEncuestaDto el objeto pregunta con los datos correspondientes para ejecutar el insert.
+     */
     @POST
     @Path("/addPreguntaEncuesta")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public PreguntaEncuestaDto addPreguntaEncuesta(PreguntaEncuestaDto preguntaEncuestaDto){
+    public Response addPreguntaEncuesta(PreguntaEncuestaDto preguntaEncuestaDto){
 
         PreguntaEncuestaDto resultado = new PreguntaEncuestaDto();
+        JsonObject dataObject;
 
         try {
 
@@ -110,13 +124,36 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
             PreguntaEncuesta resul = daoPreguntaEncuesta.insert(preguntaEncuesta);
             resultado.setId(resul.get_id());
 
-        } catch (Exception ex){
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha realizado la operacion con éxito: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
-            return resultado;
     }
 
     //Actualizar estatus de pregunta

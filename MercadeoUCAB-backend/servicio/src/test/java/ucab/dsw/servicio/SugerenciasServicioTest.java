@@ -61,4 +61,18 @@ class SugerenciasServicioTest {
         Response respuesta = servicio.listarEstudiosCliente(id);
         Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
     }
+
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarEstudiosAnalista
+     * @author Emanuel Di Cristofaro
+     */
+    @Test
+    void testListarEstudiosAnalista() {
+
+        long id = 1; // ID de un usuario activo con un rol igual a "Analista".
+
+        SugerenciasServicio servicio = new SugerenciasServicio();
+        Response respuesta = servicio.listarEstudiosAnalista(id);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
+    }
 }

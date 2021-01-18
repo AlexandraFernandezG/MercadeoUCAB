@@ -8,6 +8,9 @@ import ucab.dsw.entidades.Hijo;
 import ucab.dsw.entidades.Informacion;
 
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -20,22 +23,43 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class HijoServicio extends AplicacionBase{
 
-    // Listar todos los hijos
+    /**
+     * Este método permite obtener todos los hijos de una persona.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json
+     * con los hijos consultados o una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando no se encuentra ningún hijo en el registro
+     */
     @GET
     @Path("/allHijos")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Hijo> listarHijos() throws NullPointerException {
+    public Response listarHijos() throws NullPointerException {
 
         DaoHijo daoHijo = new DaoHijo();
+        JsonObject dataObject;
 
         try {
-            return daoHijo.findAll(Hijo.class);
+            List<Hijo> listaHijos = daoHijo.findAll(Hijo.class);
 
-        } catch (NullPointerException ex){
+            return Response.status(Response.Status.OK).entity(listaHijos).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado ningún hijo: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 

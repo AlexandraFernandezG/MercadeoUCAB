@@ -1,6 +1,7 @@
 package ucab.dsw.servicio;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.response.UsuarioResponse;
 import ucab.dsw.accesodatos.DaoRol;
 import ucab.dsw.accesodatos.DaoUsuario;
@@ -46,6 +47,81 @@ public class UsuarioServicio extends AplicacionBase {
         }
     }
 
+    /**
+     * Este método permite obtener todos los analistas.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de los usuarios analistas y en tal caso obtener una excepción si aplica.
+     */
+    @GET
+    @Path("/allAnalistas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarAnalistas() {
+
+        DaoUsuario daoUsuario = new DaoUsuario();
+        JsonObject dataObject;
+
+        try {
+
+            List<Object[]> listaAnalistas = daoUsuario.listarAnalistas();
+            List<UsuarioResponse> listaAnalistaResponse = new ArrayList<>();
+
+            for (Object[] ana: listaAnalistas){
+
+                listaAnalistaResponse.add(new UsuarioResponse((long)ana[0], (String)ana[1], (String)ana[2], (String)ana[3], (String)ana[4]));
+            }
+
+            return Response.status(Response.Status.OK).entity(listaAnalistaResponse).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+    }
+
+    /**
+     * Este método permite obtener un usuario cuando le pasas un correo.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * el usuario del correo consultado y en tal caso obtener una excepción si aplica.
+     */
+    @GET
+    @Path("/consultarUsuarioCorreo/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response consultarUsuarioCorreo(@PathParam("email") String email) {
+
+        JsonObject dataObject;
+        DaoUsuario daoUsuario = new DaoUsuario();
+
+        try {
+
+            List<Object[]> usuarioCorreo = daoUsuario.usuarioCorreo(email);
+            List<UsuarioResponse> listaUsuarioDefinitiva = new ArrayList<>(usuarioCorreo.size());
+
+            for (Object[] us: usuarioCorreo){
+
+                listaUsuarioDefinitiva.add(new UsuarioResponse((long)us[0], (String)us[1], (String)us[2], (String)us[3], (String)us[4]));
+            }
+
+            return Response.status(Response.Status.OK).entity(listaUsuarioDefinitiva).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+
+    }
+
     @GET
     @Path("/consultarUsuario/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -63,53 +139,6 @@ public class UsuarioServicio extends AplicacionBase {
             return null;
         }
     }
-
-    @GET
-    @Path("/consultarUsuarioCorreo/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<UsuarioResponse> consultarUsuarioCorreo(@PathParam("email") String email) throws NullPointerException{
-
-        /**
-        * Este metodo permite obtener un usuario cuando le pasas un correo
-        *
-        *
-        * */
-
-        String SQL = null;
-
-        try {
-
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-            EntityManager entitymanager = factory.createEntityManager();
-
-            SQL = "SELECT u._id as idUsuario, u._nombre as nombre, u._codigoRecuperacion as codigoRecuperacion, u._correoelectronico as correo, u._estatus as estatus " +
-                    "FROM Usuario as u " +
-                    "WHERE u._correoelectronico = :email";
-
-            Query query = entitymanager.createQuery(SQL);
-            query.setParameter("email", email);
-
-            List<Object[]> listaUsuario = query.getResultList();
-
-            List<UsuarioResponse> listaUsuarioDefinitiva = new ArrayList<>(listaUsuario.size());
-
-            for (Object[] us: listaUsuario){
-
-                listaUsuarioDefinitiva.add(new UsuarioResponse((long)us[0], (String)us[1], (String)us[2], (String)us[3], (String)us[4]));
-            }
-
-            return listaUsuarioDefinitiva;
-
-        } catch (NullPointerException ex) {
-
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
-        }
-
-
-    }
-
 
     @POST
     @Path("/addUsuario")

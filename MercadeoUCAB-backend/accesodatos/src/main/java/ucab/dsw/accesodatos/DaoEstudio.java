@@ -86,4 +86,23 @@ public class DaoEstudio extends Dao<Estudio>{
         return listaEstudios;
     }
 
+    public List<Object[]> listarEstudiosAnalista(long id){
+
+        String SQL = null;
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+        EntityManager entitymanager = factory.createEntityManager();
+
+        SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estado as estado, e._estatus as estatus " +
+                "FROM Estudio as e, Usuario as u " +
+                "WHERE e._usuario._id = u._id and u._id = :id";
+
+        Query query = entitymanager.createQuery(SQL);
+        query.setParameter("id", id);
+
+        List<Object[]> listaEstudios = query.getResultList();
+
+        return listaEstudios;
+    }
+
 }

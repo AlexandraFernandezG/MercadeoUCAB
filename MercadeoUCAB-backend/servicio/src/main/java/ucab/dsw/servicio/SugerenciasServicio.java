@@ -220,41 +220,20 @@ public class SugerenciasServicio extends AplicacionBase {
     /**
      * Este método permite duplicar un estudio recomendado en base a una solicitud.
      * @author Emanuel Di Cristofaro
-     * @param idSE: Es el id de la solicitud de estudio inicial
-     * @param idE: Es el id del estudio recomendado seleccionado
-     * @param idU: Es el id del usuario para el estudio (En este caso el analista o al admin)
+     * @param idER: Es el id del estudio recomendado
+     * @param idE: Es el id del estudio creado
      * @throws NullPointerException si no se encuentra el estudio recomendado
      */
     @POST
-    @Path("/insertarEstudioRecomendado/{idSE}/{idE}/{idU}")
+    @Path("/insertarEstudioRecomendado/{idER}/{idE}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response insertarEstudioRecomendado(@PathParam("idSE") long idSE, @PathParam("idE") long idE, @PathParam("idU") long idU) {
+    public Response insertarEstudioRecomendado(@PathParam("idER") long idER, @PathParam("idE") long idE) {
 
         JsonObject dataObject;
-        EstudioDto resultado = new EstudioDto();
         DaoEstudio daoEstudio = new DaoEstudio();
 
         try {
-
-            //Encontrar el estudio recomendado
-            Estudio estudio_recomendado = daoEstudio.find(idE, Estudio.class);
-            Estudio estudio_nuevo = new Estudio();
-
-            estudio_nuevo.set_nombre(estudio_recomendado.get_nombre());
-            estudio_nuevo.set_tipoInstrumento(estudio_recomendado.get_tipoInstrumento());
-            estudio_nuevo.set_fechaInicio(estudio_recomendado.get_fechaInicio());
-            estudio_nuevo.set_fechaFin(estudio_recomendado.get_fechaFin());
-            estudio_nuevo.set_estado(estudio_recomendado.get_estado());
-            estudio_nuevo.set_estatus(estudio_recomendado.get_estatus());
-            SolicitudEstudio solicitudEstudio = new SolicitudEstudio(idSE);
-            estudio_nuevo.set_solicitudEstudio(solicitudEstudio);
-            Usuario usuario = new Usuario(idU);
-            estudio_nuevo.set_usuario(usuario);
-
-            //Insertar nuevo estudio
-            Estudio resul = daoEstudio.insert(estudio_nuevo);
-            resultado.setId(resul.get_id());
 
             //Obtener las preguntas del estudio recomendado
             DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
@@ -263,7 +242,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
             for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
 
-                if (preguntaEstudio.get_estudio().get_id() == idE) {
+                if (preguntaEstudio.get_estudio().get_id() == idER) {
 
                     long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
                     DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
@@ -273,29 +252,21 @@ public class SugerenciasServicio extends AplicacionBase {
             }
 
             //Insertar las preguntas recomendadas en el nuevo estudio
-            List<Estudio> allEstudios = daoEstudio.findAll(Estudio.class);
             PreguntaEstudioDto preguntaEstudiodto = new PreguntaEstudioDto();
             ucab.dsw.servicio.PreguntasEstudioServicio servicio = new ucab.dsw.servicio.PreguntasEstudioServicio();
-
-            Estudio estudio = allEstudios.get(allEstudios.size() - 1);
-
-            if(estudio.get_solicitudEstudio().get_id() == idSE){
-
-                long idEN = estudio.get_id();
 
                 for (PreguntaEncuesta preguntaEncuesta: listaPreguntasEstudio){
 
                     long idPR = preguntaEncuesta.get_id();
                     PreguntaEncuestaDto preguntaEncuesta_insert = new PreguntaEncuestaDto(idPR);
                     preguntaEstudiodto.setPreguntaEncuestaDto(preguntaEncuesta_insert);
-                    EstudioDto estudio_insert = new EstudioDto(idEN);
+                    EstudioDto estudio_insert = new EstudioDto(idE);
                     preguntaEstudiodto.setEstudioDto(estudio_insert);
                     preguntaEstudiodto.setEstatus("Activo");
                     servicio.addPreguntaEstudio(preguntaEstudiodto);
                 }
-            }
 
-            return Response.status(Response.Status.OK).entity(resultado).build();
+            return Response.status(Response.Status.OK).entity(listaEstudioPregunta).build();
 
         } catch (NullPointerException ex) {
 
@@ -319,9 +290,9 @@ public class SugerenciasServicio extends AplicacionBase {
     }
 
     /**
-     * Este método permite obtener los estudios recomendados partiendo de un cliente
+     * Este método permite obtener los estudios partiendo de un cliente
      * @author Emanuel Di Cristofaro
-     * @param id id del usuario Cliente que permite obtener los estudios recomendados
+     * @param id id del usuario Cliente que permite obtener los estudios
      */
     @GET
     @Path("/estudiosCliente/{id}")
@@ -354,6 +325,44 @@ public class SugerenciasServicio extends AplicacionBase {
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
+    }
+
+    /**
+     * Este método permite obtener los estudios partiendo de un analista
+     * @author Emanuel Di Cristofaro
+     * @param id id del usuario Analista que permite obtener los estudios
+     */
+    @GET
+    @Path("/estudiosAnalista/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response listarEstudiosAnalista(@PathParam("id") long id){
+
+        DaoEstudio daoEstudio = new DaoEstudio();
+        JsonObject dataObject;
+
+        try {
+
+            List<Object[]> listaEstudios = daoEstudio.listarEstudiosAnalista(id);
+
+            List<EstudiosResponse> listaEstudiosAnalista = new ArrayList<>(listaEstudios.size());
+
+            for (Object[] eA: listaEstudios){
+
+                listaEstudiosAnalista.add(new EstudiosResponse((long)eA[0], (String)eA[1], (String)eA[2], devolverFecha((Date)eA[3]), devolverFecha((Date)eA[4]), (String)eA[5], (String)eA[6]));
+            }
+
+            return Response.status(Response.Status.OK).entity(listaEstudiosAnalista).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+
     }
 
 }
