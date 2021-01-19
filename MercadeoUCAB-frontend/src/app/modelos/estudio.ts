@@ -8,6 +8,7 @@ export class Estudio {
     _fechaInicio: Date;
     _fechaFin: Date;
     _estatus: string;
+    _estado: string;
     _usuario: Usuario;
     _solicitudEstudio: Solicitud;
 }
@@ -18,6 +19,7 @@ export class Estudio2 {
     fechaInicio: Date;
     fechaFin: Date;
     estatus: string;
+    estado: string;
     usuarioDto: number;
     solicitudEstudioDto: number;
 }
