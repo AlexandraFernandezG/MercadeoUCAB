@@ -72,7 +72,7 @@
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef></th>
         <mat-cell *matCellDef="let row">
-          <button mat-icon-button>
+          <button mat-icon-button (click)='cloneEstudio(row._id)'>
             <mat-icon>note_add</mat-icon>
           </button>
         </mat-cell>
