@@ -3,37 +3,17 @@
   <div class="row text-left mt-5">
     <div class="col-5">
       <div class="row">
-        <h2 id="Encabezado">Preguntas asignadas al Estudio {{id}}</h2>
+        <h2 id="Encabezado">Preguntas asignadas al {{id}}</h2>
         <a id="hand" class="btn"><i class="fas fa-retweet fa-lg" style="color:rgba(84, 157, 252, 0.993);"></i></a>
       </div>
 
-      <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal(id)">Asignar preguntas<i
+      <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal1()">pregunta nueva<i
+          class="fas fa-plus-circle"></i></a>
+      <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal">preguntas sugeridas<i
+          class="fas fa-plus-circle"></i></a>
+      <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal(id)">utilizar estudio existente<i
           class="fas fa-plus-circle"></i></a>
     </div>
-
-
-    <!-- <div class="container" style="margin-bottom: 30px;">
-      <table id="dataTable" #dataTable class="table table-bordered table-hover" style="background-color: #FDF4E3;">
-        <thead class="thead" style="background-color:rgba(84, 157, 252, 0.993); color: #FFFF;">
-          <tr class="text-center">
-            <th scope="col">Numero</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Tipo de Pregunta</th>
-            <th scope="col">Subcategoria que pertenece</th>
-            <th scope="col">Estatus</th>
-          </tr>
-        </thead>
-        <tbody class="tbody">
-          <tr *ngFor="let pregunta of preguntas; let i=index">
-            <th class="text-center" scope="row">{{i+1}}</th>
-            <td class="text-center">{{pregunta._descripcion}}</td>
-            <td class="text-center">{{pregunta._tipoPregunta}}</td>
-            <td class="text-center">{{pregunta._subcategoria._nombre}}</td>
-            <td class="text-center">{{pregunta._estatus}}</td>     
-        </tbody>
-    
-      </table>
-    </div> -->
   </div>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
@@ -66,3 +46,63 @@
   </div>
 </div>
 
+<!--
+ <form [formGroup]="formAnswers" >
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <mat-form-field appearance="legacy" class="form-group col-md-12" >
+        <mat-label>Nombre de la encuesta</mat-label>
+        <input matInput formControlName="nameAnswer" >
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="divider"></div> 
+
+  <div>
+    <div (click)="newAnswer()" class="newAnswer">
+      <svg class="bi bi-plus-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z"/>
+      </svg>
+      Agregar pregunta
+    </div>
+    <ng-container formArrayName="encuesta" >
+      <div *ngFor="let p of encuesta.controls; index as i" id={{i+1}} class="containerAccordion">
+        <ng-container [formGroup]="p" >
+          <mat-accordion >
+            <mat-expansion-panel expanded>
+              <mat-expansion-panel-header>
+                <mat-panel-title class="numPregunta"> Pregunta n° {{i+1}}  </mat-panel-title>
+                <mat-panel-description> {{p.get('pregunta').value}} </mat-panel-description>
+                <button mat-button data-toggle="modal" data-target="#exampleModal" (click)="itemValue(i)">
+                  <svg class="bi bi-trash-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                  </svg>
+                </button>
+              </mat-expansion-panel-header>
+              <mat-form-field class="form-group col-md-12" >
+                <mat-label>Pregunta</mat-label>
+                <input matInput formControlName="pregunta" >
+              </mat-form-field>
+              <mat-form-field class="form-group col-md-12">
+                <mat-label>Tipo de Respuesta</mat-label>
+                <mat-select formControlName="tipo" >
+                  <mat-option value="0">Si/No</mat-option>
+                  <mat-option value="1">1 al 5</mat-option>
+                  <mat-option value="2">1 al 10</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <button type="submit" mat-raised-button color="primary" >Guardar</button>
+  <div *ngIf="validated" class="alert alert-danger" role="alert">
+    Todos lo datos son necesarios.
+  </div>
+  <div *ngIf="dateSave" class="alert alert-success" role="alert">
+    Datos guardados correctamente
+  </div>
+</form> -->
