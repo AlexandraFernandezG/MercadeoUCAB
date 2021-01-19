@@ -1,14 +1,9 @@
 package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
-import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
-import ucab.dsw.accesodatos.DaoRespuestaPregunta;
-import ucab.dsw.accesodatos.DaoSubcategoria;
-import ucab.dsw.accesodatos.DaoUsuario;
+import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.PreguntaEncuestaDto;
-import ucab.dsw.entidades.PreguntaEncuesta;
-import ucab.dsw.entidades.RespuestaPregunta;
-import ucab.dsw.entidades.Subcategoria;
-import ucab.dsw.entidades.Usuario;
+import ucab.dsw.dtos.PreguntaEstudioDto;
+import ucab.dsw.entidades.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,6 +118,85 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
             preguntaEncuesta.set_subcategoria(subcategoria);
             PreguntaEncuesta resul = daoPreguntaEncuesta.insert(preguntaEncuesta);
             resultado.setId(resul.get_id());
+
+            return Response.status(Response.Status.OK).entity(resultado).build();
+
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha realizado la operacion con éxito: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+
+    }
+
+    /**
+     * Este método permite insertar una pregunta en un estudio.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * la pregunta insertada y en tal caso obtener una excepción si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @throws PersistenceException si se inserta una pregunta duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param preguntaEncuestaDto el objeto pregunta con los datos correspondientes para ejecutar el insert.
+     */
+    @POST
+    @Path("/addPreguntaEncuestaEstudio/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response addPreguntaEncuestaEstudio(@PathParam("id") long id, PreguntaEncuestaDto preguntaEncuestaDto){
+
+        PreguntaEncuestaDto resultado = new PreguntaEncuestaDto();
+        JsonObject dataObject;
+
+        try {
+
+            DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+            PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta();
+            DaoUsuario daoUsuario = new DaoUsuario();
+            DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
+
+            preguntaEncuesta.set_descripcion(preguntaEncuestaDto.getDescripcion());
+            preguntaEncuesta.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
+            preguntaEncuesta.set_estatus(preguntaEncuestaDto.getEstatus());
+            Usuario usuario = daoUsuario.find(preguntaEncuestaDto.getUsuarioDto().getId(), Usuario.class);
+            preguntaEncuesta.set_usuario(usuario);
+            Subcategoria subcategoria = daoSubcategoria.find(preguntaEncuestaDto.getSubcategoriaDto().getId(), Subcategoria.class);
+            preguntaEncuesta.set_subcategoria(subcategoria);
+            PreguntaEncuesta resul = daoPreguntaEncuesta.insert(preguntaEncuesta);
+            resultado.setId(resul.get_id());
+
+            //Insertar la pregunta en el estudio
+            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+            PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
+
+            preguntaEstudio.set_estatus("Activo");
+            PreguntaEncuesta idPregunta = new PreguntaEncuesta(resul.get_id());
+            preguntaEstudio.set_preguntaEncuesta(idPregunta);
+            Estudio idEstudio = new Estudio(id);
+            preguntaEstudio.set_estudio(idEstudio);
+            daoPreguntaEstudio.insert(preguntaEstudio);
 
             return Response.status(Response.Status.OK).entity(resultado).build();
 

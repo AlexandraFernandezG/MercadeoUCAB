@@ -80,6 +80,34 @@ public class PreguntaEncuestaServicio_Test {
         }
     }
 
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarPreguntaEstudio
+     * @author Emanuel Di Cristofaro
+     */
+    @Test
+    public void pruebaInsertarPreguntaEstudio() {
+
+        PreguntaEncuestaServicio servicio = new PreguntaEncuestaServicio();
+
+        try {
+            PreguntaEncuestaDto preguntaEncuestaDto = new PreguntaEncuestaDto();
+
+            preguntaEncuestaDto.setDescripcion("Que te parece los perros calientes de frutillas?");
+            preguntaEncuestaDto.setTipoPregunta("Abierta");
+            preguntaEncuestaDto.setEstatus("Activo");
+            // Recuerden que deben ver los id de los registros en la BD
+            UsuarioDto usuarioDto = new UsuarioDto(3);
+            SubcategoriaDto subcategoriaDto = new SubcategoriaDto(1);
+            preguntaEncuestaDto.setUsuarioDto(usuarioDto);
+            preguntaEncuestaDto.setSubcategoriaDto(subcategoriaDto);
+            Response respuesta = servicio.addPreguntaEncuestaEstudio(1, preguntaEncuestaDto);
+            Assert.assertEquals(respuesta.getStatus(), Response.Status.OK.getStatusCode());
+
+        } catch (Exception e) {
+            Assertions.fail(e.getMessage(), e.getCause());
+        }
+    }
+
     // Esta prueba permite actualizar el estatus de Pregunta
     @Test
     public void pruebaModificarEstatusPregunta(){
