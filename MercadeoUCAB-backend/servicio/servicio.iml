@@ -21,7 +21,9 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="EclipseLink" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="servicio" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -37,6 +39,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="accesodatos" />
+    <orderEntry type="module" module-name="dtos" />
+    <orderEntry type="module" module-name="excepciones" />
+    <orderEntry type="module" module-name="directorioactivo" />
     <orderEntry type="module" module-name="accesodatos" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.4" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:javax.persistence:2.1.1" level="project" />
