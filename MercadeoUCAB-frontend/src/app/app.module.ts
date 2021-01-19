@@ -26,7 +26,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { MarcaComponent } from './admin/marca/marca.component';
 import { AddMarcaComponent } from './admin/marca/add-marca/add-marca.component';
@@ -94,7 +93,6 @@ import { ResultadosComponent } from './analista/resultados/resultados.component'
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent,
     MarcaComponent,
     AddMarcaComponent,
     EditMarcaComponent,

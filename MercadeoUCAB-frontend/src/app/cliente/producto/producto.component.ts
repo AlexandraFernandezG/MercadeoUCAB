@@ -27,31 +27,7 @@ export class ProductoComponent implements OnInit {
   productoForm: any;
   productoFormTP: any;
 
-  producto: Producto =
-  {
-    _id:0,
-    _nombre:'',
-    _estatus:'',
-    _descripcion:'',
-      _marca:{
-      _id:0,
-      _nombre:'',
-      _descripcion: '',
-     _estatus:'',
-    },
-    _subcategoria:{
-      _id:0,
-      _nombre:'',
-      _estatus:'',
-      _descripcion:'',
-      _categoria:{
-        _id:0,
-        _nombre:'',
-        _descripcion: '',
-        _estatus:'',
-      }
-    }
-  }
+  producto: Producto [];
   subcategorias: Subcategoria[] = [];
   marcas: Marca[] = [];
   tipos: Tipo [] = [];
