@@ -7,7 +7,7 @@
 /* No se puede mover a styles.css */
 table {
 	/* width: 80%; */
-	width: inherit;
+	/* width: inherit; */
 	margin: 40px auto;
 }
 
