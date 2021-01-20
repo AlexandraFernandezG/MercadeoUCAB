@@ -30,7 +30,7 @@
       <mat-label>Descripción:</mat-label>
       <input formControlName="descripcion" matInput required />
       <mat-error *ngIf="preguntaForm.get('descripcion').errors?.required">
-        Falta llenar la descripción
+        Campo obligatorio
       </mat-error>
     </mat-form-field>
   </div>

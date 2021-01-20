@@ -31,10 +31,10 @@
             <td class="text-center">{{solicitud._descripcion}}</td>
             <td class="text-center">{{solicitud._genero}}</td>
             <td class="text-center">{{solicitud._edadMinima }}</td>
-            <td class="text-center">{{solicitud._edadMaxima}}</td> 
-            <td class="text-center">{{solicitud._estadoCivil}}</td>   
-            <td class="text-center">{{solicitud._usuario._nombre}}</td> 
-            <td class="text-center">{{solicitud._producto._nombre}}</td> 
+            <td class="text-center">{{solicitud._edadMaxima}}</td>
+            <td class="text-center">{{solicitud._estadoCivil}}</td>
+            <td class="text-center">{{solicitud._usuario._nombre}}</td>
+            <td class="text-center">{{solicitud._producto._nombre}}</td>
             <td>
             <div align="center" class="col-sm-4">
                  <button type="submit" class="btn btn-info" (click)="openModal(id)" ><i class="fas fa-plus"></i></button>
@@ -47,25 +47,25 @@
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
-  
-      
+
+
       <ng-container matColumnDef="descripcion">
-        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Descripcion </th>
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Descripción </th>
         <td mat-cell *matCellDef="let element"> {{element._descripcion}} </td>
       </ng-container>
-  
+
       <ng-container matColumnDef="genero">
-        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Genero </th>
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Género </th>
         <td mat-cell *matCellDef="let element"> {{element._genero}} </td>
       </ng-container>
 
       <ng-container matColumnDef="edadMinima">
-        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Edad Minima </th>
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Edad Mínima </th>
         <td mat-cell *matCellDef="let element"> {{element._edadMinima}} </td>
       </ng-container>
 
       <ng-container matColumnDef="edadMaxima">
-        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Edad Maxima </th>
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Edad Máxima </th>
         <td mat-cell *matCellDef="let element"> {{element._edadMaxima}} </td>
       </ng-container>
 
@@ -83,18 +83,22 @@
         <th mat-header-cell *matHeaderCellDef  mat-sort-header> Producto </th>
         <td mat-cell *matCellDef="let element"> {{element._producto._nombre}} </td>
       </ng-container>
-      
+
       <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef></th>
+        <th class="accion-header" mat-header-cell *matHeaderCellDef> Acciones </th>
         <mat-cell *matCellDef="let row">
-          <button mat-icon-button (click)="openModal(row._id)"><mat-icon>note_add</mat-icon></button>
+          <button mat-icon-button (click)="openModal(row._id)">
+            <mat-icon class="asignar-icon mdl-js-button mdl-js-ripple-effect">
+              note_add
+            </mat-icon>
+          </button>
         </mat-cell>
       </ng-container>
-  
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-  
+
     <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
