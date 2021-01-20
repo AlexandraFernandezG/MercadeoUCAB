@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Estudio } from 'src/app/modelos/estudio';
+import { Estudio, Estudio2 } from 'src/app/modelos/estudio';
 import { EstudiosService } from 'src/app/servicios/estudios.service';
 import { EstudiosComponent } from '../estudios/estudios.component';
+import { PreguntasEstudioComponent } from '../estudios/preguntas-estudio/preguntas-estudio.component';
 
 @Component({
   selector: 'app-estudios-sugeridos',
@@ -16,6 +18,8 @@ export class EstudiosSugeridosComponent implements OnInit {
   estudios: Estudio[];
   constructor(
     private service: EstudiosService,
+    public dialogRef: MatDialogRef<PreguntasEstudioComponent>,
+    @Inject(MAT_DIALOG_DATA) public est: Estudio2,
   ) { }
 
   displayedColumns: string[] = ['nombre', 'fechaInicio', 'fechaFin', 'usuario',
@@ -32,11 +36,20 @@ export class EstudiosSugeridosComponent implements OnInit {
       this.dataSource.sort = this.sort;
     } );
 
-  //  this.service.getEstudiosSugeridos()
-  //  .subscribe(data => {this.estudios = data;
+  //  this.service.getEstudiosSugeridos(this.est.id)
+  //  .subscribe(data => {
+  //   this.dataSource = new MatTableDataSource<Estudio>(data);
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
   //  } );
-    
   }
 
+  cloneEstudio(idSugerido: number){
+    this.service.addEstudioSugerido(
+      idSugerido,
+      this.est.id
+    ).subscribe();
+    this.dialogRef.close();
+  }
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Usuario, UsuarioCorreo } from '../modelos/usuario';
+import { Analista, Usuario, UsuarioCorreo } from '../modelos/usuario';
 import { Usuario2 } from '../modelos/usuario';
 import { catchError, map, tap, retry } from 'rxjs/operators';
 import { RegistroEncuestado } from '../modelos/registro-encuestado';
@@ -44,6 +44,10 @@ export class UsuariosService {
       tap(_ => console.log(`fetched usuario id=${correo}`)),
       catchError(this.handleError)
     );
+  }
+
+  getAnalistas(){
+    return this.http.get<Analista[]>(this.url + 'usuario/allAnalistas');
   }
 
   createUsuario(usuario: Usuario2): Observable<Usuario2>{

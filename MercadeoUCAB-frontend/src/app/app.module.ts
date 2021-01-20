@@ -87,6 +87,7 @@ import { EstudiosService } from './servicios/estudios.service';
 import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-sugeridos.component';
 import { SolicitudesPendientesComponent } from './cliente/solicitudes-pendientes/solicitudes-pendientes.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { AddPreguntaEstudioComponent } from './admin/estudios/add-pregunta-estudio/add-pregunta-estudio.component';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { ResultadosComponent } from './analista/resultados/resultados.component';
 
@@ -145,7 +146,8 @@ import { ResultadosComponent } from './analista/resultados/resultados.component'
     ResultadosComponent,
     SolicitudesComponent,
     EstudiosSugeridosComponent,
-    SolicitudesPendientesComponent
+    SolicitudesPendientesComponent,
+    AddPreguntaEstudioComponent
   ],
   imports: [
     RouterModule,

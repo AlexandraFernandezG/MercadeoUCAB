@@ -42,3 +42,12 @@ export class UsuarioCorreo {
     public estatus: string
   ){}
 }
+export class Analista{
+  constructor(
+     public id: number,
+     public nombre: string,
+     public correo: string,
+     public codigoRecuperacion: string,
+     public estatus: string,
+   ){}
+}
