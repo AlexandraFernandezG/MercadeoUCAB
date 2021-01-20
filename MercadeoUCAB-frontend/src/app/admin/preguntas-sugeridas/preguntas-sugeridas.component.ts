@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { CategoriasService } from 'src/app/servicios/categorias.service';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -14,6 +14,7 @@ import { Estudio2 } from 'src/app/modelos/estudio';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { PreguntasEstudioComponent } from '../estudios/preguntas-estudio/preguntas-estudio.component';
 
 
 @Component({
@@ -32,21 +33,24 @@ export class PreguntasSugeridasComponent implements OnInit {
     private serviceSubcategoria: SubcategoriasService,
     public actRoute: ActivatedRoute,
     public dialog: MatDialog,
+    public dialogRef: MatDialogRef<PreguntasEstudioComponent>,
     private router: Router,
     private formBuilder: FormBuilder,
-    private location: Location
+    private location: Location,
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
   preguntaForm: FormGroup;
   idestudio: number;
-  displayedColumns: string[] = ['descripcion','tipoPregunta','subCategoria','estatus', 'acciones'];
+  displayedColumns: string[] = ['descripcion','tipoPregunta','estatus', 'acciones'];
   dataSource: MatTableDataSource<Pregunta3>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
+    this.dialogRef.updateSize('650px', '450px')
     this.idestudio = +this.actRoute.snapshot.paramMap.get("id");
-    console.log(this.idestudio);
-    this.servicePreguntaEstudio.getPreguntasSugeridasEstudio(this.idestudio)
+    console.log('id:', this.data.idSolicitud);
+    this.servicePreguntaEstudio.getPreguntasSugeridasEstudio(this.data.idSolicitud)
     .subscribe(data => {
       this.dataSource = new MatTableDataSource<Pregunta3>(data);
       this.dataSource.paginator = this.paginator;
@@ -61,10 +65,10 @@ export class PreguntasSugeridasComponent implements OnInit {
      id,
     estatus,
     preguntaEncuestaDto: pregunta.idPregunta,
-    estudioDto: this.idestudio
+    estudioDto: this.data.id
 
     } as PreguntaEstudio2).subscribe();
-    console.log(PreguntaEstudio);
+    this.dialogRef.close();
   }
 
   deletepregunta( pregunta: Pregunta): void{

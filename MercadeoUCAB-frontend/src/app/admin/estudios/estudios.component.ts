@@ -16,6 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 
 
+
 @Component({
   selector: 'app-estudio',
   templateUrl: './estudios.component.html',
@@ -31,11 +32,13 @@ export class EstudiosComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private formBuilder: FormBuilder,
-    private location: Location
+    private location: Location,
+    
   ) { }
+
   estudioForm: FormGroup;
   displayedColumns: string[] = ['nombre', 'fechaInicio', 'fechaFin', 'usuario',
-    'estatus', 'acciones'];
+    'estatus', 'estado', 'acciones'];
   dataSource: MatTableDataSource<Estudio>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

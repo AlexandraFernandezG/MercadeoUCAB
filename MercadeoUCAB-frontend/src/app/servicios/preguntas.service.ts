@@ -46,6 +46,16 @@ export class PreguntasService {
     );
   }
 
+  createPreguntaEstudio(pregunta: Pregunta2, idEstudio: number): Observable<Pregunta2>{
+    console.log(pregunta);
+    console.log('entre');
+    return this.http.post<Pregunta2>(this.url + 'preguntasEncuesta/addPreguntaEncuestaEstudio/' + idEstudio, 
+      JSON.stringify(pregunta), this.httpOptions).pipe(
+      tap((newpregunta: Pregunta2) => console.log(`added pregunta w/ id=${newpregunta.id}`)),
+      catchError(this.handleError)
+    );
+  }
+
   createPreguntaRespuesta(idPregunta: number, respuesta: any): Observable<any>{
    let headers = new HttpHeaders().set('Content-Type', 'application/json');
    return this.http.post(this.url + 'respuestaPregunta/addRespuestaPregunta/'+`${idPregunta}`,JSON.stringify(respuesta), this.httpOptions );

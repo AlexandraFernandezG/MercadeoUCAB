@@ -20,11 +20,36 @@
     border-radius: 10px;
 }
 
+/* Estilo del botón de modificar, de las tablas. */
+.create-icon {
+  color: #4174db;
+}
+
+.delete-icon {
+  color: rgb(165, 35, 35);
+}
+
+.mat-paginator {
+	width: inherit;
+	/* align-content: center; */
+  align-items: center;
+}
+
+/* Modifica el área del título de la tabla
+y el botón de agregar. */
+.col-5 {
+  margin-left: 130px;
+  /* margin-right: 130px; */
+  width: 1000px;
+}
 
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

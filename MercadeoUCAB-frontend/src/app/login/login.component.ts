@@ -73,7 +73,9 @@ export class LoginComponent implements OnInit {
           this.serviceUsuario.getUsuarioCorreo(this.usuario.correo)
             .subscribe( userData => {this.usuarioLog = userData;
               localStorage.setItem('usuarioID', JSON.stringify(this.usuarioLog[0].id));
-              localStorage.setItem('rol', this.user.rol)
+              localStorage.setItem('rol',  JSON.stringify (this.user.rol));
+              localStorage.setItem('nombre', JSON.stringify(this.usuarioLog[0].nombre));
+  
             } );
           if (this.user.rol === 'Administrador'){
             console.log ('Soy un administrador');

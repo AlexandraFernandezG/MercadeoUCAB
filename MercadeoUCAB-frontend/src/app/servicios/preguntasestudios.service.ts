@@ -35,7 +35,7 @@ export class PreguntasEstudioService {
 
   getPreguntasSugeridasEstudio(id:number){
     console.log('sugerencias');
-    return this.http.get<Pregunta3[]>(this.url + 'suggestions/suggestionsPreguntasEstudio/' +  id);
+    return this.http.get<Pregunta3[]>(this.url + 'sugerencias/preguntasEstudio/' +  id);
   }
 
   createPreguntaEstudio(preguntaEstudio: PreguntaEstudio2): Observable<PreguntaEstudio2>{
@@ -48,15 +48,28 @@ export class PreguntasEstudioService {
     );
   }
 
-    /// Error HandleError
-    handleError(error): Observable<never> {
-      let errorMessage = '';
-      if (error.error instanceof ErrorEvent) {
-        errorMessage = error.error.message;
-      } else {
-        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      }
-      window.alert(errorMessage);
-      return throwError(errorMessage);
-   }
+  createPreguntaAddEstudio(preguntaEstudio: PreguntaEstudio2): Observable<PreguntaEstudio2>{
+    console.log(preguntaEstudio);
+    console.log('entre');
+    return this.http.post<PreguntaEstudio2>(this.url + 'preguntasEstudio/addPreguntaEstudio', JSON.stringify(preguntaEstudio), this.httpOptions)
+    .pipe(
+      tap((newpregunta: PreguntaEstudio2) => 
+        console.log(`added preguntaEstudio w/ id=${newpregunta.id}`),
+        
+      ),
+      catchError(this.handleError)
+    );
+  }
+
+  /// Error HandleError
+  handleError(error): Observable<never> {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = error.error.message;
+    } else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    window.alert(errorMessage);
+    return throwError(errorMessage);
+  }
 }

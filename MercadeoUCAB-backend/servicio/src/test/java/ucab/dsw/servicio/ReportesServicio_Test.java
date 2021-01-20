@@ -29,10 +29,10 @@ public class ReportesServicio_Test {
     @Test
     void testPorcentajeVeraderoFalso(){
 
-        long id = 2; // ID del estudio para poder la estadistica
+        long id = 3; // ID del estudio para poder la estadistica
 
         ReportesServicio servicio = new ReportesServicio();
-        Response respuesta = servicio.porcentajeVeraderoFalso(id);
+        Response respuesta = servicio.preguntasCantidadVF(id);
         Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }

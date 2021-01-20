@@ -10,8 +10,8 @@
         <module name="entidades" />
         <module name="directorioactivo" />
         <module name="accesodatos" />
-        <module name="dtos" />
         <module name="servicio" />
+        <module name="dtos" />
         <module name="excepciones" />
       </profile>
     </annotationProcessing>

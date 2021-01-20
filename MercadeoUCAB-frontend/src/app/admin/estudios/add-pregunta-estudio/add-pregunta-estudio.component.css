@@ -1,0 +1,8 @@
+.mat-plus {
+    background-color: rgb(77, 230, 136);
+    color: #fff;
+}
+button{
+    margin-right: 20px;
+    flex: 1 1 auto;
+}
