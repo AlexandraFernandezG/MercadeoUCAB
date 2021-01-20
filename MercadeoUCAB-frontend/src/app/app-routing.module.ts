@@ -61,7 +61,7 @@ const routes: Routes = [
     ]
   },
 
-  { path: 'cliente', component: ClienteComponent, 
+  { path: 'cliente', component: ClienteComponent,
     children: [
       { path: 'estudios', component: EstudiosClienteComponent },
       { path: 'solicitar_estudio', component: SolicitudEstudioComponent },
@@ -70,7 +70,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'prefix', redirectTo: 'estudios'},
     ]
   },
-  
+
   { path: 'encuestado', component: EncuestadoComponent,
     children: [
       { path: 'estudios', component: EstudiosEncuestadoComponent },
@@ -79,7 +79,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'prefix', redirectTo: 'estudios'},
     ]
   },
-  
+
   { path: 'analista', component: AnalistaComponent,
     children: [
       { path: 'solicitudes', component: EstudiosAnalistaComponent },

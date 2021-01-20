@@ -20,6 +20,7 @@
     border-radius: 10px;
 }
 
+/* Íconos */
 /* Estilo del botón de modificar, de las tablas. */
 .create-icon {
   color: #4174db;
@@ -28,6 +29,11 @@
 .delete-icon {
   color: rgb(165, 35, 35);
 }
+
+.asignar-icon {
+  color:  rgb(66, 138, 38);
+}
+/* --------------------------------------- */
 
 .mat-paginator {
 	width: inherit;
@@ -38,8 +44,7 @@
 /* Modifica el área del título de la tabla
 y el botón de agregar. */
 .col-5 {
-  margin-left: 130px;
-  /* margin-right: 130px; */
+  padding-left: 15%;
   width: 1000px;
 }
 
