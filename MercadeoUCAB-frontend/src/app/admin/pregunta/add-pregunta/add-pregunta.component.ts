@@ -49,7 +49,6 @@ export class AddPreguntaComponent implements OnInit {
     };
 
   ngOnInit(): void {
-    this.dialogRef.updateSize('600px', '600px');
     this.service.getPreguntas()
     .subscribe(data => {this.preguntas = data;
     } );

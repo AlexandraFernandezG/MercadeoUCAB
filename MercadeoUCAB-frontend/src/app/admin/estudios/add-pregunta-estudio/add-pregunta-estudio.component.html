@@ -1,4 +1,4 @@
-<form [formGroup]="preguntaForm" novalidate>
+<form [formGroup]="preguntaForm" novalidate (ngSubmit)="addPreguntaEstudio()">
 
     <h4>Nueva Pregunta</h4>
     <h5>Seleccione una subcategoria asociada:</h5>
@@ -53,6 +53,13 @@
       </div>
     </div>
   
-    <button type="submit" mat-raised-button color="primary" [disabled]="preguntaForm.invalid">Añadir</button>
+    
+    
+
   </form>
-  
+  <button type="submit" mat-raised-button color="primary" [disabled]="preguntaForm.invalid" (click)="addPreguntaEstudio()">
+    Añadir
+  </button>
+  <button  mat-raised-button color="warn" (click)="close()">
+    Cancelar
+  </button> 
