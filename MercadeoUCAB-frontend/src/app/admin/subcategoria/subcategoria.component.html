@@ -30,7 +30,7 @@
             <td class="text-center">{{subcategoria._nombre}}</td>
             <td class="text-center">{{subcategoria._descripcion}}</td>
             <td class="text-center">{{subcategoria._categoria._nombre}}</td>
-            <td class="text-center">{{subcategoria._estatus}}</td>     
+            <td class="text-center">{{subcategoria._estatus}}</td>
             <td>
               <div class="row">
                 <div align="center" class="col-sm-4">
@@ -48,14 +48,14 @@
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
-  
-      
+
+
       <ng-container matColumnDef="nombre">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
         <td mat-cell *matCellDef="let subcategoria"> {{subcategoria._nombre}} </td>
       </ng-container>
-  
-      
+
+
       <ng-container matColumnDef="descripcion">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
         <td mat-cell *matCellDef="let subcategoria"> {{subcategoria._descripcion}} </td>
@@ -70,19 +70,27 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
         <td mat-cell *matCellDef="let subcategoria"> {{subcategoria._estatus}} </td>
       </ng-container>
-      
+
       <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef></th>
+        <th class="accion-header" mat-header-cell *matHeaderCellDef> Acciones </th>
         <mat-cell *matCellDef="let row">
-          <button mat-icon-button (click)="openEModal(row._id)"><mat-icon>create</mat-icon></button>
-          <button mat-icon-button (click)="deleteSubcategoria(row)"><mat-icon>delete</mat-icon></button>
+          <button mat-icon-button (click)="openEModal(row._id)">
+            <mat-icon class="create-icon mdl-js-button mdl-js-ripple-effect">
+              create
+            </mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteSubcategoria(row)">
+            <mat-icon class="delete-icon mdl-js-button mdl-js-ripple-effect">
+              delete
+            </mat-icon>
+          </button>
         </mat-cell>
       </ng-container>
-  
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-  
+
     <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
   </div>
 </div>

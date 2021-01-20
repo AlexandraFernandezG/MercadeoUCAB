@@ -33,7 +33,7 @@ export class TipoComponent implements OnInit {
     private location: Location
   ) { }
   tipoForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'descripcion','estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'estatus', 'acciones'];
   dataSource: MatTableDataSource<Tipo>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

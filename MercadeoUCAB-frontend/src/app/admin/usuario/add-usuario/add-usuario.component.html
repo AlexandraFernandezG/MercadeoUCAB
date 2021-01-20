@@ -1,4 +1,4 @@
-<form [formGroup]="usuarioForm" novalidate> 
+<form [formGroup]="usuarioForm" novalidate>
 
     <h4>Nuevo Usuario</h4>
       <div class="form-group">
@@ -6,7 +6,7 @@
           <mat-label>Nombre Usuario:</mat-label>
           <input formControlName="nombreUsuario" matInput required [(ngModel)]="usuario._nombre"/>
           <mat-error *ngIf="usuarioForm.get('nombreUsuario').errors?.required">
-              Falta llenar el nuevo nombre usuario
+            Campo obligatorio
           </mat-error>
         </mat-form-field>
       </div>
@@ -15,7 +15,7 @@
           <mat-label>Email:</mat-label>
           <input formControlName="correo" matInput required [(ngModel)]="usuario._correoelectronico" />
           <mat-error *ngIf="usuarioForm.get('correo').errors?.required">
-            Falta llenar el correo electronico
+            Campo obligatorio
           </mat-error>
         </mat-form-field>
       </div>
@@ -23,9 +23,9 @@
         <mat-form-field class="full-width" appareance="outline">
             <mat-label>Contraseña:</mat-label>
             <input formControlName="contrasena" matInput [type]= "'hide' ? 'password': 'text'" required />
-             <mat-error *ngIf="usuarioForm.get('contrasena').errors?.required">
-                Introduzca la contraseña
-             </mat-error>
+            <mat-error *ngIf="usuarioForm.get('contrasena').errors?.required">
+              Campo obligatorio
+            </mat-error>
         </mat-form-field>
     </div>
         <h5>Seleccione un rol:</h5>
@@ -39,7 +39,7 @@
               </mat-select>
       </mat-form-field>
         </div>
-  
+
     <button type="submit"  mat-raised-button color="primary" (click)="addUsuario(usuario._correoelectronico, usuario._nombre)" [disabled]="usuarioForm.invalid">Añadir Usuario</button>
   </form>
-  
+
