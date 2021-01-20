@@ -12,6 +12,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddPreguntaEstudioComponent } from '../add-pregunta-estudio/add-pregunta-estudio.component';
 import { EstudiosSugeridosComponent } from '../../estudios-sugeridos/estudios-sugeridos.component';
+import { PreguntasSugeridasComponent } from '../../preguntas-sugeridas/preguntas-sugeridas.component';
+import { Estudio } from 'src/app/modelos/estudio';
+import { EstudiosService } from 'src/app/servicios/estudios.service';
 
 @Component({
   selector: 'app-preguntas-estudio',
@@ -23,9 +26,11 @@ export class PreguntasEstudioComponent implements OnInit {
   preguntasEstudios: PreguntaEstudio[];
   preguntas: Pregunta[];
   id: number;
+  estudio: Estudio;
 
   constructor(
     private service: PreguntasEstudioService,
+    private estudiosService: EstudiosService,
     public actRoute: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
@@ -48,6 +53,11 @@ export class PreguntasEstudioComponent implements OnInit {
 
   ngOnInit(): void {
       this.id= +this.actRoute.snapshot.paramMap.get("id");
+      this.estudiosService.consultarEstudio(this.id).subscribe(
+        data => { this.estudio = data}
+      )
+      console.log(this.estudio)
+
       this.service.getPreguntasEstudio(this.id)
       .subscribe(data => {
         this.dataSource = new MatTableDataSource<Pregunta>(data);
@@ -64,16 +74,31 @@ export class PreguntasEstudioComponent implements OnInit {
 
   delete(){ this.encuesta.removeAt(this.item); }
 
-  openModal(id: number):void{
+  openModal1(){
+    this.dialog.open(AddPreguntaEstudioComponent,
+      {
+        data: {id: this.id}
+      }
+    );
+  }
+
+  openModal2(){
+    this.dialog.open(PreguntasSugeridasComponent,
+      {
+        data: {
+          id: this.id,
+          idSolicitud: this.estudio._solicitudEstudio._id
+        }
+      }
+    );
+  }
+
+  openModal3(id: number):void{
     this.dialog.open(EstudiosSugeridosComponent,
       {
         data: {id: id}
       }
-      );
-  }
-
-  openModal1(){
-    this.dialog.open(AddPreguntaEstudioComponent);
+    );
   }
 
 }
