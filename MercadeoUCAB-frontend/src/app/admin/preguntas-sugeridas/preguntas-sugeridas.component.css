@@ -1,3 +1,9 @@
+/* Encabezado */
+.row.text-left.mt-5 {
+  padding-left: 15%;
+  width: 1000px;
+}
+
 table {
     width: 80%;
     margin: 40px auto;
@@ -5,4 +11,31 @@ table {
 .mat-elevation-z8{
     width: 80%;
     margin: 20px auto;
+}
+
+/* Para dar espacio entre las columnas */
+.mat-row {
+  height: auto;
+}
+
+/* Para dar espacio entre las columnas */
+.mat-cell {
+  padding: 10px 10px 10px 0;
+}
+
+/* Para resaltar filas de la tabla */
+/* No se puede mover a styles.css */
+tr:hover {
+	background-color: rgba(128, 128, 128, 0.596);
+}
+
+/* Cambia el encabezado de la tabla */
+/* No se puede mover a styles.css */
+th {
+	font: 16px bolder, Roboto;
+	color: black;
+	letter-spacing: normal;
+  text-align: center;
+  /* Para que no se resalte el encabezado de la tabla */
+  background-color: white;
 }
