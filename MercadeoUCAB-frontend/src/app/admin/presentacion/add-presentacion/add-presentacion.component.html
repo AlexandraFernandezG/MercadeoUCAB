@@ -1,4 +1,4 @@
-<form [formGroup]="presentacionForm" novalidate> 
+<form [formGroup]="presentacionForm" novalidate>
 
     <h4>Presentación</h4>
       <div class="form-group">
@@ -6,7 +6,7 @@
           <mat-label>Nombre:</mat-label>
           <input formControlName="nombre" matInput required [(ngModel)]="presentacion2.nombre"/>
           <mat-error *ngIf="presentacionForm.get('nombre').errors?.required">
-              Falta llenar el nuevo nombre de la presentación
+            Campo obligatorio
           </mat-error>
         </mat-form-field>
       </div>
@@ -14,12 +14,11 @@
         <mat-form-field class="full-width" appaerance="outline">
           <mat-label>Descripción:</mat-label>
           <input formControlName="descripcion" matInput required [(ngModel)]="presentacion2.descripcion"/>
-           <mat-error *ngIf="presentacionForm.get('descripcion').errors?.required">
-              Falta llenar la descripción
-          </mat-error>
+            <mat-error *ngIf="presentacionForm.get('descripcion').errors?.required">
+              Campo obligatorio
+            </mat-error>
         </mat-form-field>
       </div>
-  
+
     <button type="submit"  mat-raised-button color="primary" (click)="addPresentacion(presentacion2.nombre, presentacion2.descripcion)" [disabled]="presentacionForm.invalid">Añadir Presentación</button>
   </form>
-  

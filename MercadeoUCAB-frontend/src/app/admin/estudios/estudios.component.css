@@ -6,9 +6,18 @@
 
 /* No se puede mover a styles.css */
 table {
-	/* width: 80%; */
-	width: inherit;
+	width: 80%;
 	margin: 40px auto;
+}
+
+/* Para dar espacio entre las columnas */
+.mat-row {
+  height: auto;
+}
+
+/* Para dar espacio entre las columnas */
+.mat-cell {
+  padding: 10px 10px 10px 0;
 }
 
 /* Para resaltar filas de la tabla */
@@ -31,7 +40,12 @@ th {
 /* Título de las acciones en la tabla */
 /* No se puede mover a styles.css */
 .accion-header {
-	max-width: 130px;
 	margin-left: 10%;
 	text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
 }

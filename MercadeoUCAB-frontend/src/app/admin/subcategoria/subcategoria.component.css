@@ -6,3 +6,43 @@ table {
     width: 80%;
     margin: 20px auto;
 }
+
+/* Para dar espacio entre las columnas */
+.mat-row {
+  height: auto;
+}
+
+/* Para dar espacio entre las columnas */
+.mat-cell {
+  padding: 10px 10px 10px 0;
+}
+
+/* Para resaltar filas de la tabla */
+/* No se puede mover a styles.css */
+tr:hover {
+	background-color: rgba(128, 128, 128, 0.596);
+}
+
+/* Cambia el encabezado de la tabla */
+/* No se puede mover a styles.css */
+th {
+	font: 16px bolder, Roboto;
+	color: black;
+	letter-spacing: normal;
+  text-align: center;
+  /* Para que no se resalte el encabezado de la tabla */
+  background-color: white;
+}
+
+/* Título de las acciones en la tabla */
+/* No se puede mover a styles.css */
+.accion-header {
+	margin-left: 10%;
+	text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}

@@ -1,4 +1,4 @@
-<form [formGroup]="subcategoriaForm" novalidate> 
+<form [formGroup]="subcategoriaForm" novalidate>
 
     <h4>Subcategorí­a</h4>
       <div class="form-group">
@@ -6,7 +6,7 @@
           <mat-label>Nombre:</mat-label>
           <input formControlName="nombre" matInput required [(ngModel)]="subcategoria._nombre"/>
           <mat-error *ngIf="subcategoriaForm.get('nombre').errors?.required" >
-              Falta llenar el nuevo nombre de la subcategoría
+            Campo obligatorio
           </mat-error>
         </mat-form-field>
       </div>
@@ -14,9 +14,9 @@
         <mat-form-field class="full-width" appaerance="outline">
           <mat-label>Descripción:</mat-label>
           <input formControlName="descripcion" matInput required [(ngModel)]="subcategoria._descripcion"/>
-           <mat-error *ngIf="subcategoriaForm.get('descripcion').errors?.required">
-              Falta llenar la descripción
-          </mat-error>
+            <mat-error *ngIf="subcategoriaForm.get('descripcion').errors?.required">
+              Campo obligatorio
+            </mat-error>
         </mat-form-field>
       </div>
       <h5>Seleccione una categoria:</h5>
@@ -30,7 +30,7 @@
             </mat-select>
     </mat-form-field>
       </div>
-  
+
     <button type="submit"  mat-raised-button color="primary" (click)="addSubcategoria(subcategoria._nombre, subcategoria._descripcion)" [disabled]="subcategoriaForm.invalid" >Añadir Subcategoría</button>
   </form>
-  
+
