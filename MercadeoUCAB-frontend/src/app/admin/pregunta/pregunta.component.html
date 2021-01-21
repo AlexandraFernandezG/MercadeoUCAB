@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div class="row text-left mt-5">
+  <!-- <div class="row text-left mt-5">
     <div class="col-5">
       <div class="row">
         <h2 id="Encabezado">Todas las preguntas</h2>
@@ -10,47 +10,21 @@
       <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal()">Agregar <i
           class="fas fa-plus-circle"></i></a>
     </div>
+  </div> -->
 
-
-    <!-- <div class="container" style="margin-bottom: 30px;">
-      <table id="dataTable" #dataTable class="table table-bordered table-hover" style="background-color: #FDF4E3;">
-        <thead class="thead" style="background-color:rgba(84, 157, 252, 0.993); color: #FFFF;">
-          <tr class="text-center">
-            <th scope="col">id</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Tipo de Pregunta</th>
-            <th scope="col">Subcategoria que pertenece</th>
-            <th scope="col">Estatus</th>
-            <th scope="col">Acciones</th>
-            <th scope="col">Agregar al estudio</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tbody class="tbody">
-          <tr *ngFor="let pregunta of preguntas">
-            <th class="text-center" scope="row">{{pregunta._id}}</th>
-            <td class="text-center">{{pregunta._descripcion}}</td>
-            <td class="text-center">{{pregunta._tipoPregunta}}</td>
-            <td class="text-center">{{pregunta._subcategoria._nombre}}</td>
-            <td class="text-center">{{pregunta._estatus}}</td>
-            <td>
-              <div class="row">
-                <div align="center" class="col-sm-4">
-                  <a class="btn btn-primary text-white" style="cursor: pointer;" data-toggle="modal" data-target="#Modal" (click)="openEModal(pregunta._id)"><i class="fas fa-pencil-alt"></i></a>
-                </div>
-                <div align="center" class="col-sm-4">
-                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div align="center" class="col-sm-4">
-                   <button type="submit" class="btn btn-info" (click)="Agregar(pregunta)" ><i class="fas fa-plus"></i></button>
-                </div>
-             </td>
-        </tbody>
-      </table>
-    </div> -->
+  <!-- Encabezado -->
+  <div class="pageHeader">
+    <mat-toolbar>
+      <span class="fill-remaining-space"></span>
+      <span>Todas las preguntas</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+  </div>
+  <div class="botones-opciones">
+    <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal()">
+      Agregar
+      <i class="fas fa-plus-circle"></i>
+    </a>
   </div>
 
   <div class="mat-elevation-z8">

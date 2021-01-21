@@ -52,6 +52,7 @@ export class SubcategoriaComponent implements OnInit {
     } );
   }
 
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddSubcategoriaComponent);
   }

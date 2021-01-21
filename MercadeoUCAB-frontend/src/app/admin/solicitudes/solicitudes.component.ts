@@ -33,7 +33,7 @@ export class SolicitudesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
-    this.id= +this.actRoute.snapshot.paramMap.get("id");
+    this.id = +this.actRoute.snapshot.paramMap.get('id');
     this.service.getSolicitudes()
     .subscribe(data => {
       this.dataSource = new MatTableDataSource<Solicitud>(data);

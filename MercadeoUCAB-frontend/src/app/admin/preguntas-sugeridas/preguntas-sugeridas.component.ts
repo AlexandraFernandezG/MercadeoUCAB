@@ -48,8 +48,8 @@ export class PreguntasSugeridasComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
-    this.dialogRef.updateSize('650px', '450px')
-    this.idestudio = +this.actRoute.snapshot.paramMap.get("id");
+    this.dialogRef.updateSize('650px', '450px');
+    this.idestudio = +this.actRoute.snapshot.paramMap.get('id');
     console.log('id:', this.data.idSolicitud);
     this.servicePreguntaEstudio.getPreguntasSugeridasEstudio(this.data.idSolicitud)
     .subscribe(data => {

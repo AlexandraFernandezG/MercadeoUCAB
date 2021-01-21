@@ -1,13 +1,50 @@
-/* No se puede mover a styles.css */
-.mat-elevation-z8{
-	width: 80%;
-	margin: 20px auto;
+/* Título de la página */
+div.pageHeader{
+  margin: 0px 40px;
 }
 
-/* No se puede mover a styles.css */
+.fill-remaining-space{
+  flex: 1 1 auto;
+}
+/* --------------------------------------- */
+
+/* Tabla de datos */
+.mat-elevation-z8{
+  width: 80%;
+  margin: 20px auto;
+  /* Horizontal scroll bar */
+  /* overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap; */
+}
+
 table {
 	width: 80%;
-	margin: 40px auto;
+  margin: 40px auto;
+  /* Horizontal scroll bar */
+  /* display: inline-block; */
+}
+
+/* Para dar espacio entre las columnas */
+.mat-row {
+  height: auto;
+}
+/* --------------------------------------- */
+
+/* Cambia el encabezado de la tabla */
+th {
+	font: 16px bolder, Roboto;
+	color: black;
+	letter-spacing: normal;
+  text-align: center;
+  /* Para que no se resalte el encabezado de la tabla */
+  background-color: white;
+}
+
+/* Título de las acciones en la tabla */
+.accion-header {
+	margin-left: 10%;
+	text-align: center;
 }
 
 /* Para dar espacio entre las columnas */
@@ -15,37 +52,12 @@ table {
   height: auto;
 }
 
-/* Para dar espacio entre las columnas */
 .mat-cell {
   padding: 10px 10px 10px 0;
 }
+/* --------------------------------------- */
 
 /* Para resaltar filas de la tabla */
-/* No se puede mover a styles.css */
 tr:hover {
 	background-color: rgba(128, 128, 128, 0.596);
-}
-
-/* Cambia el encabezado de la tabla */
-/* No se puede mover a styles.css */
-th {
-	font: 16px bolder, Roboto;
-	color: black;
-	letter-spacing: normal;
-  text-align: center;
-  /* Para que no se resalte el encabezado de la tabla */
-	background-color: white;
-}
-
-/* Título de las acciones en la tabla */
-/* No se puede mover a styles.css */
-.accion-header {
-	margin-left: 10%;
-	text-align: center;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
 }

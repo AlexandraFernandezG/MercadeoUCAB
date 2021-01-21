@@ -37,11 +37,12 @@ export class UsuarioComponent implements OnInit {
     private location: Location
   ) { }
   usuarioForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'correo', 'rol','estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'correo', 'rol', 'estatus', 'acciones'];
   dataSource: MatTableDataSource<Usuario>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
     this.service.getUsuarios()
     .subscribe(data => {
@@ -53,6 +54,7 @@ export class UsuarioComponent implements OnInit {
     } );
 
   }
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddUsuarioComponent);
   }
@@ -61,6 +63,7 @@ export class UsuarioComponent implements OnInit {
   openEModal( id: number): void{
     this.dialog.open(EditUsuarioComponent,
       {
+        // tslint:disable-next-line: object-literal-shorthand
         data: {id: id}
       }
     );
