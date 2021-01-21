@@ -31,7 +31,7 @@ export class SolicitudesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
-    this.id= +this.actRoute.snapshot.paramMap.get("id");
+    this.id = +this.actRoute.snapshot.paramMap.get('id');
     this.service.getSolicitudes()
     .subscribe(data => {
       this.dataSource = new MatTableDataSource<Solicitud>(data);
@@ -40,9 +40,10 @@ export class SolicitudesComponent implements OnInit {
     } );
   }
 
-  openModal(id: number):void{
+  openModal(id: number): void {
     this.dialog.open(AddEstudioComponent,
       {
+        // tslint:disable-next-line: object-literal-shorthand
         data: {id: id}
       }
       );

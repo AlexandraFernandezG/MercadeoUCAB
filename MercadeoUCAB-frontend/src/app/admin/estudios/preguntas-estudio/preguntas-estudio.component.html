@@ -1,6 +1,6 @@
 <div class="container">
 
-	<div class="row text-left mt-5">
+	<!-- <div class="row text-left mt-5"> -->
 		<!-- <div class="col-5 preguntas-estudio-header"> -->
       <!-- TODO: agregar botón para volver a la página de estudios solicitados -->
 			<!-- <div class="row">
@@ -23,7 +23,30 @@
         </a>
 			</div> -->
 		<!-- </div> -->
-	</div>
+  <!-- </div> -->
+
+  <div class="pageHeader">
+    <mat-toolbar>
+      <span class="fill-remaining-space"></span>
+      <span>Preguntas asignadas al estudio #{{id}}</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+  </div>
+  <!-- <div class="div-opciones">
+    <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal1()">
+      Nueva pregunta
+      <i class="fas fa-plus-circle"></i>
+    </a>
+    <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal">
+      Preguntas sugeridas
+      <i class="fas fa-plus-circle"></i>
+    </a>
+    <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal(id)">
+      Utilizar estudio existente
+      <i class="fas fa-plus-circle"></i>
+    </a>
+  </div> -->
+
 	<div class="mat-elevation-z8">
 		<table mat-table [dataSource]="dataSource">
 
