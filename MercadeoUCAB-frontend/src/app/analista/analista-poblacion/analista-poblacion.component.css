@@ -15,3 +15,44 @@ table {
 .headerEstudios{
     margin: 30px auto;
 }
+/* Cambia el encabezado de la tabla */
+th {
+	font: 16px bolder, Roboto;
+	color: black;
+	letter-spacing: normal;
+  text-align: center;
+  /* Para que no se resalte el encabezado de la tabla */
+  background-color: white;
+}
+
+/* Título de las acciones en la tabla */
+.accion-header {
+	margin-left: 10%;
+	text-align: center;
+}
+
+/* Para dar espacio entre las columnas */
+.mat-row {
+  height: auto;
+}
+
+.mat-cell {
+  padding: 10px 10px 10px 0;
+}
+/* --------------------------------------- */
+
+/* Para resaltar filas de la tabla */
+tr:hover {
+	background-color: rgba(128, 128, 128, 0.596);
+}
+
+/* Tamaño de las columnas (para mejor visualización del contenido)
+-- Configuración particular a esta vista */
+td#columna-descripcion {
+  width: 70%;
+}
+
+td#columna-id {
+  width: 10%;
+}
+/* --------------------------------------- */
