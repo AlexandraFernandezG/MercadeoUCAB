@@ -9,29 +9,33 @@
 
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
-    
-        <!-- Position Column -->
+
+        <!-- Columna ID -->
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
-          <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td id="columna-id" mat-cell *matCellDef="let element"> {{element._id}} </td>
         </ng-container>
-    
-        <!-- Name Column -->
+
+        <!-- Column Descripción -->
         <ng-container matColumnDef="descripcion">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
-          <td mat-cell *matCellDef="let element"> {{element._descripcion}} </td>
+          <td id="columna-descripcion" mat-cell *matCellDef="let element"> {{element._descripcion}} </td>
         </ng-container>
-    
-        
+
+        <!-- Columna de Acciones -->
         <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef></th>
+          <!-- TODO: preguntar qué hace este botón -->
+          <th class="accion-header" mat-header-cell *matHeaderCellDef>?</th>
           <mat-cell *matCellDef="let row">
-            <button mat-icon-button (click)="crearEstudio()">Realizar <mat-icon>build_circle</mat-icon></button>
-            
+            <button mat-icon-button (click)="crearEstudio()">Realizar <mat-icon class="realizar-boton">
+                build_circle
+              </mat-icon>
+            </button>
+
           </mat-cell>
         </ng-container>
-    
-        <!-- 
+
+        <!--
         <ng-container matColumnDef="symbol">
           <th mat-header-cell *matHeaderCellDef> Symbol </th>
           <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
@@ -40,8 +44,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-    
+
       <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
     </div>
-    
+
 </html>
