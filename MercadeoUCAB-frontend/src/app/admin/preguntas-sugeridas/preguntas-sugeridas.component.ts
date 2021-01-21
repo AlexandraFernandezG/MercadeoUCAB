@@ -41,14 +41,14 @@ export class PreguntasSugeridasComponent implements OnInit {
   ) { }
   preguntaForm: FormGroup;
   idestudio: number;
-  displayedColumns: string[] = ['descripcion','tipoPregunta','estatus', 'acciones'];
+  displayedColumns: string[] = ['descripcion', 'tipoPregunta', 'estatus', 'acciones'];
   dataSource: MatTableDataSource<Pregunta3>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
-    this.dialogRef.updateSize('650px', '450px')
-    this.idestudio = +this.actRoute.snapshot.paramMap.get("id");
+    this.dialogRef.updateSize('650px', '450px');
+    this.idestudio = +this.actRoute.snapshot.paramMap.get('id');
     console.log('id:', this.data.idSolicitud);
     this.servicePreguntaEstudio.getPreguntasSugeridasEstudio(this.data.idSolicitud)
     .subscribe(data => {

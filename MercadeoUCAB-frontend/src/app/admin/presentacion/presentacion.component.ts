@@ -33,11 +33,12 @@ export class PresentacionComponent implements OnInit {
     private location: Location
   ) { }
   presentacionForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'descripcion','estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'estatus', 'acciones'];
   dataSource: MatTableDataSource<Presentacion>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
     this.service.getPresentaciones()
     .subscribe(data => {
@@ -47,6 +48,7 @@ export class PresentacionComponent implements OnInit {
     } );
 
   }
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddPresentacionComponent);
   }
@@ -55,6 +57,7 @@ export class PresentacionComponent implements OnInit {
   openEModal( id: number): void{
     this.dialog.open(EditPresentacionComponent,
       {
+        // tslint:disable-next-line: object-literal-shorthand
         data: {id: id}
       }
     );

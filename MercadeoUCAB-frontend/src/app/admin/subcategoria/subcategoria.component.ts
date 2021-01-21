@@ -35,7 +35,7 @@ export class SubcategoriaComponent implements OnInit {
     private location: Location
   ) { }
   subcategoriaForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'descripcion','estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'estatus', 'acciones'];
   dataSource: MatTableDataSource<Subcategoria>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -52,6 +52,7 @@ export class SubcategoriaComponent implements OnInit {
     } );
   }
 
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddSubcategoriaComponent);
   }
