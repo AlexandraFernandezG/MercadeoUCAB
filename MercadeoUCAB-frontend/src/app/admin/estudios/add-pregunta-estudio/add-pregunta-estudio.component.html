@@ -30,11 +30,11 @@
         <mat-label>Descripción:</mat-label>
         <input formControlName="descripcion" matInput required />
         <mat-error *ngIf="preguntaForm.get('descripcion').errors?.required">
-          Falta llenar la descripción
+          Campo obligatorio
         </mat-error>
       </mat-form-field>
     </div>
-  
+
     <!--Para las opciones de Seleccion Simple y Multiple-->
     <div
       *ngIf="preguntaForm.get('tipoPregunta').value == 'Selección Simple' || preguntaForm.get('tipoPregunta').value == 'Selección Múltiple'">
@@ -52,9 +52,9 @@
       </div>
       </div>
     </div>
-  
-    
-    
+
+
+
 
   </form>
   <button type="submit" mat-raised-button color="primary" [disabled]="preguntaForm.invalid" (click)="addPreguntaEstudio()">
@@ -62,4 +62,4 @@
   </button>
   <button  mat-raised-button color="warn" (click)="close()">
     Cancelar
-  </button> 
+  </button>
