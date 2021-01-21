@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UsuariosService } from '../servicios/usuarios.service';
 import { Usuario, UsuarioCorreo } from '../modelos/usuario';
 import { useAnimation } from '@angular/animations';
-import { NotificationsService } from 'angular2-notifications'
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-login',
@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
 
   ) { }
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
     this.loginForm = new FormGroup(
       {
@@ -46,15 +47,17 @@ export class LoginComponent implements OnInit {
    // this.logout();
   }
 
+  // tslint:disable-next-line: typedef
   onSucess(message){
     this.servicenotifications.success('Exitoso', message, {
       position: ['bottom', 'right'],
       timeOut: 5000,
       animate: 'fade',
       showProgressBar: true,
-      })
+      });
   }
 
+  // tslint:disable-next-line: typedef
   onError(message){
     this.servicenotifications.error('¡Algo falló!', message, {
       position: ['bottom', 'right'],
@@ -64,6 +67,7 @@ export class LoginComponent implements OnInit {
       });
   }
 
+  // tslint:disable-next-line: typedef
   onLogin() {
   if (this.loginForm.valid) {
       console.log('entre1');
@@ -72,17 +76,16 @@ export class LoginComponent implements OnInit {
         if (this.user.estado === 'success') {
           this.serviceUsuario.getUsuarioCorreo(this.usuario.correo)
             .subscribe( userData => {this.usuarioLog = userData;
-              localStorage.setItem('usuarioID', JSON.stringify(this.usuarioLog[0].id));
-              localStorage.setItem('rol',  JSON.stringify (this.user.rol));
-              localStorage.setItem('nombre', JSON.stringify(this.usuarioLog[0].nombre));
-  
+                                     localStorage.setItem('usuarioID', JSON.stringify(this.usuarioLog[0].id));
+                                     localStorage.setItem('rol',  JSON.stringify (this.user.rol));
+                                     localStorage.setItem('nombre', JSON.stringify(this.usuarioLog[0].nombre));
             } );
           if (this.user.rol === 'Administrador'){
             console.log ('Soy un administrador');
             this.onSucess('Inicio sesión exitoso');
             setTimeout(() => {
               this.router.navigate(['/admin']);
-            },2000);
+            }, 2000);
           }
           if (this.user.rol === 'Encuestado'){
             console.log('Soy un Encuestado');
@@ -90,7 +93,7 @@ export class LoginComponent implements OnInit {
             this.onSucess('Inicio sesión exitoso');
             setTimeout(() => {
               this.router.navigate(['encuestado/']);
-            },2000);
+            }, 2000);
           }
           if (this.user.rol === 'Analista'){
             console.log('Soy un  Analista');
@@ -98,14 +101,14 @@ export class LoginComponent implements OnInit {
             this.onSucess('Inicio sesión exitoso');
             setTimeout(() => {
               this.router.navigate(['/analista/']);
-            },2000);
+            }, 2000);
           }
           if (this.user.rol === 'Cliente'){
             console.log('Soy un Cliente');
             this.onSucess('Inicio sesión exitoso');
             setTimeout(() => {
               this.router.navigate(['/cliente']);
-            },2000);
+            }, 2000);
           }
 
         }else {

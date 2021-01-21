@@ -4,19 +4,22 @@ import { Pregunta } from './pregunta';
 
 export class PreguntaEstudio {
     constructor(
+       // tslint:disable-next-line: variable-name
        public _id: number,
+       // tslint:disable-next-line: variable-name
        public _estatus: string,
+       // tslint:disable-next-line: variable-name
        public _estudio: Estudio,
+       // tslint:disable-next-line: variable-name
        public _preguntaEncuesta: Pregunta
-       
      ){}
    }
 export class PreguntaEstudio2{
-     constructor(
-        public id: number,
-       public estatus: string,
-       public estudioDto: number,
-       public preguntaEncuestaDto: number
+    constructor(
+      public id: number,
+      public estatus: string,
+      public estudioDto: number,
+      public preguntaEncuestaDto: number
      ){}
      }
 
