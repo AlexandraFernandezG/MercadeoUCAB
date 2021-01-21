@@ -28,4 +28,4 @@ export class ResultadosService {
       }
       window.alert(errorMessage);
       return throwError(errorMessage);
-   }
+   }}

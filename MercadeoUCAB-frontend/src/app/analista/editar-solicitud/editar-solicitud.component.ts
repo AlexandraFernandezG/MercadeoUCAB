@@ -28,14 +28,14 @@ export class EditarSolicitudComponent implements OnInit {
   nivelAcademicoArray: NivelAcademico[];
   nivelAcademico2: NivelAcademico2;
   nivelEconomicoArray: NivelEconomico[];
-  selectedEstado: Lugar = { 
+  selectedEstado: Lugar = {
     _id: 0,
     _nombre: '',
     _tipo: '',
     _categoriaSocioEconominca: '',
     _estatus: '',
     _fk_lugar: null,
-  }
+  };
   municipios: Lugar[];
 
   constructor(
@@ -47,27 +47,26 @@ export class EditarSolicitudComponent implements OnInit {
     private lugarService: LugarService,
     private variosService: VariosService,
     @Inject(MAT_DIALOG_DATA) public data: Solicitud2,
-  ) { 
+  ) {
     this.solicitudForm = this.fb.group({
-      
-      descripcion: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
-      edadMinima: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
-      edadMaxima: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
-      genero: new FormControl('',[Validators.maxLength(100)]),
-      estadoCivil: new FormControl('',[Validators.maxLength(100)]),
-      estado: new FormControl('',[Validators.maxLength(100)]),
-      municipio: new FormControl('',[Validators.maxLength(100)]),
-      disponibilidadEnLinea: new FormControl('',[Validators.maxLength(100)]),
-      cantidadPersonas: new FormControl('',[Validators.maxLength(100)]),
-      cantidadHijos: new FormControl('',[Validators.maxLength(100)]),
-      generoHijos: new FormControl('',[Validators.maxLength(100)]),
-      edadMinimaHijos: new FormControl('',[Validators.maxLength(100)]),
-      edadMaximaHijos: new FormControl('',[Validators.maxLength(100)]),
+      descripcion: new FormControl( '', [ Validators.required, Validators.maxLength(150)]),
+      edadMinima: new FormControl('', [ Validators.required, Validators.maxLength(50)]),
+      edadMaxima: new FormControl('', [ Validators.required, Validators.maxLength(50)]),
+      genero: new FormControl('', [Validators.maxLength(100)]),
+      estadoCivil: new FormControl('', [Validators.maxLength(100)]),
+      estado: new FormControl('', [Validators.maxLength(100)]),
+      municipio: new FormControl('', [Validators.maxLength(100)]),
+      disponibilidadEnLinea: new FormControl('', [Validators.maxLength(100)]),
+      cantidadPersonas: new FormControl('', [Validators.maxLength(100)]),
+      cantidadHijos: new FormControl('', [Validators.maxLength(100)]),
+      generoHijos: new FormControl('', [Validators.maxLength(100)]),
+      edadMinimaHijos: new FormControl('', [Validators.maxLength(100)]),
+      edadMaximaHijos: new FormControl('', [Validators.maxLength(100)]),
 
-      nivelEconomicoDto: new FormControl('',[Validators.maxLength(100)]),
-      productoDto: new FormControl( '',[ Validators.required, Validators.maxLength(150)]),
-      ocupacionDto: new FormControl('',[Validators.maxLength(100)]),
-      nivelAcademicoDto: new FormControl('',[Validators.maxLength(100)]),
+      nivelEconomicoDto: new FormControl('', [Validators.maxLength(100)]),
+      productoDto: new FormControl( '', [ Validators.required, Validators.maxLength(150)]),
+      ocupacionDto: new FormControl('', [Validators.maxLength(100)]),
+      nivelAcademicoDto: new FormControl('', [Validators.maxLength(100)]),
     });
   }
 
@@ -97,27 +96,27 @@ export class EditarSolicitudComponent implements OnInit {
   ngOnInit(): void {
     this.getId();
 
-    //Productos de la BD para el select
+    // Productos de la BD para el select
     this.productoService.getProductos()
-    .subscribe(productosData => {this.productos = productosData;});
+    .subscribe(productosData => {this.productos = productosData; });
 
-    //Ocupaciones de la BD para el select
+    // Ocupaciones de la BD para el select
     this.ocupacionService.getOcupaciones()
-    .subscribe(ocupacionesData => {this.ocupaciones = ocupacionesData;});
+    .subscribe(ocupacionesData => {this.ocupaciones = ocupacionesData; });
 
-    //Nivel Académico de la BD para el select
+    // Nivel Académico de la BD para el select
     this.variosService.getNivelAcademico()
-    .subscribe(nivelAcademicoData => {this.nivelAcademicoArray = nivelAcademicoData;});
+    .subscribe(nivelAcademicoData => {this.nivelAcademicoArray = nivelAcademicoData; });
 
-    //Nivel Económico de la BD para el select
+    // Nivel Económico de la BD para el select
     this.variosService.getNivelEconomico()
-    .subscribe(nivelEconomicoData => {this.nivelEconomicoArray = nivelEconomicoData;});
+    .subscribe(nivelEconomicoData => {this.nivelEconomicoArray = nivelEconomicoData; });
 
-    //Lugares de la BD para el select
+    // Lugares de la BD para el select
     this.lugarService.getLugares().subscribe(lugaresData => {
       this.estados = lugaresData.filter(
         (obj) => {
-          if(obj._tipo == "estado"){
+          if (obj._tipo === 'estado'){
             return true;
           }
           return false;
@@ -128,26 +127,27 @@ export class EditarSolicitudComponent implements OnInit {
     this.lugarService.getLugares().subscribe(lugaresData => {
       this.municipios = lugaresData.filter(
         (obj) => {
-          if(obj._tipo == "municipio"){
+          if (obj._tipo === 'municipio'){
             return true;
           }
           return false;
         }
       );
     });
-    
+
     this.productoService.getProductos().subscribe(productosData => console.log(productosData));
     this.ocupacionService.getOcupaciones().subscribe(ocupacionesData => console.log(ocupacionesData));
     this.lugarService.getLugares().subscribe(lugaresData => console.log(lugaresData));
   }
 
+  // tslint:disable-next-line: typedef
   getId(){
     console.log('primero', this.solicitud);
     const id = this.data.id;
     this.service.getSolicitud(id).subscribe(data => {this.solicitud = data;
-      console.log('segundo', this.solicitud);
+                                                     console.log('segundo', this.solicitud);
     });
-    
+
   }
 
   editSolicitud(): void{
