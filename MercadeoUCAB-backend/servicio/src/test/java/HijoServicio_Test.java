@@ -5,6 +5,7 @@ import ucab.dsw.dtos.InformacionDto;
 import ucab.dsw.entidades.Hijo;
 import ucab.dsw.servicio.HijoServicio;
 
+import javax.ws.rs.core.Response;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,10 +36,10 @@ public class HijoServicio_Test {
 	public void pruebaConsultarHijo(){
 		
 		HijoServicio servicio = new HijoServicio();
-		Hijo hijo_buscar = servicio.consultarHijo(1);
+		Response hijo_buscar = servicio.consultarHijo(1);
 		
 		try {
-			Assertions.assertEquals(1, hijo_buscar.get_id());
+			Assertions.assertEquals(1, hijo_buscar);
 			
 		} catch (Exception e) {
 			
@@ -69,7 +70,7 @@ public class HijoServicio_Test {
 			hijoDto.setEstatus("Activo");
 			hijoDto.setInformacionDto(informacionDto);
 			
-			Hijo hijoDtoInsertado = servicio.addHijo(hijoDto);
+			Response hijoDtoInsertado = servicio.addHijo(hijoDto);
 			
 			Assertions.assertNotNull(hijoDtoInsertado);
 		} catch (Exception e) {
@@ -120,7 +121,7 @@ public class HijoServicio_Test {
 			listaHijosDto.add(hijoDto2);
 			
 			// Método para insertar los registros anteriores, en la BD.
-			List<Hijo> listaHijosInsertados =  servicio.addVariosHijos(listaHijosDto);
+			List<Response> listaHijosInsertados =  servicio.addVariosHijos(listaHijosDto);
 			
 			// Comprobación
 			boolean condicion = listaHijosInsertados.size() > 0 // Esta no se está cumpliendo.

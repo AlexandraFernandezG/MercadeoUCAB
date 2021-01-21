@@ -58,6 +58,15 @@ export class EstudiosService {
     );
   }
 
+  consultarEstudio(id: number): Observable<Estudio> {
+    console.log(id);
+    return this.http.get<Estudio>(this.url + 'estudio/consultarEstudio/' + id)
+    .pipe(
+      tap(_ => console.log(`fetched estudio id=${id}`)),
+      catchError(this.handleError)
+    );
+  }
+
   /// Error HandleError
   handleError(error): Observable<never> {
     let errorMessage = '';

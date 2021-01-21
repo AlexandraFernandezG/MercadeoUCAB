@@ -1,7 +1,3 @@
-<br><br><br>
-
-<br><br><br>
-
 
 <div class="container">
 
@@ -12,46 +8,6 @@
         <a id="hand" class="btn"><i class="fas fa-retweet fa-lg" style="color:rgba(84, 157, 252, 0.993);"></i></a>
       </div>
     <!-- </div> -->
-
-
-    <!-- <div class="container" style="margin-bottom: 30px;">
-      <table id="dataTable" #dataTable class="table table-bordered table-hover" style="background-color: #FDF4E3;">
-        <thead class="thead" style="background-color:rgba(84, 157, 252, 0.993); color: #FFFF;">
-          <tr class="text-center">
-            <th scope="col">id</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Tipo de Pregunta</th>
-            <th scope="col">Estatus</th>
-            <th scope="col">Acciones</th>
-            <th scope="col">Agregar al estudio</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tbody class="tbody">
-          <tr *ngFor="let pregunta of preguntas">
-            <th class="text-center" scope="row">{{pregunta.idPregunta}}</th>
-            <td class="text-center">{{pregunta.descripcionPregunta}}</td>
-            <td class="text-center">{{pregunta.tipoPregunta}}</td>
-            <td class="text-center">{{pregunta.estatusPregunta}}</td>
-            <td>
-              <div class="row">
-                <div align="center" class="col-sm-4">
-                  <a class="btn btn-primary text-white" style="cursor: pointer;" data-toggle="modal" data-target="#Modal" (click)="openEModal(pregunta._id)"><i class="fas fa-pencil-alt"></i></a>
-                </div>
-                <div align="center" class="col-sm-4">
-                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div align="center" class="col-sm-4">
-                   <button type="submit" class="btn btn-info" (click)="Agregar(pregunta)" ><i class="fas fa-plus"></i></button>
-                </div>
-             </td>
-        </tbody>
-      </table>
-    </div> -->
-  </div>
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -64,11 +20,6 @@
       <ng-container matColumnDef="tipoPregunta">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
         <td mat-cell *matCellDef="let element"> {{element.tipoPregunta}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="subCategoria">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Subcategoria </th>
-        <td mat-cell *matCellDef="let element"> {{element._subcategoria._nombre}} </td>
       </ng-container>
 
       <ng-container matColumnDef="estatus">
