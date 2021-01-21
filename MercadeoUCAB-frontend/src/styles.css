@@ -21,31 +21,34 @@
 }
 
 /* Íconos */
-/* Estilo del botón de modificar, de las tablas. */
-.create-icon {
+.create-icon { /* Estilo del botón de modificar, de las tablas. */
   color: #4174db;
 }
 
-.delete-icon {
+.delete-icon { /* Estilo del botón de eliminar, de las tablas. */
   color: rgb(165, 35, 35);
 }
 
-.asignar-icon {
+.asignar-icon { /* Estilo del botón de asignar, de las tablas. */
   color:  rgb(66, 138, 38);
+}
+
+.realizar-boton {
+  color: #7d2ae8;
 }
 /* --------------------------------------- */
 
 .mat-paginator {
 	width: inherit;
-	/* align-content: center; */
   align-items: center;
 }
 
-/* Modifica el área del título de la tabla
-y el botón de agregar. */
-.col-5 {
-  padding-left: 15%;
-  width: 1000px;
+/* Área de opciones */
+.botones-opciones {
+  /* padding-left: 15%;*/
+  margin: 0px 40px;
+  /* justify-content: center; */
+  text-align: center;
 }
 
 
