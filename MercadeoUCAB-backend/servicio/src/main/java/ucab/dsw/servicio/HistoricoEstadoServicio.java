@@ -79,7 +79,7 @@ public class HistoricoEstadoServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado el historico: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -183,7 +183,7 @@ public class HistoricoEstadoServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado el historico: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -240,7 +240,7 @@ public class HistoricoEstadoServicio extends AplicacionBase{
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                        .add("excepcion", "No se ha encontrado el historico: " + ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -284,7 +284,7 @@ public class HistoricoEstadoServicio extends AplicacionBase{
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                        .add("excepcion", "No se ha encontrado el historico: " + ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();

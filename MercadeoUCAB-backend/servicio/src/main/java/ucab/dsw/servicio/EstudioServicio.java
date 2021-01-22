@@ -42,24 +42,7 @@ public class EstudioServicio extends AplicacionBase {
         try {
             List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
 
-            for (Estudio estudios_consultados: listaEstudios) {
-                JsonObject estudio = Json.createObjectBuilder()
-                        .add("id", estudios_consultados.get_id())
-                        .add("nombre", estudios_consultados.get_nombre())
-                        .add("tipoInstrumento", estudios_consultados.get_tipoInstrumento())
-                        //.add("fechaInicio", estudios_consultados.get_fechaInicio())
-                        //.add("fechaFin", estudios_consultados.get_fechaFin())
-                        .add("estatus", estudios_consultados.get_estatus()).build();
-
-                estudiosArrayJson.add(estudio);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Operación realizada con éxito")
-                    .add("codigo", 200)
-                    .add("Todas los estudios", estudiosArrayJson).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(listaEstudios).build();
 
 
         } catch (Exception ex){
@@ -98,7 +81,7 @@ public class EstudioServicio extends AplicacionBase {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -207,7 +190,7 @@ public class EstudioServicio extends AplicacionBase {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -270,7 +253,7 @@ public class EstudioServicio extends AplicacionBase {
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                        .add("excepcion", "No se ha encontrado el hijo: " + ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -312,7 +295,7 @@ public class EstudioServicio extends AplicacionBase {
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                        .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();

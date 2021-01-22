@@ -147,7 +147,7 @@ public class HijoServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado el hijo: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -283,7 +283,7 @@ public class HijoServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("excepcion", "No se ha encontrado el hijo: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
