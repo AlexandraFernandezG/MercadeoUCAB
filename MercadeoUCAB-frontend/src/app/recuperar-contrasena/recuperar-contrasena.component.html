@@ -4,10 +4,10 @@
     <form name="envioForm" [formGroup]="envioForm">
       <div class="form-group">
         <mat-form-field class="w-100" appaerance="outline">
-          <mat-label>Ingrese el correo:</mat-label>
+          <mat-label>Correo electrónico</mat-label>
           <input formControlName="correo" matInput required [(ngModel)]="usuario._correoelectronico"/>
           <mat-error *ngIf="envioForm.get('correo').errors?.required">
-            Falta llenar el correo electronico
+            Ingrese el correo con el que se registró en el sistema
           </mat-error>
         </mat-form-field>
       </div>
