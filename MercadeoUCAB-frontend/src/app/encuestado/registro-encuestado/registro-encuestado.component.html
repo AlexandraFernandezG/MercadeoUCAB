@@ -5,47 +5,47 @@
       <span class="fill-remaining-space"></span>
     </mat-toolbar>
   </div>
-  <form novalidate [formGroup]="registroForm" name="registroForm" (ngSubmit)="onSubmit()"> 
-  
+  <form novalidate [formGroup]="registroForm" name="registroForm" (ngSubmit)="onSubmit()">
+
     <div>
-    
+
       <mat-form-field class="full-width" appearance="fill">
-        <mat-label>Cedula</mat-label>
+        <mat-label>Cédula</mat-label>
         <input type="number" formControlName="cedula" matInput/>
       </mat-form-field>
-      
+
     </div>
-  
+
     <div class="nombres-input">
 			<mat-form-field class="full-width" appearance="fill">
 				<mat-label>Primer Nombre</mat-label>
 				<input formControlName="primerNombre"  matInput required />
 				<mat-error *ngIf="registroForm.get('primerNombre').errors?.required">
-					Campo requerido
+					Campo obligatorio
 				</mat-error>
 			</mat-form-field>
-        
+
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Segundo Nombre</mat-label>
         <input formControlName="segundoNombre"  matInput/>
       </mat-form-field>
 		</div>
-		
+
 		<div class="apellidos-input">
 			<mat-form-field class="full-width" appearance="fill">
 				<mat-label>Primer Apellido</mat-label>
 				<input formControlName="primerApellido"  matInput required />
 				<mat-error *ngIf="registroForm.get('primerApellido').errors?.required">
-					Campo requerido
+					Campo obligatorio
 				</mat-error>
 			</mat-form-field>
-			
+
 			<mat-form-field class="full-width" appearance="fill">
 				<mat-label>Segundo Apellido</mat-label>
 				<input formControlName="segundoApellido"  matInput/>
 			</mat-form-field>
 		</div>
-  
+
     <div class="edadMinima-input">
       <mat-form-field appearance="fill">
 				<mat-label>Choose a date</mat-label>
@@ -53,22 +53,22 @@
 				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 				<mat-datepicker #picker></mat-datepicker>
         <mat-error *ngIf="registroForm.get('fechaNacimiento').errors?.required">
-          Campo requerido
+          Campo obligatorio
         </mat-error>
       </mat-form-field>
-			
+
 			<mat-form-field class="full-width" appearance="fill">
-        <mat-label>Genero</mat-label>
+        <mat-label>Género</mat-label>
         <mat-select formControlName="genero" matInput>
           <mat-option value="Masculino">Masculino</mat-option>
           <mat-option value="Femenino">Femenino</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    
+
     <div>
-      
-  
+
+
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Estado Civil</mat-label>
         <mat-select formControlName="estadoCivil" matInput>
@@ -78,8 +78,8 @@
           <mat-option value="viudo">Viudo/a</mat-option>
         </mat-select>
       </mat-form-field>
-    </div>    
-    
+    </div>
+
     <div class="lugar-input">
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Estado</mat-label>
@@ -89,7 +89,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
+
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Municipio</mat-label>
         <mat-select formControlName="municipio" matInput required>
@@ -99,9 +99,9 @@
         </mat-select>
       </mat-form-field>
     </div>
-  
+
     <div class="nivelEconomico">
-    
+
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Nivel Económico</mat-label>
         <mat-select formControlName="nivelEconomicoDto" matInput>
@@ -110,7 +110,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      
+
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Disponibilidad en Línea</mat-label>
         <mat-select formControlName="disponibilidadEnLinea" matInput>
@@ -118,9 +118,9 @@
           <mat-option value="no">No</mat-option>
         </mat-select>
       </mat-form-field>
-      
+
     </div>
-  
+
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Nivel Académico</mat-label>
       <mat-select formControlName="nivelAcademicoDto" matInput>
@@ -129,7 +129,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-        
+
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Ocupación</mat-label>
       <mat-select formControlName="ocupacionDto" matInput>
@@ -138,17 +138,17 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  
+
     <div class="cantidadPersonas">
-    
+
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Nº de Personas</mat-label>
         <input type="number" formControlName="cantidadPersonas" matInput/>
       </mat-form-field>
-      
+
     </div>
     <!-- <div class="datosHijos">
-  
+
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Genero Hijo</mat-label>
         <mat-select formControlName="generoHijos" matInput>
@@ -156,24 +156,23 @@
           <mat-option value="Mujer">Femino</mat-option>
         </mat-select>
       </mat-form-field>
-    
+
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Edad Mínima Hijo/a</mat-label>
         <input type="number" formControlName="edadMinimaHijos" matInput/>
       </mat-form-field>
-  
+
       <mat-form-field class="full-width" appearance="fill">
         <mat-label>Edad Máxima Hijo/a</mat-label>
         <input type="number" formControlName="edadMaximaHijos" matInput/>
       </mat-form-field>
-      
+
     </div> -->
-  
+
     <div></div>
-  
+
     <button  mat-raised-button color="primary" type="submit" [disabled]="registroForm.invalid">
         Enviar
-    </button> 
-  
+    </button>
+
   </form>
-  
