@@ -92,10 +92,10 @@ export class ProductoComponent implements OnInit {
       subcategoriaDto: this.productoForm.get("subcategoriaDto").value,
       marcaDto: this.productoForm.get("marcaDto").value
     };
-  
+
     console.log(newProducto)
-    this._productoService.editProducto(newProducto).subscribe(() => {  
-    this.openSnackBar(); 
+    this._productoService.editProducto(newProducto).subscribe(() => {
+    this.openSnackBar();
     this.isWait = false;
     this.getProducto();
     this.getTipoPresentacion(); });
@@ -113,7 +113,7 @@ export class ProductoComponent implements OnInit {
   }
 
   console.log(newTP);
-  this._tpService.createProductoTipoPresentacion(newTP).subscribe(() => {   
+  this._tpService.createProductoTipoPresentacion(newTP).subscribe(() => {
     this.isWait = false;
     this.openSnackBar();
     this.getProducto();
@@ -140,7 +140,7 @@ deleteTipoPresentacion(tp: ProductoTipoPresentacion): void {
       this.getTipoPresentacion();
     });
   }
-} 
+}
 o
 
 
@@ -149,8 +149,8 @@ o
       this.getProducto();
       this.getTipoPresentacion();
     });
-    
-  } 
+
+  }
 
 
   *
