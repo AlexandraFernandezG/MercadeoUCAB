@@ -7,37 +7,6 @@
       <span class="fill-remaining-space"></span>
     </mat-toolbar>
   </div>
-
-
-    <!-- <div class="container" style="margin-bottom: 30px;">
-      <table id="dataTable" #dataTable class="table table-bordered table-hover" style="background-color: #FDF4E3;">
-        <thead class="thead" style="background-color:rgba(84, 157, 252, 0.993); color: #FFFF;">
-          <tr class="text-center">
-            <th scope="col">id</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Fecha Inicio</th>
-            <th scope="col">Fecha Fin</th>
-            <th scope="col">Estatus</th>
-            <th scope="col">Responder encuesta</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tbody class="tbody">
-          <tr *ngFor="let estudio of estudios">
-            <th class="text-center" scope="row">{{estudio.idEstudio}}</th>
-            <td class="text-center">{{estudio.nombreEstudio}}</td>
-            <td class="text-center">{{estudio.fechaInicioEstudio | date: "dd/MM/yyyy"}}</td>
-            <td class="text-center">{{estudio.fechaFinEstudio | date: "dd/MM/yyyy"}}</td>
-            <td class="text-center">{{estudio.estatusEstudio}}</td>  
-            <td>
-            <div align="center" class="col-sm-4">
-                 <button type="submit" class="btn btn-info" [routerLink]="['/encuestado/respuestas-encuesta', estudio._id]" ><i class="fas fa-check"></i></button>
-            </div>
-
-            </td>
-        </tbody>
-      </table>
-    </div> -->
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
 
@@ -47,31 +16,36 @@
       </ng-container>
 
       <ng-container matColumnDef="fechaInicio">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Inicio </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Inicia </th>
         <td mat-cell *matCellDef="let element"> {{element.fechaInicioEstudio | date: "dd/MM/yyyy"}} </td>
       </ng-container>
 
        <ng-container matColumnDef="fechaFin">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Fin </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Termina </th>
         <td mat-cell *matCellDef="let element"> {{element.fechaFinEstudio | date: "dd/MM/yyyy"}} </td>
-      </ng-container> 
+      </ng-container>
 
       <ng-container matColumnDef="estatus">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
         <td mat-cell *matCellDef="let element"> {{element.estatusEstudio}} </td>
       </ng-container>
-    
+
+      <!-- TODO: preguntar para qué es este botón -->
       <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef></th>
+        <th class="accion-header" mat-header-cell *matHeaderCellDef>?</th>
         <mat-cell *matCellDef="let row">
-          <button mat-icon-button [routerLink]="['/encuestado/respuestas-encuesta', row._id]"><mat-icon>launch</mat-icon></button>
+          <button mat-icon-button [routerLink]="['/encuestado/respuestas-encuesta', row._id]">
+            <mat-icon class="launch-icon mdl-js-button mdl-js-ripple-effect">
+            launch
+          </mat-icon>
+          </button>
         </mat-cell>
       </ng-container>
-    
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
   </div>
-  
+
 </div>
