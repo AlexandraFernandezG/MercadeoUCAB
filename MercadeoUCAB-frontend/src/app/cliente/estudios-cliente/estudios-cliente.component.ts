@@ -15,35 +15,38 @@ import { MatSort } from '@angular/material/sort';
 })
 export class EstudiosClienteComponent implements OnInit {
 
-  constructor( 
-    private estudiosService: EstudiosService, 
+  constructor(
+    private estudiosService: EstudiosService,
     private dialog: MatDialog,
+    // tslint:disable-next-line: variable-name
     private _router: Router
     ) { }
 
-  estudios: Estudio[];  
-  displayedColumns: string[] = ['_id', 'nombre', '_fechaInicio','_fechaFin', '_estatus', 'acciones'];
+  estudios: Estudio[];
+  displayedColumns: string[] = ['_id', 'nombre', '_fechaInicio', '_fechaFin', '_estatus', 'acciones'];
   dataSource: MatTableDataSource<Estudio>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
+
   ngOnInit(): void {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.estudiosService.getEstudiosCliente(id).subscribe(
-      estudios => { 
+      estudios => {
         this.dataSource = new MatTableDataSource<Estudio>(estudios);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
-    
+
 
     this.estudiosService.getEstudios().subscribe(estudios => console.log(estudios));
   }
   solicitarEstudio(): void {
     this._router.navigate(['/cliente/solicitar_estudio']);
   }
+  // tslint:disable-next-line: typedef
   onCreate(){
     this.dialog.open(SolicitudEstudioComponent);
   }
-  crearProducto(){};
+  // tslint:disable-next-line: typedef
+  crearProducto(){}
 }

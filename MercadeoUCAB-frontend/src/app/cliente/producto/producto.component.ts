@@ -29,29 +29,29 @@ export class ProductoComponent implements OnInit {
 
   producto: Producto =
   {
-    _id:0,
-    _nombre:'',
-    _estatus:'',
-    _descripcion:'',
-      _marca:{
-      _id:0,
-      _nombre:'',
+    _id: 0,
+    _nombre: '',
+    _estatus: '',
+    _descripcion: '',
+      _marca: {
+      _id: 0,
+      _nombre: '',
       _descripcion: '',
-     _estatus:'',
+     _estatus: '',
     },
-    _subcategoria:{
-      _id:0,
-      _nombre:'',
-      _estatus:'',
-      _descripcion:'',
-      _categoria:{
-        _id:0,
-        _nombre:'',
+    _subcategoria: {
+      _id: 0,
+      _nombre: '',
+      _estatus: '',
+      _descripcion: '',
+      _categoria: {
+        _id: 0,
+        _nombre: '',
         _descripcion: '',
-        _estatus:'',
+        _estatus: '',
       }
     }
-  }
+  };
   subcategorias: Subcategoria[] = [];
   marcas: Marca[] = [];
   tipos: Tipo [] = [];
@@ -62,21 +62,28 @@ export class ProductoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    // tslint:disable-next-line: variable-name
     private _productoService: ProductosService,
+    // tslint:disable-next-line: variable-name
     private _subcategoriaService: SubcategoriasService,
+    // tslint:disable-next-line: variable-name
     private _marcaService: MarcasService,
+    // tslint:disable-next-line: variable-name
     private _tipoService: TiposService,
+    // tslint:disable-next-line: variable-name
     private _presentacionService: PresentacionesService,
+    // tslint:disable-next-line: variable-name
     private _tpService: TiposPresentacionService,
+    // tslint:disable-next-line: variable-name
     private _snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {
 
     this.productoForm = this.fb.group({
-      nombre: new FormControl('',[ Validators.required]),
-      descripcion: new FormControl( '',[ Validators.required]),
+      nombre: new FormControl('', [ Validators.required]),
+      descripcion: new FormControl( '', [ Validators.required]),
       marca: new FormControl ('', [Validators.required]),
-      subcategoria: new FormControl('',[Validators.required])
+      subcategoria: new FormControl('', [Validators.required])
 
     });
    }
@@ -111,10 +118,10 @@ export class ProductoComponent implements OnInit {
       subcategoriaDto: this.productoForm.get("subcategoriaDto").value,
       marcaDto: this.productoForm.get("marcaDto").value
     };
-  
+
     console.log(newProducto)
-    this._productoService.editProducto(newProducto).subscribe(() => {  
-    this.openSnackBar(); 
+    this._productoService.editProducto(newProducto).subscribe(() => {
+    this.openSnackBar();
     this.isWait = false;
     this.getProducto();
     this.getTipoPresentacion(); });
@@ -132,7 +139,7 @@ export class ProductoComponent implements OnInit {
   }
 
   console.log(newTP);
-  this._tpService.createProductoTipoPresentacion(newTP).subscribe(() => {   
+  this._tpService.createProductoTipoPresentacion(newTP).subscribe(() => {
     this.isWait = false;
     this.openSnackBar();
     this.getProducto();
@@ -159,7 +166,7 @@ deleteTipoPresentacion(tp: ProductoTipoPresentacion): void {
       this.getTipoPresentacion();
     });
   }
-} 
+}
 o
 
 
@@ -168,8 +175,8 @@ o
       this.getProducto();
       this.getTipoPresentacion();
     });
-    
-  } 
+
+  }
 
 
   *

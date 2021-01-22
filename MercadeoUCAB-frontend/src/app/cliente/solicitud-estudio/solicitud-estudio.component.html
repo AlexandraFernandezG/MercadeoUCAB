@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center">
     <h1>Solicitud de Estudios</h1>
   </div>
-  <form class="w-100" novalidate [formGroup]="solicitudForm" name="solicitudForm" (ngSubmit)="onSubmit()"> 
+  <form class="w-100" novalidate [formGroup]="solicitudForm" name="solicitudForm" (ngSubmit)="onSubmit()">
     <h2>Producto</h2>
     <div id="productoGrup" class="form-row">
       <div class="d-flex flex-column col-lg-5">
@@ -15,7 +15,7 @@
             </mat-option>
           </mat-select>
           <mat-error *ngIf="solicitudForm.get('productoDto').errors?.required">
-            Campo requerido
+            Campo obligatorio
           </mat-error>
         </mat-form-field>
       </div>
@@ -25,7 +25,7 @@
           <mat-label>Descripción del estudio</mat-label>
           <input formControlName="descripcion" matInput required />
           <mat-error *ngIf="solicitudForm.get('descripcion').errors?.required">
-            Campo requerido
+            Campo obligatorio
           </mat-error>
         </mat-form-field>
       </div>
@@ -40,17 +40,17 @@
             <mat-label>Mínima</mat-label>
             <input type="number" formControlName="edadMinima" matInput min="0" required/>
               <mat-error *ngIf="solicitudForm.get('edadMinima').errors?.required">
-                Campo requerido
+                Campo obligtorio
             </mat-error>
           </mat-form-field>
           <mat-form-field class="w-50 mt-0" appearance="fill" style="max-width: 125px">
             <mat-label>Máxima</mat-label>
             <input type="number" formControlName="edadMaxima" matInput min="0" required/>
               <mat-error *ngIf="solicitudForm.get('edadMaxima').errors?.required">
-                Campo requerido
+                Campo obligatorio
               </mat-error>
           </mat-form-field>
-        </div>          
+        </div>
       </div>
       <div id="genero-grupo" class="mr-4">
         <h3 class="mb-0">Ingrese el género de la población a encuestar.</h3>

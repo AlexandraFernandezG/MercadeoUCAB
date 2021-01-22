@@ -1,5 +1,5 @@
 <body>
-<form [formGroup]="productoForm" novalidate> 
+<form [formGroup]="productoForm" novalidate>
 
     <h4>Nuevo Producto</h4>
       <div class="form-group">
@@ -7,7 +7,7 @@
           <mat-label>Nombre:</mat-label>
           <input formControlName="nombre" matInput required [(ngModel)]="producto._nombre"/>
           <mat-error *ngIf="productoForm.get('nombre').errors?.required">
-              Falta llenar el nuevo nombre del producto
+              Campo obligatorio
           </mat-error>
         </mat-form-field>
       </div>
@@ -16,7 +16,7 @@
           <mat-label>Descripción:</mat-label>
           <input formControlName="descripcion" matInput required [(ngModel)]="producto._descripcion"/>
            <mat-error *ngIf="productoForm.get('descripcion').errors?.required">
-              Falta llenar la descripción
+            Campo obligatorio
           </mat-error>
         </mat-form-field>
       </div>
