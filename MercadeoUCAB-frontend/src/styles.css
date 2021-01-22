@@ -36,6 +36,10 @@
 .realizar-boton {
   color: #7d2ae8;
 }
+
+.launch-icon {
+  color: grey;
+}
 /* --------------------------------------- */
 
 .mat-paginator {
