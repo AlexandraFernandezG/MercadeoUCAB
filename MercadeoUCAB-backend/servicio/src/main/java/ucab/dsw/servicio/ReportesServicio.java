@@ -5,7 +5,6 @@ import ucab.dsw.accesodatos.*;
 import ucab.dsw.entidades.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -253,6 +252,8 @@ public class ReportesServicio extends AplicacionBase {
     public Response preguntasCantidadSimpleMultiple(@PathParam("id") long id){
 
         JsonObject dataObject;
+        JsonArrayBuilder cantidades =Json.createArrayBuilder();
+        JsonArrayBuilder builder =Json.createArrayBuilder();
         long cantidad_opcion = 0;
 
         try {
@@ -288,12 +289,8 @@ public class ReportesServicio extends AplicacionBase {
             DaoRespuesta daoRespuesta = new DaoRespuesta();
             DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
             List<RespuestaPregunta> listaRespuestasPregunta = daoRespuestaPregunta.findAll(RespuestaPregunta.class);
-            List<SimpleMultipleEscalaResponse> cantidadesAux = new ArrayList<>();
             List<Long> cantidadOpcion = new ArrayList<>();
             List<Long> cantidadOpcion2 = new ArrayList<>();
-            List<SimpleMultipleResponse> Resultado = new ArrayList<>();
-            List<SimpleMultipleEscalaResponse> CantidadesSimples = new ArrayList<>();
-            List<SimpleMultipleEscalaResponse> CantidadesMultiples = new ArrayList<>();
 
             for (PreguntaEncuesta preguntaEncuestaSimpleMultiple: listaPreguntasSimplesMultiples){
 
@@ -304,23 +301,32 @@ public class ReportesServicio extends AplicacionBase {
 
                         cantidadOpcion = daoRespuesta.cantidadSimple(preguntaEncuestaSimpleMultiple.get_id(), respuestaPregunta.get_nombre());
                         cantidad_opcion = cantidadOpcion.get(0);
-                        CantidadesSimples.add(new SimpleMultipleEscalaResponse(preguntaEncuestaSimpleMultiple.get_descripcion(), preguntaEncuestaSimpleMultiple.get_tipoPregunta(), respuestaPregunta.get_nombre(), (int)cantidad_opcion));
+                        cantidades.add(Json.createArrayBuilder().add(respuestaPregunta.get_nombre()).add(cantidad_opcion));
                         cantidadOpcion.clear();
 
                     } else if(respuestaPregunta.get_preguntaEncuesta().get_id() == preguntaEncuestaSimpleMultiple.get_id() && preguntaEncuestaSimpleMultiple.get_tipoPregunta().equals("Multiple")){
 
                         cantidadOpcion2 = daoRespuesta.cantidadMultiple(preguntaEncuestaSimpleMultiple.get_id(), respuestaPregunta.get_nombre());
                         cantidad_opcion = cantidadOpcion2.get(0);
-                        CantidadesMultiples.add(new SimpleMultipleEscalaResponse(preguntaEncuestaSimpleMultiple.get_descripcion(), preguntaEncuestaSimpleMultiple.get_tipoPregunta(), respuestaPregunta.get_nombre(), (int)cantidad_opcion));
+                        cantidades.add(Json.createArrayBuilder().add(respuestaPregunta.get_nombre()).add(cantidad_opcion));
                         cantidadOpcion2.clear();
                     }
+
+
                 }
+
+                JsonObject pregunta = Json.createObjectBuilder()
+                        .add("pregunta", preguntaEncuestaSimpleMultiple.get_descripcion())
+                        .add("tipo_pregunta", preguntaEncuestaSimpleMultiple.get_tipoPregunta())
+                        .add("resultado", cantidades).build();
+
+                builder.add(pregunta);
             }
 
-            SimpleMultipleResponse element = new SimpleMultipleResponse(CantidadesSimples, CantidadesMultiples);
-            Resultado.add(element);
+            dataObject = Json.createObjectBuilder()
+                    .add("Preguntas", builder).build();
 
-            return Response.status(Response.Status.OK).entity(Resultado).build();
+            return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
 
