@@ -23,16 +23,16 @@ public class ReportesServicio_Test {
     }
 
     /**
-     * Prueba unitaria para verificar el funcionamiento del método PorcentajeVeraderoFalso
+     * Prueba unitaria para verificar el funcionamiento del método CantidadesPreguntas
      * @author Emanuel Di Cristofaro
      */
     @Test
-    void testPorcentajeVeraderoFalso(){
+    void testCantidadesPreguntas(){
 
         long id = 3; // ID del estudio para poder la estadistica
 
         ReportesServicio servicio = new ReportesServicio();
-        Response respuesta = servicio.preguntasCantidadVF(id);
+        Response respuesta = servicio.listarCantidadesPreguntas(id);
         Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
