@@ -6,6 +6,7 @@ import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.HistoricoEstado;
 import ucab.dsw.servicio.HistoricoEstadoServicio;
 
+import javax.ws.rs.core.Response;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +20,7 @@ public class HistoricoEstadoServicio_Test {
         HistoricoEstadoServicio servicio = new HistoricoEstadoServicio();
 
         try {
-            Assertions.assertTrue(servicio.listarHistoricos().size() > 0);
+            Assertions.assertNotNull(servicio.listarHistoricos());
 
         } catch (Exception e) {
 
@@ -33,10 +34,10 @@ public class HistoricoEstadoServicio_Test {
     public void pruebaConsultarHistorico(){
 
         HistoricoEstadoServicio servicio = new HistoricoEstadoServicio();
-        HistoricoEstado historicoEstado = servicio.consultarHistorico(1);
+        Response historicoEstado = servicio.consultarHistorico(1);
 
         try {
-            Assertions.assertEquals(1, historicoEstado.get_id());
+            Assertions.assertNotNull(historicoEstado);
         } catch (Exception e) {
             Assertions.fail(e.getMessage());
         }
@@ -50,7 +51,7 @@ public class HistoricoEstadoServicio_Test {
         HistoricoEstadoServicio servicio = new HistoricoEstadoServicio();
 
         try {
-            Assertions.assertTrue(servicio.historicosActivos().size() > 0);
+            Assertions.assertNotNull(servicio.historicosActivos());
 
         } catch (Exception e) {
 
@@ -80,8 +81,8 @@ public class HistoricoEstadoServicio_Test {
             historicoEstadoDto.setEstatus("Activo");
             UsuarioDto usuarioDto = new UsuarioDto(1);
             historicoEstadoDto.setUsuarioDto(usuarioDto);
-            HistoricoEstadoDto resultado = servicio.addHistoricoEstado(historicoEstadoDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response resultado = servicio.addHistoricoEstado(historicoEstadoDto);
+            Assert.assertNotNull(resultado);
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

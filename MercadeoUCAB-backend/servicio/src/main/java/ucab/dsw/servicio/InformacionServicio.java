@@ -1,13 +1,19 @@
 package ucab.dsw.servicio;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.InformacionDto;
 import ucab.dsw.dtos.LugarDto;
 import ucab.dsw.entidades.*;
+import ucab.dsw.excepciones.PruebaExcepcion;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path( "/informacion" )
@@ -15,71 +21,132 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class InformacionServicio extends AplicacionBase {
 
-    //Consultar persona con la cedula
+    /**
+     * Este método permite obtener la información correspondiente a una cédula.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de la información consultado y en tal caso obtener una excepción si aplica.
+     */
     @GET
     @Path("/consultarCedula/{cedula}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Informacion> consultarInformacionCedula(@PathParam("cedula") int cedula) throws NullPointerException{
-
+    public Response consultarInformacionCedula(@PathParam("cedula") int cedula) {
+        JsonObject dataObject;
         DaoInformacion daoInformacion = new DaoInformacion();
 
         try {
-            return daoInformacion.obtenerInformacion(cedula);
+            List<Informacion> informacion_consultada = daoInformacion.obtenerInformacion(cedula);
+            return Response.status(Response.Status.OK).entity(informacion_consultada).build();
 
         } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
-    //Listar todos los encuestados
+    /**
+     * Este método permite obtener todas las informaciones.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de informaciones y en tal caso obtener una excepción si aplica.
+     */
     @GET
     @Path("/listarInformacion")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Informacion> listarInformacionEncuestados() throws NullPointerException{
+    public Response listarInformacionEncuestados() {
 
         DaoInformacion daoInformacion = new DaoInformacion();
+        JsonObject dataObject;
 
         try {
-            return daoInformacion.findAll(Informacion.class);
+            List<Informacion> listaInformaciones = daoInformacion.findAll(Informacion.class);
+            return Response.status(Response.Status.OK).entity(listaInformaciones).build();
 
-        } catch (NullPointerException ex) {
+        } catch (Exception ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
-    //Consultar una información
+    /**
+     * Este método permite obtener una información.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la información consultada y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id de la información que se quiere consultar.
+     *
+     */
     @GET
     @Path("/consultarInformacion/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Informacion consultarInformacion(@PathParam("id") long id) throws NullPointerException {
+    public Response consultarInformacion(@PathParam("id") long id) throws NullPointerException {
 
         DaoInformacion daoInformacion = new DaoInformacion();
+        JsonObject dataObject;
 
         try {
-            return daoInformacion.find(id, Informacion.class);
+            Informacion informacion_consultada = daoInformacion.find(id, Informacion.class);
+            return Response.status(Response.Status.OK).entity(informacion_consultada).build();
 
         } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la información: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
-    //Agregar una información
+     /** Este método permite insertar una información
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la información insertada y en tal caso obtener una excepcion si aplica.
+     * @throws PruebaExcepcion esta excepcion permite obtener errores generales.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta una información duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param informacionDto el objeto información que el sistema desea insertar o crear.
+     */
     @POST
     @Path("/addInformacion")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public InformacionDto addInformacion(InformacionDto informacionDto) {
+    public Response addInformacion(InformacionDto informacionDto) {
 
         InformacionDto resultado = new InformacionDto();
+        JsonObject dataObject;
 
         try {
 
@@ -123,17 +190,50 @@ public class InformacionServicio extends AplicacionBase {
             Informacion resul = daoInformacion.insert(informacion);
             resultado.setId(resul.get_id());
 
-        } catch (Exception ex) {
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha insertado la información: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
 
-        return resultado;
     }
 
-    //Actualizar Producto
+    /**
+     * Este método permite modificar una categoria
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la información modificada y en tal caso obtener una excepción si aplica.
+     * @throws NullPointerException esta excepción se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta una información duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param informacionDto el objeto información que el sistema desea modificar.
+     * @param id el id de la información a modificar
+     */
     @PUT
     @Path("/updateInformacion/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -142,11 +242,7 @@ public class InformacionServicio extends AplicacionBase {
 
         DaoInformacion daoInformacion = new DaoInformacion();
         Informacion informacion_modificar = daoInformacion.find(id, Informacion.class);
-
-        if (informacion_modificar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
         try {
 
@@ -184,17 +280,39 @@ public class InformacionServicio extends AplicacionBase {
             informacion_modificar.set_usuario(usuario);
 
             daoInformacion.update(informacion_modificar);
+            return Response.status(Response.Status.OK).entity(informacion_modificar).build();
 
-        } catch (Exception ex) {
+        } catch (PersistenceException | DatabaseException ex){
 
-            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la información: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-        return Response.ok().entity(informacion_modificar).build();
 
     }
 
-    // Elimina una información
+    /**
+     * Este método permite eliminar una información
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id de la categoria a eliminar
+     */
     @DELETE
     @Path("/deleteInformacion/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -202,22 +320,32 @@ public class InformacionServicio extends AplicacionBase {
 
         DaoInformacion daoInformacion = new DaoInformacion();
         Informacion informacion_eliminar = daoInformacion.find(id, Informacion.class);
-
-        if (informacion_eliminar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
         try {
 
             daoInformacion.delete(informacion_eliminar);
 
-        } catch (Exception ex) {
+            return Response.status(Response.Status.OK).entity(informacion_eliminar).build();
 
-            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la información: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-        return Response.ok().entity(informacion_eliminar).build();
-
     }
 }

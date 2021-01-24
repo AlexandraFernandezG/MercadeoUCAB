@@ -4,6 +4,7 @@ import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.Informacion;
 import ucab.dsw.servicio.InformacionServicio;
 
+import javax.ws.rs.core.Response;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +18,7 @@ public class InformacionServicio_Test {
         InformacionServicio servicio = new InformacionServicio();
 
         try {
-            Assertions.assertTrue(servicio.listarInformacionEncuestados().size() > 0);
+            Assertions.assertNotNull(servicio.listarInformacionEncuestados());
 
         } catch (Exception e) {
 
@@ -31,11 +32,11 @@ public class InformacionServicio_Test {
     public void pruebaConsultarEncuestado(){
 
         InformacionServicio servicio = new InformacionServicio();
-        Informacion informacion_buscar = servicio.consultarInformacion(1);
+        Response informacion_buscar = servicio.consultarInformacion(1);
 
         // Recuerden estar pendientes de los ids de la base de datos
         try {
-            Assertions.assertEquals(1, informacion_buscar.get_id());
+            Assertions.assertNotNull(informacion_buscar);
         } catch (Exception e) {
             Assertions.fail(e.getMessage());
         }
@@ -84,8 +85,8 @@ public class InformacionServicio_Test {
             UsuarioDto usuarioDto = new UsuarioDto(6);
             informacionDto.setUsuarioDto(usuarioDto);
 
-            InformacionDto resultado = servicio.addInformacion(informacionDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response resultado = servicio.addInformacion(informacionDto);
+            Assert.assertNotNull(resultado);
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
