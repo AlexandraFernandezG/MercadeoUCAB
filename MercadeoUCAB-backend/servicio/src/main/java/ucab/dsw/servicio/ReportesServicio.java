@@ -5,7 +5,6 @@ import ucab.dsw.accesodatos.*;
 import ucab.dsw.entidades.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -24,7 +23,7 @@ public class ReportesServicio extends AplicacionBase {
      * @param id id del estudio seleccionado por el administrador o el analista para obtener las preguntas.
      */
     @GET
-    @Path("respuestasPregunta/{id}")
+    @Path("/respuestasPregunta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarRespuestasAbiertas(@PathParam("id") long id) {
 
@@ -55,293 +54,150 @@ public class ReportesServicio extends AplicacionBase {
     }
 
     /**
-     * Este método permite obtener las cantidades de respuestas de verdadero y falso por pregunta
+     * Este método permite obtener las cantidades de respuestas de V/F, escala, simple y múltiple por pregunta
      * para un estudio.
      * @author Emanuel Di Cristofaro
      * @param id id del estudio seleccionado por el administrador o el analista para obtener las estadisticas.
      * @throws NullPointerException si hay algun problema en el analisis
      */
-    @GET
-    @Path("/preguntasCantidadVF/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    public Response preguntasCantidadVF(@PathParam("id") long id){
+     @GET
+     @Path("/cantidadesPregunta/{id}")
+     @Produces( MediaType.APPLICATION_JSON )
+     public Response listarCantidadesPreguntas(@PathParam("id") long id){
+
+         JsonObject dataObject;
+         JsonArrayBuilder cantidades =Json.createArrayBuilder();
+         JsonArrayBuilder builder =Json.createArrayBuilder();
+         long cantidad_opcion = 0;
+         long verdadero_result = 0;
+         long falso_result = 0;
+         long escala_uno = 0;
+         long escala_dos = 0;
+         long escala_tres = 0;
+         long escala_cuatro = 0;
+         long escala_cinco = 0;
 
-        JsonObject dataObject;
-        long verdadero_result = 0;
-        long falso_result = 0;
+         try {
 
-        try {
+             //Listar todas las preguntas del estudio seleccionado
+             DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+             List<PreguntaEstudio> listaEstudioPregunta = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
+             List<PreguntaEncuesta> listaPreguntasEstudio = new ArrayList<PreguntaEncuesta>();
 
-            //Listar todas las preguntas del estudio seleccionado
-            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-            List<PreguntaEstudio> listaEstudioPregunta = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-            List<PreguntaEncuesta> listaPreguntasEstudio = new ArrayList<PreguntaEncuesta>();
+             for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
 
-            for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
+                 if (preguntaEstudio.get_estudio().get_id() == id) {
 
-                if (preguntaEstudio.get_estudio().get_id() == id) {
+                     long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
+                     DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+                     PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
+                     listaPreguntasEstudio.add(preguntaEncuesta);
+                 }
+             }
 
-                    long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
-                    DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-                    PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
-                    listaPreguntasEstudio.add(preguntaEncuesta);
-                }
-            }
+             //Recorrer cada pregunta del estudio y obtener las cantidades
+             DaoRespuesta daoRespuesta = new DaoRespuesta();
+             DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
+             List<RespuestaPregunta> listaRespuestasPregunta = daoRespuestaPregunta.findAll(RespuestaPregunta.class);
+             List<Long> cantidadOpcion = new ArrayList<>();
+             List<Long> cantidadOpcion2 = new ArrayList<>();
+             for (PreguntaEncuesta preguntaEncuestaEstudio: listaPreguntasEstudio){
 
-            //Listar solamente las preguntas de tipo verdadero/falso
-            List<PreguntaEncuesta> listaPreguntasVF = new ArrayList<>();
 
-            for (PreguntaEncuesta preguntaEncuesta: listaPreguntasEstudio){
+                 if(preguntaEncuestaEstudio.get_tipoPregunta().equals("Verdadero o Falso")){
 
-                if(preguntaEncuesta.get_tipoPregunta().equals("VerdaderoFalso")){
+                     List<Long> verdaderos = daoRespuesta.cantidadVerdaderosPregunta(preguntaEncuestaEstudio.get_id());
+                     List<Long> falsos = daoRespuesta.cantidadFalsosPregunta(preguntaEncuestaEstudio.get_id());
+                     verdadero_result = verdaderos.get(0);
+                     falso_result = falsos.get(0);
+                     cantidades.add(Json.createArrayBuilder().add("Verdadero").add(verdadero_result).add("Falso").add(falso_result));
+                     verdaderos.clear();
+                     falsos.clear();
 
-                    listaPreguntasVF.add(preguntaEncuesta);
-                }
-            }
+                 }
+                 else if (preguntaEncuestaEstudio.get_tipoPregunta().equals("Escala")){
 
-            //Obtener las cantidades de verdadero y falso de cada pregunta
-            DaoRespuesta daoRespuesta = new DaoRespuesta();
-            List<VerdaderoFalsoResponse> Cantidades = new ArrayList<>();
+                     List<Long> uno = daoRespuesta.cantidadEscalaUno(preguntaEncuestaEstudio.get_id());
+                     List<Long> dos = daoRespuesta.cantidadEscalaDos(preguntaEncuestaEstudio.get_id());
+                     List<Long> tres = daoRespuesta.cantidadEscalaTres(preguntaEncuestaEstudio.get_id());
+                     List<Long> cuatro = daoRespuesta.cantidadEscalaCuatro(preguntaEncuestaEstudio.get_id());
+                     List<Long> cinco = daoRespuesta.cantidadEscalaCinco(preguntaEncuestaEstudio.get_id());
 
-            for (PreguntaEncuesta preguntaEncuestaVF: listaPreguntasVF){
+                     escala_uno = uno.get(0);
+                     escala_dos = dos.get(0);
+                     escala_tres = tres.get(0);
+                     escala_cuatro = cuatro.get(0);
+                     escala_cinco = cinco.get(0);
 
-                List<Long> verdaderos = daoRespuesta.cantidadVerdaderosPregunta(preguntaEncuestaVF.get_id());
-                List<Long> falsos = daoRespuesta.cantidadFalsosPregunta(preguntaEncuestaVF.get_id());
+                     cantidades.add(Json.createArrayBuilder().add("1").add(escala_uno).add("2").add(escala_dos)
+                             .add("3").add(escala_tres).add("4").add(escala_cuatro).add("5").add(escala_cinco));
 
-                verdadero_result = verdaderos.get(0);
-                falso_result = falsos.get(0);
+                     uno.clear();
+                     dos.clear();
+                     tres.clear();
+                     cuatro.clear();
+                     cinco.clear();
 
-                Cantidades.add(new VerdaderoFalsoResponse(preguntaEncuestaVF.get_descripcion(), (int)verdadero_result, (int)falso_result));
+                 }
 
-                verdaderos.clear();
-                falsos.clear();
+                 else if (preguntaEncuestaEstudio.get_tipoPregunta().equals("Selección Simple") || preguntaEncuestaEstudio.get_tipoPregunta().equals("Selección Múltiple")){
 
-            }
+                     for (RespuestaPregunta respuestaPregunta: listaRespuestasPregunta){
 
-            return Response.status(Response.Status.OK).entity(Cantidades).build();
+                         if(respuestaPregunta.get_preguntaEncuesta().get_id() == preguntaEncuestaEstudio.get_id() && preguntaEncuestaEstudio.get_tipoPregunta().equals("Selección Simple")){
 
-        } catch (NullPointerException ex) {
+                             cantidadOpcion = daoRespuesta.cantidadSimple(preguntaEncuestaEstudio.get_id(), respuestaPregunta.get_nombre());
+                             cantidad_opcion = cantidadOpcion.get(0);
+                             cantidades.add(Json.createArrayBuilder().add(respuestaPregunta.get_nombre()).add(cantidad_opcion));
+                             cantidadOpcion.clear();
 
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
-                    .add("excepcion", "No se ha podido ejecutar el análisis " + ex.getMessage())
-                    .add("codigo", 400).build();
+                         } else if(respuestaPregunta.get_preguntaEncuesta().get_id() == preguntaEncuestaEstudio.get_id() && preguntaEncuestaEstudio.get_tipoPregunta().equals("Selección Múltiple")){
 
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+                             cantidadOpcion2 = daoRespuesta.cantidadMultiple(preguntaEncuestaEstudio.get_id(), respuestaPregunta.get_nombre());
+                             cantidad_opcion = cantidadOpcion2.get(0);
+                             cantidades.add(Json.createArrayBuilder().add(respuestaPregunta.get_nombre()).add(cantidad_opcion));
+                             cantidadOpcion2.clear();
+                         }
 
-        } catch (Exception ex) {
+                     }
 
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
-                    .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                 }
 
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
-        }
+                 JsonObject pregunta = Json.createObjectBuilder()
+                         .add("pregunta", preguntaEncuestaEstudio.get_descripcion())
+                         .add("tipo_pregunta", preguntaEncuestaEstudio.get_tipoPregunta())
+                         .add("resultado", cantidades).build();
 
-    }
+                 builder.add(pregunta);
 
-    /**
-     * Este método permite obtener las cantidades de respuestas de escala por pregunta (1,2,3,4 y 5)
-     * para un estudio.
-     * @author Emanuel Di Cristofaro
-     * @param id id del estudio seleccionado por el administrador o el analista para obtener las estadisticas.
-     * @throws NullPointerException si hay algun problema en el analisis
-     */
-    @GET
-    @Path("/preguntasCantidadEscala/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    public Response preguntasCantidadEscala(@PathParam("id") long id){
+             }
 
-        JsonObject dataObject;
-        long escala_uno = 0;
-        long escala_dos = 0;
-        long escala_tres = 0;
-        long escala_cuatro = 0;
-        long escala_cinco = 0;
 
-        try {
+             dataObject = Json.createObjectBuilder()
+                     .add("Preguntas", builder).build();
 
-            //Listar todas las preguntas del estudio seleccionado
-            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-            List<PreguntaEstudio> listaEstudioPregunta = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-            List<PreguntaEncuesta> listaPreguntasEstudio = new ArrayList<PreguntaEncuesta>();
+             return Response.status(Response.Status.OK).entity(dataObject).build();
 
-            for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
+         } catch (NullPointerException ex) {
 
-                if (preguntaEstudio.get_estudio().get_id() == id) {
+             dataObject = Json.createObjectBuilder()
+                     .add("estado", "Error")
+                     .add("excepcion", "No se ha podido ejecutar el análisis " + ex.getMessage())
+                     .add("codigo", 400).build();
 
-                    long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
-                    DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-                    PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
-                    listaPreguntasEstudio.add(preguntaEncuesta);
-                }
-            }
+             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
-            //Listar solamente las preguntas de tipo escala
-            List<PreguntaEncuesta> listaPreguntasEscala = new ArrayList<>();
+         } catch (Exception ex) {
 
-            for (PreguntaEncuesta preguntaEncuesta: listaPreguntasEstudio){
+             dataObject = Json.createObjectBuilder()
+                     .add("estado", "Error")
+                     .add("excepcion", ex.getMessage())
+                     .add("codigo", 400).build();
 
-                if(preguntaEncuesta.get_tipoPregunta().equals("Escala")){
+             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+         }
 
-                    listaPreguntasEscala.add(preguntaEncuesta);
-                }
-            }
-
-            //Obtener las cantidades de verdadero y falso de cada pregunta
-            DaoRespuesta daoRespuesta = new DaoRespuesta();
-            List<EscalaResponse> Cantidades = new ArrayList<>();
-
-            for (PreguntaEncuesta preguntaEncuestaEscala: listaPreguntasEscala){
-
-                List<Long> uno = daoRespuesta.cantidadEscalaUno(preguntaEncuestaEscala.get_id());
-                List<Long> dos = daoRespuesta.cantidadEscalaDos(preguntaEncuestaEscala.get_id());
-                List<Long> tres = daoRespuesta.cantidadEscalaTres(preguntaEncuestaEscala.get_id());
-                List<Long> cuatro = daoRespuesta.cantidadEscalaCuatro(preguntaEncuestaEscala.get_id());
-                List<Long> cinco = daoRespuesta.cantidadEscalaCinco(preguntaEncuestaEscala.get_id());
-
-                escala_uno = uno.get(0);
-                escala_dos = dos.get(0);
-                escala_tres = tres.get(0);
-                escala_cuatro = cuatro.get(0);
-                escala_cinco = cinco.get(0);
-
-                Cantidades.add(new EscalaResponse(preguntaEncuestaEscala.get_descripcion(), (int)escala_uno, (int)escala_dos, (int)escala_tres, (int)escala_cuatro, (int)escala_cinco));
-
-                uno.clear();
-                dos.clear();
-                tres.clear();
-                cuatro.clear();
-                cinco.clear();
-
-            }
-
-            return Response.status(Response.Status.OK).entity(Cantidades).build();
-
-        } catch (NullPointerException ex) {
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
-                    .add("excepcion", "No se ha podido ejecutar el análisis " + ex.getMessage())
-                    .add("codigo", 400).build();
-
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
-
-        } catch (Exception ex) {
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
-                    .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
-
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
-        }
-
-    }
-
-    /**
-     * Este método permite obtener las cantidades de respuestas simples y multiples por pregunta
-     * para un estudio.
-     * @author Emanuel Di Cristofaro
-     * @param id id del estudio seleccionado por el administrador o el analista para obtener las estadisticas.
-     * @throws NullPointerException si hay algun problema en el analisis
-     */
-    @GET
-    @Path("/preguntasCantidadSimpleMultiple/{id}")
-    @Produces( MediaType.APPLICATION_JSON )
-    public Response preguntasCantidadSimpleMultiple(@PathParam("id") long id){
-
-        JsonObject dataObject;
-        long cantidad_opcion = 0;
-
-        try {
-
-            //Listar todas las preguntas del estudio seleccionado
-            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-            List<PreguntaEstudio> listaEstudioPregunta = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-            List<PreguntaEncuesta> listaPreguntasEstudio = new ArrayList<PreguntaEncuesta>();
-
-            for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
-
-                if (preguntaEstudio.get_estudio().get_id() == id) {
-
-                    long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
-                    DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-                    PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
-                    listaPreguntasEstudio.add(preguntaEncuesta);
-                }
-            }
-
-            //Listar solamente las preguntas de tipo Simple
-            List<PreguntaEncuesta> listaPreguntasSimplesMultiples = new ArrayList<>();
-
-            for (PreguntaEncuesta preguntaEncuesta: listaPreguntasEstudio){
-
-                if(preguntaEncuesta.get_tipoPregunta().equals("Simple") || preguntaEncuesta.get_tipoPregunta().equals("Multiple")){
-
-                    listaPreguntasSimplesMultiples.add(preguntaEncuesta);
-                }
-            }
-
-            //Obtener la cantidad de selecciones de las preguntas simples
-            DaoRespuesta daoRespuesta = new DaoRespuesta();
-            DaoRespuestaPregunta daoRespuestaPregunta = new DaoRespuestaPregunta();
-            List<RespuestaPregunta> listaRespuestasPregunta = daoRespuestaPregunta.findAll(RespuestaPregunta.class);
-            List<SimpleMultipleEscalaResponse> cantidadesAux = new ArrayList<>();
-            List<Long> cantidadOpcion = new ArrayList<>();
-            List<Long> cantidadOpcion2 = new ArrayList<>();
-            List<SimpleMultipleResponse> Resultado = new ArrayList<>();
-            List<SimpleMultipleEscalaResponse> CantidadesSimples = new ArrayList<>();
-            List<SimpleMultipleEscalaResponse> CantidadesMultiples = new ArrayList<>();
-
-            for (PreguntaEncuesta preguntaEncuestaSimpleMultiple: listaPreguntasSimplesMultiples){
-
-                //Guardar todas las opciones de la pregunta
-                for (RespuestaPregunta respuestaPregunta: listaRespuestasPregunta){
-
-                    if(respuestaPregunta.get_preguntaEncuesta().get_id() == preguntaEncuestaSimpleMultiple.get_id() && preguntaEncuestaSimpleMultiple.get_tipoPregunta().equals("Simple")){
-
-                        cantidadOpcion = daoRespuesta.cantidadSimple(preguntaEncuestaSimpleMultiple.get_id(), respuestaPregunta.get_nombre());
-                        cantidad_opcion = cantidadOpcion.get(0);
-                        CantidadesSimples.add(new SimpleMultipleEscalaResponse(preguntaEncuestaSimpleMultiple.get_descripcion(), preguntaEncuestaSimpleMultiple.get_tipoPregunta(), respuestaPregunta.get_nombre(), (int)cantidad_opcion));
-                        cantidadOpcion.clear();
-
-                    } else if(respuestaPregunta.get_preguntaEncuesta().get_id() == preguntaEncuestaSimpleMultiple.get_id() && preguntaEncuestaSimpleMultiple.get_tipoPregunta().equals("Multiple")){
-
-                        cantidadOpcion2 = daoRespuesta.cantidadMultiple(preguntaEncuestaSimpleMultiple.get_id(), respuestaPregunta.get_nombre());
-                        cantidad_opcion = cantidadOpcion2.get(0);
-                        CantidadesMultiples.add(new SimpleMultipleEscalaResponse(preguntaEncuestaSimpleMultiple.get_descripcion(), preguntaEncuestaSimpleMultiple.get_tipoPregunta(), respuestaPregunta.get_nombre(), (int)cantidad_opcion));
-                        cantidadOpcion2.clear();
-                    }
-                }
-            }
-
-            SimpleMultipleResponse element = new SimpleMultipleResponse(CantidadesSimples, CantidadesMultiples);
-            Resultado.add(element);
-
-            return Response.status(Response.Status.OK).entity(Resultado).build();
-
-        } catch (NullPointerException ex) {
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
-                    .add("excepcion", "No se ha podido ejecutar el análisis " + ex.getMessage())
-                    .add("codigo", 400).build();
-
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
-
-        } catch (Exception ex) {
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
-                    .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
-
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
-        }
-
-    }
+     }
 
     /**
      * Este método permite obtener la cantidad de hombres y mujeres que respondieron un estudio

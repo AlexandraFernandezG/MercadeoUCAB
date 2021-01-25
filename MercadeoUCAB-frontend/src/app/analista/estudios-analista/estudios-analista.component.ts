@@ -24,8 +24,12 @@ export class EstudiosAnalistaComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-   
-    this.service.getEstudios();
+    let id = 20;
+    this.service.getEstudiosCliente(id).subscribe(
+      estudiosData => { this.estudios = estudiosData ,
+        console.log(this.estudios)},
+      );
+    
   }
 
   edit(id){
