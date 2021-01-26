@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { MarcaComponent } from './admin/marca/marca.component';
 import { CategoriaComponent } from './admin/categoria/categoria.component';
 import { SubcategoriaComponent } from './admin/subcategoria/subcategoria.component';
@@ -36,9 +35,6 @@ import { ResultadosComponent } from './analista/resultados/resultados.component'
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'dashboard/marcas', component: MarcaComponent},
-  { path: 'dashboard/usuarios', component: UsuarioComponent },
   { path: 'recuperarContrasena', component: RecuperarContrasenaComponent},
   { path: 'cambioContrasena', component:  CambioContrasenaComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' },

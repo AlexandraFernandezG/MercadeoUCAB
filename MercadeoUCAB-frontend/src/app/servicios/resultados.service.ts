@@ -17,7 +17,9 @@ export class ResultadosService {
       'Content-Type': 'application/json'
     })
   };
-
+  getResultados():Observable<any>{
+    return this.http.get<any>(this.url + 'reportes/allReportes');
+  }
     /// Error HandleError
     handleError(error): Observable<never> {
       let errorMessage = '';
@@ -29,3 +31,4 @@ export class ResultadosService {
       window.alert(errorMessage);
       return throwError(errorMessage);
    }
+  }

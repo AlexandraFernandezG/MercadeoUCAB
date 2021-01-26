@@ -26,7 +26,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { MarcaComponent } from './admin/marca/marca.component';
 import { AddMarcaComponent } from './admin/marca/add-marca/add-marca.component';
@@ -91,13 +90,13 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AddPreguntaEstudioComponent } from './admin/estudios/add-pregunta-estudio/add-pregunta-estudio.component';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { ResultadosComponent } from './analista/resultados/resultados.component';
+import { ResultadosService } from './servicios/resultados.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent,
     MarcaComponent,
     AddMarcaComponent,
     EditMarcaComponent,
@@ -194,7 +193,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ProductosService,
     PreguntasService,
     SolicitudEstudiosService,
-    EstudiosService
+    EstudiosService,
+    ResultadosService
 
   ],
   bootstrap: [AppComponent],

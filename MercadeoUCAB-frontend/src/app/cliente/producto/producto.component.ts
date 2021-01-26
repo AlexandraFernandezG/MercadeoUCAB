@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Routes, RouterModule, ActivatedRoute } from '@angular/router';
 import { Producto, Producto2 } from 'src/app/modelos/producto';
 import { ProductosService } from 'src/app/servicios/productos.service';
@@ -9,12 +9,16 @@ import { SubcategoriasService } from 'src/app/servicios/subcategorias.service';
 import { Subcategoria, Subcategoria2 } from 'src/app/modelos/subcategoria';
 import { Presentacion, Presentacion2 } from 'src/app/modelos/presentacion';
 import { ProductoTipoPresentacion, ProductoTipoPresentacion2 } from 'src/app/modelos/producto';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TiposPresentacionService } from 'src/app/servicios/tipospresentaciones.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Marca, Marca2 } from 'src/app/modelos/marca';
 import { Tipo, Tipo2 } from 'src/app/modelos/tipo';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { AddProductoComponent } from './add-producto/add-producto.component';
 
 @Component({
   selector: 'app-producto',
@@ -24,34 +28,14 @@ import { Tipo, Tipo2 } from 'src/app/modelos/tipo';
 export class ProductoComponent implements OnInit {
 
   // Form
-  productoForm: any;
+  productoForm: FormGroup;
   productoFormTP: any;
+  displayedColumns: string[] = ['nombre', 'descripcion', 'subcategoria', 'marca', 'estatus', 'acciones'];
+  dataSource: MatTableDataSource<Producto>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  producto: Producto =
-  {
-    _id:0,
-    _nombre:'',
-    _estatus:'',
-    _descripcion:'',
-      _marca:{
-      _id:0,
-      _nombre:'',
-      _descripcion: '',
-     _estatus:'',
-    },
-    _subcategoria:{
-      _id:0,
-      _nombre:'',
-      _estatus:'',
-      _descripcion:'',
-      _categoria:{
-        _id:0,
-        _nombre:'',
-        _descripcion: '',
-        _estatus:'',
-      }
-    }
-  }
+  producto: Producto [];
   subcategorias: Subcategoria[] = [];
   marcas: Marca[] = [];
   tipos: Tipo [] = [];
@@ -60,25 +44,11 @@ export class ProductoComponent implements OnInit {
 
 
   constructor(
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private _productoService: ProductosService,
-    private _subcategoriaService: SubcategoriasService,
-    private _marcaService: MarcasService,
-    private _tipoService: TiposService,
-    private _presentacionService: PresentacionesService,
-    private _tpService: TiposPresentacionService,
-    private _snackBar: MatSnackBar,
-    public dialog: MatDialog
+    private service: ProductosService,
+    public actRoute: ActivatedRoute,
+    public dialog: MatDialog,
   ) {
 
-    this.productoForm = this.fb.group({
-      nombre: new FormControl('',[ Validators.required]),
-      descripcion: new FormControl( '',[ Validators.required]),
-      marca: new FormControl ('', [Validators.required]),
-      subcategoria: new FormControl('',[Validators.required])
-
-    });
    }
 
 
@@ -90,7 +60,18 @@ export class ProductoComponent implements OnInit {
   //  this.getTipos();
   //  this.getPresentaciones();
   // this.getTipoPresentacion();
+  this.service.getProductos()
+  .subscribe(data => {
+    this.dataSource = new MatTableDataSource<Producto>(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+  } );
   }
+
+  openModal(){
+    this.dialog.open(AddProductoComponent);
+  }
+
 
 
   // Metodos Productos

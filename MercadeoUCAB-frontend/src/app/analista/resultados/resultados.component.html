@@ -1,4 +1,6 @@
 <p>Resultados</p>
-<div id="divChart">
-    <canvas id="VerdaderoFalso"></canvas>
+
+<div class="contentCanvas" *ngFor="let pregunta of preguntas; let i = index ">
+    <h1>{{preguntas[i]}}</h1>
+     <canvas #myChart id="myChart"></canvas>
 </div>
