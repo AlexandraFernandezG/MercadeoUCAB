@@ -91,6 +91,7 @@ import { AddPreguntaEstudioComponent } from './admin/estudios/add-pregunta-estud
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { ResultadosComponent } from './analista/resultados/resultados.component';
 import { ResultadosService } from './servicios/resultados.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -179,7 +180,8 @@ import { ResultadosService } from './servicios/resultados.service';
     MatNativeDateModule,
     FormsModule,
     SimpleNotificationsModule.forRoot(),
-    AngularMaterialModule
+    AngularMaterialModule,
+    FlexLayoutModule
   ],
   providers: [
     CategoriasService,

@@ -38,11 +38,11 @@ export class EstudiosService {
   }
 
   getEstudiosEncuestado(id: number):Observable<Estudio[]>{
-    return this.http.get<Estudio[]>(this.url + 'suggestions/suggestionsEstudiosEncuestado/' + id);
+    return this.http.get<Estudio[]>(this.url + 'sugerencias/estudiosEncuestado/' + id);
   }
 
   getEstudiosCliente(id: number):Observable<Estudio[]>{
-    return this.http.get<Estudio[]>(this.url + 'suggestions/suggestionsEstudiosCliente/' + id);
+    return this.http.get<Estudio[]>(this.url + 'sugerencias/estudiosCliente/' + id);
   }
 
   getEstudiosSugeridos(id:number):Observable<Estudio[]>{

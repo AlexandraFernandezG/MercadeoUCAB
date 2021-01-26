@@ -16,31 +16,6 @@ public class DaoEstudio extends Dao<Estudio>{
         super (_handler);
     }
 
-    public List<Object[]> listaEstudiosSolicitud(String genero, String estadoCivil, int cantidadPersonas){
-
-        String SQL = null;
-
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
-        EntityManager entitymanager = factory.createEntityManager();
-
-        SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estado as estado, e._estatus as estatus " +
-                "FROM Estudio as e, SolicitudEstudio as se " +
-                "WHERE se._id = e._solicitudEstudio._id and e._solicitudEstudio._id in " +
-                "(SELECT se._id FROM SolicitudEstudio as se, Informacion as inf, MedioComunicacion as me " +
-                "WHERE se._id = me._solicitudEstudio._id and me._informacion._id = inf._id and " +
-                "(inf._genero = :genero) and (inf._estadoCivil = :estadoCivil) and (inf._cantidadPersonas = :cantidadPersonas))";
-
-        Query query = entitymanager.createQuery(SQL);
-        query.setParameter("genero", genero);
-        query.setParameter("estadoCivil", estadoCivil);
-        query.setParameter("cantidadPersonas", cantidadPersonas);
-
-        List<Object[]> listaEstudios = query.getResultList();
-
-        return listaEstudios;
-
-    }
-
     public List<Object[]> listarEstudiosEncuestado(String genero, String estadoCivil, int cantidadPersonas, int edad){
 
         String SQL = null;

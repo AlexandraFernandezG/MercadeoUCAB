@@ -1,20 +1,21 @@
 package ucab.dsw.servicio;
 
-import org.eclipse.persistence.internal.sessions.DirectCollectionChangeRecord;
+import org.eclipse.persistence.exceptions.DatabaseException;
+
 import ucab.dsw.accesodatos.DaoHijo;
 import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.dtos.HijoDto;
 import ucab.dsw.entidades.Hijo;
 import ucab.dsw.entidades.Informacion;
-
+import ucab.dsw.excepciones.PruebaExcepcion;
 
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import java.util.List;
 public class HijoServicio extends AplicacionBase{
 
     /**
-     * Este método permite obtener todos los hijos de una persona.
+     * Este método permite obtener todos los hijos.
      * @author Emanuel Di Cristofaro y Gregg Spinetti
      * @return Este metodo retorna un objeto de tipo Json
      * con los hijos consultados o una excepcion si aplica.
@@ -57,31 +58,50 @@ public class HijoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 404).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
-    // Consultar un hijo
+    /**
+     * Este método permite obtener un hijo dado un id.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json
+     * con los hijos consultados o una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando no se encuentra ningún hijo en el registro
+     */
     @GET
     @Path("/consultarHijo/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Hijo consultarHijo(@PathParam("id") long id) throws NullPointerException {
+    public Response consultarHijo(@PathParam("id") long id) throws NullPointerException {
 
         DaoHijo daoHijo = new DaoHijo();
+        JsonObject dataObject;
 
         try {
-            return daoHijo.find(id, Hijo.class);
+            Hijo hijoConsultado = daoHijo.find(id, Hijo.class);
+            return Response.status(Response.Status.OK).entity(hijoConsultado).build();
 
         } catch (NullPointerException ex){
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado ningún hijo: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 404).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
-    
+
     /**
      * Este método inserta un solo registro de Hijo, en la BD.
      *
@@ -91,39 +111,59 @@ public class HijoServicio extends AplicacionBase{
     @Path("/addHijo")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Hijo addHijo(HijoDto hijoDto) {
-        
-        DaoHijo daoHijo = new DaoHijo();
-        Hijo hijo = new Hijo();
-        Hijo hijoInsertado = new Hijo();
-        DaoInformacion daoInformacion = new DaoInformacion();
-    
+    public Response addHijo(HijoDto hijoDto) {
+
+        JsonObject dataObject;
+        HijoDto resultado = new HijoDto();
+
         try {
 
-            hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
-            System.out.println(hijo.get_fechaNacimiento());
+            DaoHijo dao = new DaoHijo();
+            Hijo hijo = new Hijo();
+
             hijo.set_genero(hijoDto.getGenero());
-            System.out.println(hijo.get_genero());
+            hijo.set_fechaNacimiento(hijoDto.getFechaNacimiento());
             hijo.set_estatus(hijoDto.getEstatus());
-            System.out.println(hijo.get_estatus());
-        
-            // Busca la información del padre/la madre
+
+            DaoInformacion daoInformacion = new DaoInformacion();
             Informacion informacion = daoInformacion.find(hijoDto.get_informacionDto().getId(), Informacion.class);
             hijo.set_informacion(informacion);
-            System.out.println(hijo.get_informacion());
-    
-            hijoInsertado = daoHijo.insert(hijo);
-            System.out.println(hijoInsertado.get_id());
-    
-        } catch (Exception e) {
-            
-            String mensaje = e.getMessage();
-            System.out.print(mensaje);
+
+            Hijo resul = dao.insert(hijo);
+            resultado.setId(resul.get_id());
+
+            return Response.status(Response.Status.OK).entity(resultado).build();
+
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el hijo: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-    
-        return hijoInsertado;
     }
-    
+
     /**
      * Inserta varios registros de Hijo, en la BD.
      *
@@ -137,8 +177,8 @@ public class HijoServicio extends AplicacionBase{
     @Path("/addVariosHijos")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public List<Hijo> addVariosHijos(List<HijoDto> listaHijoDto){
-        List<Hijo> listaHijo = new ArrayList<Hijo>();
+    public List<Response> addVariosHijos(List<HijoDto> listaHijoDto){
+        List<Response> listaHijo = new ArrayList<Response>();
 
         try {
             int n = 1;
@@ -154,10 +194,20 @@ public class HijoServicio extends AplicacionBase{
 
         }
 
-            return listaHijo;
+        return listaHijo;
     }
 
-    //Actualizar un hijo
+    /**
+     * Este método permite modificar la data de un hijo
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el hijo modificado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta una categoria duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param hijoDto el objeto hijo que el sistema desea modificar.
+     * @param id el id del hijo a modificar
+     */
     @PUT
     @Path("/updateHijo/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -165,55 +215,79 @@ public class HijoServicio extends AplicacionBase{
     public Response updateHijo(@PathParam("id") long id, HijoDto hijoDto){
 
         DaoHijo daoHijo = new DaoHijo();
-        Hijo hijo_modificar = daoHijo.find(id, Hijo.class);
+        JsonObject dataObject;
 
-        if(hijo_modificar == null){
+        try {
+            Hijo hijo_modificar = daoHijo.find(id, Hijo.class);
+            hijo_modificar.set_fechaNacimiento(hijoDto.getFechaNacimiento());
+            hijo_modificar.set_genero(hijoDto.getGenero());
+            hijo_modificar.set_estatus("Activo");
+            daoHijo.update(hijo_modificar);
+            return Response.status(Response.Status.OK).entity(hijo_modificar).build();
 
-            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
-
-            try {
-
-                hijo_modificar.set_fechaNacimiento(hijoDto.getFechaNacimiento());
-                hijo_modificar.set_genero(hijoDto.getGenero());
-                hijo_modificar.set_estatus("Activo");
-                daoHijo.update(hijo_modificar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
-            }
-
-            return Response.ok().entity(hijo_modificar).build();
-
     }
 
-    // Eliminar un hijo
+    /**
+     * Este método permite eliminar un hijo
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de éxito y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un hijo duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id del hijo a eliminar
+     */
     @DELETE
     @Path("/deleteHijo/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
     public Response deleteHijo(@PathParam("id") long id){
 
+        JsonObject dataObject;
         DaoHijo daoHijo = new DaoHijo();
-        Hijo hijo_eliminar = daoHijo.find(id, Hijo.class);
 
-        if(hijo_eliminar == null){
+        try {
+            Hijo hijo_eliminar = daoHijo.find(id, Hijo.class);
+            daoHijo.delete(hijo_eliminar);
+            return Response.status(Response.Status.OK).entity(hijo_eliminar).build();
 
-            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el hijo: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-            try {
-
-                daoHijo.delete(hijo_eliminar);
-
-            } catch (Exception ex){
-
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
-
-            return Response.ok().entity(hijo_eliminar).build();
-
     }
 }

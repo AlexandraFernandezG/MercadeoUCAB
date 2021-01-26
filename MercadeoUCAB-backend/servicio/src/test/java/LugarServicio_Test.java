@@ -5,6 +5,8 @@ import ucab.dsw.dtos.LugarDto;
 import ucab.dsw.entidades.Lugar;
 import ucab.dsw.servicio.LugarServicio;
 
+import javax.ws.rs.core.Response;
+
 public class LugarServicio_Test {
 
     //Listar todos los lugares
@@ -14,7 +16,7 @@ public class LugarServicio_Test {
         LugarServicio servicio = new LugarServicio();
 
         try {
-            Assertions.assertTrue(servicio.listarLugares().size() > 0);
+            Assertions.assertNotNull(servicio.listarLugares());
 
         } catch (Exception e) {
 
@@ -28,10 +30,10 @@ public class LugarServicio_Test {
     public void pruebaConsultarLugar(){
 
         LugarServicio servicio = new LugarServicio();
-        Lugar lugar_buscar = servicio.consultarLugar(1);
+        Response lugar_buscar = servicio.consultarLugar(1);
 
         try {
-            Assertions.assertEquals(1, lugar_buscar.get_id());
+            Assertions.assertEquals(1, lugar_buscar);
         } catch (Exception e) {
             Assertions.fail(e.getMessage());
         }
@@ -45,7 +47,7 @@ public class LugarServicio_Test {
         LugarServicio servicio = new LugarServicio();
 
         try {
-            Assertions.assertTrue(servicio.listarPaises().size() > 0);
+            Assertions.assertNotNull(servicio.listarPaises());
 
         } catch (Exception e) {
 
@@ -61,7 +63,7 @@ public class LugarServicio_Test {
         LugarServicio servicio = new LugarServicio();
 
         try {
-            Assertions.assertTrue(servicio.listarEstados().size() > 0);
+            Assertions.assertNotNull(servicio.listarEstados());
 
         } catch (Exception e) {
 
@@ -77,7 +79,7 @@ public class LugarServicio_Test {
         LugarServicio servicio = new LugarServicio();
 
         try {
-            Assertions.assertTrue(servicio.listarUrbanizaciones().size() > 0);
+            Assertions.assertNotNull(servicio.listarUrbanizaciones());
 
         } catch (Exception e) {
 
@@ -94,7 +96,7 @@ public class LugarServicio_Test {
         long idPais = 1;
 
         try {
-            Assertions.assertTrue(servicio.jerarquiaLugar(idPais).size() > 0);
+            Assertions.assertNotNull(servicio.jerarquiaLugar(idPais));
 
         } catch (Exception e) {
 
@@ -119,8 +121,8 @@ public class LugarServicio_Test {
             //Estar pendientes con los ids de la base de datos
             LugarDto lugar = new LugarDto(1);
             lugarDto.setLugar(lugar);
-            LugarDto resultado = servicio.addLugar(lugarDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response resultado = servicio.addLugar(lugarDto);
+            Assert.assertNotNull(resultado);
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

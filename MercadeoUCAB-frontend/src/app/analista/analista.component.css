@@ -7,10 +7,8 @@
 #wrapper #content-wrapper {
     overflow-x: hidden;
     width: 100%;
-    padding-top: 0;
-    padding-bottom: 80px;
+    padding: 40px;
 }
-
 .sidebar {
     width: 90px !important;
     background-color:black ;
