@@ -90,6 +90,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AddPreguntaEstudioComponent } from './admin/estudios/add-pregunta-estudio/add-pregunta-estudio.component';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { ResultadosComponent } from './analista/resultados/resultados.component';
+import { ResultadosService } from './servicios/resultados.service';
 
 @NgModule({
   declarations: [
@@ -190,7 +191,8 @@ import { ResultadosComponent } from './analista/resultados/resultados.component'
     ProductosService,
     PreguntasService,
     SolicitudEstudiosService,
-    EstudiosService
+    EstudiosService,
+    ResultadosService
 
   ],
   bootstrap: [AppComponent],

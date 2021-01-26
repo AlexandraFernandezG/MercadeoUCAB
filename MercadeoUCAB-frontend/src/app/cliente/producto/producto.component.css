@@ -1,0 +1,37 @@
+.full-width {
+    width: 300px;
+    height: 100px;
+  }
+  table {
+    width: 80%;
+    margin: 40px auto;
+}
+.mat-elevation-z8{
+    width: 80%;
+    margin: 20px auto;
+}
+
+/* Para resaltar filas de la tabla */
+/* No se puede mover a styles.css */
+tr:hover {
+	background-color: rgba(128, 128, 128, 0.596);
+}
+
+/* Cambia el encabezado de la tabla */
+/* No se puede mover a styles.css */
+th {
+	font: 16px bolder, Roboto;
+	color: black;
+	letter-spacing: normal;
+  text-align: center;
+  /* Para que no se resalte el encabezado de la tabla */
+	background-color: white;
+}
+
+/* Título de las acciones en la tabla */
+/* No se puede mover a styles.css */
+.accion-header {
+	max-width: 130px;
+	margin-left: 10%;
+	text-align: center;
+}
