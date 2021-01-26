@@ -314,16 +314,14 @@ public class EntidadDto {
 		return hijoDto;
 	}
 	
-	protected HistoricoEstadoDto getHistoricoEstadoDto(long id) throws PruebaExcepcion {
-		HistoricoEstadoDto heDto = new HistoricoEstadoDto();
-		DaoHistoricoEstado dao = new DaoHistoricoEstado();
+	protected UsuarioEstudioDto getHistoricoEstadoDto(long id) throws PruebaExcepcion {
+		UsuarioEstudioDto heDto = new UsuarioEstudioDto();
+		DaoUsuarioEstudio dao = new DaoUsuarioEstudio();
 		
-		HistoricoEstado he = dao.find(id, HistoricoEstado.class);
+		UsuarioEstudio he = dao.find(id, UsuarioEstudio.class);
 		
 		if (he != null) {
 			heDto.setId(he.get_id());
-			heDto.setFechaInicio(he.get_fechaInicio());
-			heDto.setFechaFin(he.get_fechaFin());
 			heDto.setEstatus(he.get_estatus());
 			heDto.setUsuarioDto(this.getUsuarioDto(he.get_usuario().get_id()));
 		}
