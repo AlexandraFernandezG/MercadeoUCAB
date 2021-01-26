@@ -1,8 +1,8 @@
 package ucab.dsw.servicio;
 
 import lombok.extern.java.Log;
-import ucab.dsw.response.EstudiosResponse;
-import ucab.dsw.response.PreguntasResponse;
+import ucab.dsw.Response.EstudiosResponse;
+import ucab.dsw.Response.PreguntasResponse;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.EstudioDto;
 import ucab.dsw.dtos.PreguntaEncuestaDto;
@@ -15,6 +15,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.json.*;
+import javax.sound.sampled.Line;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -105,21 +106,44 @@ public class SugerenciasServicio extends AplicacionBase {
 
             SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
 
+                //Variables para poder hacer el macth
                 String genero = solicitudEstudio.get_genero();
                 String estadoCivil = solicitudEstudio.get_estadoCivil();
                 int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
+                int edadMaxima = solicitudEstudio.get_edadMaxima();
+                int edadMinima = solicitudEstudio.get_edadMinima();
 
-                List<Object[]> listaEstudios = daoEstudio.listaEstudiosSolicitud(genero, estadoCivil, cantidadPersonas);
-                List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
+                //Listar todos los estudios e informaciones de los encuestados
+                List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
+                List<SolicitudEstudio> listaSolicitudes = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
+                List<SolicitudEstudio> listaAuxSolicitudes = new ArrayList<>();
+                List<Estudio> listaEstudiosRecomendados = new ArrayList<>();
 
-                for (Object[] est : listaEstudios) {
+                for(SolicitudEstudio solicitudEstudioRemove: listaSolicitudes){
 
-                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
+                    if(solicitudEstudioRemove.get_id() != id){
+
+                        listaAuxSolicitudes.add(solicitudEstudioRemove);
+                    }
                 }
 
+                for (SolicitudEstudio solicitudEstudio_macth: listaAuxSolicitudes){
+
+                    if(genero.equals(solicitudEstudio_macth.get_genero()) && estadoCivil.equals(solicitudEstudio_macth.get_estadoCivil()) &&
+                            cantidadPersonas == solicitudEstudio_macth.get_cantidadPersonas() && edadMaxima == solicitudEstudio_macth.get_edadMaxima() &&
+                            edadMinima == solicitudEstudio_macth.get_edadMinima()){
+
+                        for (Estudio estudio: listaEstudios){
+
+                            if(estudio.get_solicitudEstudio().get_id() == solicitudEstudio_macth.get_id()){
+
+                                listaEstudiosRecomendados.add(estudio);
+                            }
+                        }
+                    }
+                }
 
                 return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
-
 
         } catch (NullPointerException ex) {
 
@@ -366,3 +390,4 @@ public class SugerenciasServicio extends AplicacionBase {
     }
 
 }
+

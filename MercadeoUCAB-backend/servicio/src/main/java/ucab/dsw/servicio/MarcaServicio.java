@@ -1,9 +1,14 @@
 package ucab.dsw.servicio;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoMarca;
 import ucab.dsw.dtos.MarcaDto;
 import ucab.dsw.entidades.Marca;
+import ucab.dsw.excepciones.PruebaExcepcion;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -16,51 +21,92 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class MarcaServicio extends AplicacionBase{
 
-    // Listar marcas
+    /**
+     * Este método permite obtener todas las marcas.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de Marcas y en tal caso obtener una excepción si aplica.
+     */
     @GET
     @Path("/allMarca")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Marca> listarMarcas() throws NullPointerException{
+    public Response listarMarcas() {
         DaoMarca daoMarca = new DaoMarca();
+        JsonObject dataObject;
 
         try {
-            return daoMarca.findAll(Marca.class);
+            List<Marca> listaMarcas = daoMarca.findAll(Marca.class);
+            return Response.status(Response.Status.OK).entity(listaMarcas).build();
 
-        } catch (NullPointerException ex){
+        } catch (Exception ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
-    //Consultar una marca
+    /**
+     * Este método permite obtener una marca.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la marca consultada y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id de la marca que se quiere consultar.
+     *
+     */
     @GET
     @Path("/consultarMarca/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Marca consultarMarca(@PathParam("id") long id) throws NullPointerException{
+    public Response consultarMarca(@PathParam("id") long id) {
         DaoMarca daoMarca = new DaoMarca();
+        JsonObject dataObject;
 
         try {
-            return daoMarca.find(id, Marca.class);
+            Marca marca_consultada = daoMarca.find(id, Marca.class);
+            return Response.status(Response.Status.OK).entity(marca_consultada).build();
 
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
 
 
-    // Mostrar las marcas activas
+    /**
+     * Este método permite obtener todas las marcas activas.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con las marcas activas y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando no se encuentra ninguna marca activa
+     *
+     */
     @GET
     @Path("/mostrarMarcasActivas")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<Marca> marcasActivas() throws NullPointerException{
+    public Response marcasActivas() {
 
         DaoMarca daoMarca = new DaoMarca();
+        JsonObject dataObject;
         List<Marca> listaMarca = daoMarca.findAll(Marca.class);
         List<Marca> listaMarcaActivas = new ArrayList<Marca>();
 
@@ -73,24 +119,47 @@ public class MarcaServicio extends AplicacionBase{
                 }
             }
 
-            return listaMarcaActivas;
+            return Response.status(Response.Status.OK).entity(listaMarca).build();
 
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado ninguna marca activa: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
-    // Agregar una marca
+    /**
+     * Este método permite insertar una marca
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la marca insertada y en tal caso obtener una excepcion si aplica.
+     * @throws PruebaExcepcion esta excepcion permite obtener errores generales.
+     * @throws NullPointerException esta excepcion se aplica cuando ha fallado la inserción
+     * @throws PersistenceException si se inserta una marca duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param marcaDto el objeto de tipo marca que el sistema desea insertar o crear.
+     */
     @POST
     @Path("/addMarca")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public MarcaDto addMarca(MarcaDto marcaDto){
+    public Response addMarca(MarcaDto marcaDto){
 
         MarcaDto resultado = new MarcaDto();
+        JsonObject dataObject;
 
         try {
 
@@ -103,17 +172,49 @@ public class MarcaServicio extends AplicacionBase{
             daoMarca.insert(marca);
             Marca resul = daoMarca.insert(marca);
             resultado.setId(resul.get_id());
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
-        } catch (Exception ex){
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-            return resultado;
     }
 
-    //Actualizar la marca
+    /**
+     * Este método permite modificar una marca
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la marca modificada y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param marcaDto el objeto categoria que el sistema desea modificar.
+     * @param id el id de la categoria a modificar
+     */
     @PUT
     @Path("/updateMarca/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -122,12 +223,7 @@ public class MarcaServicio extends AplicacionBase{
 
         DaoMarca daoMarca = new DaoMarca();
         Marca marca_modificar = daoMarca.find(id, Marca.class);
-
-        if (marca_modificar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-
-        }
+        JsonObject dataObject;
 
             try {
 
@@ -135,17 +231,39 @@ public class MarcaServicio extends AplicacionBase{
                 marca_modificar.set_descripcion(marcaDto.getDescripcion());
                 marca_modificar.set_estatus(marcaDto.getEstatus());
                 daoMarca.update(marca_modificar);
+                return Response.status(Response.Status.OK).entity(marca_modificar).build();
 
-            } catch (Exception ex){
+            } catch (PersistenceException | DatabaseException ex){
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","Error")
+                        .add("mensaje", ex.getMessage())
+                        .add("codigo",500).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(marca_modificar).build();
 
     }
 
-    // Eliminar una Marca
+    /**
+     * Este método permite eliminar una marca
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id de la marca a eliminar
+     */
     @DELETE
     @Path("/deleteMarca/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -153,23 +271,31 @@ public class MarcaServicio extends AplicacionBase{
 
         DaoMarca daoMarca = new DaoMarca();
         Marca marca_eliminar = daoMarca.find(id, Marca.class);
-
-        if(marca_eliminar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-
-        }
+        JsonObject dataObject;
 
             try {
                 daoMarca.delete(marca_eliminar);
+                return Response.status(Response.Status.OK).entity(marca_eliminar).build();
 
-            } catch (Exception ex) {
+            } catch (PersistenceException | DatabaseException ex){
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","Error")
+                        .add("mensaje", ex.getMessage())
+                        .add("codigo",500).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(marca_eliminar).build();
-
 
         }
 }

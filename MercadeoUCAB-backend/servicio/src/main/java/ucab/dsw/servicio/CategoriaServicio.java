@@ -392,7 +392,7 @@ public class CategoriaServicio extends AplicacionBase {
             } catch (PersistenceException | DatabaseException ex){
 
                 dataObject= Json.createObjectBuilder()
-                        .add("estado","error")
+                        .add("estado","Error")
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 

@@ -1,8 +1,8 @@
 package ucab.dsw.servicio;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import ucab.dsw.response.PreguntasResponse;
-import ucab.dsw.response.UsuarioResponse;
+import org.eclipse.persistence.exceptions.DatabaseException;
+import ucab.dsw.Response.UsuarioResponse;
 import ucab.dsw.accesodatos.DaoRol;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.directorioactivo.DirectorioActivo;
@@ -14,10 +14,7 @@ import ucab.dsw.entidades.Usuario;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.mail.MessagingException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -29,21 +26,33 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class UsuarioServicio extends AplicacionBase {
 
+    /**
+     * Este método permite obtener todos los usuarios.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de usuarios y en tal caso obtener una excepción si aplica.
+     */
     @GET
     @Path("/allUsuarios")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Usuario> listarUsuarios() throws NullPointerException {
+    public Response listarUsuarios() {
 
         DaoUsuario daoUsuario = new DaoUsuario();
+        JsonObject dataObject;
 
         try {
-            return daoUsuario.findAll(Usuario.class);
+            List<Usuario> listaUsuarios = daoUsuario.findAll(Usuario.class);
+            return Response.status(Response.Status.OK).entity(listaUsuarios).build();
 
-        } catch (NullPointerException ex) {
+        } catch (Exception ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
@@ -122,21 +131,45 @@ public class UsuarioServicio extends AplicacionBase {
 
     }
 
+    /**
+     * Este método permite obtener un usuario.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el usuario consultado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id del usuario que se quiere consultar.
+     *
+     */
     @GET
     @Path("/consultarUsuario/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Usuario consultarUsuario(@PathParam("id") long id) throws NullPointerException{
+    public Response consultarUsuario(@PathParam("id") long id) {
 
         DaoUsuario daoUsuario = new DaoUsuario();
+        JsonObject dataObject;
 
         try {
-            return daoUsuario.find(id, Usuario.class);
+            Usuario usuario_consultado = daoUsuario.find(id, Usuario.class);
+
+            return Response.status(Response.Status.OK).entity(usuario_consultado).build();
 
         } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el usuario: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
@@ -182,6 +215,16 @@ public class UsuarioServicio extends AplicacionBase {
         return resultado;
     }
 
+    /**
+     * Este método permite modificar un usuario
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el usuario modificado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param usuarioDto el objeto usuario que el sistema desea modificar.
+     * @param id el id del usuario a modificar
+     */
     @PUT
     @Path("/updateUsuario/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -190,11 +233,8 @@ public class UsuarioServicio extends AplicacionBase {
 
         DaoUsuario daoUsuario = new DaoUsuario();
         Usuario usuario_modificar = daoUsuario.find(id, Usuario.class);
+        JsonObject dataObject;
 
-        if(usuario_modificar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
 
         try {
 
@@ -204,17 +244,40 @@ public class UsuarioServicio extends AplicacionBase {
             daoUsuario.update(usuario_modificar);
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.updateEntry(usuarioDto);
+            return Response.status(Response.Status.OK).entity(usuario_modificar).build();
 
-        } catch (Exception ex) {
+        } catch (PersistenceException | DatabaseException ex){
 
-            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","Error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el usuario a modificar: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
 
-        return Response.ok().entity(usuario_modificar).build();
 
     }
 
-    //Falta eliminar en el LDAP
+    /**
+     * Este método permite eliminar un usuario
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id del usuario a eliminar
+     */
     @DELETE
     @Path("/deleteUsuario/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -222,12 +285,7 @@ public class UsuarioServicio extends AplicacionBase {
 
         DaoUsuario daoUsuario = new DaoUsuario();
         Usuario usuario_eliminar = daoUsuario.find(id, Usuario.class);
-
-        if(usuario_eliminar == null) {
-
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
         try {
             UsuarioDto usuarioDto = new UsuarioDto();
@@ -235,16 +293,22 @@ public class UsuarioServicio extends AplicacionBase {
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.deleteEntry(usuarioDto);
             daoUsuario.delete(usuario_eliminar);
+            return Response.status(Response.Status.OK).entity(usuario_eliminar).build();
 
         } catch (Exception ex) {
 
             return Response.status(Response.Status.EXPECTATION_FAILED).build();
         }
 
-        return Response.ok().entity(usuario_eliminar).build();
-
     }
 
+    /**
+     * Este método permite cambiar la contraseña de un usuario.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
+     * @param usuarioDto el usuario a cambiar la contraseña
+     */
     @PUT
     @Path("/changePassword")
     @Produces( MediaType.APPLICATION_JSON )
@@ -254,17 +318,26 @@ public class UsuarioServicio extends AplicacionBase {
         try {
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.changePassword(usuarioDto);
+            return Response.status(Response.Status.OK).entity(usuarioDto).build();
 
         } catch (Exception ex) {
 
             return Response.status(Response.Status.EXPECTATION_FAILED).build();
         }
 
-        return Response.ok().entity(usuarioDto).build();
 
     }
 
-    //Cambiar el estado a inactivo
+    /**
+     * Este método permite modificar el estatus de un usuario
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el usuario modificado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param usuarioDto el objeto usuario que el sistema desea modificar.
+     * @param id el id del usuario a modificar
+     */
     @PUT
     @Path("/estatusUsuario/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -273,11 +346,7 @@ public class UsuarioServicio extends AplicacionBase {
 
         DaoUsuario daoUsuario = new DaoUsuario();
         Usuario usuario_modificar = daoUsuario.find(id, Usuario.class);
-
-        if(usuario_modificar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
         try {
 
@@ -290,16 +359,36 @@ public class UsuarioServicio extends AplicacionBase {
                 daoUsuario.update(usuario_modificar);
             }
 
-        } catch (Exception ex) {
+            return Response.status(Response.Status.OK).entity(usuario_modificar).build();
 
-            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","Error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el usuario a modificar el estatus: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
-
-        return Response.ok().entity(usuario_modificar).build();
 
     }
 
-    //Recuperar clave de usuario por correo
+    /**
+     * Este método permite solicitar una nueva contraseña en caso de que se haya olvidado
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo JsonObject con la respuesta a la solicitud
+     * @param usuarioDto el objeto usuario que el sistema desea modificar.
+     */
     @POST
     @Path("/recuperarClave")
     @Produces( MediaType.APPLICATION_JSON )

@@ -5,8 +5,7 @@ import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.ProductoDto;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
-import ucab.dsw.response.EstudiosResponse;
-import ucab.dsw.response.ProductoResponse;
+import ucab.dsw.Response.ProductoResponse;
 
 import java.util.ArrayList;
 import java.util.List;

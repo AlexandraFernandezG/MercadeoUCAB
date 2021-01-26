@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import ucab.dsw.dtos.NivelAcademicoDto;
 import ucab.dsw.entidades.NivelAcademico;
 
+import javax.ws.rs.core.Response;
+
 class NivelAcademicoServicioTest {
 	private final EntidadDto dto = new EntidadDto();
 	
@@ -23,7 +25,7 @@ class NivelAcademicoServicioTest {
 		NivelAcademicoServicio servicio = new NivelAcademicoServicio();
 		
 		try {
-			Assertions.assertTrue(servicio.listarNivelAcademico().size() > 0);
+			Assertions.assertNotNull(servicio.listarNivelAcademico());
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -40,8 +42,7 @@ class NivelAcademicoServicioTest {
 		NivelAcademicoServicio servicio = new NivelAcademicoServicio();
 		
 		try {
-			Assertions.assertEquals(1,
-				servicio.consultarNivelAcademico(1L).get_id());
+			Assertions.assertNotNull(servicio.consultarNivelAcademico(1L));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -132,14 +133,14 @@ class NivelAcademicoServicioTest {
 		 * */
 		
 		NivelAcademicoServicio servicio = new NivelAcademicoServicio();
-		NivelAcademico nivelAcademico = servicio.consultarNivelAcademico(3L);
+		Response nivelAcademico = servicio.consultarNivelAcademico(3L);
 		
 		try {
 			// Solo actualizará un registro que exista en la BD.
 			if (nivelAcademico != null) {
 				NivelAcademicoDto naDto = new NivelAcademicoDto();
 				
-				naDto.setId(nivelAcademico.get_id());
+				naDto.setId(3);
 				naDto.setDescripcion("Tempora quis minima delectus.");
 				naDto.setEstatus("Inactivo");
 				servicio.updateNivelAcademico(naDto.getId(), naDto);
@@ -156,12 +157,12 @@ class NivelAcademicoServicioTest {
 		 * */
 		
 		NivelAcademicoServicio servicio = new NivelAcademicoServicio();
-		NivelAcademico nivelAcademico = servicio.consultarNivelAcademico(3L);
+		Response nivelAcademico = servicio.consultarNivelAcademico(3L);
 		
 		try {
 			// Solo eliminará un registro que exista en la BD.
 			if (nivelAcademico != null) {
-				servicio.eliminarNivelAcademico(nivelAcademico.get_id());
+				servicio.eliminarNivelAcademico(3);
 			}
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());

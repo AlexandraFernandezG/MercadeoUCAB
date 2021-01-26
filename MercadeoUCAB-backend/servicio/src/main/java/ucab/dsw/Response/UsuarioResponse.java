@@ -1,4 +1,4 @@
-package ucab.dsw.response;
+package ucab.dsw.Response;
 
 import lombok.Getter;
 import lombok.Setter;

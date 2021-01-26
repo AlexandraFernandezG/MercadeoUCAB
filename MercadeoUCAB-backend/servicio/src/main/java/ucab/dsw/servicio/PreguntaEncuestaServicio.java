@@ -20,50 +20,88 @@ import javax.ws.rs.core.Response;
 @Consumes( MediaType.APPLICATION_JSON )
 public class PreguntaEncuestaServicio extends AplicacionBase{
 
-    //Listar preguntas
+    /**
+     * Este método permite obtener todas las preguntas.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de PreguntaEncuesta y en tal caso obtener una excepción si aplica.
+     */
     @GET
     @Path("/allPreguntasEncuesta")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<PreguntaEncuesta> listarPreguntas() throws NullPointerException{
+    public Response listarPreguntas() {
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+        JsonObject dataObject;
 
         try {
-            return daoPreguntaEncuesta.findAll(PreguntaEncuesta.class);
+            List<PreguntaEncuesta> listaPreguntaEncuesta = daoPreguntaEncuesta.findAll(PreguntaEncuesta.class);
+            return Response.status(Response.Status.OK).entity(listaPreguntaEncuesta).build();
 
-        } catch (NullPointerException ex){
+        } catch (Exception ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
-    //Consultar una pregunta
+    /**
+     * Este método permite obtener una pregunta
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la pregunta consultada y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id de la pregunta que se quiere consultar.
+     *
+     */
     @GET
     @Path("/consultarPreguntaEncuesta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public PreguntaEncuesta encontrarPreguntaEncuesta(@PathParam("id") long id) throws NullPointerException{
+    public Response encontrarPreguntaEncuesta(@PathParam("id") long id) throws NullPointerException{
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+        JsonObject dataObject;
 
         try {
-            return daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
+            PreguntaEncuesta preguntaEncuesta_consultada = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
+            return Response.status(Response.Status.OK).entity(preguntaEncuesta_consultada).build();
+        } catch (NullPointerException ex) {
 
-        } catch (NullPointerException ex){
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la pregunta: " + ex.getMessage())
+                    .add("codigo", 400).build();
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
-    //Mostrar las preguntas activas
+    /**
+     * Este método permite obtener todas las preguntas activas.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de PreguntaEncuesta y en tal caso obtener una excepción si aplica.
+     */
     @GET
     @Path("/mostrarPreguntasActivas")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<PreguntaEncuesta> preguntasActivas() throws NullPointerException{
+    public Response preguntasActivas() {
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         List<PreguntaEncuesta> listaPreguntas = daoPreguntaEncuesta.findAll(PreguntaEncuesta.class);
         List<PreguntaEncuesta> listaPreguntasActivas = new ArrayList<PreguntaEncuesta>();
+        JsonObject dataObject;
 
         try {
 
@@ -73,13 +111,17 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     listaPreguntasActivas.add(preguntaEncuesta);
                 }
             }
-            return listaPreguntasActivas;
+            return Response.status(Response.Status.OK).entity(listaPreguntasActivas).build();
 
-        } catch (NullPointerException ex){
+        } catch (Exception ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
@@ -230,7 +272,16 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
 
     }
 
-    //Actualizar estatus de pregunta
+    /**
+     * Este método permite modificar el estatus de una pregunta
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la  pregunta modificada y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param preguntaEncuestaDto el objeto pregunta que el sistema desea modificar.
+     * @param id el id de la pregunta a modificar
+     */
     @PUT
     @Path("/estatusPregunta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -239,11 +290,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
 
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         PreguntaEncuesta preguntaEncuesta_modificar = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
-
-        if (preguntaEncuesta_modificar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
             try {
 
@@ -275,16 +322,41 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     }
                 }
 
-            } catch (Exception ex){
+                return Response.status(Response.Status.OK).entity(preguntaEncuesta_modificar).build();
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+            } catch (PersistenceException | DatabaseException ex){
+
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","Error")
+                        .add("mensaje", ex.getMessage())
+                        .add("codigo",500).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado la pregunta: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
 
-            return Response.ok().entity(preguntaEncuesta_modificar).build();
 
     }
 
-    //Actualizar pregunta
+    /**
+     * Este método permite modificar una pregunta
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con la  pregunta modificada y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param preguntaEncuestaDto el objeto pregunta que el sistema desea modificar.
+     * @param id el id de la pregunta a modificar
+     */
     @PUT
     @Path("/updatePreguntaEncuesta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -293,28 +365,46 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
 
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         PreguntaEncuesta preguntaEncuesta_modificar = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
-
-        if (preguntaEncuesta_modificar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
             try {
                 preguntaEncuesta_modificar.set_descripcion(preguntaEncuestaDto.getDescripcion());
                 preguntaEncuesta_modificar.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
                 preguntaEncuesta_modificar.set_estatus(preguntaEncuestaDto.getEstatus());
                 daoPreguntaEncuesta.update(preguntaEncuesta_modificar);
+                return Response.status(Response.Status.OK).entity(preguntaEncuesta_modificar).build();
 
-            } catch (Exception ex){
+            } catch (PersistenceException | DatabaseException ex){
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","Error")
+                        .add("mensaje", ex.getMessage())
+                        .add("codigo",500).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado la pregunta: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(preguntaEncuesta_modificar).build();
 
     }
 
-    //Eliminar una pregunta
+    /**
+     * Este método permite eliminar una pregunta
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id de la pregunta a eliminar
+     */
     @DELETE
     @Path("/deletePreguntaEncuesta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -322,21 +412,31 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
 
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         PreguntaEncuesta preguntaEncuesta_eliminar = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
-
-        if (preguntaEncuesta_eliminar == null){
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
             try {
                 daoPreguntaEncuesta.delete(preguntaEncuesta_eliminar);
+                return Response.status(Response.Status.OK).entity(preguntaEncuesta_eliminar).build();
 
-            } catch (Exception ex){
+            } catch (PersistenceException | DatabaseException ex){
 
-                return Response.status(Response.Status.EXPECTATION_FAILED).build();
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","Error")
+                        .add("mensaje", ex.getMessage())
+                        .add("codigo",500).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado la pregunta: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(preguntaEncuesta_eliminar).build();
 
     }
 }
