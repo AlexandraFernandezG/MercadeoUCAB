@@ -13,7 +13,6 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -243,7 +242,7 @@ public class EstudioServicio extends AplicacionBase {
             } catch (PersistenceException | DatabaseException ex){
 
                 dataObject= Json.createObjectBuilder()
-                        .add("estado","error")
+                        .add("estado","Error")
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
@@ -253,7 +252,7 @@ public class EstudioServicio extends AplicacionBase {
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado el hijo: " + ex.getMessage())
+                        .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();

@@ -5,9 +5,9 @@ import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.RespuestaDto;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
-import ucab.dsw.response.EncuestaResponse;
-import ucab.dsw.response.EstudioEncuestadoResponse;
-import ucab.dsw.response.RespuestaPreguntaResponse;
+import ucab.dsw.Response.EncuestaResponse;
+import ucab.dsw.Response.EstudioEncuestadoResponse;
+import ucab.dsw.Response.RespuestaPreguntaResponse;
 
 import javax.json.Json;
 import javax.json.JsonObject;
