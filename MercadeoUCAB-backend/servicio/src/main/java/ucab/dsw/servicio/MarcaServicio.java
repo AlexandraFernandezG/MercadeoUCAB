@@ -211,7 +211,6 @@ public class MarcaServicio extends AplicacionBase{
      * @return Este metodo retorna un objeto de tipo Json con el
      * con la marca modificada y en tal caso obtener una excepcion si aplica.
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
-     * @throws PersistenceException si se modifica una marca duplicada.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
      * @param marcaDto el objeto categoria que el sistema desea modificar.
      * @param id el id de la categoria a modificar
@@ -237,7 +236,7 @@ public class MarcaServicio extends AplicacionBase{
             } catch (PersistenceException | DatabaseException ex){
 
                 dataObject= Json.createObjectBuilder()
-                        .add("estado","error")
+                        .add("estado","Error")
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
