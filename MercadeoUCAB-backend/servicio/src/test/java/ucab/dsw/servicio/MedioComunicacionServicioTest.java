@@ -5,9 +5,10 @@ import org.junit.jupiter.api.Test;
 import ucab.dsw.dtos.MedioComunicacionDto;
 import ucab.dsw.entidades.MedioComunicacion;
 
+import javax.ws.rs.core.Response;
+
 class MedioComunicacionServicioTest {
 	private final EntidadDto dto = new EntidadDto();
-	
 	@Test
 	void testListarMedioComunicacion() {
 		/** Prueba Unitaria para listar registros de Medio de Comunicación.
@@ -23,7 +24,7 @@ class MedioComunicacionServicioTest {
 		MedioComunicacionServicio servicio = new MedioComunicacionServicio();
 		
 		try {
-			Assertions.assertTrue(servicio.listarMedioComunicacion().size() > 0);
+			Assertions.assertNotNull(servicio.listarMedioComunicacion());
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -40,8 +41,7 @@ class MedioComunicacionServicioTest {
 		MedioComunicacionServicio servicio = new MedioComunicacionServicio();
 		
 		try {
-			Assertions.assertEquals(1,
-				servicio.consultarMedioComunicacion(1L).get_id());
+			Assertions.assertNotNull(servicio.consultarMedioComunicacion(1));
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -86,12 +86,12 @@ class MedioComunicacionServicioTest {
 		 * */
 		
 		MedioComunicacionServicio servicio = new MedioComunicacionServicio();
-		MedioComunicacion mc = servicio.consultarMedioComunicacion(1L);
+		Response mc = servicio.consultarMedioComunicacion(1L);
 		
 		try {
 			// Solo actualizará un registro que exista en la BD.
 			if (mc != null) {
-				MedioComunicacionDto mcDto = dto.getMedioComunicacionDto(mc.get_id());
+				MedioComunicacionDto mcDto = dto.getMedioComunicacionDto(1);
 				
 				mcDto.setTipoDeMedio("qui");
 				
@@ -114,12 +114,12 @@ class MedioComunicacionServicioTest {
 		 * */
 		
 		MedioComunicacionServicio servicio = new MedioComunicacionServicio();
-		MedioComunicacion mc = servicio.consultarMedioComunicacion(2L);
+		Response mc = servicio.consultarMedioComunicacion(2L);
 		
 		try {
 			// Solo actualizará un registro que exista en la BD.
 			if (mc != null) {
-				MedioComunicacionDto mcDto = dto.getMedioComunicacionDto(mc.get_id());
+				MedioComunicacionDto mcDto = dto.getMedioComunicacionDto(2);
 				
 				mcDto.setEstatus("Inactivo");
 				
@@ -140,12 +140,12 @@ class MedioComunicacionServicioTest {
 		 * */
 		
 		MedioComunicacionServicio servicio = new MedioComunicacionServicio();
-		MedioComunicacion mc = servicio.consultarMedioComunicacion(3L);
+		Response mc = servicio.consultarMedioComunicacion(3L);
 		
 		try {
 			// Solo actualizará un registro que exista en la BD.
 			if (mc != null) {
-				MedioComunicacionDto mcDto = dto.getMedioComunicacionDto(mc.get_id());
+				MedioComunicacionDto mcDto = dto.getMedioComunicacionDto(3);
 				
 				mcDto.setTipoDeMedio("quia");
 				mcDto.setEstatus("Inactivo");
@@ -164,12 +164,12 @@ class MedioComunicacionServicioTest {
 		 * */
 		
 		MedioComunicacionServicio servicio = new MedioComunicacionServicio();
-		MedioComunicacion mc = servicio.consultarMedioComunicacion(4L);
+		Response mc = servicio.consultarMedioComunicacion(4L);
 		
 		try {
 			// Solo eliminará un registro que exista en la BD.
 			if (mc != null) {
-				servicio.eliminarMedioComunicacion(mc.get_id());
+				servicio.eliminarMedioComunicacion(4);
 			}
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
