@@ -1,9 +1,14 @@
 package ucab.dsw.servicio;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoNivelAcademico;
 import ucab.dsw.dtos.NivelAcademicoDto;
 import ucab.dsw.entidades.NivelAcademico;
+import ucab.dsw.excepciones.PruebaExcepcion;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -15,52 +20,94 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class NivelAcademicoServicio extends AplicacionBase{
 
-    //Listar niveles academicos
+    /**
+     * Este método permite obtener todas los niveles académicos.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de NivelAcademico y en tal caso obtener una excepción si aplica.
+     */
     @GET
     @Path("/allNivelAcademico")
     @Produces( MediaType.APPLICATION_JSON )
-    public List<NivelAcademico> listarNivelAcademico() throws NullPointerException{
+    public  Response listarNivelAcademico() {
         DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
+        JsonObject dataObject;
 
         try {
-            return daoNivelAcademico.findAll(NivelAcademico.class);
+            List<NivelAcademico> listaNivelAcademico = daoNivelAcademico.findAll(NivelAcademico.class);
+            return Response.status(Response.Status.OK).entity(listaNivelAcademico).build();
 
-        } catch (NullPointerException ex){
+        } catch (Exception ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
     }
 
-    //Consultar un nivel academico
+    /**
+     * Este método permite obtener una marca.
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el nivel académico consultado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id del nivel académico que se quiere consultar.
+     *
+     */
     @GET
     @Path("/consultarNivelAcademico/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public NivelAcademico consultarNivelAcademico(@PathParam("id") long id) throws NullPointerException{
+    public Response consultarNivelAcademico(@PathParam("id") long id) {
         DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
+        JsonObject dataObject;
 
         try {
-            return daoNivelAcademico.find(id, NivelAcademico.class);
+            NivelAcademico nivelAcademico_consultado = daoNivelAcademico.find(id, NivelAcademico.class);
+            return Response.status(Response.Status.OK).entity(nivelAcademico_consultado).build();
 
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
-            return null;
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el nivel académico: " + ex.getMessage())
+                    .add("codigo", 400).build();
 
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
-    //Agregar un nivel academico
+    /**
+     * Este método permite insertar un nivel académico
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el nivel académico insertado y en tal caso obtener una excepcion si aplica.
+     * @throws PruebaExcepcion esta excepcion permite obtener errores generales.
+     * @throws NullPointerException esta excepcion se aplica cuando ha fallado la inserción
+     * @throws PersistenceException si se inserta un nivel académico duplicada.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param nivelAcademicoDto el objeto de tipo nivel académico que el sistema desea insertar o crear.
+     */
     @POST
     @Path("/addNivelAcademico")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public NivelAcademicoDto addNivelAcademico(NivelAcademicoDto nivelAcademicoDto){
+    public Response addNivelAcademico(NivelAcademicoDto nivelAcademicoDto){
 
         NivelAcademicoDto resultado = new NivelAcademicoDto();
+        JsonObject dataObject;
 
         try {
 
@@ -71,18 +118,48 @@ public class NivelAcademicoServicio extends AplicacionBase{
             nivelAcademico.set_estatus(nivelAcademicoDto.getEstatus());
             NivelAcademico resul = daoNivelAcademico.insert(nivelAcademico);
             resultado.setId(resul.get_id());
+            return Response.status(Response.Status.OK).entity(resultado).build();
 
-        } catch (Exception ex){
+        } catch (PersistenceException | DatabaseException ex){
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
-
-            return resultado;
     }
 
-    //Actualizar un nivel academico
+    /**
+     * Este método permite modificar un nivel académico
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el nivel académico y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param nivelAcademicoDto el objeto nivel académico que el sistema desea modificar.
+     * @param id el id de la categoria a modificar
+     */
     @PUT
     @Path("/updateNivelAcademico/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -91,27 +168,46 @@ public class NivelAcademicoServicio extends AplicacionBase{
 
         DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
         NivelAcademico nivelAcademico_modificar = daoNivelAcademico.find(id, NivelAcademico.class);
-
-        if (nivelAcademico_modificar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
                 try {
                     nivelAcademico_modificar.set_descripcion(nivelAcademicoDto.getDescripcion());
                     nivelAcademico_modificar.set_estatus(nivelAcademicoDto.getEstatus());
                     daoNivelAcademico.update(nivelAcademico_modificar);
+                    return Response.status(Response.Status.OK).entity(nivelAcademico_modificar).build();
 
-                } catch (Exception ex){
+                } catch (PersistenceException | DatabaseException ex){
 
-                    return Response.status(Response.Status.EXPECTATION_FAILED).build();
+                    dataObject= Json.createObjectBuilder()
+                            .add("estado","Error")
+                            .add("mensaje", ex.getMessage())
+                            .add("codigo",500).build();
+
+                    return Response.status(Response.Status.OK).entity(dataObject).build();
+
+                } catch (NullPointerException ex) {
+
+                    dataObject = Json.createObjectBuilder()
+                            .add("estado", "Error")
+                            .add("excepcion", "No se ha encontrado el nivel académico: " + ex.getMessage())
+                            .add("codigo", 400).build();
+
+                    return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
                 }
-
-                return Response.ok().entity(nivelAcademico_modificar).build();
 
     }
 
-    // Eliminar un nivel academico
+
+    /**
+     * Este método permite eliminar un nivel académico
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el mensaje de exito y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id del nivel académico a eliminar
+     */
     @DELETE
     @Path("/deleteNivelAcademico/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -119,20 +215,30 @@ public class NivelAcademicoServicio extends AplicacionBase{
 
         DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
         NivelAcademico nivelAcademico_eliminar = daoNivelAcademico.find(id, NivelAcademico.class);
-
-        if(nivelAcademico_eliminar == null) {
-
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        JsonObject dataObject;
 
             try {
                 daoNivelAcademico.delete(nivelAcademico_eliminar);
+                return Response.status(Response.Status.OK).entity(nivelAcademico_eliminar).build();
 
-            } catch (Exception ex){
+            } catch (PersistenceException | DatabaseException ex){
 
-                return Response.status(Response.Status.NOT_FOUND).build();
+                dataObject= Json.createObjectBuilder()
+                        .add("estado","Error")
+                        .add("mensaje", ex.getMessage())
+                        .add("codigo",500).build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
+
+            } catch (NullPointerException ex) {
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", "No se ha encontrado  el nivel académico: " + ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
             }
-
-            return Response.ok().entity(nivelAcademico_eliminar).build();
     }
 }
