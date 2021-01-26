@@ -50,7 +50,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
     }
 
     /**
-     * Este método permite obtener una marca.
+     * Este método permite obtener un nivel académico
      * @author Emanuel Di Cristofaro y Gregg Spinetti
      * @return Este metodo retorna un objeto de tipo Json con el
      * con el nivel académico consultado y en tal caso obtener una excepcion si aplica.
@@ -123,7 +123,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
         } catch (PersistenceException | DatabaseException ex){
 
             dataObject= Json.createObjectBuilder()
-                    .add("estado","error")
+                    .add("estado","Error")
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
@@ -133,7 +133,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
+                    .add("excepcion", "No se ha podido insertar el nivel académico: " + ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -158,7 +158,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
      * @param nivelAcademicoDto el objeto nivel académico que el sistema desea modificar.
-     * @param id el id de la categoria a modificar
+     * @param id el id del nivel académico a modificar
      */
     @PUT
     @Path("/updateNivelAcademico/{id}")

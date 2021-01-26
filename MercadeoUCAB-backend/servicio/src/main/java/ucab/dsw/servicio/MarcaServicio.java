@@ -213,7 +213,7 @@ public class MarcaServicio extends AplicacionBase{
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
      * @param marcaDto el objeto categoria que el sistema desea modificar.
-     * @param id el id de la categoria a modificar
+     * @param id el id de la marca a modificar
      */
     @PUT
     @Path("/updateMarca/{id}")

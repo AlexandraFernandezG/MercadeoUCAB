@@ -23,7 +23,7 @@ class NivelEconomicoServicioTest {
 		NivelEconomicoServicio servicio = new NivelEconomicoServicio();
 		
 		try {
-			Assertions.assertTrue(servicio.listarNivelEconomico().size() > 0);
+			Assertions.assertNotNull(servicio.listarNivelEconomico());
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
