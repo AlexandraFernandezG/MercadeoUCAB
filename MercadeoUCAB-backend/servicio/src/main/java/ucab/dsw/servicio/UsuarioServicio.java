@@ -1,8 +1,7 @@
 package ucab.dsw.servicio;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import ucab.dsw.response.PreguntasResponse;
-import ucab.dsw.response.UsuarioResponse;
+import ucab.dsw.Response.UsuarioResponse;
 import ucab.dsw.accesodatos.DaoRol;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.directorioactivo.DirectorioActivo;
@@ -14,10 +13,6 @@ import ucab.dsw.entidades.Usuario;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.mail.MessagingException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

@@ -1,8 +1,8 @@
 package ucab.dsw.servicio;
 
 import lombok.extern.java.Log;
-import ucab.dsw.response.EstudiosResponse;
-import ucab.dsw.response.PreguntasResponse;
+import ucab.dsw.Response.EstudiosResponse;
+import ucab.dsw.Response.PreguntasResponse;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.EstudioDto;
 import ucab.dsw.dtos.PreguntaEncuestaDto;
