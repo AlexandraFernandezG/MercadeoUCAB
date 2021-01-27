@@ -330,8 +330,12 @@ public class EstudioServicio extends AplicacionBase {
 
             if (estudio_modificar.get_estado() == "En espera")
                 estudio_modificar.set_estado("En proceso");
+            else if (estudio_modificar.get_estado() == "en espera")
+                estudio_modificar.set_estado("en proceso");
             else if (estudio_modificar.get_estado() == "En proceso")
                 estudio_modificar.set_estado("Finalizado");
+            else if (estudio_modificar.get_estado() == "en proceso")
+                estudio_modificar.set_estado("finalizado");
             daoEstudio.update(estudio_modificar);
 
             return Response.status(Response.Status.OK).entity(estudio_modificar).build();
