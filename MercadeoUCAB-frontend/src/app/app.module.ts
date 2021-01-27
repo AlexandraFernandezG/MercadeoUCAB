@@ -53,7 +53,7 @@ import { SolicitudEstudioComponent } from './cliente/solicitud-estudio/solicitud
 import { EncuestadoComponent } from './encuestado/encuestado.component';
 import { EstudiosEncuestadoComponent } from './encuestado/estudios-encuestado/estudios-encuestado.component';
 import { RespuestasEncuestaComponent } from './encuestado/respuestas-encuesta/respuestas-encuesta.component';
-import { RegistroEncuestadoComponent } from './encuestado/registro-encuestado/registro-encuestado.component';
+//import { RegistroEncuestadoComponent } from './encuestado/registro-encuestado/registro-encuestado.component';
 import { AnalistaComponent } from './analista/analista.component';
 import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios-analista.component';
 import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
@@ -92,6 +92,7 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { ResultadosComponent } from './analista/resultados/resultados.component';
 import { ResultadosService } from './servicios/resultados.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MuestraEstudioComponent } from './analista/muestra-estudio/muestra-estudio.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +134,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AddProductoComponent,
     RecuperarContrasenaComponent,
     CambioContrasenaComponent,
-    RegistroEncuestadoComponent,
+    //RegistroEncuestadoComponent,
     PreguntaComponent,
     AddPreguntaComponent,
     EditPreguntaComponent,
@@ -149,7 +150,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     SolicitudesComponent,
     EstudiosSugeridosComponent,
     SolicitudesPendientesComponent,
-    AddPreguntaEstudioComponent
+    AddPreguntaEstudioComponent,
+    MuestraEstudioComponent
   ],
   imports: [
     RouterModule,

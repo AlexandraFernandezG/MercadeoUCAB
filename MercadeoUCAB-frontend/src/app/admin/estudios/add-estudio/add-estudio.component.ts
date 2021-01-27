@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Estudio2 } from 'src/app/modelos/estudio';
 import { Solicitud2 } from 'src/app/modelos/solicitud';
-import { Analista } from 'src/app/modelos/usuario';
+import { Usuario3 } from 'src/app/modelos/usuario';
 import { EstudiosService } from 'src/app/servicios/estudios.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { SolicitudesComponent } from '../../solicitudes/solicitudes.component';
@@ -17,7 +17,7 @@ export class AddEstudioComponent implements OnInit {
 
   estudioForm: FormGroup;
   estudio: Estudio2;
-  analistas: Analista[];
+  analistas: Usuario3[];
 
 
   constructor(

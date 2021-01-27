@@ -1,11 +1,15 @@
 package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoEstudio;
+import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.accesodatos.DaoSolicitudEstudio;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.dtos.EstudioDto;
+import ucab.dsw.dtos.UsuarioDto;
+import ucab.dsw.dtos.UsuarioEstudioDto;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.response.UsuarioResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +139,7 @@ public class EstudioServicio extends AplicacionBase {
     }
 
     /**
-     * Este método permite insertar un estudio
+     * Este método permite insertar un estudio con sus respectivos encuestados
      * @author Emanuel Di Cristofaro y Gregg Spinetti
      * @return Este metodo retorna un objeto de tipo Json con el
      * con el estudio insertado y en tal caso obtener una excepcion si aplica.
@@ -149,11 +153,13 @@ public class EstudioServicio extends AplicacionBase {
     @Path("/addEstudio")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response addEstudios(EstudioDto estudioDto){
+    public Response addEstudios(EstudioDto estudioDto) throws Exception {
 
         JsonObject dataObject;
         EstudioDto resultado = new EstudioDto();
-        
+        DaoInformacion daoInformacion = new DaoInformacion();
+        ucab.dsw.servicio.UsuarioEstudioServicio servicio = new ucab.dsw.servicio.UsuarioEstudioServicio();
+
         try {
 
             DaoEstudio daoEstudio = new DaoEstudio();
@@ -174,6 +180,38 @@ public class EstudioServicio extends AplicacionBase {
             estudio.set_usuario(usuario);
             Estudio resul = daoEstudio.insert(estudio);
             resultado.setId(resul.get_id());
+
+            //Insertar encuestados al estudio
+            UsuarioEstudioDto usuarioEstudioDto = new UsuarioEstudioDto();
+
+            //Listar todos los usuarios encuestados
+            List<Object[]> listaUsuariosEncuestados = daoUsuario.listarEncuestadosEstudio();
+            List<UsuarioResponse> listaUsuariosEncuestadosResult = new ArrayList<>(listaUsuariosEncuestados.size());
+            List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
+
+            for (Object[] user : listaUsuariosEncuestados) {
+
+                listaUsuariosEncuestadosResult.add(new UsuarioResponse((long) user[0], (String) user[1], (String) user[2], (String) user[3], (String) user[4]));
+            }
+
+            //Recorremos la lista de encuestados y hacemos el match
+            for (UsuarioResponse usuarioEncuestado: listaUsuariosEncuestadosResult) {
+
+                for (Informacion informacion : listaInformacion) {
+
+                    if(solicitudEstudio.get_genero().equals(informacion.get_genero()) && solicitudEstudio.get_estadoCivil().equals(informacion.get_estadoCivil()) &&
+                            solicitudEstudio.get_cantidadPersonas() == informacion.get_cantidadPersonas() && informacion.get_usuario().get_id() == usuarioEncuestado.getId()) {
+
+                        usuarioEstudioDto.setEstatus("Activo");
+                        EstudioDto idEstudio = new EstudioDto(resul.get_id());
+                        usuarioEstudioDto.setEstudioDto(idEstudio);
+                        UsuarioDto idUsuario = new UsuarioDto(usuarioEncuestado.getId());
+                        usuarioEstudioDto.setUsuarioDto(idUsuario);
+                        servicio.addUsuarioEstudio(usuarioEstudioDto);
+                    }
+                }
+            }
+
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -195,6 +233,15 @@ public class EstudioServicio extends AplicacionBase {
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")

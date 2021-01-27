@@ -1,6 +1,6 @@
 package ucab.dsw.servicio;
 
-import ucab.dsw.Response.*;
+import ucab.dsw.response.*;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.entidades.*;
 

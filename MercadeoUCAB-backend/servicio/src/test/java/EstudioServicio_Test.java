@@ -73,11 +73,12 @@ public class EstudioServicio_Test {
             DateFormat forma2 = new SimpleDateFormat("yyyy-MM-dd");
             Date myDate2 = forma2.parse(date2);
             estudioDto.setFechaFin(myDate2);
+            estudioDto.setEstado("En proceso");
             estudioDto.setEstatus("Activo");
             // Revisar los registros de sus base de datos
             SolicitudEstudioDto solicitudEstudioDto = new SolicitudEstudioDto(1);
             estudioDto.setSolicitudEstudioDto(solicitudEstudioDto);
-            UsuarioDto usuarioDto = new UsuarioDto(6);
+            UsuarioDto usuarioDto = new UsuarioDto(4);
             estudioDto.setUsuarioDto(usuarioDto);
             Response resultado = servicio.addEstudios(estudioDto);
             Assert.assertNotNull(resultado);

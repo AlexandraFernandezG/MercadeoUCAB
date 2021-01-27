@@ -42,7 +42,7 @@ export class UsuarioCorreo {
     public estatus: string
   ){}
 }
-export class Analista{
+export class Usuario3{
   constructor(
      public id: number,
      public nombre: string,
