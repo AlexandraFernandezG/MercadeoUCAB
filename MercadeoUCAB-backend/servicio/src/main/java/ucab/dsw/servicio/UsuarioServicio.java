@@ -2,7 +2,7 @@ package ucab.dsw.servicio;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.eclipse.persistence.exceptions.DatabaseException;
-import ucab.dsw.Response.UsuarioResponse;
+import ucab.dsw.response.UsuarioResponse;
 import ucab.dsw.accesodatos.DaoRol;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.directorioactivo.DirectorioActivo;

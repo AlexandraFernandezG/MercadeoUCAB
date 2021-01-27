@@ -215,9 +215,9 @@ public class UsuarioEstudioServicio extends AplicacionBase{
             DaoEstudio daoEstudio = new DaoEstudio();
 
             usuarioEstudio.set_estatus(usuarioEstudioDto.getEstatus());
-            Usuario usuario = daoUsuario.find(usuarioEstudio.get_usuario().get_id(), Usuario.class);
+            Usuario usuario = daoUsuario.find(usuarioEstudioDto.getUsuarioDto().getId(), Usuario.class);
             usuarioEstudio.set_usuario(usuario);
-            Estudio estudio = daoEstudio.find(usuarioEstudio.get_estudio().get_id(), Estudio.class);
+            Estudio estudio = daoEstudio.find(usuarioEstudioDto.getEstudioDto().getId(), Estudio.class);
             usuarioEstudio.set_estudio(estudio);
             UsuarioEstudio resul = daoUsuarioEstudio.insert(usuarioEstudio);
             resultado.setId(resul.get_id());
