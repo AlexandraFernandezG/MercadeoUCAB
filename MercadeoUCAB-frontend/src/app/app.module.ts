@@ -53,7 +53,7 @@ import { SolicitudEstudioComponent } from './cliente/solicitud-estudio/solicitud
 import { EncuestadoComponent } from './encuestado/encuestado.component';
 import { EstudiosEncuestadoComponent } from './encuestado/estudios-encuestado/estudios-encuestado.component';
 import { RespuestasEncuestaComponent } from './encuestado/respuestas-encuesta/respuestas-encuesta.component';
-import { RegistroEncuestadoComponent } from './encuestado/registro-encuestado/registro-encuestado.component';
+//import { RegistroEncuestadoComponent } from './encuestado/registro-encuestado/registro-encuestado.component';
 import { AnalistaComponent } from './analista/analista.component';
 import { EstudiosAnalistaComponent } from './analista/estudios-analista/estudios-analista.component';
 import { DataEstudioComponent } from './analista/data-estudio/data-estudio.component';
@@ -134,7 +134,7 @@ import { MuestraEstudioComponent } from './analista/muestra-estudio/muestra-estu
     AddProductoComponent,
     RecuperarContrasenaComponent,
     CambioContrasenaComponent,
-    RegistroEncuestadoComponent,
+    //RegistroEncuestadoComponent,
     PreguntaComponent,
     AddPreguntaComponent,
     EditPreguntaComponent,
