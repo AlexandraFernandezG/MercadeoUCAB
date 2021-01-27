@@ -261,6 +261,56 @@ public class EstudioServicio extends AplicacionBase {
     }
 
     /**
+     * Este método permite modificar un el estado de un estudio
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el objeto modificado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un estudio duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param id el id del estudio a modificar
+     */
+    @PUT
+    @Path("/updateEstadoEstudio/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response modificarEstadoEstudio(@PathParam("id") long id){
+
+        DaoEstudio daoEstudio = new DaoEstudio();
+        JsonObject dataObject;
+        try {
+            Estudio estudio_modificar = daoEstudio.find(id, Estudio.class);
+
+            if (estudio_modificar.get_estado() == "En espera")
+                estudio_modificar.set_estado("En proceso");
+            else if (estudio_modificar.get_estado() == "En proceso")
+                estudio_modificar.set_estado("Finalizado");
+            daoEstudio.update(estudio_modificar);
+
+            return Response.status(Response.Status.OK).entity(estudio_modificar).build();
+
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","Error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        }
+    }
+
+    /**
      * Este método permite eliminar un estudio
      * @author Emanuel Di Cristofaro y Gregg Spinetti
      * @return Este metodo retorna un objeto de tipo Json con el
