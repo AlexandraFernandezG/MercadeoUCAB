@@ -92,6 +92,7 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { ResultadosComponent } from './analista/resultados/resultados.component';
 import { ResultadosService } from './servicios/resultados.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MuestraEstudioComponent } from './analista/muestra-estudio/muestra-estudio.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +150,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     SolicitudesComponent,
     EstudiosSugeridosComponent,
     SolicitudesPendientesComponent,
-    AddPreguntaEstudioComponent
+    AddPreguntaEstudioComponent,
+    MuestraEstudioComponent
   ],
   imports: [
     RouterModule,
