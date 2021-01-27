@@ -22,6 +22,7 @@ export class ResultadosComponent implements OnInit, AfterViewInit {
   public respuestas: any = Array(0);
   public arrayresp: any = Array(0);
   public cantidad: any = Array(0);
+  public inicio: any = Array(0);
   chart: any;
   myChart: any;
   myctx: any;
@@ -144,20 +145,25 @@ export class ResultadosComponent implements OnInit, AfterViewInit {
 
   Resultados() {
     var objeto = this.getResultados();
-
+    var k=0, l=0;
+    this.inicio.push(l);
     objeto["Preguntas"].forEach(function callback(element, i) {
       element["resultado"].forEach(function result(opcion, j) {
-        opcion.forEach(function item(resp,k) {
+        opcion.forEach(function item(resp) {
           if (typeof resp === 'string') {
 
             this.labels.push(resp);
+            k++;
+            l++;
           }
           else {
             this.respuestas.push(resp);
           }
         }, this);
-        this.cantidad.push(this.k);
       }, this);
+      this.cantidad.push(k);
+      this.inicio.push(l);
+      k=0;
       this.preguntas.push(element.pregunta);
       // this.Graficas(this.labels, this.data);
       console.log(this.preguntas);
@@ -165,43 +171,45 @@ export class ResultadosComponent implements OnInit, AfterViewInit {
     }, this);
     console.log(this.labels);
     console.log(this.respuestas);
+    console.log(this.cantidad);
+    console.log(this.inicio);
   }
 
-  ConstruirLabel(numPre: number, cant: number){
+  ConstruirLabel(numPre: number, cant: number, inicio: number){
     let preg: any = Array(0);
     while (cant > 0){
-      preg.push(this.labels[numPre]);
-      numPre++;
+      preg.push(this.labels[inicio]);
+      inicio++;
       cant--;
     }
     console.log(preg);
     return preg;
   }
 
-  ConstruirResp(numPre: number, cant: number) {
+  ConstruirResp(numPre: number, cant: number, inicio: number) {
     let res: any = Array(0);
     while (cant > 0){
-      res.push(this.respuestas[numPre]);
-      numPre++;
+      res.push(this.respuestas[inicio]);
+      inicio++;
       cant--;
     }
     console.log(res);
     return res;
   }
   ngAfterViewInit() {
-    var i = 2;
-    console.log('labels', this.labels[i]);
-    console.log('respuestas', this.respuestas[i]);
-
+  //  var i = 2;
+   // console.log('labels', this.labels[i]);
+   // console.log('respuestas', this.respuestas[i]);
+    var cont=0;
     var ctx = 'myChart';
     this.ctx.forEach((e, i) => {
     this.myChart = new Chart(e.nativeElement.getContext('2d'),{
       type: 'pie',
       data: {
-        labels: this.ConstruirLabel(i, 2),
+        labels: this.ConstruirLabel(i, this.cantidad[i], this.inicio[i]),
         datasets: [{
           label: '# of Votes',
-          data: this.ConstruirResp(i, 2),
+          data: this.ConstruirResp(i, this.cantidad[i], this.inicio[i]),
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
