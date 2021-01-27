@@ -72,5 +72,20 @@ public class DaoUsuario extends Dao<Usuario>
         return listaUsuario;
     }
 
+    public List<Object[]> listarEncuestadosEstudio (){
 
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+        EntityManager entitymanager = factory.createEntityManager();
+
+        String sqlQuery = "SELECT DISTINCT u._id, u._nombre, u._codigoRecuperacion, u._correoelectronico, u._estatus " +
+                "FROM Usuario as u, Rol as r " +
+                "WHERE u._rol._id = r._id and r._nombre = 'Encuestado'";
+
+        Query query = entitymanager.createQuery(sqlQuery);
+
+        List<Object[]> estudioUsuarioResponseList = query.getResultList();
+
+        return estudioUsuarioResponseList;
+
+    }
 }
