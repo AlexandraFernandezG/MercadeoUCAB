@@ -11,7 +11,7 @@
     <mat-card class="mat-elevation-z4" >
       <mat-card-header>
         <mat-card-title>{{estudio.nombreEstudio}}</mat-card-title>
-        <mat-card-subtitle>estudio subtitulo</mat-card-subtitle>
+        <mat-card-subtitle>{{estudio.estadoEstudio}}</mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image src="/../assets/img/survey.png">
       <mat-card-content>
@@ -20,10 +20,10 @@
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary">Ver Muestra</button>
+        <button mat-button color="primary" (click)="openModal(estudio.idEstudio, estudio.nombreEstudio)" >Ver Muestra</button>
         <button mat-button color="primary">Ver Resultados</button>
-        <button mat-button color="primary">Iniciar</button>
-        <button mat-button color="primary">Terminar</button>        
+        <button mat-button color="primary" (click)="iniciar(estudio)" >Iniciar</button>
+        <button mat-button color="primary" (click)="Cerrar()" >Terminar</button>        
       </mat-card-actions>
     </mat-card>
   </div>
