@@ -79,6 +79,14 @@ export class EstudiosService {
       catchError(this.handleError)
     );
   }
+  updateEstudio2(id): Observable<Estudio>{
+    console.log(id);
+    return this.http.put<Estudio>(this.url + 'estudio/updateEstadoEstudio/' + id, JSON.stringify(id), this.httpOptions)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
 
   /// Error HandleError
   handleError(error): Observable<never> {

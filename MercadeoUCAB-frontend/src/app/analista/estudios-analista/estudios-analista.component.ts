@@ -20,6 +20,8 @@ export class EstudiosAnalistaComponent implements OnInit {
 
   estudios:any[];
   editEst: Estudio2;
+  ab1: boolean;
+  ab2: boolean;
 
   constructor(
     private service: EstudiosService,
@@ -32,6 +34,7 @@ export class EstudiosAnalistaComponent implements OnInit {
       estudiosData => { this.estudios = estudiosData ,
         console.log(this.estudios)},
       );
+    
     
   }
 
@@ -72,11 +75,15 @@ export class EstudiosAnalistaComponent implements OnInit {
       fechaInicio: estudio.fechaInicioEstudio,
       fechaFin: estudio.fechaFinEstudio,
       estatus: estudio.estatusEstudio,
-      estado: "en proceso",
+      estado: "finalizado",
       usuarioDto: JSON.parse(localStorage.getItem('usuarioID')),
       solicitudEstudioDto: 4,
     }
     console.log(this.editEst)
-    //this.service.updateEstudio(estudio).subscribe();
+    this.service.updateEstudio(this.editEst).subscribe();
+  }
+
+  updateEstado(id){
+    this.service.updateEstudio2(id).subscribe();
   }
 }

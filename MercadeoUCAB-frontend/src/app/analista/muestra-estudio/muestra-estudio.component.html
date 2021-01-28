@@ -27,27 +27,19 @@
         <ng-container matColumnDef="acciones">
             <th class="accion-header" mat-header-cell *matHeaderCellDef> Acciones </th>
             <mat-cell *matCellDef="let row">
-                <button mat-icon-button >
-                    <mat-icon class="delete-icon mdl-js-button mdl-js-ripple-effect">
-                        delete
-                    </mat-icon>
-                </button>
+
+              <button mat-icon-button [routerLink]="['/encuestado/respuestas-encuesta', data.id]" (click)="closeModal()">
+                <mat-icon>note_add</mat-icon>
+              </button>
+
+              <button mat-icon-button >
+                  <mat-icon class="delete-icon mdl-js-button mdl-js-ripple-effect">
+                      delete
+                  </mat-icon>
+              </button>
+                
             </mat-cell>
         </ng-container>
-  
-        <!-- FIXME: column not showing -->
-        <ng-container matColumnDef="asignarPreguntas">
-          <th mat-header-cell *matHeaderCellDef> Asignar Preguntas</th>
-          <mat-cell *matCellDef="let row">
-            <button mat-icon-button [routerLink]="['/admin/asignacionpreguntas', row._id]">
-              <mat-icon class="asignar-icon mdl-js-button mdl-js-ripple-effect">
-                note_add
-              </mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-  
-  
   
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

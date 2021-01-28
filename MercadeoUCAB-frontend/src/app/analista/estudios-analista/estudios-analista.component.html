@@ -16,14 +16,21 @@
       <img mat-card-image src="/../assets/img/survey.png">
       <mat-card-content>
         <p>
-          descripcion de estudio
+          descripcion de estudio 
         </p>
       </mat-card-content>
-      <mat-card-actions>
+
+      <mat-card-actions >
         <button mat-button color="primary" (click)="openModal(estudio.idEstudio, estudio.nombreEstudio)" >Ver Muestra</button>
         <button mat-button color="primary">Ver Resultados</button>
-        <button mat-button color="primary" (click)="iniciar(estudio)" >Iniciar</button>
-        <button mat-button color="primary" (click)="Cerrar()" >Terminar</button>        
+        <button mat-button color="primary" *ngIf="estudio.estadoEstudio === 'en espera' " 
+          (click)="updateEstado(estudio.idEstudio)">
+          Iniciar
+        </button>
+        <button mat-button color="primary" *ngIf="estudio.estadoEstudio === 'en proceso' " 
+          (click)="updateEstado(estudio.idEstudio)">
+          Terminar
+        </button>        
       </mat-card-actions>
     </mat-card>
   </div>
