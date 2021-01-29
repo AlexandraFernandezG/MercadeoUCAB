@@ -1,34 +1,44 @@
 import org.junit.*;
 import org.junit.jupiter.api.Assertions;
+import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
+import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.dtos.EstudioDto;
 import ucab.dsw.dtos.SolicitudEstudioDto;
 import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.Estudio;
+import ucab.dsw.entidades.PreguntaEncuesta;
+import ucab.dsw.entidades.Usuario;
+import ucab.dsw.response.PreguntasResponse;
+import ucab.dsw.response.UsuarioResponse;
 import ucab.dsw.servicio.EstudioServicio;
 
 import javax.ws.rs.core.Response;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class EstudioServicio_Test {
 
-    //Listar todos los estudios
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarEstudios
+     * @author Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaListarEstudios(){
 
         EstudioServicio servicio = new EstudioServicio();
-
-        try {
-
-        } catch (Exception e) {
-
-        }
+        Response respuesta = servicio.listarEstudios();
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
     }
 
-    //Consultar un Estudio
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarEstudio
+     * @author Gregg Spinetti
+     */
     @Test
     public void pruebaConsultarEstudio(){
 
@@ -43,7 +53,10 @@ public class EstudioServicio_Test {
 
     }
 
-    //Listar estudios activos
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ConsultarEstudio
+     * @author Gregg Spinetti
+     */
     @Test
     public void pruebaListarEstudiosActivos(){
 
@@ -54,11 +67,32 @@ public class EstudioServicio_Test {
         }
     }
 
-    // Esta prueba permite insertar un estudio a la BD
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ListarEncuestados
+     * @author Emanuel Di Cristofaro
+     */
+    @Test
+    public void pruebaListarEncuestados(){
+
+        EstudioServicio servicio = new EstudioServicio();
+        Response respuesta = servicio.listarEncuestadosSolicitud(1);
+        Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
+    }
+
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método InsertarEstudio
+     * @author Gregg Spinetti y Emanuel Di Cristofaro
+     */
     @Test
     public void pruebaInsertarEstudio() throws Exception {
 
         EstudioServicio servicio = new EstudioServicio();
+        DaoUsuario daoUsuario = new DaoUsuario();
+        DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+        long idEncuestado = 3;
+        long idPregunta = 1;
+        Usuario encuestado = daoUsuario.find(idEncuestado, Usuario.class);
+        PreguntaEncuesta pregunta = daoPreguntaEncuesta.find(idPregunta, PreguntaEncuesta.class);
 
         try {
             EstudioDto estudioDto = new EstudioDto();
@@ -80,7 +114,23 @@ public class EstudioServicio_Test {
             estudioDto.setSolicitudEstudioDto(solicitudEstudioDto);
             UsuarioDto usuarioDto = new UsuarioDto(4);
             estudioDto.setUsuarioDto(usuarioDto);
-            Response resultado = servicio.addEstudios(estudioDto);
+
+            //Llenar lista con un encuestado para probar
+            List<UsuarioResponse> listaEncuestados = new ArrayList<>();
+
+            UsuarioResponse usuarioResponse = new UsuarioResponse(encuestado.get_id(), encuestado.get_nombre(),
+                    encuestado.get_codigoRecuperacion(), encuestado.get_correoelectronico(), encuestado.get_estatus());
+
+            listaEncuestados.add(usuarioResponse);
+
+            //LLenar la lista con una pregunta
+            List<PreguntasResponse> listaPreguntas = new ArrayList<>();
+            PreguntasResponse preguntaEncuesta = new PreguntasResponse(pregunta.get_id(), pregunta.get_descripcion(),
+                    pregunta.get_tipoPregunta(), pregunta.get_estatus());
+
+            listaPreguntas.add(preguntaEncuesta);
+
+            Response resultado = servicio.addEstudios(estudioDto, listaEncuestados, listaPreguntas);
             Assert.assertNotNull(resultado);
 
         } catch (Exception e) {
@@ -89,7 +139,10 @@ public class EstudioServicio_Test {
 
     }
 
-    // Esta prueba permite modificar un estudio
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método ModificarEstudio
+     * @author Gregg Spinetti
+     */
     @Test
     public void pruebaModificarEstudio() throws ParseException {
 
@@ -116,7 +169,10 @@ public class EstudioServicio_Test {
         }
     }
 
-    // Esta prueba permite eliminar un estudio
+    /**
+     * Prueba unitaria para verificar el funcionamiento del método EliminarEstudio
+     * @author Gregg Spinetti
+     */
     @Test
     public void pruebaEliminarEstudio(){
 
