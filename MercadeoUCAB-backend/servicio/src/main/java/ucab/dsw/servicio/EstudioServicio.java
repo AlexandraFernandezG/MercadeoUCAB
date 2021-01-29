@@ -253,7 +253,7 @@ public class EstudioServicio extends AplicacionBase {
             //Recorremos la lista de encuestados y insertamos
             for (UsuarioResponse usuarioEncuestado: listaEncuestados) {
 
-                usuarioEstudioDto.setEstatus("Activo");
+                usuarioEstudioDto.setEstatus("En proceso");
                 EstudioDto idEstudio = new EstudioDto(resul.get_id());
                 usuarioEstudioDto.setEstudioDto(idEstudio);
                 UsuarioDto idUsuario = new UsuarioDto(usuarioEncuestado.getId());
