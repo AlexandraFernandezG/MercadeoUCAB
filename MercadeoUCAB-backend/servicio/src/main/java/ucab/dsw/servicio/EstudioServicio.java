@@ -1,9 +1,6 @@
 package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
-import ucab.dsw.accesodatos.DaoEstudio;
-import ucab.dsw.accesodatos.DaoInformacion;
-import ucab.dsw.accesodatos.DaoSolicitudEstudio;
-import ucab.dsw.accesodatos.DaoUsuario;
+import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
@@ -376,7 +373,7 @@ public class EstudioServicio extends AplicacionBase {
      * @return Este metodo retorna un objeto de tipo Json con el
      * con el objeto modificado y en tal caso obtener una excepcion si aplica.
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
-     * @throws PersistenceException si se inserta un estudio duplicado.
+     * @throws PersistenceException si se modifica un estudio duplicado.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
      * @param id el id del estudio a modificar
      */
@@ -464,6 +461,120 @@ public class EstudioServicio extends AplicacionBase {
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
+
+    }
+
+    /**
+     * Este método permite verificar si todos los encuestados respondieron las encuestas de un estudio
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de resultado exitoso y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un estudio duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     */
+    @PUT
+    @Path("/updateUsuarioEstudio/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response cambiarEstatusUsuarioEstudio(@PathParam("id") long id){
+
+        JsonObject dataObject;
+        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
+        DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+        DaoRespuesta daoRespuesta = new DaoRespuesta();
+        List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
+        List<PreguntaEstudio> listaPreguntas = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
+        List<Respuesta> listaRespuestas = daoRespuesta.findAll(Respuesta.class);
+        int cantidadPreguntas = 0;
+        int cantidadRespuesta = 0;
+        int cantidadMultiples = 0;
+        long fkB = 0;
+
+        try {
+
+            //Calcular cantidad de preguntas del estudio
+            for(PreguntaEstudio preguntaEstudio: listaPreguntas){
+
+                if(preguntaEstudio.get_estudio().get_id() == id){
+
+                    cantidadPreguntas = cantidadPreguntas + 1;
+                }
+            }
+
+            for (UsuarioEstudio usuarioEncuestado: listaUsuarioEstudio){
+
+                if(usuarioEncuestado.get_estudio().get_id() == id){
+
+                    for(Respuesta respuesta: listaRespuestas){
+
+                        if(respuesta.get_usuario().get_id() == usuarioEncuestado.get_usuario().get_id()){
+
+                            for(PreguntaEstudio preguntaEstudioR: listaPreguntas){
+
+                                if(preguntaEstudioR.get_id() == respuesta.get_preguntaEstudio().get_id() && preguntaEstudioR.get_estudio().get_id() == id){
+
+                                    if(respuesta.get_respuestaMultiple() != null) {
+
+                                        if(respuesta.get_preguntaEstudio().get_id() != fkB) {
+
+                                            cantidadMultiples = cantidadMultiples + 1;
+                                            fkB = respuesta.get_preguntaEstudio().get_id();
+                                        }
+
+                                    } else {
+
+                                        cantidadRespuesta = cantidadRespuesta + 1;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+            if(cantidadPreguntas == (cantidadRespuesta+cantidadMultiples)) {
+
+                cantidadRespuesta = 0;
+                cantidadMultiples = 0;
+                UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(usuarioEncuestado.get_id(), UsuarioEstudio.class);
+                usuarioEstudio_modificar.set_estatus("Respondido");
+                daoUsuarioEstudio.update(usuarioEstudio_modificar);
+
+            } else {
+
+                cantidadRespuesta = 0;
+                cantidadMultiples = 0;
+            }
+
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "operacion realizada con éxito")
+                    .add("Cantidad Respuestas", 200).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","Error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        }
+
 
     }
 }

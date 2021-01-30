@@ -69,7 +69,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
             for (Object[] pre: listaPreguntas){
 
-                listaPreguntasRecomendadas.add(new PreguntasResponse((long)pre[0], (String)pre[1], (String)pre[2], (String)pre[3]));
+                listaPreguntasRecomendadas.add(new PreguntasResponse((long)pre[0], (String)pre[1], (String)pre[2], (String)pre[3], (String)pre[4]));
 
             }
 

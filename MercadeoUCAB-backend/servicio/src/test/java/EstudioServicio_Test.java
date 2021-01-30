@@ -126,7 +126,7 @@ public class EstudioServicio_Test {
             //LLenar la lista con una pregunta
             List<PreguntasResponse> listaPreguntas = new ArrayList<>();
             PreguntasResponse preguntaEncuesta = new PreguntasResponse(pregunta.get_id(), pregunta.get_descripcion(),
-                    pregunta.get_tipoPregunta(), pregunta.get_estatus());
+                    pregunta.get_tipoPregunta(), pregunta.get_estatus(), "Comida rapida");
 
             listaPreguntas.add(preguntaEncuesta);
 
