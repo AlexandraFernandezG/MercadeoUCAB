@@ -28,7 +28,6 @@ public class PreguntaEncuesta extends EntidadBase{
    
    //Getters, Setters, y otros metodos.
 
-
     public Subcategoria get_subcategoria() {
         return _subcategoria;
     }

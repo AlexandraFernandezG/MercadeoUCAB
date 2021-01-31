@@ -1,14 +1,10 @@
 package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
-import ucab.dsw.accesodatos.DaoEstudio;
-import ucab.dsw.accesodatos.DaoInformacion;
-import ucab.dsw.accesodatos.DaoSolicitudEstudio;
-import ucab.dsw.accesodatos.DaoUsuario;
-import ucab.dsw.dtos.EstudioDto;
-import ucab.dsw.dtos.UsuarioDto;
-import ucab.dsw.dtos.UsuarioEstudioDto;
+import ucab.dsw.accesodatos.*;
+import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.response.UsuarioResponse;
 
 import java.util.ArrayList;
@@ -139,7 +135,74 @@ public class EstudioServicio extends AplicacionBase {
     }
 
     /**
-     * Este método permite insertar un estudio con sus respectivos encuestados
+     * Este método permite obtener los encuestados en base a una solicitud de estudio.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de encuestados de una solicitud y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     */
+    @GET
+    @Path("/solicitudEncuestados/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response listarEncuestadosSolicitud(@PathParam("id") long id){
+
+        JsonObject dataObject;
+        List<UsuarioResponse> listaEncuestadosSolicitud = new ArrayList<>();
+        DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
+        DaoUsuario daoUsuario = new DaoUsuario();
+        DaoInformacion daoInformacion = new DaoInformacion();
+
+        try {
+
+            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
+
+            //Listar todos los usuarios encuestados
+            List<Object[]> listaUsuariosEncuestados = daoUsuario.listarEncuestadosEstudio();
+            List<UsuarioResponse> listaUsuariosEncuestadosResult = new ArrayList<>(listaUsuariosEncuestados.size());
+            List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
+
+            for (Object[] user : listaUsuariosEncuestados) {
+
+                listaUsuariosEncuestadosResult.add(new UsuarioResponse((long) user[0], (String) user[1], (String) user[2], (String) user[3], (String) user[4]));
+            }
+
+            //Recorremos la lista de encuestados y hacemos el match
+            for (UsuarioResponse usuarioEncuestado: listaUsuariosEncuestadosResult) {
+
+                for (Informacion informacion : listaInformacion) {
+
+                    if(solicitudEstudio.get_genero().equals(informacion.get_genero()) && solicitudEstudio.get_estadoCivil().equals(informacion.get_estadoCivil()) &&
+                            solicitudEstudio.get_cantidadPersonas() == informacion.get_cantidadPersonas() && informacion.get_usuario().get_id() == usuarioEncuestado.getId()) {
+
+                        listaEncuestadosSolicitud.add(usuarioEncuestado);
+                    }
+                }
+            }
+
+            return Response.status(Response.Status.OK).entity(listaEncuestadosSolicitud).build();
+
+        }  catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+    }
+
+    /**
+     * Este método permite insertar un estudio con sus respectivos encuestados y preguntas
      * @author Emanuel Di Cristofaro y Gregg Spinetti
      * @return Este metodo retorna un objeto de tipo Json con el
      * con el estudio insertado y en tal caso obtener una excepcion si aplica.
@@ -153,12 +216,12 @@ public class EstudioServicio extends AplicacionBase {
     @Path("/addEstudio")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response addEstudios(EstudioDto estudioDto) throws Exception {
+    public Response addEstudios(EstudioDto estudioDto, List<UsuarioResponse> listaEncuestados, List<PreguntasResponse> listaPreguntas) {
 
         JsonObject dataObject;
         EstudioDto resultado = new EstudioDto();
-        DaoInformacion daoInformacion = new DaoInformacion();
         ucab.dsw.servicio.UsuarioEstudioServicio servicio = new ucab.dsw.servicio.UsuarioEstudioServicio();
+        ucab.dsw.servicio.PreguntasEstudioServicio servicio1 = new ucab.dsw.servicio.PreguntasEstudioServicio();
 
         try {
 
@@ -184,32 +247,29 @@ public class EstudioServicio extends AplicacionBase {
             //Insertar encuestados al estudio
             UsuarioEstudioDto usuarioEstudioDto = new UsuarioEstudioDto();
 
-            //Listar todos los usuarios encuestados
-            List<Object[]> listaUsuariosEncuestados = daoUsuario.listarEncuestadosEstudio();
-            List<UsuarioResponse> listaUsuariosEncuestadosResult = new ArrayList<>(listaUsuariosEncuestados.size());
-            List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
+            //Recorremos la lista de encuestados y insertamos
+            for (UsuarioResponse usuarioEncuestado: listaEncuestados) {
 
-            for (Object[] user : listaUsuariosEncuestados) {
+                usuarioEstudioDto.setEstatus("En proceso");
+                EstudioDto idEstudio = new EstudioDto(resul.get_id());
+                usuarioEstudioDto.setEstudioDto(idEstudio);
+                UsuarioDto idUsuario = new UsuarioDto(usuarioEncuestado.getId());
+                usuarioEstudioDto.setUsuarioDto(idUsuario);
+                servicio.addUsuarioEstudio(usuarioEstudioDto);
 
-                listaUsuariosEncuestadosResult.add(new UsuarioResponse((long) user[0], (String) user[1], (String) user[2], (String) user[3], (String) user[4]));
             }
 
-            //Recorremos la lista de encuestados y hacemos el match
-            for (UsuarioResponse usuarioEncuestado: listaUsuariosEncuestadosResult) {
+            //Recorremos e insertamos las preguntas con el estudio
+            PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto();
 
-                for (Informacion informacion : listaInformacion) {
+            for(PreguntasResponse preguntaEncuesta: listaPreguntas){
 
-                    if(solicitudEstudio.get_genero().equals(informacion.get_genero()) && solicitudEstudio.get_estadoCivil().equals(informacion.get_estadoCivil()) &&
-                            solicitudEstudio.get_cantidadPersonas() == informacion.get_cantidadPersonas() && informacion.get_usuario().get_id() == usuarioEncuestado.getId()) {
-
-                        usuarioEstudioDto.setEstatus("Activo");
-                        EstudioDto idEstudio = new EstudioDto(resul.get_id());
-                        usuarioEstudioDto.setEstudioDto(idEstudio);
-                        UsuarioDto idUsuario = new UsuarioDto(usuarioEncuestado.getId());
-                        usuarioEstudioDto.setUsuarioDto(idUsuario);
-                        servicio.addUsuarioEstudio(usuarioEstudioDto);
-                    }
-                }
+                preguntaEstudioDto.setEstatus("Activo");
+                EstudioDto idEstudio2 = new EstudioDto(resul.get_id());
+                preguntaEstudioDto.setEstudioDto(idEstudio2);
+                PreguntaEncuestaDto idPregunta = new PreguntaEncuestaDto(preguntaEncuesta.getIdPregunta());
+                preguntaEstudioDto.setPreguntaEncuestaDto(idPregunta);
+                servicio1.addPreguntaEstudio(preguntaEstudioDto);
             }
 
             return Response.status(Response.Status.OK).entity(resultado).build();
@@ -313,7 +373,7 @@ public class EstudioServicio extends AplicacionBase {
      * @return Este metodo retorna un objeto de tipo Json con el
      * con el objeto modificado y en tal caso obtener una excepcion si aplica.
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
-     * @throws PersistenceException si se inserta un estudio duplicado.
+     * @throws PersistenceException si se modifica un estudio duplicado.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
      * @param id el id del estudio a modificar
      */
@@ -401,6 +461,120 @@ public class EstudioServicio extends AplicacionBase {
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
+
+    }
+
+    /**
+     * Este método permite verificar si todos los encuestados respondieron las encuestas de un estudio
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de resultado exitoso y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un estudio duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     */
+    @PUT
+    @Path("/updateUsuarioEstudio/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response cambiarEstatusUsuarioEstudio(@PathParam("id") long id){
+
+        JsonObject dataObject;
+        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
+        DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+        DaoRespuesta daoRespuesta = new DaoRespuesta();
+        List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
+        List<PreguntaEstudio> listaPreguntas = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
+        List<Respuesta> listaRespuestas = daoRespuesta.findAll(Respuesta.class);
+        int cantidadPreguntas = 0;
+        int cantidadRespuesta = 0;
+        int cantidadMultiples = 0;
+        long fkB = 0;
+
+        try {
+
+            //Calcular cantidad de preguntas del estudio
+            for(PreguntaEstudio preguntaEstudio: listaPreguntas){
+
+                if(preguntaEstudio.get_estudio().get_id() == id){
+
+                    cantidadPreguntas = cantidadPreguntas + 1;
+                }
+            }
+
+            for (UsuarioEstudio usuarioEncuestado: listaUsuarioEstudio){
+
+                if(usuarioEncuestado.get_estudio().get_id() == id){
+
+                    for(Respuesta respuesta: listaRespuestas){
+
+                        if(respuesta.get_usuario().get_id() == usuarioEncuestado.get_usuario().get_id()){
+
+                            for(PreguntaEstudio preguntaEstudioR: listaPreguntas){
+
+                                if(preguntaEstudioR.get_id() == respuesta.get_preguntaEstudio().get_id() && preguntaEstudioR.get_estudio().get_id() == id){
+
+                                    if(respuesta.get_respuestaMultiple() != null) {
+
+                                        if(respuesta.get_preguntaEstudio().get_id() != fkB) {
+
+                                            cantidadMultiples = cantidadMultiples + 1;
+                                            fkB = respuesta.get_preguntaEstudio().get_id();
+                                        }
+
+                                    } else {
+
+                                        cantidadRespuesta = cantidadRespuesta + 1;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+            if(cantidadPreguntas == (cantidadRespuesta+cantidadMultiples)) {
+
+                cantidadRespuesta = 0;
+                cantidadMultiples = 0;
+                UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(usuarioEncuestado.get_id(), UsuarioEstudio.class);
+                usuarioEstudio_modificar.set_estatus("Respondido");
+                daoUsuarioEstudio.update(usuarioEstudio_modificar);
+
+            } else {
+
+                cantidadRespuesta = 0;
+                cantidadMultiples = 0;
+            }
+
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "operacion realizada con éxito")
+                    .add("Cantidad Respuestas", 200).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","Error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        }
+
 
     }
 }

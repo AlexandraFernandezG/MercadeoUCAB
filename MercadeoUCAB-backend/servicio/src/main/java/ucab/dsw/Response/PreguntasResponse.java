@@ -11,12 +11,14 @@ public class PreguntasResponse {
     private String descripcionPregunta;
     private String tipoPregunta;
     private String estatusPregunta;
+    private String nombreSubcategoria;
 
-    public PreguntasResponse(long idPregunta, String descripcionPregunta, String tipoPregunta, String estatusPregunta){
+    public PreguntasResponse(long idPregunta, String descripcionPregunta, String tipoPregunta, String estatusPregunta, String nombreSubcategoria){
             this.idPregunta = idPregunta;
             this.descripcionPregunta = descripcionPregunta;
             this.tipoPregunta = tipoPregunta;
             this.estatusPregunta = estatusPregunta;
+            this.nombreSubcategoria = nombreSubcategoria;
     }
 
     public long getIdPregunta() {
@@ -49,5 +51,13 @@ public class PreguntasResponse {
 
     public void setEstatusPregunta(String estatusPregunta) {
         this.estatusPregunta = estatusPregunta;
+    }
+
+    public String getNombreSubcategoria() {
+        return nombreSubcategoria;
+    }
+
+    public void setNombreSubcategoria(String nombreSubcategoria) {
+        this.nombreSubcategoria = nombreSubcategoria;
     }
 }
