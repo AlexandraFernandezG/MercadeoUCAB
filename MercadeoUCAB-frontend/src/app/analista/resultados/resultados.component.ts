@@ -31,7 +31,7 @@ export class ResultadosComponent implements OnInit, AfterViewInit {
   myctx: any;
   canva: any;
   data: JSON;
-  objeto :any;
+  objeto :JSON;
 
 
   constructor(
@@ -41,7 +41,6 @@ export class ResultadosComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.idEstudio = +this.actRoute.snapshot.paramMap.get("id");
-    this.objeto = this.service.getResultados(this.idEstudio);
     this.Resultados();
 
   }
