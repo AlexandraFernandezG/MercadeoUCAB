@@ -16,6 +16,10 @@ public class EstudioEncuestadoResponse {
         this.nombreUsuario = nombreUsuario;
     }
 
+    public EstudioEncuestadoResponse(){
+        super();
+    }
+
     public long getIdUsuario() {
         return idUsuario;
     }

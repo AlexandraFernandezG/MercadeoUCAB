@@ -7,34 +7,38 @@ import lombok.Setter;
 @Setter
 public class PreguntasResponse {
 
-    private long idPregunta;
-    private String descripcionPregunta;
+    private long id;
+    private String descripcion;
     private String tipoPregunta;
-    private String estatusPregunta;
+    private String estatus;
     private String nombreSubcategoria;
 
-    public PreguntasResponse(long idPregunta, String descripcionPregunta, String tipoPregunta, String estatusPregunta, String nombreSubcategoria){
-            this.idPregunta = idPregunta;
-            this.descripcionPregunta = descripcionPregunta;
+    public PreguntasResponse(){
+        super();
+    }
+
+    public PreguntasResponse(long id, String descripcion, String tipoPregunta, String estatus, String nombreSubcategoria){
+            this.id = id;
+            this.descripcion = descripcion;
             this.tipoPregunta = tipoPregunta;
-            this.estatusPregunta = estatusPregunta;
+            this.estatus = estatus;
             this.nombreSubcategoria = nombreSubcategoria;
     }
 
-    public long getIdPregunta() {
-        return idPregunta;
+    public long getId() {
+        return id;
     }
 
-    public void setIdPregunta(long idPregunta) {
-        this.idPregunta = idPregunta;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getDescripcionPregunta() {
-        return descripcionPregunta;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescripcionPregunta(String descripcionPregunta) {
-        this.descripcionPregunta = descripcionPregunta;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getTipoPregunta() {
@@ -45,12 +49,12 @@ public class PreguntasResponse {
         this.tipoPregunta = tipoPregunta;
     }
 
-    public String getEstatusPregunta() {
-        return estatusPregunta;
+    public String getEstatus() {
+        return estatus;
     }
 
-    public void setEstatusPregunta(String estatusPregunta) {
-        this.estatusPregunta = estatusPregunta;
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
     }
 
     public String getNombreSubcategoria() {

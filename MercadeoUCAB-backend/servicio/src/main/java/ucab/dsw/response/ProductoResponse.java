@@ -12,6 +12,10 @@ public class ProductoResponse {
         private String descripcionProducto;
         private String estatusProducto;
 
+    public ProductoResponse(){
+        super();
+    }
+
     public ProductoResponse(long idProducto, String nombreProducto, String descripcionProducto, String estatusProducto) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
