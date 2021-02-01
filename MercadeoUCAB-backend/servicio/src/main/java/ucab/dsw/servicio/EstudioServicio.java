@@ -1,18 +1,13 @@
 package ucab.dsw.servicio;
-import com.google.gson.reflect.TypeToken;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
-import ucab.dsw.response.EstudioInsertResponse;
 import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.response.UsuarioResponse;
-import com.google.gson.*;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -206,9 +201,104 @@ public class EstudioServicio extends AplicacionBase {
         }
     }
 
+    /**
+     * Este método permite insertar los encuestados de un estudio creado
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * un mensaje de exito y en tal caso obtener una excepcion si aplica.
+     */
+     @POST
+     @Path("/estudioEncuestados/{id}")
+     @Consumes( MediaType.APPLICATION_JSON )
+     @Produces( MediaType.APPLICATION_JSON )
+     public Response insertarEncuestadosEstudio(@PathParam("id") long id, List<UsuarioResponse> listaEncuestados){
+
+         JsonObject dataObject;
+         ucab.dsw.servicio.UsuarioEstudioServicio servicio = new ucab.dsw.servicio.UsuarioEstudioServicio();
+
+         try {
+
+             //Insertar encuestados al estudio
+             UsuarioEstudioDto usuarioEstudioDto = new UsuarioEstudioDto();
+
+             //Recorremos la lista de encuestados y insertamos
+             for (UsuarioResponse usuarioEncuestado: listaEncuestados) {
+
+                 usuarioEstudioDto.setEstatus("En proceso");
+                 EstudioDto idEstudio = new EstudioDto(id);
+                 usuarioEstudioDto.setEstudioDto(idEstudio);
+                 UsuarioDto idUsuario = new UsuarioDto(usuarioEncuestado.getId());
+                 usuarioEstudioDto.setUsuarioDto(idUsuario);
+                 servicio.addUsuarioEstudio(usuarioEstudioDto);
+
+             }
+
+             dataObject = Json.createObjectBuilder()
+                     .add("estado", "Se han insertado los encuestados correctamente")
+                     .add("codigo", 200).build();
+
+             return Response.status(Response.Status.OK).entity(dataObject).build();
+
+         } catch (Exception ex) {
+
+             dataObject = Json.createObjectBuilder()
+                     .add("estado", "Error")
+                     .add("excepcion", ex.getMessage())
+                     .add("codigo", 400).build();
+
+             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+         }
+     }
 
     /**
-     * Este método permite insertar un estudio con sus respectivos encuestados y preguntas
+     * Este método permite insertar las preguntas sugeridas/añadidas de un estudio creado
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * un mensaje de exito y en tal caso obtener una excepcion si aplica.
+     */
+    @POST
+    @Path("/estudioPreguntas/{id}")
+    @Consumes( MediaType.APPLICATION_JSON )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response insertarPreguntasEstudio(@PathParam("id") long id, List<PreguntasResponse> listaPreguntas){
+
+        JsonObject dataObject;
+        ucab.dsw.servicio.PreguntasEstudioServicio servicio1 = new ucab.dsw.servicio.PreguntasEstudioServicio();
+
+        try {
+
+            //Recorremos e insertamos las preguntas con el estudio
+            PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto();
+
+            for(PreguntasResponse preguntaEncuesta: listaPreguntas){
+
+                preguntaEstudioDto.setEstatus("Activo");
+                EstudioDto idEstudio2 = new EstudioDto(id);
+                preguntaEstudioDto.setEstudioDto(idEstudio2);
+                PreguntaEncuestaDto idPregunta = new PreguntaEncuestaDto(preguntaEncuesta.getIdPregunta());
+                preguntaEstudioDto.setPreguntaEncuestaDto(idPregunta);
+                servicio1.addPreguntaEstudio(preguntaEstudioDto);
+            }
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Se han insertado las preguntas correctamente")
+                    .add("codigo", 200).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+    }
+
+    /**
+     * Este método permite insertar un estudio
      * @author Emanuel Di Cristofaro y Gregg Spinetti
      * @return Este metodo retorna un objeto de tipo Json con el
      * con el estudio insertado y en tal caso obtener una excepcion si aplica.
@@ -216,26 +306,18 @@ public class EstudioServicio extends AplicacionBase {
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
      * @throws PersistenceException si se inserta un estudio duplicado.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
-     * @param estudioDtoString el objeto dto a insertar en formato string.
-     * @param listaEncuestados la lista de encuestados a insertar en formato string.
-     * @param listaPreguntas la lista de preguntas a insertar en formato string.
+     * @param estudioDto el objeto dto a insertar del estudio que se quiere crear.
      */
     @POST
-    @Path("/addEstudio/{estudio}/{encuestado}/{preguntas}")
-    @Consumes( MediaType.TEXT_PLAIN )
+    @Path("/addEstudio")
+    @Consumes( MediaType.APPLICATION_JSON )
     @Produces( MediaType.APPLICATION_JSON )
-    public Response addEstudios(@PathParam("estudio") String estudioDtoString, @PathParam("encuestado") String listaEncuestados, @PathParam("preguntas") String listaPreguntas) {
+    public Response addEstudios(EstudioDto estudioDto) {
 
         JsonObject dataObject;
         EstudioDto resultado = new EstudioDto();
-        ucab.dsw.servicio.UsuarioEstudioServicio servicio = new ucab.dsw.servicio.UsuarioEstudioServicio();
-        ucab.dsw.servicio.PreguntasEstudioServicio servicio1 = new ucab.dsw.servicio.PreguntasEstudioServicio();
 
         try {
-
-            //Pasar el objeto dto de string a objeto estudioDto
-            Gson gson = new Gson();
-            EstudioInsertResponse estudioDto = gson.fromJson(estudioDtoString, EstudioInsertResponse.class);
 
             DaoEstudio daoEstudio = new DaoEstudio();
             Estudio estudio = new Estudio();
@@ -250,48 +332,12 @@ public class EstudioServicio extends AplicacionBase {
             estudio.set_fechaFin(estudioDto.getFechaFin());
             estudio.set_estado(estudioDto.getEstado());
             estudio.set_estatus(estudioDto.getEstatus());
-            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(estudioDto.getSolicitudEstudioDto(), SolicitudEstudio.class);
-            Usuario usuario = daoUsuario.find(estudioDto.getUsuarioDto(), Usuario.class);
+            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(estudioDto.getSolicitudEstudioDto().getId(), SolicitudEstudio.class);
+            Usuario usuario = daoUsuario.find(estudioDto.getUsuarioDto().getId(), Usuario.class);
             estudio.set_solicitudEstudio(solicitudEstudio);
             estudio.set_usuario(usuario);
             Estudio resul = daoEstudio.insert(estudio);
             resultado.setId(resul.get_id());
-
-            //Insertar encuestados al estudio
-            UsuarioEstudioDto usuarioEstudioDto = new UsuarioEstudioDto();
-
-            //Transformar de string a list
-            Type collectionType = new TypeToken<Collection<UsuarioResponse>>(){}.getType();
-            Collection<UsuarioResponse> listaEncuestadosNew = gson.fromJson(listaEncuestados, collectionType);
-
-            //Recorremos la lista de encuestados y insertamos
-            for (UsuarioResponse usuarioEncuestado: listaEncuestadosNew) {
-
-                usuarioEstudioDto.setEstatus("En proceso");
-                EstudioDto idEstudio = new EstudioDto(resul.get_id());
-                usuarioEstudioDto.setEstudioDto(idEstudio);
-                UsuarioDto idUsuario = new UsuarioDto(usuarioEncuestado.getId());
-                usuarioEstudioDto.setUsuarioDto(idUsuario);
-                servicio.addUsuarioEstudio(usuarioEstudioDto);
-
-            }
-
-            //Transformar de string a list
-            Type collectionType2 = new TypeToken<Collection<PreguntasResponse>>(){}.getType();
-            Collection<PreguntasResponse> listaPreguntasNew = gson.fromJson(listaPreguntas, collectionType2);
-
-            //Recorremos e insertamos las preguntas con el estudio
-            PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto();
-
-            for(PreguntasResponse preguntaEncuesta: listaPreguntasNew){
-
-                preguntaEstudioDto.setEstatus("Activo");
-                EstudioDto idEstudio2 = new EstudioDto(resul.get_id());
-                preguntaEstudioDto.setEstudioDto(idEstudio2);
-                PreguntaEncuestaDto idPregunta = new PreguntaEncuestaDto(preguntaEncuesta.getIdPregunta());
-                preguntaEstudioDto.setPreguntaEncuestaDto(idPregunta);
-                servicio1.addPreguntaEstudio(preguntaEstudioDto);
-            }
 
             return Response.status(Response.Status.OK).entity(resultado).build();
 
