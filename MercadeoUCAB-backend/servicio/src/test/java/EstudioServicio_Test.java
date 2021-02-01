@@ -88,12 +88,6 @@ public class EstudioServicio_Test {
     public void pruebaInsertarEstudio() throws Exception {
 
         EstudioServicio servicio = new EstudioServicio();
-        DaoUsuario daoUsuario = new DaoUsuario();
-        DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-        long idEncuestado = 3;
-        long idPregunta = 1;
-        Usuario encuestado = daoUsuario.find(idEncuestado, Usuario.class);
-        PreguntaEncuesta pregunta = daoPreguntaEncuesta.find(idPregunta, PreguntaEncuesta.class);
 
         try {
             EstudioDto estudioDto = new EstudioDto();
@@ -115,24 +109,8 @@ public class EstudioServicio_Test {
             estudioDto.setSolicitudEstudioDto(solicitudEstudioDto);
             UsuarioDto usuarioDto = new UsuarioDto(4);
             estudioDto.setUsuarioDto(usuarioDto);
-
-            //Llenar lista con un encuestado para probar
-            List<UsuarioResponse> listaEncuestados = new ArrayList<>();
-
-            UsuarioResponse usuarioResponse = new UsuarioResponse(encuestado.get_id(), encuestado.get_nombre(),
-                    encuestado.get_codigoRecuperacion(), encuestado.get_correoelectronico(), encuestado.get_estatus());
-
-            listaEncuestados.add(usuarioResponse);
-
-            //LLenar la lista con una pregunta
-            List<PreguntasResponse> listaPreguntas = new ArrayList<>();
-            PreguntasResponse preguntaEncuesta = new PreguntasResponse(pregunta.get_id(), pregunta.get_descripcion(),
-                    pregunta.get_tipoPregunta(), pregunta.get_estatus(), "Comida rapida");
-
-            listaPreguntas.add(preguntaEncuesta);
-
-            //Response resultado = servicio.addEstudios();
-            //Assert.assertNotNull(resultado);
+            Response resultado = servicio.addEstudios(estudioDto);
+            Assert.assertNotNull(resultado);
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
