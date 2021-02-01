@@ -32,11 +32,11 @@ export class RespuestasEncuestaComponent implements OnInit {
   respuestasAso2: respuestaPregunta3[];
   
   ngOnInit(): void {
-    this.service.getPreguntasEncuesta(1)
+    this.service.getPreguntasEncuesta(2)
     .subscribe(data => {this.preguntas2 = data;
       console.log(this.preguntas);
     } );
-    this.service.getRespuestasAsociadas(1)
+    this.service.getRespuestasAsociadas(2)
     .subscribe(data => {this.respuestasAso2 = data;
       console.log(this.respuestasAso);
     } );

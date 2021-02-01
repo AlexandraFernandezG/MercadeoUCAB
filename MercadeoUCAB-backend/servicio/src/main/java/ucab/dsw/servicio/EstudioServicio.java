@@ -1,13 +1,18 @@
 package ucab.dsw.servicio;
+import com.google.gson.reflect.TypeToken;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.response.EstudioInsertResponse;
 import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.response.UsuarioResponse;
+import com.google.gson.*;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -67,7 +72,7 @@ public class EstudioServicio extends AplicacionBase {
     @GET
     @Path("/consultarEstudio/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response consultarEstudio(@PathParam("id") long id) throws NullPointerException{
+    public Response consultarEstudio(@PathParam("id") long id) {
 
         JsonObject dataObject;
         DaoEstudio daoEstudio = new DaoEstudio();
@@ -201,6 +206,7 @@ public class EstudioServicio extends AplicacionBase {
         }
     }
 
+
     /**
      * Este método permite insertar un estudio con sus respectivos encuestados y preguntas
      * @author Emanuel Di Cristofaro y Gregg Spinetti
@@ -210,13 +216,15 @@ public class EstudioServicio extends AplicacionBase {
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
      * @throws PersistenceException si se inserta un estudio duplicado.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
-     * @param estudioDto el objeto categoria que el sistema desea insertar o crear.
+     * @param estudioDtoString el objeto dto a insertar en formato string.
+     * @param listaEncuestados la lista de encuestados a insertar en formato string.
+     * @param listaPreguntas la lista de preguntas a insertar en formato string.
      */
     @POST
-    @Path("/addEstudio")
+    @Path("/addEstudio/{estudio}/{encuestado}/{preguntas}")
+    @Consumes( MediaType.TEXT_PLAIN )
     @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
-    public Response addEstudios(EstudioDto estudioDto, List<UsuarioResponse> listaEncuestados, List<PreguntasResponse> listaPreguntas) {
+    public Response addEstudios(@PathParam("estudio") String estudioDtoString, @PathParam("encuestado") String listaEncuestados, @PathParam("preguntas") String listaPreguntas) {
 
         JsonObject dataObject;
         EstudioDto resultado = new EstudioDto();
@@ -225,20 +233,25 @@ public class EstudioServicio extends AplicacionBase {
 
         try {
 
+            //Pasar el objeto dto de string a objeto estudioDto
+            Gson gson = new Gson();
+            EstudioInsertResponse estudioDto = gson.fromJson(estudioDtoString, EstudioInsertResponse.class);
+
             DaoEstudio daoEstudio = new DaoEstudio();
             Estudio estudio = new Estudio();
 
             DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
             DaoUsuario daoUsuario = new DaoUsuario();
 
+            //Ejecutar el insert
             estudio.set_nombre(estudioDto.getNombre());
             estudio.set_tipoInstrumento(estudioDto.getTipoInstrumento());
             estudio.set_fechaInicio(estudioDto.getFechaInicio());
             estudio.set_fechaFin(estudioDto.getFechaFin());
             estudio.set_estado(estudioDto.getEstado());
             estudio.set_estatus(estudioDto.getEstatus());
-            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(estudioDto.getSolicitudEstudioDto().getId(), SolicitudEstudio.class);
-            Usuario usuario = daoUsuario.find(estudioDto.getUsuarioDto().getId(), Usuario.class);
+            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(estudioDto.getSolicitudEstudioDto(), SolicitudEstudio.class);
+            Usuario usuario = daoUsuario.find(estudioDto.getUsuarioDto(), Usuario.class);
             estudio.set_solicitudEstudio(solicitudEstudio);
             estudio.set_usuario(usuario);
             Estudio resul = daoEstudio.insert(estudio);
@@ -247,8 +260,12 @@ public class EstudioServicio extends AplicacionBase {
             //Insertar encuestados al estudio
             UsuarioEstudioDto usuarioEstudioDto = new UsuarioEstudioDto();
 
+            //Transformar de string a list
+            Type collectionType = new TypeToken<Collection<UsuarioResponse>>(){}.getType();
+            Collection<UsuarioResponse> listaEncuestadosNew = gson.fromJson(listaEncuestados, collectionType);
+
             //Recorremos la lista de encuestados y insertamos
-            for (UsuarioResponse usuarioEncuestado: listaEncuestados) {
+            for (UsuarioResponse usuarioEncuestado: listaEncuestadosNew) {
 
                 usuarioEstudioDto.setEstatus("En proceso");
                 EstudioDto idEstudio = new EstudioDto(resul.get_id());
@@ -259,10 +276,14 @@ public class EstudioServicio extends AplicacionBase {
 
             }
 
+            //Transformar de string a list
+            Type collectionType2 = new TypeToken<Collection<PreguntasResponse>>(){}.getType();
+            Collection<PreguntasResponse> listaPreguntasNew = gson.fromJson(listaPreguntas, collectionType2);
+
             //Recorremos e insertamos las preguntas con el estudio
             PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto();
 
-            for(PreguntasResponse preguntaEncuesta: listaPreguntas){
+            for(PreguntasResponse preguntaEncuesta: listaPreguntasNew){
 
                 preguntaEstudioDto.setEstatus("Activo");
                 EstudioDto idEstudio2 = new EstudioDto(resul.get_id());
@@ -292,16 +313,7 @@ public class EstudioServicio extends AplicacionBase {
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
-        } catch (PruebaExcepcion ex) {
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
-                    .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
-
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
-
-        } catch (Exception ex) {
+        }  catch (Exception ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
