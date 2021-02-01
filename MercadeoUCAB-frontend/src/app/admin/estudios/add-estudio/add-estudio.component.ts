@@ -121,16 +121,28 @@ export class AddEstudioComponent implements OnInit {
     console.log(this.estudio);
     console.log(this.encuestados);
     console.log(this.preguntas);
-    if( this.encuestados.length == 0){
-      this.onError('El estudio debe tener encuestados asignados');
-    }else if (this.preguntas.length == 0){
-      this.onError('El estudio debe tener preguntas asignadas');
-    }else{
-      this.onSucess('error');
-      this.estudiosService.createEstudio(
-        this.estudio as Estudio2, this.encuestados as Usuario3[], this.preguntas as Pregunta3[]
-      ).subscribe();
-    }
+    this.estudiosService.createEstudio(
+      this.estudio as Estudio2
+    ).subscribe( dataEstudio => 
+      //console.log('prueba de que si se inserto la vaina',dataEstudio.id),
+      localStorage.setItem('idEstudioCreado',  JSON.stringify (dataEstudio.id))
+    );
+    // if( this.encuestados.length == 0){
+    //   this.onError('El estudio debe tener encuestados asignados');
+    // }else if (this.preguntas.length == 0){
+    //   this.onError('El estudio debe tener preguntas asignadas');
+    // }else{
+    //   this.onSucess('error');
+    //   this.estudiosService.createEstudio(
+    //     this.estudio as Estudio2
+    //   ).subscribe( dataEstudio => 
+    //     //console.log('prueba de que si se inserto la vaina',dataEstudio.id),
+    //     localStorage.setItem('idEstudioCreado',  JSON.stringify (dataEstudio.id))
+    //   );
+      //this.estudiosService.addEncuestadosEstudio(JSON.parse(localStorage.getItem('preguntasEst')),this.encuestados);
+
+  
+    //}
     
 
   }

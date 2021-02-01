@@ -13,6 +13,10 @@ export class EstudiosService {
 
   public url = '//localhost:8080/servicio-1.0-SNAPSHOT/api/';
 
+  est: string;
+  enc: string;
+  preg: string;
+
   constructor( private http: HttpClient) { }
   
   // Http Options
@@ -22,19 +26,17 @@ export class EstudiosService {
     })
   };
 
-  createEstudio(estudio: Estudio2, encuestados: Usuario3[], preguntas: Pregunta3[]):Observable<any>{
-    console.log(JSON.stringify(estudio))
-    console.log(JSON.stringify(encuestados))
-    console.log(JSON.stringify(preguntas))
-    var body = {
-      estudioDto: JSON.stringify(estudio),
-      listaEncuestados: JSON.stringify(encuestados),
-      listaPreguntas: JSON.stringify(preguntas)}
-    return this.http.post<any>(this.url + 'estudio/addEstudio', body, this.httpOptions).
+  createEstudio(estudio: Estudio2):Observable<Estudio2>{
+    console.log(estudio)
+    return this.http.post<Estudio2>(this.url + 'estudio/addEstudio/', JSON.stringify(estudio) ,  this.httpOptions).
     pipe(
       tap((newEstudio: Estudio2) => console.log(`added estudio w/ id=${newEstudio.id}`)),
       catchError(this.handleError)
     );
+  }
+
+  addEncuestadosEstudio(id: number, encuestados: Usuario3[]): Observable<any>{
+    return this.http.post(this.url + 'estudio/addEstudio/' + id, JSON.stringify(encuestados) ,  this.httpOptions)
   }
 
   addEstudioSugerido(idSugerido: number, idEstudio: number):Observable<any>{
