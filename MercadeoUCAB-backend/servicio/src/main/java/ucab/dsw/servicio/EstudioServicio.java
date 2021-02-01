@@ -275,7 +275,7 @@ public class EstudioServicio extends AplicacionBase {
                 preguntaEstudioDto.setEstatus("Activo");
                 EstudioDto idEstudio2 = new EstudioDto(id);
                 preguntaEstudioDto.setEstudioDto(idEstudio2);
-                PreguntaEncuestaDto idPregunta = new PreguntaEncuestaDto(preguntaEncuesta.getIdPregunta());
+                PreguntaEncuestaDto idPregunta = new PreguntaEncuestaDto(preguntaEncuesta.getId());
                 preguntaEstudioDto.setPreguntaEncuestaDto(idPregunta);
                 servicio1.addPreguntaEstudio(preguntaEstudioDto);
             }
@@ -285,6 +285,15 @@ public class EstudioServicio extends AplicacionBase {
                     .add("codigo", 200).build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
 
@@ -359,7 +368,16 @@ public class EstudioServicio extends AplicacionBase {
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
-        }  catch (Exception ex) {
+        }  catch (PruebaExcepcion ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")

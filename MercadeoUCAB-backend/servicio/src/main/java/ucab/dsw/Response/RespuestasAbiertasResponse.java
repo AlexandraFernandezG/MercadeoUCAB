@@ -11,6 +11,10 @@ public class RespuestasAbiertasResponse {
     private String respuestaAbierta;
     private String pregunta;
 
+    public RespuestasAbiertasResponse(){
+        super();
+    }
+
     public RespuestasAbiertasResponse(long id, String respuestaAbierta, String pregunta) {
         this.id = id;
         this.respuestaAbierta = respuestaAbierta;

@@ -13,6 +13,10 @@ public class UsuarioResponse {
     private String correo;
     private String estatus;
 
+    public UsuarioResponse(){
+        super();
+    }
+
     public UsuarioResponse(long id, String nombre, String codigoRecuperacion, String correo, String estatus) {
         this.id = id;
         this.nombre = nombre;

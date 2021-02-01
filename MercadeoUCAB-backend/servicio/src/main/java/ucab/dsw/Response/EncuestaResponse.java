@@ -12,6 +12,11 @@ public class EncuestaResponse {
     private String tipoPregunta;
     private long idPreguntaEstudio;
 
+    public EncuestaResponse(){
+
+        super();
+    }
+
     public EncuestaResponse(long idPreguntaEncuesta, String descripcion, String tipoPregunta, long idPreguntaEstudio) {
         this.idPreguntaEncuesta = idPreguntaEncuesta;
         this.descripcion = descripcion;

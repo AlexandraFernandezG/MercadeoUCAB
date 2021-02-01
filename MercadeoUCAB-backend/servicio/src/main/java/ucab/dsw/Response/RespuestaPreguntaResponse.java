@@ -9,6 +9,10 @@ public class RespuestaPreguntaResponse {
     private long fkPregunta;
     private String pregunta;
 
+    public RespuestaPreguntaResponse(){
+        super();
+    }
+
     public RespuestaPreguntaResponse(long fkPregunta, String pregunta) {
         this.fkPregunta = fkPregunta;
         this.pregunta = pregunta;
