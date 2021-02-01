@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Estudio, Estudio2 } from '../modelos/estudio';
 import { Observable, throwError } from 'rxjs';
 import { tap, retry, catchError } from 'rxjs/operators';
+import { Usuario3 } from '../modelos/usuario';
+import { Pregunta3 } from '../modelos/pregunta';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +22,15 @@ export class EstudiosService {
     })
   };
 
-  createEstudio(estudio: Estudio2):Observable<Estudio2>{
-    return this.http.post<Estudio2>(this.url + 'estudio/addEstudio', JSON.stringify(estudio), this.httpOptions).
+  createEstudio(estudio: Estudio2, encuestados: Usuario3[], preguntas: Pregunta3[]):Observable<any>{
+    console.log(JSON.stringify(estudio))
+    console.log(JSON.stringify(encuestados))
+    console.log(JSON.stringify(preguntas))
+    var body = {
+      estudioDto: JSON.stringify(estudio),
+      listaEncuestados: JSON.stringify(encuestados),
+      listaPreguntas: JSON.stringify(preguntas)}
+    return this.http.post<any>(this.url + 'estudio/addEstudio', body, this.httpOptions).
     pipe(
       tap((newEstudio: Estudio2) => console.log(`added estudio w/ id=${newEstudio.id}`)),
       catchError(this.handleError)
@@ -50,7 +59,7 @@ export class EstudiosService {
   }
 
   getEstudiosSugeridos(id:number):Observable<Estudio[]>{
-    return this.http.get<Estudio[]>(this.url + 'suggestions/suggestionsEstudio/' + id);
+    return this.http.get<Estudio[]>(this.url + 'sugerencias/solicitudEstudio/' + id);
   }
 
   getEstudio(id: number): Observable<Estudio> {

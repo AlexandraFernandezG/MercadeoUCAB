@@ -3,7 +3,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { Pregunta, Pregunta2 } from 'src/app/modelos/pregunta';
+import { Pregunta, Pregunta2, Pregunta3 } from 'src/app/modelos/pregunta';
 import { PreguntasService } from 'src/app/servicios/preguntas.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { PreguntasEstudioService } from 'src/app/servicios/preguntasestudios.service';
@@ -58,11 +58,11 @@ export class PreguntasEstudioComponent implements OnInit {
       )
       console.log(this.estudio)
 
-      this.service.getPreguntasEstudio(this.id)
-      .subscribe(data => {
-        this.dataSource = new MatTableDataSource<Pregunta>(data);
-        this.dataSource.paginator = this.paginator;
-      } );
+      // this.service.getPreguntasEstudio(this.id)
+      // .subscribe(data => {
+      //   this.dataSource = new MatTableDataSource<Pregunta3>(data);
+      //   this.dataSource.paginator = this.paginator;
+      // } );
   }
 
   newAnswer(){

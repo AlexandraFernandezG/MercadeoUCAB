@@ -25,6 +25,7 @@ import { PreguntasEstudioComponent } from '../estudios/preguntas-estudio/pregunt
 export class PreguntasSugeridasComponent implements OnInit {
 
   preguntas: Pregunta3[];
+  preguntasAgregadas: Pregunta3[] = [];
   subcategorias: Subcategoria[];
 
   constructor(
@@ -59,16 +60,22 @@ export class PreguntasSugeridasComponent implements OnInit {
   }
 
   Agregar(pregunta: Pregunta3): void {
-    const id = 1;
-    const estatus = 'Activo';
-    this.servicePreguntaEstudio.createPreguntaEstudio({
-     id,
-    estatus,
-    preguntaEncuestaDto: pregunta.idPregunta,
-    estudioDto: this.data.id
+    // const id = 1;
+    // const estatus = 'Activo';
+    // this.servicePreguntaEstudio.createPreguntaEstudio({
+    //  id,
+    // estatus,
+    // preguntaEncuestaDto: pregunta.idPregunta,
+    // estudioDto: this.data.id
 
-    } as PreguntaEstudio2).subscribe();
-    this.dialogRef.close();
+    // } as PreguntaEstudio2).subscribe();
+    console.log('antes:', this.preguntasAgregadas)
+    this.preguntasAgregadas = JSON.parse(localStorage.getItem('preguntasEst'));
+    console.log('traer: ',this.preguntasAgregadas);
+    this.preguntasAgregadas.push(pregunta);
+    console.log('agregar: ', this.preguntasAgregadas);
+    localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntasAgregadas))
+    // this.dialogRef.close();
   }
 
   deletepregunta( pregunta: Pregunta): void{

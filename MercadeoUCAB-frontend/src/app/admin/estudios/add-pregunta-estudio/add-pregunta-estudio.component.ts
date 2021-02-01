@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Estudio2 } from 'src/app/modelos/estudio';
-import { Pregunta2 } from 'src/app/modelos/pregunta';
+import { Pregunta2, Pregunta3 } from 'src/app/modelos/pregunta';
 import { Subcategoria } from 'src/app/modelos/subcategoria';
 import { Usuario } from 'src/app/modelos/usuario';
 import { PreguntasService } from 'src/app/servicios/preguntas.service';
@@ -16,7 +16,9 @@ import { PreguntaComponent } from '../../pregunta/pregunta.component';
   styleUrls: ['./add-pregunta-estudio.component.css']
 })
 export class AddPreguntaEstudioComponent implements OnInit {
-
+  
+  preguntaEst: Pregunta3;
+  preguntasAgregadas: Pregunta3[];
   constructor(
     private fb: FormBuilder,
     private service: PreguntasService,
@@ -82,20 +84,46 @@ export class AddPreguntaEstudioComponent implements OnInit {
   }
 
   addPreguntaEstudio(): void{
+    // let id = 1;
+    // const estatus = 'Activo';
+    // const usuarioDto = 1;
+    // const respuestas = this.preguntaForm.get('respuestas').value;
+    // this.service.createPreguntaEstudio({
+    // id,
+    // descripcion: this.preguntaForm.get('descripcion').value,
+    // tipoPregunta: this.preguntaForm.get('tipoPregunta').value,
+    // estatus,
+    // usuarioDto,
+    // subcategoriaDto: this.preguntaForm.get('subcategoriaDto').value
+    // } as Pregunta2, this.data.id).subscribe(
+
+    //   response => {
+    //   if (this.preguntaForm.get('tipoPregunta').value == 'Selección Simple' || this.preguntaForm.get('tipoPregunta').value == 'Selección Múltiple'){
+    //     this.service.createPreguntaRespuesta(response.id,respuestas).subscribe(
+    //       respuesta => {
+    //         console.log(respuesta);
+    //       }
+    //     );
+    //  }
+    //   }
+    // );
+    // this.dialogRef.close();
     let id = 1;
     const estatus = 'Activo';
     const usuarioDto = 1;
     const respuestas = this.preguntaForm.get('respuestas').value;
-    this.service.createPreguntaEstudio({
+    this.service.createPregunta({
     id,
     descripcion: this.preguntaForm.get('descripcion').value,
     tipoPregunta: this.preguntaForm.get('tipoPregunta').value,
     estatus,
     usuarioDto,
     subcategoriaDto: this.preguntaForm.get('subcategoriaDto').value
-    } as Pregunta2, this.data.id).subscribe(
+    } as Pregunta2).subscribe(
 
       response => {
+      console.log(response);
+      console.log(respuestas);
       if (this.preguntaForm.get('tipoPregunta').value == 'Selección Simple' || this.preguntaForm.get('tipoPregunta').value == 'Selección Múltiple'){
         this.service.createPreguntaRespuesta(response.id,respuestas).subscribe(
           respuesta => {
@@ -105,6 +133,13 @@ export class AddPreguntaEstudioComponent implements OnInit {
      }
       }
     );
+    
+    // console.log('antes:', this.preguntasAgregadas)
+    // this.preguntasAgregadas = JSON.parse(localStorage.getItem('preguntasEst'));
+    // console.log('traer: ',this.preguntasAgregadas);
+    // this.preguntasAgregadas.push(this.preguntaEst);
+    // console.log('agregar: ', this.preguntasAgregadas);
+    // localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntasAgregadas))
     this.dialogRef.close();
   }
 }

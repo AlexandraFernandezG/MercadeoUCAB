@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { Pregunta3 } from 'src/app/modelos/pregunta';
 import { Solicitud } from 'src/app/modelos/solicitud';
 import { EstudiosService } from 'src/app/servicios/estudios.service';
 import { SolicitudEstudiosService } from 'src/app/servicios/solicitud-estudios.service';
@@ -17,6 +18,7 @@ import { AddEstudioComponent } from '../estudios/add-estudio/add-estudio.compone
 export class SolicitudesComponent implements OnInit {
 
   solicitudes: Solicitud[];
+  preguntas: Pregunta3[] = [];
   id: number;
   constructor(
     private service: SolicitudEstudiosService,
@@ -40,12 +42,9 @@ export class SolicitudesComponent implements OnInit {
     } );
   }
 
-  openModal(id: number):void{
-    this.dialog.open(AddEstudioComponent,
-      {
-        data: {id: id}
-      }
-      );
+  createEstudio(id: number):void{
+    localStorage.setItem('solicitudId',  JSON.stringify (id));
+    localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntas))
   }
 
 }

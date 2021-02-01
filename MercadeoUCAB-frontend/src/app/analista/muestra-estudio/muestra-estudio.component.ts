@@ -35,6 +35,7 @@ export class MuestraEstudioComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       } );
+      
     console.log(this.encuestados)
   }
 

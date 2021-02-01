@@ -70,7 +70,7 @@ export class UsuariosService {
 
   getEncuestadosEstudio(id: number): Observable<Usuario3[]>{
     console.log(id);
-    return this.http.get<Usuario3[]>(this.url + 'usuarioEstudio/encuestadosEstudio/' + id)
+    return this.http.get<Usuario3[]>(this.url + 'estudio/solicitudEncuestados/' + id)
     .pipe(
       tap(_ => console.log(`fetched usuario id=${id}`)),
       catchError(this.handleError)

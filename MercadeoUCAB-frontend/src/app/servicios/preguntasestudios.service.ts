@@ -30,7 +30,7 @@ export class PreguntasEstudioService {
   };
 
   getPreguntasEstudio(id:number){
-    return this.http.get<Pregunta[]>(this.url + 'preguntasEstudio/listarPreguntasEstudio/' +  id);
+    return this.http.get<Pregunta3[]>(this.url + 'preguntasEstudio/listarPreguntasEstudio/' +  id);
   }
 
   getPreguntasSugeridasEstudio(id:number){

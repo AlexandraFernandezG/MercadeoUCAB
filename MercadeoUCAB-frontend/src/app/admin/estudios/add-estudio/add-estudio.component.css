@@ -7,6 +7,14 @@ div.pageHeader{
 .fill-remaining-space{
     flex: 1 1 auto;
 }
+table {
+    width: 80%;
+    margin: 20px auto;
+}
+.mat-elevation-z8{
+    width: 80%;
+    margin: 20px auto;
+}
 button{
     margin-right: 20px;
     flex: 1 1 auto;
