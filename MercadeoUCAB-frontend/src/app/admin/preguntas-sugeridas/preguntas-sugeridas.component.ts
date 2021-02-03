@@ -42,7 +42,7 @@ export class PreguntasSugeridasComponent implements OnInit {
   ) { }
   preguntaForm: FormGroup;
   idestudio: number;
-  displayedColumns: string[] = ['descripcion','tipoPregunta','estatus', 'acciones'];
+  displayedColumns: string[] = ['descripcion','tipoPregunta','subcategoria', 'acciones'];
   dataSource: MatTableDataSource<Pregunta3>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -59,23 +59,15 @@ export class PreguntasSugeridasComponent implements OnInit {
     } );
   }
 
-  Agregar(pregunta: Pregunta3): void {
-    // const id = 1;
-    // const estatus = 'Activo';
-    // this.servicePreguntaEstudio.createPreguntaEstudio({
-    //  id,
-    // estatus,
-    // preguntaEncuestaDto: pregunta.idPregunta,
-    // estudioDto: this.data.id
-
-    // } as PreguntaEstudio2).subscribe();
+  Agregar(pregunta: Pregunta3) {
+    
     console.log('antes:', this.preguntasAgregadas)
     this.preguntasAgregadas = JSON.parse(localStorage.getItem('preguntasEst'));
     console.log('traer: ',this.preguntasAgregadas);
     this.preguntasAgregadas.push(pregunta);
     console.log('agregar: ', this.preguntasAgregadas);
     localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntasAgregadas))
-    // this.dialogRef.close();
+    return this.dialogRef.close();
   }
 
   deletepregunta( pregunta: Pregunta): void{

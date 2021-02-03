@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -14,29 +14,31 @@ import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import { EstudiosSugeridosComponent } from '../../estudios-sugeridos/estudios-sugeridos.component';
 import { PreguntasSugeridasComponent } from '../../preguntas-sugeridas/preguntas-sugeridas.component';
 import { SolicitudesComponent } from '../../solicitudes/solicitudes.component';
-
+import { Observable } from 'rxjs';
+import { OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-estudio',
   templateUrl: './add-estudio.component.html',
   styleUrls: ['./add-estudio.component.css']
 })
-export class AddEstudioComponent implements OnInit {
+export class AddEstudioComponent implements OnInit, OnChanges {
 
   estudioForm: FormGroup;
   estudio: Estudio2;
   analistas: Usuario3[];
   encuestados: Usuario3[];
-  
+  idEstudioCreado: number;
 
   displayedColumns: string[] = ['nombre', 'correo', 'acciones'];
   dataSource: MatTableDataSource<Usuario3>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  preguntas: Pregunta3[];
-  displayedColumns2: string[] = ['descripcionPregunta', 'tipoPregunta','estatusPregunta'];
-  dataSource2: MatTableDataSource<Pregunta>;
+  preguntas: Pregunta3[] = [];
+  displayedColumns2: string[] = ['descripcionPregunta', 'tipoPregunta','subcategoria'];
+  dataSource2: MatTableDataSource<Pregunta3>;
   @ViewChild(MatPaginator) paginator2: MatPaginator;
 
 
@@ -49,6 +51,7 @@ export class AddEstudioComponent implements OnInit {
     private encuestadosService: UsuariosService,
     private servicenotifications: NotificationsService,
     public dialog: MatDialog,
+    public router: Router,
   ) { 
     this.estudioForm = this.fb.group({
 
@@ -58,6 +61,13 @@ export class AddEstudioComponent implements OnInit {
       fechaFin: new FormControl('',[  Validators.maxLength(50)]),
       analista: new FormControl('',[  Validators.maxLength(50)]),
     })
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const preguntasChange = changes['algo'];
+    if (preguntasChange.currentValue == true){
+      this.dataSource2 = new MatTableDataSource<Pregunta3>(this.preguntas)
+    }
   }
 
   ngOnInit(): void {
@@ -76,7 +86,7 @@ export class AddEstudioComponent implements OnInit {
       } 
     );
 
-    this.dataSource2 = new MatTableDataSource<Pregunta>(
+    this.dataSource2 = new MatTableDataSource<Pregunta3>(
       JSON.parse(localStorage.getItem('preguntasEst'))
     );
     this.dataSource2.paginator = this.paginator;
@@ -85,7 +95,7 @@ export class AddEstudioComponent implements OnInit {
   }
 
   onSucess(message){
-    this.servicenotifications.success('Exitoso', message, {
+    this.servicenotifications.success('Exito', message, {
       position: ['bottom', 'right'],
       timeOut: 2000,
       animate: 'fade',
@@ -121,41 +131,50 @@ export class AddEstudioComponent implements OnInit {
     console.log(this.estudio);
     console.log(this.encuestados);
     console.log(this.preguntas);
-    this.estudiosService.createEstudio(
-      this.estudio as Estudio2
-    ).subscribe( dataEstudio => 
-      //console.log('prueba de que si se inserto la vaina',dataEstudio.id),
-      localStorage.setItem('idEstudioCreado',  JSON.stringify (dataEstudio.id))
-    );
-    // if( this.encuestados.length == 0){
-    //   this.onError('El estudio debe tener encuestados asignados');
-    // }else if (this.preguntas.length == 0){
-    //   this.onError('El estudio debe tener preguntas asignadas');
-    // }else{
-    //   this.onSucess('error');
-    //   this.estudiosService.createEstudio(
-    //     this.estudio as Estudio2
-    //   ).subscribe( dataEstudio => 
-    //     //console.log('prueba de que si se inserto la vaina',dataEstudio.id),
-    //     localStorage.setItem('idEstudioCreado',  JSON.stringify (dataEstudio.id))
-    //   );
-      //this.estudiosService.addEncuestadosEstudio(JSON.parse(localStorage.getItem('preguntasEst')),this.encuestados);
-
-  
-    //}
     
-
+    //Lógica de cracion de estudio
+    if( this.encuestados.length == 0){
+      this.onError('El estudio debe tener encuestados asignados');
+    }else if (this.preguntas.length == 0){
+      this.onError('El estudio debe tener preguntas asignadas');
+    }else{
+      this.estudiosService.createEstudio(
+        this.estudio as Estudio2
+      ).subscribe( dataEstudio => 
+        {
+          if (dataEstudio != undefined){
+            this.onSucess('Estudio creado correctamente');
+            this.estudiosService.addEncuestadosEstudio(dataEstudio.id,this.encuestados).subscribe();
+            this.estudiosService.addPreguntasEstudio(dataEstudio.id,this.preguntas).subscribe();
+            
+          }
+        }
+      );
+      setTimeout(() => {
+        this.router.navigate(['/admin']);
+        localStorage.setItem('encuestados', JSON.stringify([]));
+        localStorage.setItem('preguntasEst', JSON.stringify([]));
+      },3000);
+    }
+    
   }
 
 
   openModal2(){
-    this.dialog.open(PreguntasSugeridasComponent,
+    const dialogRef = this.dialog.open(PreguntasSugeridasComponent,
       {
         data: {
           idSolicitud: JSON.parse(localStorage.getItem('solicitudId'))
         }
       }
     );
+      
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(result)
+    //   if(result != undefined){this.preguntas.push(result)}
+    //   console.log('test preg: ', this.preguntas)
+    // });
+    // console.log('test preg: ', this.preguntas)
   }
   
   openModal3():void{
@@ -164,6 +183,7 @@ export class AddEstudioComponent implements OnInit {
         data: {id: JSON.parse(localStorage.getItem('solicitudId'))}
       }
     );
+    
   }
 }
 

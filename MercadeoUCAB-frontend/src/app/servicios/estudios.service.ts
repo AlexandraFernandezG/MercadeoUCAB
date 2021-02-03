@@ -36,7 +36,19 @@ export class EstudiosService {
   }
 
   addEncuestadosEstudio(id: number, encuestados: Usuario3[]): Observable<any>{
-    return this.http.post(this.url + 'estudio/addEstudio/' + id, JSON.stringify(encuestados) ,  this.httpOptions)
+    return this.http.post<any>(this.url + 'estudio/estudioEncuestados/' + id, JSON.stringify(encuestados) , this.httpOptions ).
+    pipe(
+      tap((dataObject: any) => console.log(`added estudio w/ id=${dataObject.estado}`)),
+      catchError(this.handleError)
+    );
+  }
+
+  addPreguntasEstudio(id: number, preguntas: Pregunta3[]): Observable<any>{
+    return this.http.post<any>(this.url + 'estudio/estudioPreguntas/' + id, JSON.stringify(preguntas) , this.httpOptions ).
+    pipe(
+      tap((dataObject: any) => console.log(`added estudio w/ id=${dataObject.estado}`)),
+      catchError(this.handleError)
+    );
   }
 
   addEstudioSugerido(idSugerido: number, idEstudio: number):Observable<any>{
