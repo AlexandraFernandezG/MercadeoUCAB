@@ -29,6 +29,7 @@ export class EstudiosClienteComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
+    // tslint:disable-next-line: prefer-const
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.estudiosService.getEstudiosCliente(id).subscribe(
       estudios => {
@@ -49,4 +50,11 @@ export class EstudiosClienteComponent implements OnInit {
   }
   // tslint:disable-next-line: typedef
   crearProducto(){}
+
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

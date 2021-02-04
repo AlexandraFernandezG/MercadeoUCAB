@@ -72,5 +72,12 @@ export class PresentacionComponent implements OnInit {
       estatus: 'Inactivo'
     };
     this.service.updatePresentacion(deletePre).subscribe();
-      }
+  }
+
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

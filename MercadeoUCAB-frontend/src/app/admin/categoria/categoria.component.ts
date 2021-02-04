@@ -33,19 +33,21 @@ export class CategoriaComponent implements OnInit {
     private location: Location
   ) { }
   categoriaForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'descripcion','estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'estatus', 'acciones'];
   dataSource: MatTableDataSource<Categoria>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  // tslint:disable-next-line: typedef
   ngOnInit() {
     this.service.getCategorias()
     .subscribe(data => {
       this.dataSource = new MatTableDataSource<Categoria>(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     } );
 
   }
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddCategoriaComponent);
   }
@@ -68,5 +70,12 @@ export class CategoriaComponent implements OnInit {
       estatus: 'Inactivo'
     };
     this.service.updateCategoria(deleteCa).subscribe();
-      }
+  }
+
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

@@ -53,6 +53,15 @@
   margin: 0px 40px;
   /* justify-content: center; */
   text-align: center;
+  padding-top: 16px;
+}
+
+/* Área del filtro */
+.filter-area {
+  min-height: 64px;
+  text-align: center !important;
+  /* padding: 16px 0 0 30px; */
+  padding-top: 16px;
 }
 
 

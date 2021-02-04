@@ -38,6 +38,7 @@ export class TipoComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
     this.service.getTipos()
     .subscribe(data => {
@@ -47,6 +48,7 @@ export class TipoComponent implements OnInit {
     } );
 
   }
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddTipoComponent);
   }
@@ -55,6 +57,7 @@ export class TipoComponent implements OnInit {
   openEModal( id: number): void{
     this.dialog.open(EditTipoComponent,
       {
+        // tslint:disable-next-line: object-literal-shorthand
         data: {id: id}
       }
     );
@@ -69,5 +72,12 @@ export class TipoComponent implements OnInit {
       estatus: 'Inactivo'
     };
     this.service.updateTipo(deleteCa).subscribe();
-      }
+  }
+
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { CategoriasService } from 'src/app/servicios/categorias.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Categoria, Categoria2 } from 'src/app/modelos/categoria';
@@ -33,7 +33,7 @@ export class EstudiosComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private location: Location,
-    
+
   ) { }
 
   estudioForm: FormGroup;
@@ -47,11 +47,12 @@ export class EstudiosComponent implements OnInit {
     this.service.getEstudios()
     .subscribe(data => {
       this.dataSource = new MatTableDataSource<Estudio>(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     } );
   }
 
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddEstudioComponent);
   }
@@ -77,6 +78,11 @@ export class EstudiosComponent implements OnInit {
     this.service.updateestudio(editSu).subscribe();
       }*/
 
-
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }
 

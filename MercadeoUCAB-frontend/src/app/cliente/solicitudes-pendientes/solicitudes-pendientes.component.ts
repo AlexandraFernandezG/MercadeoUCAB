@@ -21,6 +21,7 @@ export class SolicitudesPendientesComponent implements OnInit {
     private service: SolicitudEstudiosService,
     public actRoute: ActivatedRoute,
     public dialog: MatDialog,
+    // tslint:disable-next-line: variable-name
     private _router: Router
   ) { }
 
@@ -33,7 +34,7 @@ export class SolicitudesPendientesComponent implements OnInit {
   ngOnInit(): void {
     this.service.getSolicitudes()
     .subscribe(data => {
-      let id = JSON.parse(localStorage.getItem('usuarioID'));
+      const id = JSON.parse(localStorage.getItem('usuarioID'));
       this.dataSource = new MatTableDataSource<Solicitud>(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -42,12 +43,19 @@ export class SolicitudesPendientesComponent implements OnInit {
   solicitarEstudio(): void {
     this._router.navigate(['/cliente/solicitar_estudio']);
   }
-  openModal(id: number):void{
+  openModal(id: number): void{
     this.dialog.open(AddEstudioComponent,
       {
+        // tslint:disable-next-line: object-literal-shorthand
         data: {id: id}
       }
       );
   }
 
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

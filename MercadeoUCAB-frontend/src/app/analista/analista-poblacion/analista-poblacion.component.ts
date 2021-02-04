@@ -13,28 +13,35 @@ import { SolicitudEstudiosService } from 'src/app/servicios/solicitud-estudios.s
 })
 export class AnalistaPoblacionComponent implements OnInit {
 
-  constructor( 
-    private solicitudService: SolicitudEstudiosService, 
+  constructor(
+    private solicitudService: SolicitudEstudiosService,
+    // tslint:disable-next-line: variable-name
     private _router: Router
     ) { }
 
-  solicitudes: Solicitud[];  
+  solicitudes: Solicitud[];
   displayedColumns: string[] = ['id', 'descripcion', 'acciones'];
   dataSource: MatTableDataSource<Solicitud>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
+
   ngOnInit(): void {
 
     this.solicitudService.getSolicitudes().subscribe(
-      solicitudes => { 
+      solicitudes => {
         this.dataSource = new MatTableDataSource<Solicitud>(solicitudes);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
-    
+
 
     this.solicitudService.getSolicitudes().subscribe(solicitudes => console.log(solicitudes));
   }
 
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }
