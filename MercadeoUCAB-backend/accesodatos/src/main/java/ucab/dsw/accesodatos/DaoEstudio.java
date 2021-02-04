@@ -16,7 +16,7 @@ public class DaoEstudio extends Dao<Estudio>{
         super (_handler);
     }
 
-    public List<Object[]> listarEstudiosEncuestado(String genero, String estadoCivil, int cantidadPersonas, int edad){
+    public List<Object[]> listarEstudiosEncuestadoQuery(String genero, String estadoCivil, int cantidadPersonas, int edad){
 
         String SQL = null;
 
@@ -42,7 +42,7 @@ public class DaoEstudio extends Dao<Estudio>{
         return listaEstudios;
     }
 
-    public List<Object[]> listarEstudiosClientes(long id){
+    public List<Object[]> listarEstudiosClientesQuery(long id){
 
         String SQL = null;
 
@@ -61,7 +61,7 @@ public class DaoEstudio extends Dao<Estudio>{
         return listaEstudios;
     }
 
-    public List<Object[]> listarEstudiosAnalista(long id){
+    public List<Object[]> listarEstudiosAnalistaQuery(long id){
 
         String SQL = null;
 

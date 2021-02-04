@@ -216,7 +216,7 @@ public class SugerenciasServicio extends AplicacionBase {
                 }
             }
 
-            List<Object[]> listaEstudios = daoEstudio.listarEstudiosEncuestado(genero, estadoCivil, cantidadPersonas, edad);
+            List<Object[]> listaEstudios = daoEstudio.listarEstudiosEncuestadoQuery(genero, estadoCivil, cantidadPersonas, edad);
 
             List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
@@ -326,7 +326,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
         try {
 
-            List<Object[]> listaEstudios = daoEstudio.listarEstudiosClientes(id);
+            List<Object[]> listaEstudios = daoEstudio.listarEstudiosClientesQuery(id);
 
             List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
@@ -364,7 +364,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
         try {
 
-            List<Object[]> listaEstudios = daoEstudio.listarEstudiosAnalista(id);
+            List<Object[]> listaEstudios = daoEstudio.listarEstudiosAnalistaQuery(id);
 
             List<EstudiosResponse> listaEstudiosAnalista = new ArrayList<>(listaEstudios.size());
 
