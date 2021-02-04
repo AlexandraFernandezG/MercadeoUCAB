@@ -19,16 +19,19 @@ import java.util.List;
 public class Estudio extends EntidadBase{
 
     //Columnas
-    
+
     @Column( name = "nombre" )
     private String _nombre;
-    
+
     @Column( name = "tipoInstrumento" )
     private String _tipoInstrumento;
-    
+
+    @Column ( name = "observaciones")
+    private String _observaciones;
+
     @Column( name = "fechaInicio" )
     private Date _fechaInicio;
-    
+
     @Column( name = "fechaFin" )
     private Date _fechaFin;
 
@@ -36,15 +39,15 @@ public class Estudio extends EntidadBase{
     private String _estado;
 
     //Relaciones
-    
+
     @ManyToOne
     @JoinColumn(name="fk_usuario")
     private Usuario _usuario;
-    
+
     @ManyToOne
     @JoinColumn(name="fk_solicitud_estudio")
     private SolicitudEstudio _solicitudEstudio;
-    
+
     //Getters, Setters, y otros metodos.
 
     public String get_nombre() {
@@ -61,6 +64,14 @@ public class Estudio extends EntidadBase{
 
     public void set_tipoInstrumento(String _tipoInstrumento) {
         this._tipoInstrumento = _tipoInstrumento;
+    }
+
+    public String get_observaciones() {
+        return _observaciones;
+    }
+
+    public void set_observaciones(String _observaciones) {
+        this._observaciones = _observaciones;
     }
 
     public Date get_fechaInicio() {
@@ -120,6 +131,7 @@ public class Estudio extends EntidadBase{
         return "Estudio{" +
                 "_nombre='" + _nombre + '\'' +
                 ", _tipoInstrumento='" + _tipoInstrumento + '\'' +
+                ", _observaciones='" + _observaciones + '\'' +
                 ", _fechaInicio=" + _fechaInicio +
                 ", _fechaFin=" + _fechaFin +
                 ", _estado='" + _estado + '\'' +

@@ -1,6 +1,5 @@
 package ucab.dsw.servicio;
 
-import lombok.extern.java.Log;
 import ucab.dsw.response.EstudiosResponse;
 import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.accesodatos.*;
@@ -15,12 +14,11 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.json.*;
-import javax.sound.sampled.Line;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Log
+
 @Path( "/sugerencias" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
@@ -36,15 +34,15 @@ public class SugerenciasServicio extends AplicacionBase {
 
         String fecha_estudio = "";
 
-            if (fecha != null) {
+        if (fecha != null) {
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                fecha_estudio = sdf.format(fecha);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            fecha_estudio = sdf.format(fecha);
 
-            } else {
+        } else {
 
-                fecha_estudio = "";
-            }
+            fecha_estudio = "";
+        }
 
         return fecha_estudio;
     }
@@ -106,44 +104,44 @@ public class SugerenciasServicio extends AplicacionBase {
 
             SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
 
-                //Variables para poder hacer el macth
-                String genero = solicitudEstudio.get_genero();
-                String estadoCivil = solicitudEstudio.get_estadoCivil();
-                int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
-                int edadMaxima = solicitudEstudio.get_edadMaxima();
-                int edadMinima = solicitudEstudio.get_edadMinima();
+            //Variables para poder hacer el macth
+            String genero = solicitudEstudio.get_genero();
+            String estadoCivil = solicitudEstudio.get_estadoCivil();
+            int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
+            int edadMaxima = solicitudEstudio.get_edadMaxima();
+            int edadMinima = solicitudEstudio.get_edadMinima();
 
-                //Listar todos los estudios e informaciones de los encuestados
-                List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
-                List<SolicitudEstudio> listaSolicitudes = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
-                List<SolicitudEstudio> listaAuxSolicitudes = new ArrayList<>();
-                List<Estudio> listaEstudiosRecomendados = new ArrayList<>();
+            //Listar todos los estudios e informaciones de los encuestados
+            List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
+            List<SolicitudEstudio> listaSolicitudes = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
+            List<SolicitudEstudio> listaAuxSolicitudes = new ArrayList<>();
+            List<Estudio> listaEstudiosRecomendados = new ArrayList<>();
 
-                for(SolicitudEstudio solicitudEstudioRemove: listaSolicitudes){
+            for(SolicitudEstudio solicitudEstudioRemove: listaSolicitudes){
 
-                    if(solicitudEstudioRemove.get_id() != id){
+                if(solicitudEstudioRemove.get_id() != id){
 
-                        listaAuxSolicitudes.add(solicitudEstudioRemove);
-                    }
+                    listaAuxSolicitudes.add(solicitudEstudioRemove);
                 }
+            }
 
-                for (SolicitudEstudio solicitudEstudio_macth: listaAuxSolicitudes){
+            for (SolicitudEstudio solicitudEstudio_macth: listaAuxSolicitudes){
 
-                    if(genero.equals(solicitudEstudio_macth.get_genero()) && estadoCivil.equals(solicitudEstudio_macth.get_estadoCivil()) &&
-                            cantidadPersonas == solicitudEstudio_macth.get_cantidadPersonas() && edadMaxima == solicitudEstudio_macth.get_edadMaxima() &&
-                            edadMinima == solicitudEstudio_macth.get_edadMinima()){
+                if(genero.equals(solicitudEstudio_macth.get_genero()) && estadoCivil.equals(solicitudEstudio_macth.get_estadoCivil()) &&
+                        cantidadPersonas == solicitudEstudio_macth.get_cantidadPersonas() && edadMaxima == solicitudEstudio_macth.get_edadMaxima() &&
+                        edadMinima == solicitudEstudio_macth.get_edadMinima()){
 
-                        for (Estudio estudio: listaEstudios){
+                    for (Estudio estudio: listaEstudios){
 
-                            if(estudio.get_solicitudEstudio().get_id() == solicitudEstudio_macth.get_id()){
+                        if(estudio.get_solicitudEstudio().get_id() == solicitudEstudio_macth.get_id()){
 
-                                listaEstudiosRecomendados.add(estudio);
-                            }
+                            listaEstudiosRecomendados.add(estudio);
                         }
                     }
                 }
+            }
 
-                return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
+            return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
 
         } catch (NullPointerException ex) {
 
@@ -189,43 +187,43 @@ public class SugerenciasServicio extends AplicacionBase {
 
             List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
 
-                for (Informacion informacion: listaInformacion) {
+            for (Informacion informacion: listaInformacion) {
 
-                    if(informacion.get_usuario().get_id() == id) {
+                if(informacion.get_usuario().get_id() == id) {
 
-                        genero = informacion.get_genero();
-                        fechaNacimiento = informacion.get_fechaNacimiento();
-                        estadoCivil = informacion.get_estadoCivil();
-                        cantidadPersonas = informacion.get_cantidadPersonas();
+                    genero = informacion.get_genero();
+                    fechaNacimiento = informacion.get_fechaNacimiento();
+                    estadoCivil = informacion.get_estadoCivil();
+                    cantidadPersonas = informacion.get_cantidadPersonas();
 
-                        //Primero pasamos la fecha de nacimiento a string
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                        String fecha_nac = sdf.format(fechaNacimiento);
+                    //Primero pasamos la fecha de nacimiento a string
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    String fecha_nac = sdf.format(fechaNacimiento);
 
-                        //Formato de la fecha para la operacion de la edad
-                        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    //Formato de la fecha para la operacion de la edad
+                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-                        //Parseamos la fecha y obtener la fecha actual.
-                        LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
-                        LocalDate ahora = LocalDate.now();
+                    //Parseamos la fecha y obtener la fecha actual.
+                    LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
+                    LocalDate ahora = LocalDate.now();
 
-                        //Calcular la edad
-                        Period periodo = Period.between(fechaNac, ahora);
+                    //Calcular la edad
+                    Period periodo = Period.between(fechaNac, ahora);
 
-                        //Edad de la persona
-                        edad = periodo.getYears();
+                    //Edad de la persona
+                    edad = periodo.getYears();
 
-                    }
                 }
+            }
 
-                List<Object[]> listaEstudios = daoEstudio.listarEstudiosEncuestado(genero, estadoCivil, cantidadPersonas, edad);
+            List<Object[]> listaEstudios = daoEstudio.listarEstudiosEncuestado(genero, estadoCivil, cantidadPersonas, edad);
 
-                List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
+            List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
-                for (Object[] est : listaEstudios) {
+            for (Object[] est : listaEstudios) {
 
-                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
-                }
+                listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
+            }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
 
@@ -279,16 +277,16 @@ public class SugerenciasServicio extends AplicacionBase {
             PreguntaEstudioDto preguntaEstudiodto = new PreguntaEstudioDto();
             ucab.dsw.servicio.PreguntasEstudioServicio servicio = new ucab.dsw.servicio.PreguntasEstudioServicio();
 
-                for (PreguntaEncuesta preguntaEncuesta: listaPreguntasEstudio){
+            for (PreguntaEncuesta preguntaEncuesta: listaPreguntasEstudio){
 
-                    long idPR = preguntaEncuesta.get_id();
-                    PreguntaEncuestaDto preguntaEncuesta_insert = new PreguntaEncuestaDto(idPR);
-                    preguntaEstudiodto.setPreguntaEncuestaDto(preguntaEncuesta_insert);
-                    EstudioDto estudio_insert = new EstudioDto(idE);
-                    preguntaEstudiodto.setEstudioDto(estudio_insert);
-                    preguntaEstudiodto.setEstatus("Activo");
-                    servicio.addPreguntaEstudio(preguntaEstudiodto);
-                }
+                long idPR = preguntaEncuesta.get_id();
+                PreguntaEncuestaDto preguntaEncuesta_insert = new PreguntaEncuestaDto(idPR);
+                preguntaEstudiodto.setPreguntaEncuestaDto(preguntaEncuesta_insert);
+                EstudioDto estudio_insert = new EstudioDto(idE);
+                preguntaEstudiodto.setEstudioDto(estudio_insert);
+                preguntaEstudiodto.setEstatus("Activo");
+                servicio.addPreguntaEstudio(preguntaEstudiodto);
+            }
 
             return Response.status(Response.Status.OK).entity(listaEstudioPregunta).build();
 
@@ -332,9 +330,9 @@ public class SugerenciasServicio extends AplicacionBase {
 
             List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
-            for (Object[] eC: listaEstudios){
+            for (Object[] est: listaEstudios){
 
-                listaEstudiosRecomendados.add(new EstudiosResponse((long)eC[0], (String)eC[1], (String)eC[2], devolverFecha((Date)eC[3]), devolverFecha((Date)eC[4]), (String)eC[5], (String)eC[6]));
+                listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
             }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
@@ -370,9 +368,9 @@ public class SugerenciasServicio extends AplicacionBase {
 
             List<EstudiosResponse> listaEstudiosAnalista = new ArrayList<>(listaEstudios.size());
 
-            for (Object[] eA: listaEstudios){
+            for (Object[] est: listaEstudios){
 
-                listaEstudiosAnalista.add(new EstudiosResponse((long)eA[0], (String)eA[1], (String)eA[2], devolverFecha((Date)eA[3]), devolverFecha((Date)eA[4]), (String)eA[5], (String)eA[6]));
+                listaEstudiosAnalista.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
             }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosAnalista).build();
@@ -390,4 +388,3 @@ public class SugerenciasServicio extends AplicacionBase {
     }
 
 }
-

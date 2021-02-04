@@ -74,7 +74,7 @@ public class UsuarioEstudioServicio extends AplicacionBase{
 
             for (Object[] est : listaUsuarioEstudios) {
 
-                listaEstudiosEncuestado.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
+                listaEstudiosEncuestado.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
             }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosEncuestado).build();
@@ -274,33 +274,33 @@ public class UsuarioEstudioServicio extends AplicacionBase{
         DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
         JsonObject dataObject;
 
-            try {
+        try {
 
-                UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(id, UsuarioEstudio.class);
-                usuarioEstudioDto.setEstatus(usuarioEstudioDto.getEstatus());
-                daoUsuarioEstudio.update(usuarioEstudio_modificar);
+            UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(id, UsuarioEstudio.class);
+            usuarioEstudioDto.setEstatus(usuarioEstudioDto.getEstatus());
+            daoUsuarioEstudio.update(usuarioEstudio_modificar);
 
-                return Response.status(Response.Status.OK).entity(usuarioEstudio_modificar).build();
+            return Response.status(Response.Status.OK).entity(usuarioEstudio_modificar).build();
 
-            } catch (PersistenceException | DatabaseException ex){
+        } catch (PersistenceException | DatabaseException ex){
 
-                dataObject= Json.createObjectBuilder()
-                        .add("estado","error")
-                        .add("mensaje", ex.getMessage())
-                        .add("codigo",500).build();
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
 
-                return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(dataObject).build();
 
-            } catch (NullPointerException ex) {
+        } catch (NullPointerException ex) {
 
-                dataObject = Json.createObjectBuilder()
-                        .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado el historico: " + ex.getMessage())
-                        .add("codigo", 400).build();
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el historico: " + ex.getMessage())
+                    .add("codigo", 400).build();
 
-                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
-            }
+        }
     }
 
     /**
@@ -321,29 +321,29 @@ public class UsuarioEstudioServicio extends AplicacionBase{
         UsuarioEstudio usuarioEstudio_eliminar = daoUsuarioEstudio.find(id, UsuarioEstudio.class);
         JsonObject dataObject;
 
-            try {
-                daoUsuarioEstudio.delete(usuarioEstudio_eliminar);
+        try {
+            daoUsuarioEstudio.delete(usuarioEstudio_eliminar);
 
-                return Response.status(Response.Status.OK).entity(usuarioEstudio_eliminar).build();
+            return Response.status(Response.Status.OK).entity(usuarioEstudio_eliminar).build();
 
-            } catch (PersistenceException | DatabaseException ex){
+        } catch (PersistenceException | DatabaseException ex){
 
-                dataObject= Json.createObjectBuilder()
-                        .add("estado","error")
-                        .add("mensaje", ex.getMessage())
-                        .add("codigo",500).build();
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
 
-                return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(dataObject).build();
 
-            } catch (NullPointerException ex) {
+        } catch (NullPointerException ex) {
 
-                dataObject = Json.createObjectBuilder()
-                        .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado el historico: " + ex.getMessage())
-                        .add("codigo", 400).build();
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el historico: " + ex.getMessage())
+                    .add("codigo", 400).build();
 
-                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
-            }
+        }
     }
 }

@@ -12,6 +12,7 @@ public class EstudiosResponse {
     private long idEstudio;
     private String nombreEstudio;
     private String tipoInstrumentoEstudio;
+    private String observacionesEstudio;
     private String fechaInicioEstudio;
     private String fechaFinEstudio;
     private String estadoEstudio;
@@ -21,10 +22,11 @@ public class EstudiosResponse {
         super();
     }
 
-    public EstudiosResponse(long idEstudio, String nombreEstudio, String tipoInstrumentoEstudio, String fechaInicioEstudio, String fechaFinEstudio, String estadoEstudio, String estatusEstudio) {
+    public EstudiosResponse(long idEstudio, String nombreEstudio, String tipoInstrumentoEstudio, String observacionesEstudio, String fechaInicioEstudio, String fechaFinEstudio, String estadoEstudio, String estatusEstudio) {
         this.idEstudio = idEstudio;
         this.nombreEstudio = nombreEstudio;
         this.tipoInstrumentoEstudio = tipoInstrumentoEstudio;
+        this.observacionesEstudio = observacionesEstudio;
         this.fechaInicioEstudio = fechaInicioEstudio;
         this.fechaFinEstudio = fechaFinEstudio;
         this.estadoEstudio = estadoEstudio;
