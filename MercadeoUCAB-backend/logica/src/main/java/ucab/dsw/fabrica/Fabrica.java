@@ -2,6 +2,8 @@ package ucab.dsw.fabrica;
 
 import ucab.dsw.dtos.DtoBase;
 import ucab.dsw.entidades.EntidadBase;
+import ucab.dsw.response.PreguntasResponse;
+import ucab.dsw.response.UsuarioResponse;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -45,13 +47,30 @@ public class Fabrica<T> {
         return (T) tipo.getConstructors()[0].newInstance(id, parametro);
     }
 
-    //Estos ultimos estan en revision
-    public static <T> T crearComandoListId(Class<T> tipo, long id, List<T> listBase) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    /**
+     * Estos metodos son para instanciar aquellos servicios que utilicen listas de tipo
+     * UsuarioResponse para su funcionamiento.
+     * @author Emanuel Di Cristofaro
+     */
+    public static <T> T crearComandoListIdUsuarioResponse(Class<T> tipo, long id, List<UsuarioResponse> listBase) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         return (T) tipo.getConstructors()[0].newInstance(id, listBase);
     }
 
-    public static <T> T crearComandoList(Class<T> tipo, List<T> listBase) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static <T> T crearComandoListUsuarioResponse(Class<T> tipo, List<UsuarioResponse> listBase) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         return (T) tipo.getConstructors()[0].newInstance(listBase);
     }
-    //////////////////////////////////
+
+    /**
+     * Estos metodos son para instanciar aquellos servicios que utilicen listas de tipo
+     * PreguntasResponse para su funcionamiento.
+     * @author Emanuel Di Cristofaro
+     */
+    public static <T> T crearComandoListIdPreguntasResponse(Class<T> tipo, long id, List<PreguntasResponse> listBase) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (T) tipo.getConstructors()[0].newInstance(id, listBase);
+    }
+
+    public static <T> T crearComandoListPreguntasResponse(Class<T> tipo, List<PreguntasResponse> listBase) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (T) tipo.getConstructors()[0].newInstance(listBase);
+    }
+
 }

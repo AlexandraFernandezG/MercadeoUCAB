@@ -23,20 +23,37 @@ public class ListarEstudiosComando extends ComandoBase {
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
         List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
         ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
+        JsonObject estudio;
 
         for(Estudio obj: listaEstudios){
 
-            JsonObject estudio = Json.createObjectBuilder().add("id",obj.get_id())
-                    .add("nombre", obj.get_nombre())
-                    .add("tipoInstrumento", obj.get_tipoInstrumento())
-                    .add("observaciones", obj.get_observaciones())
-                    .add("fechaInicio", servicio.devolverFecha(obj.get_fechaInicio()))
-                    .add("fechaFin", servicio.devolverFecha(obj.get_fechaFin()))
-                    .add("estado", obj.get_estado())
-                    .add("estatus", obj.get_estatus()).build();
+            if (obj.get_observaciones() != null) {
 
+                estudio = Json.createObjectBuilder().add("id", obj.get_id())
+                        .add("nombre", obj.get_nombre())
+                        .add("tipoInstrumento", obj.get_tipoInstrumento())
+                        .add("observaciones", obj.get_observaciones())
+                        .add("fechaInicio", servicio.devolverFecha(obj.get_fechaInicio()))
+                        .add("fechaFin", servicio.devolverFecha(obj.get_fechaFin()))
+                        .add("estado", obj.get_estado())
+                        .add("estatus", obj.get_estatus()).build();
 
-            estudios.add(estudio);
+                estudios.add(estudio);
+
+            } else {
+
+                estudio = Json.createObjectBuilder().add("id", obj.get_id())
+                        .add("nombre", obj.get_nombre())
+                        .add("tipoInstrumento", obj.get_tipoInstrumento())
+                        .add("observaciones", "")
+                        .add("fechaInicio", servicio.devolverFecha(obj.get_fechaInicio()))
+                        .add("fechaFin", servicio.devolverFecha(obj.get_fechaFin()))
+                        .add("estado", obj.get_estado())
+                        .add("estatus", obj.get_estatus()).build();
+
+                estudios.add(estudio);
+
+            }
         }
 
     }
@@ -46,7 +63,7 @@ public class ListarEstudiosComando extends ComandoBase {
 
         JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todos los estudios listados")
                 .add("estado",200)
-                .add("categorias", estudios).build();
+                .add("Estudios", estudios).build();
 
         return resultado;
     }

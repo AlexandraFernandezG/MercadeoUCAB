@@ -36,10 +36,7 @@ public class AddCategoriaComando extends ComandoBase {
             Categoria resul = daoCategoria.insert(categoriaInsertar);
             CategoriaDto resultado = MapperCategoria.mapEntityToDto(resul);
 
-            categoriaObj = Json.createObjectBuilder().add("id", resultado.getId())
-                    .add("nombre", resultado.getNombre())
-                    .add("descripcion", resultado.getDescripcion())
-                    .add("estatus", resultado.getEstatus()).build();
+            categoriaObj = Json.createObjectBuilder().add("id", resultado.getId()).build();
 
         } catch (PruebaExcepcion ex) {
 
@@ -54,7 +51,7 @@ public class AddCategoriaComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Categoria insertada")
-                .add("categoria", categoriaObj).build();
+                .add("Id de la categoria", categoriaObj).build();
 
         return resultado;
     }

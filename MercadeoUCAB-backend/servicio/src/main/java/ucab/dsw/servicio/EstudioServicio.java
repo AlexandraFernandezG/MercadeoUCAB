@@ -1,15 +1,16 @@
 package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
-import ucab.dsw.comando.Estudio.ListarEstudiosComando;
+import ucab.dsw.comando.Estudio.*;
 import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
 import ucab.dsw.fabrica.Fabrica;
+import ucab.dsw.mappers.MapperEstudio;
 import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.response.UsuarioResponse;
 
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -71,17 +72,19 @@ public class EstudioServicio extends AplicacionBase {
     public Response consultarEstudio(@PathParam("id") long id) {
 
         JsonObject dataObject;
-        DaoEstudio daoEstudio = new DaoEstudio();
 
         try {
-            Estudio estudio_consultado = daoEstudio.find(id, Estudio.class);
-            return Response.status(Response.Status.OK).entity(estudio_consultado).build();
+
+            ConsultarEstudioComando comando = Fabrica.crearComandoConId(ConsultarEstudioComando.class, id);
+            comando.execute();
+
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
+                    .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -108,20 +111,15 @@ public class EstudioServicio extends AplicacionBase {
     @Path("/mostrarEstudiosActivos")
     @Produces( MediaType.APPLICATION_JSON )
     public Response estudiosActivos() {
-        DaoEstudio daoEstudio = new DaoEstudio();
-        List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
-        List<Estudio> listaEstudiosActivos = new ArrayList<Estudio>();
+
         JsonObject dataObject;
         
         try {
 
-            for (Estudio estudio : listaEstudios) {
+            MostrarEstudiosActivosComando comando = Fabrica.crear(MostrarEstudiosActivosComando.class);
+            comando.execute();
 
-                if (estudio.get_estatus().equals("Activo")) {
-                    listaEstudiosActivos.add(estudio);
-                }
-            }
-            return Response.status(Response.Status.OK).entity(listaEstudiosActivos).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -148,39 +146,13 @@ public class EstudioServicio extends AplicacionBase {
     public Response listarEncuestadosSolicitud(@PathParam("id") long id){
 
         JsonObject dataObject;
-        List<UsuarioResponse> listaEncuestadosSolicitud = new ArrayList<>();
-        DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
-        DaoUsuario daoUsuario = new DaoUsuario();
-        DaoInformacion daoInformacion = new DaoInformacion();
 
         try {
 
-            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
+            ListarSolicitudEncuestadosComando comando = Fabrica.crearComandoConId(ListarSolicitudEncuestadosComando.class, id);
+            comando.execute();
 
-            //Listar todos los usuarios encuestados
-            List<Object[]> listaUsuariosEncuestados = daoUsuario.listarEncuestadosEstudio();
-            List<UsuarioResponse> listaUsuariosEncuestadosResult = new ArrayList<>(listaUsuariosEncuestados.size());
-            List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
-
-            for (Object[] user : listaUsuariosEncuestados) {
-
-                listaUsuariosEncuestadosResult.add(new UsuarioResponse((long) user[0], (String) user[1], (String) user[2], (String) user[3], (String) user[4]));
-            }
-
-            //Recorremos la lista de encuestados y hacemos el match
-            for (UsuarioResponse usuarioEncuestado: listaUsuariosEncuestadosResult) {
-
-                for (Informacion informacion : listaInformacion) {
-
-                    if(solicitudEstudio.get_genero().equals(informacion.get_genero()) && solicitudEstudio.get_estadoCivil().equals(informacion.get_estadoCivil()) &&
-                            solicitudEstudio.get_cantidadPersonas() == informacion.get_cantidadPersonas() && informacion.get_usuario().get_id() == usuarioEncuestado.getId()) {
-
-                        listaEncuestadosSolicitud.add(usuarioEncuestado);
-                    }
-                }
-            }
-
-            return Response.status(Response.Status.OK).entity(listaEncuestadosSolicitud).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         }  catch (NullPointerException ex) {
 
@@ -215,30 +187,13 @@ public class EstudioServicio extends AplicacionBase {
      public Response insertarEncuestadosEstudio(@PathParam("id") long id, List<UsuarioResponse> listaEncuestados){
 
          JsonObject dataObject;
-         ucab.dsw.servicio.UsuarioEstudioServicio servicio = new ucab.dsw.servicio.UsuarioEstudioServicio();
 
          try {
 
-             //Insertar encuestados al estudio
-             UsuarioEstudioDto usuarioEstudioDto = new UsuarioEstudioDto();
+             InsertarEncuestadosEstudioComando comando = Fabrica.crearComandoListIdUsuarioResponse(InsertarEncuestadosEstudioComando.class, id, listaEncuestados);
+             comando.execute();
 
-             //Recorremos la lista de encuestados y insertamos
-             for (UsuarioResponse usuarioEncuestado: listaEncuestados) {
-
-                 usuarioEstudioDto.setEstatus("En proceso");
-                 EstudioDto idEstudio = new EstudioDto(id);
-                 usuarioEstudioDto.setEstudioDto(idEstudio);
-                 UsuarioDto idUsuario = new UsuarioDto(usuarioEncuestado.getId());
-                 usuarioEstudioDto.setUsuarioDto(idUsuario);
-                 servicio.addUsuarioEstudio(usuarioEstudioDto);
-
-             }
-
-             dataObject = Json.createObjectBuilder()
-                     .add("estado", "Se han insertado los encuestados correctamente")
-                     .add("codigo", 200).build();
-
-             return Response.status(Response.Status.OK).entity(dataObject).build();
+             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
          } catch (Exception ex) {
 
@@ -264,28 +219,13 @@ public class EstudioServicio extends AplicacionBase {
     public Response insertarPreguntasEstudio(@PathParam("id") long id, List<PreguntasResponse> listaPreguntas){
 
         JsonObject dataObject;
-        ucab.dsw.servicio.PreguntasEstudioServicio servicio1 = new ucab.dsw.servicio.PreguntasEstudioServicio();
 
         try {
 
-            //Recorremos e insertamos las preguntas con el estudio
-            PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto();
+            InsertarPreguntasEstudioComando comando = Fabrica.crearComandoListIdPreguntasResponse(InsertarPreguntasEstudioComando.class, id, listaPreguntas);
+            comando.execute();
 
-            for(PreguntasResponse preguntaEncuesta: listaPreguntas){
-
-                preguntaEstudioDto.setEstatus("Activo");
-                EstudioDto idEstudio2 = new EstudioDto(id);
-                preguntaEstudioDto.setEstudioDto(idEstudio2);
-                PreguntaEncuestaDto idPregunta = new PreguntaEncuestaDto(preguntaEncuesta.getId());
-                preguntaEstudioDto.setPreguntaEncuestaDto(idPregunta);
-                servicio1.addPreguntaEstudio(preguntaEstudioDto);
-            }
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Se han insertado las preguntas correctamente")
-                    .add("codigo", 200).build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PruebaExcepcion ex) {
 
@@ -325,31 +265,15 @@ public class EstudioServicio extends AplicacionBase {
     public Response addEstudios(EstudioDto estudioDto) {
 
         JsonObject dataObject;
-        EstudioDto resultado = new EstudioDto();
+
 
         try {
 
-            DaoEstudio daoEstudio = new DaoEstudio();
-            Estudio estudio = new Estudio();
+            Estudio estudio = MapperEstudio.mapDtoToEntityInsert(estudioDto);
+            AddEstudioComando comando = Fabrica.crearComandoConEntity(AddEstudioComando.class, estudio);
+            comando.execute();
 
-            DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
-            DaoUsuario daoUsuario = new DaoUsuario();
-
-            //Ejecutar el insert
-            estudio.set_nombre(estudioDto.getNombre());
-            estudio.set_tipoInstrumento(estudioDto.getTipoInstrumento());
-            estudio.set_fechaInicio(estudioDto.getFechaInicio());
-            estudio.set_fechaFin(estudioDto.getFechaFin());
-            estudio.set_estado(estudioDto.getEstado());
-            estudio.set_estatus(estudioDto.getEstatus());
-            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(estudioDto.getSolicitudEstudioDto().getId(), SolicitudEstudio.class);
-            Usuario usuario = daoUsuario.find(estudioDto.getUsuarioDto().getId(), Usuario.class);
-            estudio.set_solicitudEstudio(solicitudEstudio);
-            estudio.set_usuario(usuario);
-            Estudio resul = daoEstudio.insert(estudio);
-            resultado.setId(resul.get_id());
-
-            return Response.status(Response.Status.OK).entity(resultado).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -408,20 +332,16 @@ public class EstudioServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstudio(@PathParam("id") long id, EstudioDto estudioDto){
 
-        DaoEstudio daoEstudio = new DaoEstudio();
+
         JsonObject dataObject;
+
             try {
-                Estudio estudio_modificar = daoEstudio.find(id, Estudio.class);
 
-                estudio_modificar.set_nombre(estudioDto.getNombre());
-                estudio_modificar.set_tipoInstrumento(estudioDto.getTipoInstrumento());
-                estudio_modificar.set_fechaInicio(estudioDto.getFechaInicio());
-                estudio_modificar.set_fechaFin(estudioDto.getFechaFin());
-                estudio_modificar.set_estado(estudioDto.getEstado());
-                estudio_modificar.set_estatus(estudioDto.getEstatus());
-                daoEstudio.update(estudio_modificar);
+                Estudio estudio = MapperEstudio.mapDtoToEntityUpdate(id, estudioDto);
+                ModificarEstudioComando comando = Fabrica.crearComandoBoth(ModificarEstudioComando.class, id, estudio);
+                comando.execute();
 
-                return Response.status(Response.Status.OK).entity(estudio_modificar).build();
+                return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
@@ -436,11 +356,51 @@ public class EstudioServicio extends AplicacionBase {
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
+                        .add("excepcion", ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+            } catch (IllegalAccessException | PruebaExcepcion ex) {
+
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InstantiationException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InvocationTargetException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
             }
     }
 
@@ -460,22 +420,15 @@ public class EstudioServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstadoEstudio(@PathParam("id") long id){
 
-        DaoEstudio daoEstudio = new DaoEstudio();
+
         JsonObject dataObject;
+
         try {
-            Estudio estudio_modificar = daoEstudio.find(id, Estudio.class);
 
-            if (estudio_modificar.get_estado() == "En espera")
-                estudio_modificar.set_estado("En proceso");
-            else if (estudio_modificar.get_estado() == "en espera")
-                estudio_modificar.set_estado("en proceso");
-            else if (estudio_modificar.get_estado() == "En proceso")
-                estudio_modificar.set_estado("Finalizado");
-            else if (estudio_modificar.get_estado() == "en proceso")
-                estudio_modificar.set_estado("finalizado");
-            daoEstudio.update(estudio_modificar);
+            ModificarEstadoEstudioComando comando = Fabrica.crearComandoConId(ModificarEstadoEstudioComando.class, id);
+            comando.execute();
 
-            return Response.status(Response.Status.OK).entity(estudio_modificar).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -495,6 +448,46 @@ public class EstudioServicio extends AplicacionBase {
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+        } catch (IllegalAccessException | PruebaExcepcion ex) {
+
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InvocationTargetException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
@@ -515,9 +508,11 @@ public class EstudioServicio extends AplicacionBase {
         DaoEstudio daoEstudio = new DaoEstudio();
         JsonObject dataObject;
             try {
-                Estudio estudio_eliminar = daoEstudio.find(id, Estudio.class);
-                daoEstudio.delete(estudio_eliminar);
-                return Response.status(Response.Status.OK).entity(estudio_eliminar).build();
+
+                EliminarEstudioComando comando = Fabrica.crearComandoConId(EliminarEstudioComando.class, id);
+                comando.execute();
+
+                return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
@@ -537,6 +532,46 @@ public class EstudioServicio extends AplicacionBase {
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+            } catch (IllegalAccessException | PruebaExcepcion ex) {
+
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InstantiationException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InvocationTargetException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 400).build();
+
+                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
             }
 
     }

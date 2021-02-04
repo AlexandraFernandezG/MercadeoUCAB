@@ -51,7 +51,7 @@ public class MostrarSubcategoriasCategorias extends ComandoBase {
 
         JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todas las subcategorias de la categoria")
                 .add("estado",200)
-                .add("subcategorias", subcategorias).build();
+                .add("Subcategorias", subcategorias).build();
 
         return resultado;
     }

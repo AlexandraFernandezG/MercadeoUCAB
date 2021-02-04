@@ -8,13 +8,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="directorioactivo" />
-        <module name="servicio" />
-        <module name="excepciones" />
-        <module name="logica" />
         <module name="entidades" />
         <module name="accesodatos" />
         <module name="dtos" />
+        <module name="excepciones" />
         <module name="mappers" />
+      </profile>
+      <profile name="Deshabilitado">
+        <module name="logica" />
+        <module name="servicio" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

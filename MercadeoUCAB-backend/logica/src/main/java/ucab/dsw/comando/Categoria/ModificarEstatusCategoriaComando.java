@@ -71,7 +71,7 @@ public class ModificarEstatusCategoriaComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Modificadas las subcategorias de la categoria escogida")
-                .add("categoria", categoriaObj).build();
+                .add("Categoria", categoriaObj).build();
 
         return resultado;
     }

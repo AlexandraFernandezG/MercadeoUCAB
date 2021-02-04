@@ -37,7 +37,7 @@ public class ListarCategoriasComando extends ComandoBase {
     public JsonObject getResult() {
         JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todas las categorias listadas")
                 .add("estado",200)
-                .add("categorias", categorias).build();
+                .add("Categorias", categorias).build();
 
         return resultado;
     }

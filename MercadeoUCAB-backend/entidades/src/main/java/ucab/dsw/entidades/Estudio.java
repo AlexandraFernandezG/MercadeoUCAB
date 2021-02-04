@@ -131,6 +131,7 @@ public class Estudio extends EntidadBase{
         return "Estudio{" +
                 "_nombre='" + _nombre + '\'' +
                 ", _tipoInstrumento='" + _tipoInstrumento + '\'' +
+                ", _observaciones='" + _observaciones + '\'' +
                 ", _fechaInicio=" + _fechaInicio +
                 ", _fechaFin=" + _fechaFin +
                 ", _estado='" + _estado + '\'' +
