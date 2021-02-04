@@ -3,10 +3,13 @@ package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoCategoria;
 import ucab.dsw.accesodatos.DaoSubcategoria;
+import ucab.dsw.comando.Categoria.*;
 import ucab.dsw.dtos.CategoriaDto;
 import ucab.dsw.entidades.Categoria;
 import ucab.dsw.entidades.Subcategoria;
 import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.fabrica.Fabrica;
+import ucab.dsw.mappers.MapperCategoria;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -14,6 +17,7 @@ import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +38,13 @@ public class CategoriaServicio extends AplicacionBase {
     public Response listarCategorias() {
 
         JsonObject dataObject;
-        DaoCategoria categoriaDao = new DaoCategoria();
 
         try {
 
-            List<Categoria> listaCategorias = categoriaDao.findAll(Categoria.class);
+            ListarCategoriasComando comando = Fabrica.crear(ListarCategoriasComando.class);
+            comando.execute();
 
-            return Response.status(Response.Status.OK).entity(listaCategorias).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -69,19 +73,19 @@ public class CategoriaServicio extends AplicacionBase {
     public Response consultarCategoria(@PathParam("id") long id) {
 
         JsonObject dataObject;
-        DaoCategoria categoriaDao = new DaoCategoria();
 
         try {
 
-            Categoria categoria_consultada = categoriaDao.find(id, Categoria.class);
+            ConsultarCategoriaComando comando = Fabrica.crearComandoConId(ConsultarCategoriaComando.class, id);
+            comando.execute();
 
-            return Response.status(Response.Status.OK).entity(categoria_consultada).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -108,21 +112,15 @@ public class CategoriaServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response categoriasActivas()  {
 
-        DaoCategoria daoCategoria = new DaoCategoria();
-        List<Categoria> listaCategorias = daoCategoria.findAll(Categoria.class);
-        List<Categoria> listaCategoriasActivas = new ArrayList<Categoria>();
+
         JsonObject dataObject;
 
         try {
 
-            for (Categoria categoria : listaCategorias) {
+            MostrarCategoriasActivas comando = Fabrica.crear(MostrarCategoriasActivas.class);
+            comando.execute();
 
-                if (categoria.get_estatus().equals("Activo")) {
-                    listaCategoriasActivas.add(categoria);
-                }
-            }
-
-            return Response.status(Response.Status.OK).entity(listaCategoriasActivas).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -145,23 +143,16 @@ public class CategoriaServicio extends AplicacionBase {
     @GET
     @Path("/mostrarSubcategoriasCategoria/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response listarSubcategoriasDeCategoria(@PathParam("id") long id) throws NullPointerException{
+    public Response listarSubcategoriasDeCategoria(@PathParam("id") long id) {
 
-        DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
-        List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
-        List<Subcategoria> listaSubcategoriasCategoria = new ArrayList<Subcategoria>();
         JsonObject dataObject;
 
         try {
 
-            for (Subcategoria subcategoria : listaSubcategorias) {
+            MostrarSubcategoriasCategorias comando = Fabrica.crearComandoConId(MostrarSubcategoriasCategorias.class, id);
+            comando.execute();
 
-                if (subcategoria.get_categoria().get_id() == id) {
-                    listaSubcategoriasCategoria.add(subcategoria);
-                }
-            }
-
-            return Response.status(Response.Status.OK).entity(listaSubcategoriasCategoria).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -194,20 +185,14 @@ public class CategoriaServicio extends AplicacionBase {
     {
 
         JsonObject dataObject;
-        CategoriaDto resultado = new CategoriaDto();
 
         try {
 
-            DaoCategoria dao = new DaoCategoria();
-            Categoria categoria = new Categoria();
+            Categoria categoria = MapperCategoria.mapDtoToEntityInsert(categoriaDto);
+            AddCategoriaComando comando = Fabrica.crearComandoConEntity(AddCategoriaComando.class, categoria);
+            comando.execute();
 
-            categoria.set_nombre(categoriaDto.getNombre());
-            categoria.set_descripcion(categoriaDto.getDescripcion());
-            categoria.set_estatus(categoriaDto.getEstatus());
-            Categoria resul = dao.insert(categoria);
-            resultado.setId(resul.get_id());
-
-            return Response.status(Response.Status.OK).entity(resultado).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -222,20 +207,41 @@ public class CategoriaServicio extends AplicacionBase {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
-                    .add("codigo", 400).build();
-
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
-
-        } catch (PruebaExcepcion ex) {
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+        } catch (IllegalAccessException ex) {
+
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InvocationTargetException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
         }
     }
 
@@ -257,40 +263,14 @@ public class CategoriaServicio extends AplicacionBase {
     public Response modificarEstatusCategoria(@PathParam("id") long id, CategoriaDto categoriaDto){
 
         JsonObject dataObject;
-        DaoCategoria daoCategoria = new DaoCategoria();
 
             try {
 
-                Categoria categoria_modificar = daoCategoria.find(id, Categoria.class);
-                categoria_modificar.set_estatus(categoriaDto.getEstatus());
-                daoCategoria.update(categoria_modificar);
-                DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
+                Categoria categoria = MapperCategoria.mapDtoToEntityUpdate(id, categoriaDto);
+                ModificarEstatusCategoriaComando comando = Fabrica.crearComandoBoth(ModificarEstatusCategoriaComando.class, id, categoria);
+                comando.execute();
 
-                if (categoria_modificar.get_estatus().equals("Inactivo")) {
-
-                    List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
-
-                    for (Subcategoria subcategoria : listaSubcategorias) {
-
-                        if (subcategoria.get_categoria().get_id() == id) {
-                            subcategoria.set_estatus("Inactivo");
-                            daoSubcategoria.update(subcategoria);
-                        }
-                    }
-                } else if (categoria_modificar.get_estatus().equals("Activo")) {
-
-                    List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
-
-                    for (Subcategoria subcategoria : listaSubcategorias) {
-
-                        if (subcategoria.get_categoria().get_id() == id) {
-                            subcategoria.set_estatus("Activo");
-                            daoSubcategoria.update(subcategoria);
-                        }
-                    }
-                }
-
-                return Response.status(Response.Status.OK).entity(categoria_modificar).build();
+                return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
@@ -301,14 +281,14 @@ public class CategoriaServicio extends AplicacionBase {
 
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
-            } catch (NullPointerException ex) {
+            } catch (NullPointerException | IllegalAccessException | InvocationTargetException | InstantiationException | PruebaExcepcion ex) {
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 700).build();
 
-                return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             }
     }
@@ -331,17 +311,14 @@ public class CategoriaServicio extends AplicacionBase {
     public Response modificarCategoria(@PathParam("id") long id, CategoriaDto categoriaDto){
 
         JsonObject dataObject;
-        DaoCategoria dao = new DaoCategoria();
 
             try {
 
-                Categoria categoria_modificar = dao.find(id, Categoria.class);
-                categoria_modificar.set_nombre(categoriaDto.getNombre());
-                categoria_modificar.set_descripcion(categoriaDto.getDescripcion());
-                categoria_modificar.set_estatus(categoriaDto.getEstatus());
-                dao.update(categoria_modificar);
+                Categoria categoria = MapperCategoria.mapDtoToEntityUpdate(id, categoriaDto);
+                ModificarCategoriaComando comando = Fabrica.crearComandoBoth(ModificarCategoriaComando.class, id, categoria);
+                comando.execute();
 
-                return Response.status(Response.Status.OK).entity(categoria_modificar).build();
+                return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
@@ -356,11 +333,41 @@ public class CategoriaServicio extends AplicacionBase {
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                        .add("excepcion", ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+            } catch (IllegalAccessException | PruebaExcepcion ex) {
+
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InstantiationException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InvocationTargetException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
             }
     }
 
@@ -380,14 +387,13 @@ public class CategoriaServicio extends AplicacionBase {
     public Response eliminarCategoria(@PathParam("id") long id){
 
         JsonObject dataObject;
-        DaoCategoria dao = new DaoCategoria();
 
             try {
 
-                Categoria categoria_eliminar = dao.find(id, Categoria.class);
-                dao.delete(categoria_eliminar);
+                EliminarCategoriaComando comando = Fabrica.crearComandoConId(EliminarCategoriaComando.class, id);
+                comando.execute();
 
-                return Response.status(Response.Status.OK).entity(categoria_eliminar).build();
+                return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
@@ -407,6 +413,36 @@ public class CategoriaServicio extends AplicacionBase {
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+            } catch (IllegalAccessException | PruebaExcepcion ex) {
+
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InstantiationException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InvocationTargetException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
             }
 
     }

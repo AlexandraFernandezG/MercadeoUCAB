@@ -22,6 +22,8 @@
         <module>dtos</module>
         <module>excepciones</module>
         <module>directorioactivo</module>
+        <module>mappers</module>
+        <module>logica</module>
     </modules>
 
     <dependencies>

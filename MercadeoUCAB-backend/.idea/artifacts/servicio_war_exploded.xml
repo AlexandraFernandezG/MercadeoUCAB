@@ -60,6 +60,12 @@
           <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.6.0" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.8.1" />
+          <element id="archive" name="logica-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="logica" />
+          </element>
+          <element id="archive" name="mappers-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="mappers" />
+          </element>
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.2.3" />
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.2.3" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
