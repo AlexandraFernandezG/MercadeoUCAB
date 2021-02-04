@@ -1,6 +1,5 @@
 package ucab.dsw.servicio;
 
-import lombok.extern.java.Log;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.RespuestaDto;
 import ucab.dsw.entidades.*;
@@ -17,7 +16,6 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-@Log
 @Path( "/encuesta" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )

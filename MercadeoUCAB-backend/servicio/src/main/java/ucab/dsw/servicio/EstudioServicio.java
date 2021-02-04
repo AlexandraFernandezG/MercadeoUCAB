@@ -1,16 +1,17 @@
 package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
+import ucab.dsw.comando.Estudio.ListarEstudiosComando;
 import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.fabrica.Fabrica;
 import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.response.UsuarioResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
@@ -32,16 +33,16 @@ public class EstudioServicio extends AplicacionBase {
     @GET
     @Path("/allEstudio")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response listarEstudios() throws NullPointerException {
+    public Response listarEstudios() {
 
         JsonObject dataObject;
-        JsonArrayBuilder estudiosArrayJson = Json.createArrayBuilder();
-        DaoEstudio daoEstudio = new DaoEstudio();
 
         try {
-            List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
 
-            return Response.status(Response.Status.OK).entity(listaEstudios).build();
+            ListarEstudiosComando comando = Fabrica.crear(ListarEstudiosComando.class);
+            comando.execute();
+
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
 
         } catch (Exception ex){

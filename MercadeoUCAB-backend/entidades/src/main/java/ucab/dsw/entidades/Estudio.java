@@ -25,6 +25,9 @@ public class Estudio extends EntidadBase{
     
     @Column( name = "tipoInstrumento" )
     private String _tipoInstrumento;
+
+    @Column ( name = "observaciones")
+    private String _observaciones;
     
     @Column( name = "fechaInicio" )
     private Date _fechaInicio;
@@ -61,6 +64,14 @@ public class Estudio extends EntidadBase{
 
     public void set_tipoInstrumento(String _tipoInstrumento) {
         this._tipoInstrumento = _tipoInstrumento;
+    }
+
+    public String get_observaciones() {
+        return _observaciones;
+    }
+
+    public void set_observaciones(String _observaciones) {
+        this._observaciones = _observaciones;
     }
 
     public Date get_fechaInicio() {

@@ -23,7 +23,7 @@ public class DaoEstudio extends Dao<Estudio>{
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
-        SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estado as estado, e._estatus as estatus " +
+        SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._observaciones as observaciones, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estado as estado, e._estatus as estatus " +
                 "FROM Estudio as e, SolicitudEstudio as se " +
                 "WHERE e._solicitudEstudio._id = se._id and " +
                 "se._genero = :genero " +
@@ -49,7 +49,7 @@ public class DaoEstudio extends Dao<Estudio>{
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
-        SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estado as estado, e._estatus as estatus " +
+        SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._observaciones as observaciones, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estado as estado, e._estatus as estatus " +
                 "FROM Estudio as e, Usuario as u, SolicitudEstudio as se WHERE e._solicitudEstudio._id = se._id and " +
                 "se._usuario._id = u._id and u._id = :id";
 
@@ -68,7 +68,7 @@ public class DaoEstudio extends Dao<Estudio>{
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
-        SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estado as estado, e._estatus as estatus " +
+        SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._observaciones as observaciones, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estado as estado, e._estatus as estatus " +
                 "FROM Estudio as e, Usuario as u " +
                 "WHERE e._usuario._id = u._id and u._id = :id";
 

@@ -224,7 +224,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
                 for (Object[] est : listaEstudios) {
 
-                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
+                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
                 }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
@@ -332,9 +332,9 @@ public class SugerenciasServicio extends AplicacionBase {
 
             List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
-            for (Object[] eC: listaEstudios){
+            for (Object[] est: listaEstudios){
 
-                listaEstudiosRecomendados.add(new EstudiosResponse((long)eC[0], (String)eC[1], (String)eC[2], devolverFecha((Date)eC[3]), devolverFecha((Date)eC[4]), (String)eC[5], (String)eC[6]));
+                listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
             }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
@@ -370,9 +370,9 @@ public class SugerenciasServicio extends AplicacionBase {
 
             List<EstudiosResponse> listaEstudiosAnalista = new ArrayList<>(listaEstudios.size());
 
-            for (Object[] eA: listaEstudios){
+            for (Object[] est: listaEstudios){
 
-                listaEstudiosAnalista.add(new EstudiosResponse((long)eA[0], (String)eA[1], (String)eA[2], devolverFecha((Date)eA[3]), devolverFecha((Date)eA[4]), (String)eA[5], (String)eA[6]));
+                listaEstudiosAnalista.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
             }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosAnalista).build();

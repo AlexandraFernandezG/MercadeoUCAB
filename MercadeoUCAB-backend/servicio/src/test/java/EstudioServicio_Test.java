@@ -94,6 +94,7 @@ public class EstudioServicio_Test {
 
             estudioDto.setNombre("Perros calientes raros parte 2");
             estudioDto.setTipoInstrumento("Encuesta");
+            estudioDto.setObservaciones("Buenisimo");
             String date1 = "2020-12-01";
             DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
             Date myDate = forma.parse(date1);
@@ -131,6 +132,7 @@ public class EstudioServicio_Test {
             EstudioDto estudioDto = new EstudioDto();
             estudioDto.setNombre("Perros calientes raros parte 2");
             estudioDto.setTipoInstrumento("Encuesta");
+            estudioDto.setObservaciones("Buenisimo");
             String date1 = "2020-12-01";
             DateFormat forma = new SimpleDateFormat("yyyy-MM-dd");
             Date myDate = forma.parse(date1);

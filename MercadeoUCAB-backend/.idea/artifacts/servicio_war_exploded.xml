@@ -63,6 +63,9 @@
           <element id="archive" name="logica-1.0-SNAPSHOT.jar">
             <element id="module-output" name="logica" />
           </element>
+          <element id="archive" name="servicio-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="servicio" />
+          </element>
           <element id="archive" name="mappers-1.0-SNAPSHOT.jar">
             <element id="module-output" name="mappers" />
           </element>

@@ -74,7 +74,7 @@ public class UsuarioEstudioServicio extends AplicacionBase{
 
             for (Object[] est : listaUsuarioEstudios) {
 
-                listaEstudiosEncuestado.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], devolverFecha((Date)est[3]), devolverFecha((Date)est[4]), (String)est[5], (String)est[6]));
+                listaEstudiosEncuestado.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
             }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosEncuestado).build();
