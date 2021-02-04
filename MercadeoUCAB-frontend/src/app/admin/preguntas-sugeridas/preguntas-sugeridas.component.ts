@@ -81,6 +81,12 @@ export class PreguntasSugeridasComponent implements OnInit {
       subcategoriaDto: pregunta._subcategoria._id
     };
 //    this.service.updatePregunta(editPr).subscribe();
-      }
+  }
 
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

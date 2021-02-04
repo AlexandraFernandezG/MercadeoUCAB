@@ -28,6 +28,15 @@
   </div>
 
   <div class="mat-elevation-z8">
+
+    <!-- Filtro -->
+    <div class="filter-area">
+      <span class="material-icons search-icon">search</span>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Búsqueda">
+      </mat-form-field>
+    </div>
+
     <table mat-table [dataSource]="dataSource" matSort>
 
 

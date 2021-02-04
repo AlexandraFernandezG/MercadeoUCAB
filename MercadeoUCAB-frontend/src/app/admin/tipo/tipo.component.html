@@ -1,51 +1,42 @@
 <div class="container">
 
-  <div class="row text-left mt-5">
+  <!-- <div class="row text-left mt-5">
     <div class="col-5">
       <div class="row">
-        <h2 id="Encabezado">Tipos</h2>
+        <h2 id="Encabezado">Tipos de producto</h2>
         <a id="hand" class="btn"><i class="fas fa-retweet fa-lg" style="color:rgba(84, 157, 252, 0.993);"></i></a>
       </div>
 
       <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal()">Agregar <i
           class="fas fa-plus-circle"></i></a>
     </div>
+  </div> -->
 
-
-    <!-- <div class="container" style="margin-bottom: 30px;">
-      <table id="dataTable" #dataTable class="table table-bordered table-hover" style="background-color: #FDF4E3;">
-        <thead class="thead" style="background-color:rgba(84, 157, 252, 0.993); color: #FFFF;">
-          <tr class="text-center">
-            <th scope="col">id</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Estatus</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tbody class="tbody">
-          <tr *ngFor="let tipo of tipos">
-            <th class="text-center" scope="row">{{tipo._id}}</th>
-            <td class="text-center">{{tipo._nombre}}</td>
-            <td class="text-center">{{tipo._descripcion}}</td>
-            <td class="text-center">{{tipo._estatus}}</td>
-            <td>
-              <div class="row">
-                <div align="center" class="col-sm-4">
-                  <a class="btn btn-primary text-white" style="cursor: pointer;" data-toggle="modal" data-target="#Modal" (click)="openEModal(tipo._id)"><i class="fas fa-pencil-alt"></i></a>
-                </div>
-                <div align="center" class="col-sm-4">
-                  <button type="submit" class="btn btn-danger" (click)="deleteTipo(tipo)"><i class="fas fa-trash"></i></button>
-                </div>
-              </div>
-            </td>
-        </tbody>
-      </table>
-    </div> -->
+  <!-- Encabezado de la página -->
+  <div class="pageHeader">
+    <mat-toolbar>
+      <span class="fill-remaining-space"></span>
+      <span>Categorías de productos</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+  </div>
+  <div class="botones-opciones">
+    <a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal()">
+      Agregar
+      <i class="fas fa-plus-circle"></i>
+    </a>
   </div>
 
   <div class="mat-elevation-z8">
+
+    <!-- Filtro -->
+    <div class="filter-area">
+      <span class="material-icons search-icon">search</span>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Búsqueda">
+      </mat-form-field>
+    </div>
+
     <table mat-table [dataSource]="dataSource" matSort>
 
 

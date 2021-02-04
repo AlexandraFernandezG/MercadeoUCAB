@@ -35,12 +35,18 @@ export class MuestraEstudioComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       } );
-      
-    console.log(this.encuestados)
+    console.log(this.encuestados);
   }
 
+  // tslint:disable-next-line: typedef
   closeModal(){
     this.dialogRef.close();
   }
 
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

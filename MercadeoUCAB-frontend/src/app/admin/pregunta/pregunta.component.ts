@@ -40,13 +40,13 @@ export class PreguntaComponent implements OnInit {
   ) { }
   preguntaForm: FormGroup;
   idestudio: number;
-  displayedColumns: string[] = ['descripcion', 'tipoPregunta', 'subCategoria','estatus', 'acciones'];
+  displayedColumns: string[] = ['descripcion', 'tipoPregunta', 'subCategoria', 'estatus', 'acciones'];
   dataSource: MatTableDataSource<Pregunta>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
-    this.idestudio = +this.actRoute.snapshot.paramMap.get("id");
+    this.idestudio = +this.actRoute.snapshot.paramMap.get('id');
     console.log(this.idestudio);
     this.service.getPreguntas()
     .subscribe(data => {
@@ -56,6 +56,7 @@ export class PreguntaComponent implements OnInit {
     } );
   }
 
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddPreguntaComponent);
   }
@@ -69,7 +70,7 @@ export class PreguntaComponent implements OnInit {
     );
   }
 
-  Agregar(pregunta: Pregunta):void {
+  Agregar(pregunta: Pregunta): void {
     const id = 1;
     const estatus = 'Activo';
     this.servicePreguntaEstudio.createPreguntaEstudio({
@@ -93,7 +94,12 @@ export class PreguntaComponent implements OnInit {
       subcategoriaDto: pregunta._subcategoria._id
     };
 //    this.service.updatePregunta(editPr).subscribe();
-      }
+  }
 
-
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

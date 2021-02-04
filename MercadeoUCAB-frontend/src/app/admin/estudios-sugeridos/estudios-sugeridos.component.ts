@@ -49,6 +49,7 @@ export class EstudiosSugeridosComponent implements OnInit {
    } );
   }
 
+  // tslint:disable-next-line: typedef
   cloneEstudio(idSugerido: number){
     this.servicePreguntas.getPreguntasEstudio(idSugerido).subscribe(
       dataPreguntas => {
@@ -68,4 +69,10 @@ export class EstudiosSugeridosComponent implements OnInit {
     //this.dialogRef.close();
   }
 
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

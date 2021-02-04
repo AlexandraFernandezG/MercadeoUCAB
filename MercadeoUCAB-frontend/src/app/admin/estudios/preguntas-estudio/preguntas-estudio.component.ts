@@ -38,7 +38,7 @@ export class PreguntasEstudioComponent implements OnInit {
     private location: Location
   ) { }
 
-  displayedColumns: string[] = ['descripcion', 'tipoPregunta', 'subCategoria','estatus'];
+  displayedColumns: string[] = ['descripcion', 'tipoPregunta', 'subCategoria', 'estatus'];
   dataSource: MatTableDataSource<Pregunta>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -52,11 +52,11 @@ export class PreguntasEstudioComponent implements OnInit {
   private item: number;
 
   ngOnInit(): void {
-      this.id= +this.actRoute.snapshot.paramMap.get("id");
+      this.id = +this.actRoute.snapshot.paramMap.get('id');
       this.estudiosService.consultarEstudio(this.id).subscribe(
-        data => { this.estudio = data}
-      )
-      console.log(this.estudio)
+        data => { this.estudio = data; }
+      );
+      console.log(this.estudio);
 
       // this.service.getPreguntasEstudio(this.id)
       // .subscribe(data => {
@@ -65,6 +65,7 @@ export class PreguntasEstudioComponent implements OnInit {
       // } );
   }
 
+  // tslint:disable-next-line: typedef
   newAnswer(){
     this.encuesta.push(new FormGroup({
       pregunta: new FormControl(null, Validators.required),
@@ -72,8 +73,10 @@ export class PreguntasEstudioComponent implements OnInit {
     }));
   }
 
+  // tslint:disable-next-line: typedef
   delete(){ this.encuesta.removeAt(this.item); }
 
+  // tslint:disable-next-line: typedef
   openModal1(){
     this.dialog.open(AddPreguntaEstudioComponent,
       {
@@ -82,6 +85,7 @@ export class PreguntasEstudioComponent implements OnInit {
     );
   }
 
+  // tslint:disable-next-line: typedef
   openModal2(){
     this.dialog.open(PreguntasSugeridasComponent,
       {
@@ -93,13 +97,21 @@ export class PreguntasEstudioComponent implements OnInit {
     );
   }
 
-  openModal3(id: number):void{
+  // tslint:disable-next-line: typedef-whitespace
+  openModal3(id: number): void{
     this.dialog.open(EstudiosSugeridosComponent,
       {
+        // tslint:disable-next-line: object-literal-shorthand
         data: {id: id}
       }
     );
   }
 
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }
 

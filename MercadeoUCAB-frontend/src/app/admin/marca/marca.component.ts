@@ -34,11 +34,12 @@ export class MarcaComponent implements OnInit {
     private location: Location
   ) { }
   marcaForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'descripcion','estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'estatus', 'acciones'];
   dataSource: MatTableDataSource<Marca>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
     this.service.getMarcas()
     .subscribe(data => {
@@ -48,6 +49,7 @@ export class MarcaComponent implements OnInit {
     } );
 
   }
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddMarcaComponent);
   }
@@ -56,6 +58,7 @@ export class MarcaComponent implements OnInit {
   openEModal( id: number): void{
     this.dialog.open(EditMarcaComponent,
       {
+        // tslint:disable-next-line: object-literal-shorthand
         data: {id: id}
       }
     );
@@ -70,5 +73,12 @@ export class MarcaComponent implements OnInit {
       estatus: 'Inactivo'
     };
     this.service.updateMarca(deleteMa).subscribe();
-      }
+  }
+
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

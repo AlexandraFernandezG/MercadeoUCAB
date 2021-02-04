@@ -63,15 +63,20 @@ export class ProductoComponent implements OnInit {
   this.service.getProductos()
   .subscribe(data => {
     this.dataSource = new MatTableDataSource<Producto>(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   } );
   }
 
+  // tslint:disable-next-line: typedef
   openModal(){
     this.dialog.open(AddProductoComponent);
   }
 
-
-
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

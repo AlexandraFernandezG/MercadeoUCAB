@@ -47,4 +47,10 @@ export class SolicitudesComponent implements OnInit {
     localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntas))
   }
 
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

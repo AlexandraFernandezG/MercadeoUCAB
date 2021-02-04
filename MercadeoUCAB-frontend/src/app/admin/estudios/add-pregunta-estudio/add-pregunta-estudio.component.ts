@@ -52,16 +52,17 @@ export class AddPreguntaEstudioComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    //this.dialogRef.updateSize('600px', '600px');
+    // this.dialogRef.updateSize('600px', '600px');
     this.service.getPreguntas()
     .subscribe(data => {this.preguntas = data;
     } );
-    console.log(this.data)
+    console.log(this.data);
     this.serviceSubcategoria.getSubcategorias()
     .subscribe(catego => {this.subcategorias = catego;
     } );
   }
 
+  // tslint:disable-next-line: typedef
   addRespuesta(){
     return this.fb.group({
       id: 1,
@@ -71,43 +72,23 @@ export class AddPreguntaEstudioComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line: typedef
   addResp(){
     (this.preguntaForm.controls.respuestas as FormArray).push(this.addRespuesta());
   }
-  
+
+  // tslint:disable-next-line: typedef
   deleteRespuesta(indice: number){
     (this.preguntaForm.controls.respuestas as FormArray).removeAt(indice);
   }
 
+  // tslint:disable-next-line: typedef
   close(){
     this.dialogRef.close();
   }
 
   addPreguntaEstudio(): void{
-    // let id = 1;
-    // const estatus = 'Activo';
-    // const usuarioDto = 1;
-    // const respuestas = this.preguntaForm.get('respuestas').value;
-    // this.service.createPreguntaEstudio({
-    // id,
-    // descripcion: this.preguntaForm.get('descripcion').value,
-    // tipoPregunta: this.preguntaForm.get('tipoPregunta').value,
-    // estatus,
-    // usuarioDto,
-    // subcategoriaDto: this.preguntaForm.get('subcategoriaDto').value
-    // } as Pregunta2, this.data.id).subscribe(
-
-    //   response => {
-    //   if (this.preguntaForm.get('tipoPregunta').value == 'Selección Simple' || this.preguntaForm.get('tipoPregunta').value == 'Selección Múltiple'){
-    //     this.service.createPreguntaRespuesta(response.id,respuestas).subscribe(
-    //       respuesta => {
-    //         console.log(respuesta);
-    //       }
-    //     );
-    //  }
-    //   }
-    // );
-    // this.dialogRef.close();
+    // tslint:disable-next-line: prefer-const
     let id = 1;
     const estatus = 'Activo';
     const usuarioDto = 1;

@@ -81,5 +81,12 @@ export class UsuarioComponent implements OnInit {
      rol: usuario._rol._id
      };
     this.service.changeEstatusUsuario(deleteU).subscribe();
-       }
+  }
+
+  // tslint:disable-next-line: typedef
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }
