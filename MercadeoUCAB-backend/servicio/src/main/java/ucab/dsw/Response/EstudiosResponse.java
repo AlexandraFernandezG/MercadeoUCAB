@@ -57,6 +57,14 @@ public class EstudiosResponse {
         this.tipoInstrumentoEstudio = tipoInstrumentoEstudio;
     }
 
+    public String getObservacionesEstudio() {
+        return observacionesEstudio;
+    }
+
+    public void setObservacionesEstudio(String observacionesEstudio) {
+        this.observacionesEstudio = observacionesEstudio;
+    }
+
     public String getFechaInicioEstudio() {
         return fechaInicioEstudio;
     }

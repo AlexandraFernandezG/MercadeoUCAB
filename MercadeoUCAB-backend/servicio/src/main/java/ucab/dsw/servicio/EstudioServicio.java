@@ -337,6 +337,7 @@ public class EstudioServicio extends AplicacionBase {
             //Ejecutar el insert
             estudio.set_nombre(estudioDto.getNombre());
             estudio.set_tipoInstrumento(estudioDto.getTipoInstrumento());
+            estudio.set_observaciones(estudioDto.getObservaciones());
             estudio.set_fechaInicio(estudioDto.getFechaInicio());
             estudio.set_fechaFin(estudioDto.getFechaFin());
             estudio.set_estado(estudioDto.getEstado());
@@ -414,6 +415,7 @@ public class EstudioServicio extends AplicacionBase {
 
                 estudio_modificar.set_nombre(estudioDto.getNombre());
                 estudio_modificar.set_tipoInstrumento(estudioDto.getTipoInstrumento());
+                estudio_modificar.set_observaciones(estudioDto.getObservaciones());
                 estudio_modificar.set_fechaInicio(estudioDto.getFechaInicio());
                 estudio_modificar.set_fechaFin(estudioDto.getFechaFin());
                 estudio_modificar.set_estado(estudioDto.getEstado());

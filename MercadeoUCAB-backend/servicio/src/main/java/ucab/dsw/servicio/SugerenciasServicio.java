@@ -30,7 +30,7 @@ public class SugerenciasServicio extends AplicacionBase {
      * @author Emanuel Di Cristofaro
      * @param fecha Parsear la fecha de date a string para poder enviar el Json.
      */
-    public String devolverFecha(Date fecha){
+    public String devolverFechaSugerencias(Date fecha){
 
         String fecha_estudio = "";
 
@@ -220,9 +220,9 @@ public class SugerenciasServicio extends AplicacionBase {
 
             List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
-            for (Object[] est : listaEstudios) {
+            for (Object[] estE : listaEstudios) {
 
-                listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
+                listaEstudiosRecomendados.add(new EstudiosResponse((long)estE[0], (String)estE[1], (String)estE[2], (String)estE[3], devolverFechaSugerencias((Date)estE[4]), devolverFechaSugerencias((Date)estE[5]), (String)estE[6], (String)estE[7]));
             }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
@@ -330,9 +330,9 @@ public class SugerenciasServicio extends AplicacionBase {
 
             List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
 
-            for (Object[] est: listaEstudios){
+            for (Object[] estC: listaEstudios){
 
-                listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
+                listaEstudiosRecomendados.add(new EstudiosResponse((long)estC[0], (String)estC[1], (String)estC[2], (String)estC[3], devolverFechaSugerencias((Date)estC[4]), devolverFechaSugerencias((Date)estC[5]), (String)estC[6], (String)estC[7]));
             }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
@@ -368,9 +368,9 @@ public class SugerenciasServicio extends AplicacionBase {
 
             List<EstudiosResponse> listaEstudiosAnalista = new ArrayList<>(listaEstudios.size());
 
-            for (Object[] est: listaEstudios){
+            for (Object[] estA: listaEstudios){
 
-                listaEstudiosAnalista.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
+                listaEstudiosAnalista.add(new EstudiosResponse((long)estA[0], (String)estA[1], (String)estA[2], (String)estA[3], devolverFechaSugerencias((Date)estA[4]), devolverFechaSugerencias((Date)estA[5]), (String)estA[6], (String)estA[7]));
             }
 
             return Response.status(Response.Status.OK).entity(listaEstudiosAnalista).build();
