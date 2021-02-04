@@ -32,6 +32,7 @@ import { SolicitudesComponent } from './admin/solicitudes/solicitudes.component'
 import { EstudiosSugeridosComponent } from './admin/estudios-sugeridos/estudios-sugeridos.component';
 import { SolicitudesPendientesComponent } from './cliente/solicitudes-pendientes/solicitudes-pendientes.component';
 import { ResultadosComponent } from './analista/resultados/resultados.component';
+import { MuestraEstudioComponent } from './analista/muestra-estudio/muestra-estudio.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -81,8 +82,9 @@ const routes: Routes = [
     children: [
       { path: 'solicitudes', component: EstudiosAnalistaComponent },
       { path: 'crearEncuesta', component: CrearEstudioComponent },
+      { path: 'muestra', component: MuestraEstudioComponent },
       { path: 'poblacion', component: AnalistaPoblacionComponent },
-      { path: 'resultados', component: ResultadosComponent},
+      { path: 'resultados/:id', component: ResultadosComponent},
       { path: '', pathMatch: 'prefix', redirectTo: 'solicitudes'},
     ]
   },

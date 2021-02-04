@@ -5,6 +5,7 @@ import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.servicio.UsuarioServicio;
 
 import javax.mail.MessagingException;
+import javax.ws.rs.core.Response;
 
 public class UsuarioServicio_Test {
 
@@ -25,8 +26,8 @@ public class UsuarioServicio_Test {
             RolDto rolDto = new RolDto(1);
             usuarioDto.setRol(rolDto);
             usuarioDto.setCodigoRecuperacion(null);
-            UsuarioDto resultado = servicio.addUsuario(usuarioDto);
-            Assert.assertNotEquals(resultado.getId(), 0);
+            Response resultado = servicio.addUsuario(usuarioDto);
+            Assert.assertEquals(resultado.getStatus(), Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

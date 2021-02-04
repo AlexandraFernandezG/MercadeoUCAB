@@ -11,19 +11,26 @@
     <mat-card class="mat-elevation-z4" >
       <mat-card-header>
         <mat-card-title>{{estudio.nombreEstudio}}</mat-card-title>
-        <mat-card-subtitle>estudio subtitulo</mat-card-subtitle>
+        <mat-card-subtitle>{{estudio.estadoEstudio}}</mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image src="/../assets/img/survey.png">
       <mat-card-content>
         <p>
-          descripcion de estudio
+          descripcion de estudio 
         </p>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-button color="primary">Ver Muestra</button>
-        <button mat-button color="primary">Ver Resultados</button>
-        <button mat-button color="primary">Iniciar</button>
-        <button mat-button color="primary">Terminar</button>        
+
+      <mat-card-actions >
+        <button mat-button color="primary" (click)="openModal(estudio.idEstudio, estudio.nombreEstudio)" >Ver Muestra</button>
+        <button mat-button color="primary" [routerLink]="['/analista/resultados/', estudio.idEstudio]">Ver Resultados</button>
+        <button mat-button color="primary" *ngIf="estudio.estadoEstudio === 'en espera' " 
+          (click)="updateEstado(estudio.idEstudio)">
+          Iniciar
+        </button>
+        <button mat-button color="primary" *ngIf="estudio.estadoEstudio === 'en proceso' " 
+          (click)="updateEstado(estudio.idEstudio)">
+          Terminar
+        </button>        
       </mat-card-actions>
     </mat-card>
   </div>

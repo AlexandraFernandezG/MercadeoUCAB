@@ -11,7 +11,7 @@ export class Producto {
     _descripcion: string;
     _estatus: string;
     _marca: Marca;
-  //  _usuario: Usuario;
+    _usuario: Usuario;
     _subcategoria: Subcategoria;
 }
 export class Producto2 {
@@ -20,7 +20,7 @@ export class Producto2 {
     descripcion: string;
     estatus: string;
     marcaDto: number;
-  //  usuarioDto:number;
+    usuarioDto:number;
     subcategoriaDto: number;
 
 }

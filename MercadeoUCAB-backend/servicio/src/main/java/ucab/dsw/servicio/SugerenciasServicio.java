@@ -1,8 +1,8 @@
 package ucab.dsw.servicio;
 
 import lombok.extern.java.Log;
-import ucab.dsw.Response.EstudiosResponse;
-import ucab.dsw.Response.PreguntasResponse;
+import ucab.dsw.response.EstudiosResponse;
+import ucab.dsw.response.PreguntasResponse;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.EstudioDto;
 import ucab.dsw.dtos.PreguntaEncuestaDto;
@@ -69,7 +69,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
             for (Object[] pre: listaPreguntas){
 
-                listaPreguntasRecomendadas.add(new PreguntasResponse((long)pre[0], (String)pre[1], (String)pre[2], (String)pre[3]));
+                listaPreguntasRecomendadas.add(new PreguntasResponse((long)pre[0], (String)pre[1], (String)pre[2], (String)pre[3], (String)pre[4]));
 
             }
 

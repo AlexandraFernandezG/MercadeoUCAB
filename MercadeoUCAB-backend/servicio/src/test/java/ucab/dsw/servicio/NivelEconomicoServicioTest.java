@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import ucab.dsw.dtos.NivelEconomicoDto;
 import ucab.dsw.entidades.NivelEconomico;
 
+import javax.ws.rs.core.Response;
+
 class NivelEconomicoServicioTest {
 	private final EntidadDto dto = new EntidadDto();
 	
@@ -36,12 +38,12 @@ class NivelEconomicoServicioTest {
 		 *
 		 * Verifica si el ID del registro deseado (1), corresponde al valor 1.
 		 * */
-		
-		NivelEconomicoServicio servicio = new NivelEconomicoServicio();
+
+		NivelEconomicoServicio nivelEconomicoServicio = new NivelEconomicoServicio();
+		Response servicio = nivelEconomicoServicio.consultarNivelEconomico(1);
 		
 		try {
-			Assertions.assertEquals(1,
-				servicio.consultarNivelEconomico(1L).get_id());
+			Assertions.assertEquals(servicio.getStatus(),Response.Status.OK.getStatusCode());
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
 		}
@@ -136,18 +138,18 @@ class NivelEconomicoServicioTest {
 		 * */
 		
 		NivelEconomicoServicio servicio = new NivelEconomicoServicio();
-		NivelEconomico nivelEconomico = servicio.consultarNivelEconomico(3L);
+		Response nivelEconomico = servicio.consultarNivelEconomico(3L);
 		
 		try {
 			// Solo actualizará un registro que exista en la BD.
 			if (nivelEconomico != null) {
 				NivelEconomicoDto neDto = new NivelEconomicoDto();
-				
-				neDto.setId(nivelEconomico.get_id());
+
 				neDto.setDescripcion("Exercitationem omnis eius.");
 				neDto.setEstatus("Inactivo");
 				
-				servicio.updateNivelEconomico(neDto.getId(), neDto);
+				Response respuesta = servicio.updateNivelEconomico(neDto.getId(), neDto);
+				Assertions.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 			}
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());
@@ -161,12 +163,13 @@ class NivelEconomicoServicioTest {
 		 * */
 		
 		NivelEconomicoServicio servicio = new NivelEconomicoServicio();
-		NivelEconomico nivelEconomico = servicio.consultarNivelEconomico(3L);
+		Response nivelEconomico = servicio.consultarNivelEconomico(3L);
 		
 		try {
 			// Solo eliminará un registro que exista en la BD.
 			if (nivelEconomico != null) {
-				servicio.eliminarNivelEconomico(nivelEconomico.get_id());
+				Response respuesta = servicio.eliminarNivelEconomico(3);
+				Assertions.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 			}
 		} catch (Exception e) {
 			Assertions.fail(e.getMessage(), e.getCause());

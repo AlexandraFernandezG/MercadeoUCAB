@@ -8,6 +8,7 @@ import ucab.dsw.dtos.PreguntaEstudioDto;
 import ucab.dsw.entidades.Estudio;
 import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.entidades.PreguntaEstudio;
+import ucab.dsw.response.PreguntasResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,22 +38,18 @@ public class PreguntasEstudioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarPreguntasEstudio(@PathParam("id") long id) {
 
-        DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-        List<PreguntaEstudio> listaEstudioPregunta = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-        List<PreguntaEncuesta> listaPreguntasEstudio = new ArrayList<PreguntaEncuesta>();
         JsonObject dataObject;
 
         try {
 
-            for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
+            DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+            List<Object[]> listaPreguntas = daoPreguntaEncuesta.mostrarPreguntasEstudio(id);
+            List<PreguntasResponse> listaPreguntasEstudio = new ArrayList<>(listaPreguntas.size());
 
-                if (preguntaEstudio.get_estudio().get_id() == id) {
+            for (Object[] pre: listaPreguntas){
 
-                    long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
-                    DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-                    PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
-                    listaPreguntasEstudio.add(preguntaEncuesta);
-                }
+                listaPreguntasEstudio.add(new PreguntasResponse((long)pre[0], (String)pre[1], (String)pre[2], (String)pre[3], (String)pre[4]));
+
             }
 
             return Response.status(Response.Status.OK).entity(listaPreguntasEstudio).build();

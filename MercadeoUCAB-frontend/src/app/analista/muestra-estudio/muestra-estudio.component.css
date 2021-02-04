@@ -1,0 +1,18 @@
+div.pageHeader{
+    margin: 0px 40px;
+    margin-bottom: 10px;
+}
+.fill-remaining-space{
+    flex: 1 1 auto;
+}
+table {
+    width: 80%;
+    margin: 20px auto;
+}
+.mat-elevation-z8{
+    width: 80%;
+    margin: 20px auto;
+}
+.headerEstudios{
+    margin: 30px auto;
+}
