@@ -3,6 +3,7 @@ package ucab.dsw.fabrica;
 import ucab.dsw.dtos.DtoBase;
 import ucab.dsw.entidades.EntidadBase;
 import ucab.dsw.response.PreguntasResponse;
+import ucab.dsw.response.RespuestasAbiertasResponse;
 import ucab.dsw.response.UsuarioResponse;
 
 import java.lang.reflect.InvocationTargetException;
