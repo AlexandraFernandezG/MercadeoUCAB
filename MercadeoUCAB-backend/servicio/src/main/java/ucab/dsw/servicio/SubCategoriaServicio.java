@@ -1,4 +1,5 @@
 package ucab.dsw.servicio;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,17 +7,19 @@ import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoCategoria;
 import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.accesodatos.DaoSubcategoria;
+import ucab.dsw.comando.Subcategoria.*;
 import ucab.dsw.dtos.SubcategoriaDto;
 import ucab.dsw.entidades.Categoria;
 import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.entidades.Subcategoria;
 import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.fabrica.Fabrica;
+import ucab.dsw.mappers.MapperSubcategoria;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -36,14 +39,14 @@ public class SubCategoriaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarSubCategorias() {
 
-        DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
         JsonObject dataObject;
 
         try {
 
-            List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
+            ListarSubCategoriasComando comando = Fabrica.crear(ListarSubCategoriasComando.class);
+            comando.execute();
 
-            return Response.status(Response.Status.OK).entity(listaSubcategorias).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -71,20 +74,21 @@ public class SubCategoriaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarSubCategoria(@PathParam("id") long id) {
 
-        DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
+
         JsonObject dataObject;
 
         try {
 
-            Subcategoria subcategoria = daoSubcategoria.find(id, Subcategoria.class);
+            ConsultarSubCategoriaComando comando = Fabrica.crearComandoConId(ConsultarSubCategoriaComando.class, id);
+            comando.execute();
 
-            return Response.status(Response.Status.OK).entity(subcategoria).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la subcategoria: " + ex.getMessage())
+                    .add("excepcion",  ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -111,21 +115,14 @@ public class SubCategoriaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response subcategoriasActivas() {
 
-        DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
-        List<Subcategoria> listaSubcategorias = daoSubcategoria.findAll(Subcategoria.class);
-        List<Subcategoria> listaSubCategoriasActivas = new ArrayList<Subcategoria>();
         JsonObject dataObject;
 
         try {
 
-            for (Subcategoria subcategoria : listaSubcategorias) {
+            MostrarSubCategoriasActivasComando comando = Fabrica.crear(MostrarSubCategoriasActivasComando.class);
+            comando.execute();
 
-                if (subcategoria.get_estatus().equals("Activo")) {
-                    listaSubCategoriasActivas.add(subcategoria);
-                }
-            }
-
-            return Response.status(Response.Status.OK).entity(listaSubCategoriasActivas).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -151,24 +148,16 @@ public class SubCategoriaServicio extends AplicacionBase{
     @GET
     @Path("/listarPreguntasSubcategoria/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response listarPreguntasSubcategoria(@PathParam("id") long id) throws NullPointerException{
+    public Response listarPreguntasSubcategoria(@PathParam("id") long id) {
 
-        DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-        List<PreguntaEncuesta> listarPreguntas = daoPreguntaEncuesta.findAll(PreguntaEncuesta.class);
-        List<PreguntaEncuesta> listaPreguntasSubcategoria = new ArrayList<PreguntaEncuesta>();
         JsonObject dataObject;
 
         try {
 
-            for (PreguntaEncuesta preguntaEncuesta: listarPreguntas){
+            ListarPreguntasSubCategoriaComando comando = Fabrica.crearComandoConId(ListarPreguntasSubCategoriaComando.class, id);
+            comando.execute();
 
-                if(preguntaEncuesta.get_subcategoria().get_id() == id){
-
-                    listaPreguntasSubcategoria.add(preguntaEncuesta);
-                }
-            }
-
-            return Response.status(Response.Status.OK).entity(listaPreguntasSubcategoria).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
@@ -205,26 +194,17 @@ public class SubCategoriaServicio extends AplicacionBase{
     @Path("/addSubCategoria")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response addSubCategoria(SubcategoriaDto subcategoriaDto)
-    {
-        SubcategoriaDto resultado = new SubcategoriaDto();
+    public Response addSubCategoria(SubcategoriaDto subcategoriaDto) throws Exception {
+
         JsonObject dataObject;
 
         try {
 
-            DaoSubcategoria dao = new DaoSubcategoria();
-            Subcategoria subcategoria = new Subcategoria();
-            DaoCategoria daoCategoria = new DaoCategoria();
+            Subcategoria subcategoria = MapperSubcategoria.mapDtoToEntityInsert(subcategoriaDto);
+            AddSubCategoriaComando comando = Fabrica.crearComandoConEntity(AddSubCategoriaComando.class, subcategoria);
+            comando.execute();
 
-            subcategoria.set_nombre(subcategoriaDto.getNombre());
-            subcategoria.set_descripcion(subcategoriaDto.getDescripcion());
-            subcategoria.set_estatus(subcategoriaDto.getEstatus());
-            Categoria categoria = daoCategoria.find(subcategoriaDto.getCategoriaDto().getId(), Categoria.class);
-            subcategoria.set_categoria(categoria);
-            Subcategoria resul = dao.insert(subcategoria);
-            resultado.setId(resul.get_id());
-
-            return Response.status(Response.Status.OK).entity(resultado).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -239,7 +219,7 @@ public class SubCategoriaServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la subcategoria: " + ex.getMessage())
+                    .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -253,6 +233,36 @@ public class SubCategoriaServicio extends AplicacionBase{
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+        } catch (IllegalAccessException ex) {
+
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InvocationTargetException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
         }
     }
 
@@ -271,20 +281,17 @@ public class SubCategoriaServicio extends AplicacionBase{
     @Path("/updateSubCategoria/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response modificarSubCategoria(@PathParam("id") long id, SubcategoriaDto subcategoriaDto){
+    public Response modificarSubCategoria(@PathParam("id") long id, SubcategoriaDto subcategoriaDto) throws Exception {
 
-        DaoSubcategoria dao = new DaoSubcategoria();
-        Subcategoria subcategoria_modificar = dao.find(id, Subcategoria.class);
         JsonObject dataObject;
 
             try {
 
-                subcategoria_modificar.set_nombre(subcategoriaDto.getNombre());
-                subcategoria_modificar.set_descripcion(subcategoriaDto.getDescripcion());
-                subcategoria_modificar.set_estatus(subcategoriaDto.getEstatus());
-                dao.update(subcategoria_modificar);
+                Subcategoria subcategoria = MapperSubcategoria.mapDtoToEntityUpdate(id, subcategoriaDto);
+                ModificarSubCategoriaComando comando = Fabrica.crearComandoBoth(ModificarSubCategoriaComando.class, id, subcategoria);
+                comando.execute();
 
-                return Response.status(Response.Status.OK).entity(subcategoria_modificar).build();
+                return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
@@ -299,11 +306,41 @@ public class SubCategoriaServicio extends AplicacionBase{
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la subcategoria: " + ex.getMessage())
+                        .add("excepcion", ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+            } catch (IllegalAccessException ex) {
+
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InstantiationException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+            } catch (InvocationTargetException ex) {
+                ex.printStackTrace();
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", "Error")
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 600).build();
+
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
             }
 
     }
@@ -321,16 +358,16 @@ public class SubCategoriaServicio extends AplicacionBase{
     @DELETE
     @Path("/deleteSubCategoria/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response eliminarSubCategoria(@PathParam("id") long id){
+    public Response eliminarSubCategoria(@PathParam("id") long id) throws Exception {
 
-        DaoSubcategoria dao = new DaoSubcategoria();
-        Subcategoria subcategoria_eliminar = dao.find(id, Subcategoria.class);
         JsonObject dataObject;
 
                 try {
 
-                    dao.delete(subcategoria_eliminar);
-                    return Response.status(Response.Status.OK).entity(subcategoria_eliminar).build();
+                    EliminarSubCategoriaComando comando = Fabrica.crearComandoConId(EliminarSubCategoriaComando.class, id);
+                    comando.execute();
+
+                    return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
                 } catch (PersistenceException | DatabaseException ex){
 
@@ -350,6 +387,36 @@ public class SubCategoriaServicio extends AplicacionBase{
 
                     return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+                } catch (IllegalAccessException ex) {
+
+                    ex.printStackTrace();
+
+                    dataObject = Json.createObjectBuilder()
+                            .add("estado", "Error")
+                            .add("excepcion", ex.getMessage())
+                            .add("codigo", 600).build();
+
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+                } catch (InstantiationException ex) {
+                    ex.printStackTrace();
+
+                    dataObject = Json.createObjectBuilder()
+                            .add("estado", "Error")
+                            .add("excepcion", ex.getMessage())
+                            .add("codigo", 600).build();
+
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+                } catch (InvocationTargetException ex) {
+                    ex.printStackTrace();
+
+                    dataObject = Json.createObjectBuilder()
+                            .add("estado", "Error")
+                            .add("excepcion", ex.getMessage())
+                            .add("codigo", 600).build();
+
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
                 }
 
     }

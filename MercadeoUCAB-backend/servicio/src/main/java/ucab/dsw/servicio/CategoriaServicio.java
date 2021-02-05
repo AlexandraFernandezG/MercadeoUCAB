@@ -1,12 +1,9 @@
 package ucab.dsw.servicio;
 
 import org.eclipse.persistence.exceptions.DatabaseException;
-import ucab.dsw.accesodatos.DaoCategoria;
-import ucab.dsw.accesodatos.DaoSubcategoria;
 import ucab.dsw.comando.Categoria.*;
 import ucab.dsw.dtos.CategoriaDto;
 import ucab.dsw.entidades.Categoria;
-import ucab.dsw.entidades.Subcategoria;
 import ucab.dsw.excepciones.PruebaExcepcion;
 import ucab.dsw.fabrica.Fabrica;
 import ucab.dsw.mappers.MapperCategoria;
@@ -18,8 +15,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path( "/categoria" )
 @Produces( MediaType.APPLICATION_JSON )
@@ -117,7 +112,7 @@ public class CategoriaServicio extends AplicacionBase {
 
         try {
 
-            MostrarCategoriasActivas comando = Fabrica.crear(MostrarCategoriasActivas.class);
+            MostrarCategoriasActivasComando comando = Fabrica.crear(MostrarCategoriasActivasComando.class);
             comando.execute();
 
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
@@ -149,7 +144,7 @@ public class CategoriaServicio extends AplicacionBase {
 
         try {
 
-            MostrarSubcategoriasCategorias comando = Fabrica.crearComandoConId(MostrarSubcategoriasCategorias.class, id);
+            MostrarSubcategoriasCategoriasComando comando = Fabrica.crearComandoConId(MostrarSubcategoriasCategoriasComando.class, id);
             comando.execute();
 
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
