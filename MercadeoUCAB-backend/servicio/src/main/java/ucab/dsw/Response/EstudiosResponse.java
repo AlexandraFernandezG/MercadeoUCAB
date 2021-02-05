@@ -88,4 +88,12 @@ public class EstudiosResponse {
     public void setEstatusEstudio(String estatusEstudio) {
         this.estatusEstudio = estatusEstudio;
     }
+
+    public String getObservacionesEstudio() {
+        return observacionesEstudio;
+    }
+
+    public void setObservacionesEstudio(String observacionesEstudio) {
+        this.observacionesEstudio = observacionesEstudio;
+    }
 }

@@ -1,26 +1,16 @@
 package ucab.dsw.servicio;
 
 import lombok.extern.java.Log;
-import ucab.dsw.response.EstudiosResponse;
-import ucab.dsw.response.PreguntasResponse;
-import ucab.dsw.accesodatos.*;
-import ucab.dsw.dtos.EstudioDto;
-import ucab.dsw.dtos.PreguntaEncuestaDto;
-import ucab.dsw.dtos.PreguntaEstudioDto;
-import ucab.dsw.entidades.*;
+import ucab.dsw.comando.Sugerencias.*;
+import ucab.dsw.fabrica.Fabrica;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.json.*;
-import javax.sound.sampled.Line;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Log
 @Path( "/sugerencias" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
@@ -63,17 +53,10 @@ public class SugerenciasServicio extends AplicacionBase {
 
         try {
 
-            DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-            List<Object[]> listaPreguntas = daoPreguntaEncuesta.listarPreguntasEstudio(id);
-            List<PreguntasResponse> listaPreguntasRecomendadas = new ArrayList<>(listaPreguntas.size());
+            ListarPreguntasEstudioRecomendadasComando comando = Fabrica.crearComandoConId(ListarPreguntasEstudioRecomendadasComando.class, id);
+            comando.execute();
 
-            for (Object[] pre: listaPreguntas){
-
-                listaPreguntasRecomendadas.add(new PreguntasResponse((long)pre[0], (String)pre[1], (String)pre[2], (String)pre[3], (String)pre[4]));
-
-            }
-
-            return Response.status(Response.Status.OK).entity(listaPreguntasRecomendadas).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
 
         } catch (Exception ex) {
@@ -98,58 +81,20 @@ public class SugerenciasServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudiosRecomendados(@PathParam("id") long id) {
 
-        DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
-        DaoEstudio daoEstudio = new DaoEstudio();
         JsonObject dataObject;
 
         try {
 
-            SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
+            ListarEstudiosRecomendadosComando comando = Fabrica.crearComandoConId(ListarEstudiosRecomendadosComando.class, id);
+            comando.execute();
 
-                //Variables para poder hacer el macth
-                String genero = solicitudEstudio.get_genero();
-                String estadoCivil = solicitudEstudio.get_estadoCivil();
-                int cantidadPersonas = solicitudEstudio.get_cantidadPersonas();
-                int edadMaxima = solicitudEstudio.get_edadMaxima();
-                int edadMinima = solicitudEstudio.get_edadMinima();
-
-                //Listar todos los estudios e informaciones de los encuestados
-                List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
-                List<SolicitudEstudio> listaSolicitudes = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
-                List<SolicitudEstudio> listaAuxSolicitudes = new ArrayList<>();
-                List<Estudio> listaEstudiosRecomendados = new ArrayList<>();
-
-                for(SolicitudEstudio solicitudEstudioRemove: listaSolicitudes){
-
-                    if(solicitudEstudioRemove.get_id() != id){
-
-                        listaAuxSolicitudes.add(solicitudEstudioRemove);
-                    }
-                }
-
-                for (SolicitudEstudio solicitudEstudio_macth: listaAuxSolicitudes){
-
-                    if(genero.equals(solicitudEstudio_macth.get_genero()) && estadoCivil.equals(solicitudEstudio_macth.get_estadoCivil()) &&
-                            cantidadPersonas == solicitudEstudio_macth.get_cantidadPersonas() && edadMaxima == solicitudEstudio_macth.get_edadMaxima() &&
-                            edadMinima == solicitudEstudio_macth.get_edadMinima()){
-
-                        for (Estudio estudio: listaEstudios){
-
-                            if(estudio.get_solicitudEstudio().get_id() == solicitudEstudio_macth.get_id()){
-
-                                listaEstudiosRecomendados.add(estudio);
-                            }
-                        }
-                    }
-                }
-
-                return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
+                return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                    .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -176,58 +121,14 @@ public class SugerenciasServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudiosEncuestado(@PathParam("id") long id) {
 
-        DaoInformacion daoInformacion = new DaoInformacion();
-        DaoEstudio daoEstudio = new DaoEstudio();
         JsonObject dataObject;
-        String genero = null;
-        Date fechaNacimiento = null;
-        String estadoCivil = null;
-        int cantidadPersonas = 0;
-        int edad = 0;
 
         try {
 
-            List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
+            ListarEstudiosEncuestadoComando comando = Fabrica.crearComandoConId(ListarEstudiosEncuestadoComando.class, id);
+            comando.execute();
 
-                for (Informacion informacion: listaInformacion) {
-
-                    if(informacion.get_usuario().get_id() == id) {
-
-                        genero = informacion.get_genero();
-                        fechaNacimiento = informacion.get_fechaNacimiento();
-                        estadoCivil = informacion.get_estadoCivil();
-                        cantidadPersonas = informacion.get_cantidadPersonas();
-
-                        //Primero pasamos la fecha de nacimiento a string
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                        String fecha_nac = sdf.format(fechaNacimiento);
-
-                        //Formato de la fecha para la operacion de la edad
-                        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-                        //Parseamos la fecha y obtener la fecha actual.
-                        LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
-                        LocalDate ahora = LocalDate.now();
-
-                        //Calcular la edad
-                        Period periodo = Period.between(fechaNac, ahora);
-
-                        //Edad de la persona
-                        edad = periodo.getYears();
-
-                    }
-                }
-
-                List<Object[]> listaEstudios = daoEstudio.listarEstudiosEncuestado(genero, estadoCivil, cantidadPersonas, edad);
-
-                List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
-
-                for (Object[] est : listaEstudios) {
-
-                    listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
-                }
-
-            return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -242,7 +143,7 @@ public class SugerenciasServicio extends AplicacionBase {
     }
 
     /**
-     * Este método permite duplicar un estudio recomendado en base a una solicitud.
+     * Este método permite insertar preguntas de un estudio a otro.
      * @author Emanuel Di Cristofaro
      * @param idER: Es el id del estudio recomendado
      * @param idE: Es el id del estudio creado
@@ -255,48 +156,19 @@ public class SugerenciasServicio extends AplicacionBase {
     public Response insertarEstudioRecomendado(@PathParam("idER") long idER, @PathParam("idE") long idE) {
 
         JsonObject dataObject;
-        DaoEstudio daoEstudio = new DaoEstudio();
 
         try {
 
-            //Obtener las preguntas del estudio recomendado
-            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-            List<PreguntaEstudio> listaEstudioPregunta = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-            List<PreguntaEncuesta> listaPreguntasEstudio = new ArrayList<PreguntaEncuesta>();
+            InsertarEstudioRecomendadoComando comando = Fabrica.crearComandoDosId(InsertarEstudioRecomendadoComando.class,idER, idE);
+            comando.execute();
 
-            for (PreguntaEstudio preguntaEstudio : listaEstudioPregunta) {
-
-                if (preguntaEstudio.get_estudio().get_id() == idER) {
-
-                    long idFk = preguntaEstudio.get_preguntaEncuesta().get_id();
-                    DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-                    PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idFk, PreguntaEncuesta.class);
-                    listaPreguntasEstudio.add(preguntaEncuesta);
-                }
-            }
-
-            //Insertar las preguntas recomendadas en el nuevo estudio
-            PreguntaEstudioDto preguntaEstudiodto = new PreguntaEstudioDto();
-            ucab.dsw.servicio.PreguntasEstudioServicio servicio = new ucab.dsw.servicio.PreguntasEstudioServicio();
-
-                for (PreguntaEncuesta preguntaEncuesta: listaPreguntasEstudio){
-
-                    long idPR = preguntaEncuesta.get_id();
-                    PreguntaEncuestaDto preguntaEncuesta_insert = new PreguntaEncuestaDto(idPR);
-                    preguntaEstudiodto.setPreguntaEncuestaDto(preguntaEncuesta_insert);
-                    EstudioDto estudio_insert = new EstudioDto(idE);
-                    preguntaEstudiodto.setEstudioDto(estudio_insert);
-                    preguntaEstudiodto.setEstatus("Activo");
-                    servicio.addPreguntaEstudio(preguntaEstudiodto);
-                }
-
-            return Response.status(Response.Status.OK).entity(listaEstudioPregunta).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
+                    .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
@@ -323,21 +195,15 @@ public class SugerenciasServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudiosCliente(@PathParam("id") long id) {
 
-        DaoEstudio daoEstudio = new DaoEstudio();
+
         JsonObject dataObject;
 
         try {
 
-            List<Object[]> listaEstudios = daoEstudio.listarEstudiosClientes(id);
+            ListarEstudiosClienteComando comando = Fabrica.crearComandoConId(ListarEstudiosClienteComando.class, id);
+            comando.execute();
 
-            List<EstudiosResponse> listaEstudiosRecomendados = new ArrayList<>(listaEstudios.size());
-
-            for (Object[] est: listaEstudios){
-
-                listaEstudiosRecomendados.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
-            }
-
-            return Response.status(Response.Status.OK).entity(listaEstudiosRecomendados).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
 
         } catch (Exception ex) {
@@ -361,21 +227,14 @@ public class SugerenciasServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudiosAnalista(@PathParam("id") long id){
 
-        DaoEstudio daoEstudio = new DaoEstudio();
         JsonObject dataObject;
 
         try {
 
-            List<Object[]> listaEstudios = daoEstudio.listarEstudiosAnalista(id);
+            ListarEstudiosAnalistaComando comando = Fabrica.crearComandoConId(ListarEstudiosAnalistaComando.class, id);
+            comando.execute();
 
-            List<EstudiosResponse> listaEstudiosAnalista = new ArrayList<>(listaEstudios.size());
-
-            for (Object[] est: listaEstudios){
-
-                listaEstudiosAnalista.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], devolverFecha((Date)est[4]), devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
-            }
-
-            return Response.status(Response.Status.OK).entity(listaEstudiosAnalista).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 

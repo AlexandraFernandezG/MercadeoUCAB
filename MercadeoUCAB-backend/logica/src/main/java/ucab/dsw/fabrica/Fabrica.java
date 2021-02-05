@@ -73,4 +73,12 @@ public class Fabrica<T> {
         return (T) tipo.getConstructors()[0].newInstance(listBase);
     }
 
+    /**
+     * Este metodo particular para el funcionamiento de un metodo en sugerencias
+     * @author Emanuel Di Cristofaro
+     */
+    public static <T> T crearComandoDosId(Class<T> tipo, long idER, long idE) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (T) tipo.getConstructors()[0].newInstance(idER, idE);
+    }
+
 }

@@ -26,6 +26,36 @@ import javax.ws.rs.core.MediaType;
 public class PreguntasEstudioServicio extends AplicacionBase {
 
     /**
+     * Este método permite insertar las preguntas al estudio sin dtos
+     * @author Emanuel Di Cristofaro
+     * @throws Exception Captura cualquier excepcion encontrada.
+     * @param idPR el id de la pregunta que se quiere insertar.
+     * @param idE el id del estudio que se le asignaran las preguntas.
+     */
+    public void insertarPreguntasEstudioRecomendado(long idPR, long idE){
+
+        try {
+
+            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+            PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
+            DaoEstudio daoEstudio = new DaoEstudio();
+            DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
+
+            preguntaEstudio.set_estatus("Activo");
+            Estudio estudio = daoEstudio.find(idE, Estudio.class);
+            preguntaEstudio.set_estudio(estudio);
+            PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idPR, PreguntaEncuesta.class);
+            preguntaEstudio.set_preguntaEncuesta(preguntaEncuesta);
+            daoPreguntaEstudio.insert(preguntaEstudio);
+
+        } catch (Exception ex){
+
+            ex.getMessage();
+        }
+
+    }
+
+    /**
      * Este método permite obtener todas las preguntas de un estudio.
      * @author Emanuel Di Cristofaro
      * @return Este metodo retorna un objeto de tipo Json con el
