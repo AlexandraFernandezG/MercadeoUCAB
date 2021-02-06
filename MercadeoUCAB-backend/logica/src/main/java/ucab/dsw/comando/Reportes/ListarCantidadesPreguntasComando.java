@@ -138,6 +138,8 @@ public class ListarCantidadesPreguntasComando extends ComandoBase {
     public JsonObject getResult() {
 
         dataObject = Json.createObjectBuilder()
+                .add("estado",200)
+                .add("mensaje","Lista de cantidades por pregunta")
                 .add("Preguntas", builder).build();
 
         return dataObject;

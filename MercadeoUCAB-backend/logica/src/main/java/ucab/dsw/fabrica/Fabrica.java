@@ -82,4 +82,12 @@ public class Fabrica<T> {
         return (T) tipo.getConstructors()[0].newInstance(idER, idE);
     }
 
+    /**
+     * Este metodo particular para el funcionamiento de un metodo en usuario
+     * @author Emanuel Di Cristofaro
+     */
+    public static <T> T crearComandoCorreo(Class<T> tipo, String parameter) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (T) tipo.getConstructors()[0].newInstance(parameter);
+    }
+
 }
