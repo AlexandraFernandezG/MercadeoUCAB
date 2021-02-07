@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
-          <factory-entry name="mercadeoUcabPU" value="e573a67d-301b-46b8-9e60-94cfcd5587b3" />
+          <factory-entry name="mercadeoUcabPU" value="6a9b32ce-d807-44df-bdd1-891df3dae754" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />

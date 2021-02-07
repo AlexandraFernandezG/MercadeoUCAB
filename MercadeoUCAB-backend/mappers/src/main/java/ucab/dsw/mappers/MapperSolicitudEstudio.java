@@ -55,6 +55,18 @@ public class MapperSolicitudEstudio {
         SolicitudEstudioDto solicitudEstudioDto = new SolicitudEstudioDto();
 
         solicitudEstudioDto.setId(solicitudEstudioEntity.get_id());
+        solicitudEstudioDto.setGenero(solicitudEstudioEntity.get_genero());
+        solicitudEstudioDto.setEdadMaxima(solicitudEstudioEntity.get_edadMaxima());
+        solicitudEstudioDto.setEdadMinima(solicitudEstudioEntity.get_edadMinima());
+        solicitudEstudioDto.setEstadoCivil(solicitudEstudioEntity.get_estadoCivil());
+        solicitudEstudioDto.setDisponibilidadEnLinea(solicitudEstudioEntity.get_disponibilidadEnLinea());
+        solicitudEstudioDto.setCantidadPersonas(solicitudEstudioEntity.get_cantidadPersonas());
+        solicitudEstudioDto.setCantidadHijos(solicitudEstudioEntity.get_cantidadHijos());
+        solicitudEstudioDto.setGeneroHijos(solicitudEstudioEntity.get_generoHijos());
+        solicitudEstudioDto.setEdadMinimaHijos(solicitudEstudioEntity.get_edadMinimaHijos());
+        solicitudEstudioDto.setEdadMaximaHijos(solicitudEstudioEntity.get_edadMaximaHijos());
+        solicitudEstudioDto.setEstado(solicitudEstudioEntity.get_estado());
+        solicitudEstudioDto.setEstatus(solicitudEstudioEntity.get_estatus());
 
         return solicitudEstudioDto;
     }

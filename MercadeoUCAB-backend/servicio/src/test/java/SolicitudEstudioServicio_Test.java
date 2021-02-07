@@ -69,6 +69,7 @@ public class SolicitudEstudioServicio_Test {
             solicitudEstudioDto.setGeneroHijos("");
             solicitudEstudioDto.setEdadMinimaHijos(0);
             solicitudEstudioDto.setEdadMaximaHijos(0);
+            solicitudEstudioDto.setEstado("En proceso");
             solicitudEstudioDto.setEstatus("Activo");
 
             // Recuerden que deben ver los id de los registros en la BD
@@ -85,7 +86,7 @@ public class SolicitudEstudioServicio_Test {
             solicitudEstudioDto.setProductoDto(productoDto);
 
             // Recuerden que deben ver los id de los registros en la BD
-            OcupacionDto ocupacionDto = new OcupacionDto(3);
+            OcupacionDto ocupacionDto = new OcupacionDto(1);
             solicitudEstudioDto.setOcupacionDto(ocupacionDto);
 
             // Recuerden que deben ver los id de los registros en la BD
