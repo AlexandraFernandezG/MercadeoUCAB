@@ -1,4 +1,4 @@
-package ucab.dsw.comando.Sugerencias;
+package ucab.dsw.comando.Usuario;
 
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.comando.ComandoBase;

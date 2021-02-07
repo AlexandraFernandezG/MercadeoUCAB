@@ -1,7 +1,6 @@
 package ucab.dsw.servicio;
 
 import ucab.dsw.comando.Sugerencias.*;
-import ucab.dsw.comando.Sugerencias.ListarEncuestadosComando;
 import ucab.dsw.fabrica.Fabrica;
 
 import java.text.SimpleDateFormat;
