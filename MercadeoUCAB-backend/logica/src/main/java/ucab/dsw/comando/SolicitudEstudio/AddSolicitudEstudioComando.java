@@ -66,7 +66,7 @@ public class AddSolicitudEstudioComando extends ComandoBase {
 
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
-                .add("mensaje","Solicitud de estudio creado")
+                .add("mensaje","Su solicitud ha sido creada con éxito espere a que pase a ser procesada por el sistema")
                 .add("id de la solicitud de estudio insertado", solicitudestudioObj).build();
 
         return resultado;
