@@ -30,7 +30,6 @@ public class AddEstudioComando extends ComandoBase {
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
         DaoSolicitudEstudio daoSolicitudEstudio = Fabrica.crear(DaoSolicitudEstudio.class);
         DaoUsuario daoUsuario = Fabrica.crear(DaoUsuario.class);
-        ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
 
         Estudio estudioInsertar = Fabrica.crear(Estudio.class);
 
@@ -58,7 +57,7 @@ public class AddEstudioComando extends ComandoBase {
 
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
-                .add("mensaje","Estudio insertado")
+                .add("mensaje","Estudio creado")
                 .add("id del estudio insertado", estudioObj).build();
 
         return resultado;

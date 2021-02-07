@@ -134,6 +134,38 @@ public class EstudioServicio extends AplicacionBase {
     }
 
     /**
+     * Este método permite obtener todas los estudios en espera.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de estudios en espera y en tal caso obtener una excepcion si aplica.
+     */
+    @GET
+    @Path("/mostrarEstudiosEnEspera")
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response estudiosEnEspera() {
+
+        JsonObject dataObject;
+
+        try {
+
+            MostrarEstudiosActivosComando comando = Fabrica.crear(MostrarEstudiosActivosComando.class);
+            comando.execute();
+
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        }
+    }
+
+    /**
      * Este método permite obtener los encuestados en base a una solicitud de estudio.
      * @author Emanuel Di Cristofaro
      * @return Este metodo retorna un objeto de tipo Json con el
@@ -265,7 +297,6 @@ public class EstudioServicio extends AplicacionBase {
     public Response addEstudios(EstudioDto estudioDto) {
 
         JsonObject dataObject;
-
 
         try {
 
