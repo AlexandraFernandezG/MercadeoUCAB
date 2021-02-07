@@ -98,7 +98,7 @@ public class UsuarioServicio extends AplicacionBase {
     @GET
     @Path("/listarEncuestados")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listarEncuestados(){
+    public Response listarEncuestadosInformacion(){
 
         JsonObject dataObject;
 
