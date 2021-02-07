@@ -118,8 +118,7 @@ public class ListarEstudiosEncuestadoComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todos los estudios recomendados para el encuestado")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Estudios", estudios).build();
 
         return resultado;

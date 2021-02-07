@@ -51,8 +51,7 @@ public class ListarPreguntasEstudioRecomendadasComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Listado de preguntas recomendadas")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Preguntas", preguntas).build();
 
         return resultado;

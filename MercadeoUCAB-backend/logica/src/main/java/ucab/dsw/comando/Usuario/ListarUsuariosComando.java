@@ -50,8 +50,7 @@ public class ListarUsuariosComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todas los usuarios listados")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Usuarios", usuarios).build();
 
         return resultado;

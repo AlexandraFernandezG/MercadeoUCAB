@@ -46,8 +46,7 @@ public class ConsultarUsuarioComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Usuario consultado")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Usuario", usuarioObj).build();
 
         return resultado;

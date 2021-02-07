@@ -89,7 +89,7 @@ public class SubCategoriaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion",  ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -163,8 +163,8 @@ public class SubCategoriaServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la subcategoria: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -220,7 +220,7 @@ public class SubCategoriaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -229,7 +229,7 @@ public class SubCategoriaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -240,7 +240,7 @@ public class SubCategoriaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 600).build();
+                    .add("codigo", 601).build();
 
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
@@ -250,7 +250,7 @@ public class SubCategoriaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 600).build();
+                    .add("codigo", 602).build();
 
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
@@ -260,7 +260,7 @@ public class SubCategoriaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 600).build();
+                    .add("codigo", 603).build();
 
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
         }
@@ -307,7 +307,7 @@ public class SubCategoriaServicio extends AplicacionBase{
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -318,7 +318,7 @@ public class SubCategoriaServicio extends AplicacionBase{
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", ex.getMessage())
-                        .add("codigo", 600).build();
+                        .add("codigo", 601).build();
 
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
@@ -328,7 +328,7 @@ public class SubCategoriaServicio extends AplicacionBase{
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", ex.getMessage())
-                        .add("codigo", 600).build();
+                        .add("codigo", 602).build();
 
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
@@ -338,7 +338,7 @@ public class SubCategoriaServicio extends AplicacionBase{
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", ex.getMessage())
-                        .add("codigo", 600).build();
+                        .add("codigo", 603).build();
 
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
             }
@@ -382,8 +382,8 @@ public class SubCategoriaServicio extends AplicacionBase{
 
                     dataObject = Json.createObjectBuilder()
                             .add("estado", "Error")
-                            .add("excepcion", "No se ha encontrado la subcategoria: " + ex.getMessage())
-                            .add("codigo", 400).build();
+                            .add("excepcion", ex.getMessage())
+                            .add("codigo", 401).build();
 
                     return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -394,7 +394,7 @@ public class SubCategoriaServicio extends AplicacionBase{
                     dataObject = Json.createObjectBuilder()
                             .add("estado", "Error")
                             .add("excepcion", ex.getMessage())
-                            .add("codigo", 600).build();
+                            .add("codigo", 601).build();
 
                     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
@@ -404,7 +404,7 @@ public class SubCategoriaServicio extends AplicacionBase{
                     dataObject = Json.createObjectBuilder()
                             .add("estado", "Error")
                             .add("excepcion", ex.getMessage())
-                            .add("codigo", 600).build();
+                            .add("codigo", 602).build();
 
                     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
@@ -414,7 +414,7 @@ public class SubCategoriaServicio extends AplicacionBase{
                     dataObject = Json.createObjectBuilder()
                             .add("estado", "Error")
                             .add("excepcion", ex.getMessage())
-                            .add("codigo", 600).build();
+                            .add("codigo", 603).build();
 
                     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
                 }

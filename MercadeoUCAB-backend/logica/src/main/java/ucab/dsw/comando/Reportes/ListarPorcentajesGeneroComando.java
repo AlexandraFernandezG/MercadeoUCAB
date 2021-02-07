@@ -89,8 +89,6 @@ public class ListarPorcentajesGeneroComando extends ComandoBase {
         }
 
         dataAnalisis = Json.createObjectBuilder()
-                .add("estado",200)
-                .add("mensaje","Cantidades de hombres y mujeres por pregunta")
                 .add("Porcentaje Hombres", contador_masculino)
                 .add("Porcentaje Mujeres", contador_femenino).build();
 

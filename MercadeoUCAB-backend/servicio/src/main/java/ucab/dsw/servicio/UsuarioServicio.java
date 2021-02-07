@@ -92,37 +92,6 @@ public class UsuarioServicio extends AplicacionBase {
         }
     }
 
-    /**
-     * Este método permite obtener todos los encuestados.
-     * @author Emanuel Di Cristofaro
-     * @return Este metodo retorna un objeto de tipo Json con el
-     * arreglo de los usuarios encuestados y en tal caso obtener una excepción si aplica.
-     */
-    @GET
-    @Path("/allEncuestados")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response listarEncuestados(){
-
-        JsonObject dataObject;
-
-        try {
-
-            ListarEncuestadosComando comando = Fabrica.crear(ListarEncuestadosComando.class);
-            comando.execute();
-
-            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
-
-        } catch (Exception ex) {
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
-                    .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
-
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
-        }
-    }
-
 
     /**
      * Este método permite obtener un usuario cuando le pasas un correo.
@@ -184,7 +153,7 @@ public class UsuarioServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
