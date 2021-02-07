@@ -2,7 +2,6 @@ package ucab.dsw.servicio;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.eclipse.persistence.exceptions.DatabaseException;
-import ucab.dsw.comando.Usuario.ListarEncuestadosComando;
 import ucab.dsw.comando.Usuario.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
 import ucab.dsw.fabrica.Fabrica;
