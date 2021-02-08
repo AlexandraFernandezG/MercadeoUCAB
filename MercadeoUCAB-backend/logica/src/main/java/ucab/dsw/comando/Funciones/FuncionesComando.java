@@ -70,7 +70,7 @@ public class FuncionesComando {
     }
 
     /**
-     * Este método permite insertar los usuarios a un estudio sin dto
+     * Este método permite insertar las preguntas a un estudio sin dto
      * @author Emanuel Di Cristofaro
      * @throws Exception Captura cualquier excepcion encontrada.
      * @param idPR el id de la pregunta que se quiere insertar.

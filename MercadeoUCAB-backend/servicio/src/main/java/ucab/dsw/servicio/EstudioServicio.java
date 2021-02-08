@@ -624,16 +624,10 @@ public class EstudioServicio extends AplicacionBase {
 
         try {
 
-            DaoEstudio daoEstudio = new DaoEstudio();
-            Estudio estudioObservacion = daoEstudio.find(id, Estudio.class);
-            estudioObservacion.set_observaciones(observacion);
-            daoEstudio.update(estudioObservacion);
+            ColocarObservacionAnalistaComando comando = Fabrica.crearComandoIdString(ColocarObservacionAnalistaComando.class, id, observacion);
+            comando.execute();
 
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", 200)
-                    .add("Mensaje", "Operacion realizada con exito").build();
-
-            return Response.status(Response.Status.OK).entity(dataObject).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -653,6 +647,46 @@ public class EstudioServicio extends AplicacionBase {
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+        } catch (IllegalAccessException | PruebaExcepcion ex) {
+
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 604).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 602).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InvocationTargetException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 603).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 

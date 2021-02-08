@@ -3,11 +3,15 @@ package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.accesodatos.DaoTelefono;
+import ucab.dsw.comando.Telefono.AddTelefonoComando;
 import ucab.dsw.dtos.TelefonoDto;
 import ucab.dsw.entidades.Informacion;
 import ucab.dsw.entidades.Telefono;
 import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.fabrica.Fabrica;
+import ucab.dsw.mappers.MapperTelefono;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
@@ -113,25 +117,17 @@ public class TelefonoServicio extends AplicacionBase{
     @Path("/addTelefono")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response addTelefono(TelefonoDto telefonoDto){
+    public Response addTelefono(TelefonoDto telefonoDto) throws Exception {
 
-        TelefonoDto resultado = new TelefonoDto();
         JsonObject dataObject;
 
         try {
 
-            DaoTelefono daoTelefono = new DaoTelefono();
-            Telefono telefono = new Telefono();
-            DaoInformacion daoInformacion = new DaoInformacion();
+            Telefono telefono = MapperTelefono.mapDtoToEntityInsert(telefonoDto);
+            AddTelefonoComando comando = Fabrica.crearComandoConEntity(AddTelefonoComando.class, telefono);
+            comando.execute();
 
-            telefono.set_numero(telefonoDto.getNumero());
-            telefono.set_estatus(telefonoDto.getEstatus());
-            Informacion informacion = daoInformacion.find(telefonoDto.getInformacion().getId(), Informacion.class);
-            telefono.set_informacion(informacion);
-            Telefono resul = daoTelefono.insert(telefono);
-            resultado.setId(resul.get_id());
-
-            return Response.status(Response.Status.OK).entity(resultado).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -146,8 +142,8 @@ public class TelefonoServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el telefono: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -156,10 +152,40 @@ public class TelefonoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+        } catch (IllegalAccessException ex) {
+
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 601).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InvocationTargetException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 602).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
         }
     }
 

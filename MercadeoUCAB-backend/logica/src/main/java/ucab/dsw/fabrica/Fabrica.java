@@ -88,4 +88,8 @@ public class Fabrica<T> {
         return (T) tipo.getConstructors()[0].newInstance(parameter);
     }
 
+    public static <T> T crearComandoIdString(Class<T> tipo, long id, String parameter) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (T) tipo.getConstructors()[0].newInstance(id, parameter);
+    }
+
 }
