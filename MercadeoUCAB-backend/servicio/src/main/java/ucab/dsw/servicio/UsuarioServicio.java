@@ -2,6 +2,8 @@ package ucab.dsw.servicio;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.eclipse.persistence.exceptions.DatabaseException;
+import ucab.dsw.accesodatos.DaoLugar;
+import ucab.dsw.accesodatos.DaoTelefono;
 import ucab.dsw.comando.Usuario.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
 import ucab.dsw.fabrica.Fabrica;
@@ -14,12 +16,19 @@ import ucab.dsw.entidades.Rol;
 import ucab.dsw.entidades.Usuario;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.mail.MessagingException;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 
 @Path( "/usuario" )
 @Produces( MediaType.APPLICATION_JSON )
@@ -194,6 +203,49 @@ public class UsuarioServicio extends AplicacionBase {
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
+
+    /**
+     * Este método permite obtener los detalles de un usuario encuestado
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con los detalles del usuario consultado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     * @param id el id del usuario que se quiere consultar.
+     */
+    @GET
+    @Path("/detallesEncuestados/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response detallesEncuestados(@PathParam("id") long id){
+
+        JsonObject dataObject;
+
+        try {
+
+            DetallesEncuestadosComando comando = Fabrica.crearComandoConId(DetallesEncuestadosComando.class, id);
+            comando.execute();
+
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+    }
+
 
     @POST
     @Path("/addUsuario")

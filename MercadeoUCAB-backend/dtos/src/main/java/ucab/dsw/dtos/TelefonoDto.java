@@ -5,14 +5,14 @@ import ucab.dsw.dtos.InformacionDto;
 
 public class TelefonoDto extends DtoBase {
 
-    private int _numero;
+    private String _numero;
     private InformacionDto _informacion;
 
-    public int getNumero() {
+    public String getNumero() {
         return _numero;
     }
 
-    public void setNumero(int _numero) {
+    public void setNumero(String _numero) {
         this._numero = _numero;
     }
 

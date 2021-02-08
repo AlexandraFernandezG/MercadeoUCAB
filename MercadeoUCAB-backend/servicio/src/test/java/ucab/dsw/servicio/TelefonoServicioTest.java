@@ -49,7 +49,7 @@ class TelefonoServicioTest {
 		TelefonoDto telefonoDto = new TelefonoDto();
 		
 		// Definición del nuevo registro de Teléfono.
-		telefonoDto.setNumero(41714);
+		//telefonoDto.setNumero(41714);
 		telefonoDto.setEstatus("Activo");
 		
 		try {
@@ -78,7 +78,7 @@ class TelefonoServicioTest {
 
 				TelefonoDto telefonoDto = new TelefonoDto();
 
-				telefonoDto.setNumero(1379994);
+				//telefonoDto.setNumero(1379994);
 				telefonoDto.setEstatus("Activo");
 				InformacionDto informacionDto = new InformacionDto(1);
 				telefonoDto.setInformacion(informacionDto);

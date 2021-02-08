@@ -13,6 +13,7 @@ import ucab.dsw.Response.UsuarioResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
@@ -605,6 +606,48 @@ public class EstudioServicio extends AplicacionBase {
             }
 
     }
+
+    /**
+     * Este método permite obtener los detalles de un estudio
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de detalles de un estudio y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
+     */
+    @GET
+    @Path("/detallesEstudio/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response detallesEstudio(@PathParam("id") long id){
+
+        JsonObject dataObject;
+
+        try {
+
+            DetallesEstudioComando comando = Fabrica.crearComandoConId(DetallesEstudioComando.class, id);
+            comando.execute();
+
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+    }
+
     /**
      * Este método permite colocar una observacion
      * @author Emanuel Di Cristofaro
