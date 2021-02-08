@@ -1,12 +1,8 @@
 package ucab.dsw.comando.Estudio;
 
 import ucab.dsw.comando.ComandoBase;
-import ucab.dsw.dtos.EstudioDto;
-import ucab.dsw.dtos.UsuarioDto;
-import ucab.dsw.dtos.UsuarioEstudioDto;
-import ucab.dsw.excepciones.PruebaExcepcion;
 import ucab.dsw.fabrica.Fabrica;
-import ucab.dsw.response.UsuarioResponse;
+import ucab.dsw.Response.UsuarioResponse;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -26,20 +22,12 @@ public class InsertarEncuestadosEstudioComando extends ComandoBase {
     @Override
     public void execute() throws Exception {
 
-        ucab.dsw.servicio.UsuarioEstudioServicio servicio = new ucab.dsw.servicio.UsuarioEstudioServicio();
-
-        //Insertar encuestados al estudio
-        UsuarioEstudioDto usuarioEstudioDto = Fabrica.crear(UsuarioEstudioDto.class);
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
 
         //Recorremos la lista de encuestados y insertamos
         for (UsuarioResponse usuarioEncuestado: listaEncuestados) {
 
-            usuarioEstudioDto.setEstatus("En proceso");
-            EstudioDto idEstudio = new EstudioDto(id);
-            usuarioEstudioDto.setEstudioDto(idEstudio);
-            UsuarioDto idUsuario = new UsuarioDto(usuarioEncuestado.getId());
-            usuarioEstudioDto.setUsuarioDto(idUsuario);
-            servicio.addUsuarioEstudio(usuarioEstudioDto);
+            servicio.addUsuarioEstudio(id, usuarioEncuestado.getId());
 
         }
 

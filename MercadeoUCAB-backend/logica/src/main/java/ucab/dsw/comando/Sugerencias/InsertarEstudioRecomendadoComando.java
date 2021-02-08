@@ -54,12 +54,12 @@ public class InsertarEstudioRecomendadoComando extends ComandoBase {
         }
 
         //Insertar las preguntas recomendadas en el nuevo estudio
-        ucab.dsw.servicio.PreguntasEstudioServicio servicio = new ucab.dsw.servicio.PreguntasEstudioServicio();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
 
         for (PreguntaEncuesta preguntaEncuesta: listaPreguntasEstudio){
 
             long idPR = preguntaEncuesta.get_id();
-            servicio.insertarPreguntasEstudioRecomendado(idPR, idE);
+            servicio.addPreguntaEstudio(idE, idPR);
         }
 
         dataObject = Json.createObjectBuilder()

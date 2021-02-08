@@ -24,7 +24,7 @@ public class ConsultarEstudioComando extends ComandoBase {
 
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
         Estudio estudio_consultado = daoEstudio.find(id, Estudio.class);
-        ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
 
         if(estudio_consultado.get_observaciones() != null) {
 

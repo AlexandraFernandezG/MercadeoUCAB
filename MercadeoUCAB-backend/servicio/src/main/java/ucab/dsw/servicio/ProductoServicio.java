@@ -5,16 +5,14 @@ import ucab.dsw.accesodatos.*;
 import ucab.dsw.dtos.ProductoDto;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
-import ucab.dsw.response.ProductoResponse;
+import ucab.dsw.Response.ProductoResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 

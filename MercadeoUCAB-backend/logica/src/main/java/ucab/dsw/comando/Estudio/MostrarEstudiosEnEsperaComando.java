@@ -21,7 +21,7 @@ public class MostrarEstudiosEnEsperaComando extends ComandoBase {
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
         List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
         List<Estudio> listaEstudiosEnEspera = new ArrayList<Estudio>();
-        ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
         JsonObject estudio;
 
         for (Estudio estudios : listaEstudios) {

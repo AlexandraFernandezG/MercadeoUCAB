@@ -3,7 +3,7 @@ package ucab.dsw.comando.Sugerencias;
 import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.comando.ComandoBase;
 import ucab.dsw.fabrica.Fabrica;
-import ucab.dsw.response.PreguntasResponse;
+import ucab.dsw.Response.PreguntasResponse;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;

@@ -3,7 +3,7 @@ package ucab.dsw.comando.Usuario;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.comando.ComandoBase;
 import ucab.dsw.fabrica.Fabrica;
-import ucab.dsw.response.UsuarioResponse;
+import ucab.dsw.Response.UsuarioResponse;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;

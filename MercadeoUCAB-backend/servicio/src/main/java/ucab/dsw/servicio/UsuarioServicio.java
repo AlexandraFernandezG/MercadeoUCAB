@@ -96,7 +96,7 @@ public class UsuarioServicio extends AplicacionBase {
      * arreglo de los usuarios encuestados y en tal caso obtener una excepción si aplica.
      */
     @GET
-    @Path("/listarEncuestados")
+    @Path("/allEncuestados")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarEncuestadosInformacion(){
 

@@ -28,7 +28,7 @@ public class ListarEstudiosRecomendadosComando extends ComandoBase {
         DaoSolicitudEstudio daoSolicitudEstudio = Fabrica.crear(DaoSolicitudEstudio.class);
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
         JsonObject estudioJson;
-        ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
         SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
 
         //Variables para poder hacer el macth

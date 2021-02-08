@@ -17,28 +17,6 @@ public class SugerenciasServicio extends AplicacionBase {
 
 
     /**
-     * Este método permite transformar la fecha de date a string debido a una exigencia del Json
-     * @author Emanuel Di Cristofaro
-     * @param fecha Parsear la fecha de date a string para poder enviar el Json.
-     */
-    public String devolverFecha(Date fecha){
-
-        String fecha_estudio = "";
-
-            if (fecha != null) {
-
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                fecha_estudio = sdf.format(fecha);
-
-            } else {
-
-                fecha_estudio = "";
-            }
-
-        return fecha_estudio;
-    }
-
-    /**
      * Este método permite obtener las preguntas recomendadas en base a un estudio seleccionado
      * @author Emanuel Di Cristofaro
      * @param id id del estudio seleccionado por el administrador o el analista para recomendar las preguntas.
