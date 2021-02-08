@@ -4,12 +4,11 @@ import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.accesodatos.DaoSolicitudEstudio;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.comando.ComandoBase;
-import ucab.dsw.entidades.Estudio;
 import ucab.dsw.entidades.Informacion;
 import ucab.dsw.entidades.SolicitudEstudio;
 import ucab.dsw.excepciones.PruebaExcepcion;
 import ucab.dsw.fabrica.Fabrica;
-import ucab.dsw.response.UsuarioResponse;
+import ucab.dsw.Response.UsuarioResponse;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -92,8 +91,7 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Lista de encuestados")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Encuestados", encuestados).build();
 
         return resultado;

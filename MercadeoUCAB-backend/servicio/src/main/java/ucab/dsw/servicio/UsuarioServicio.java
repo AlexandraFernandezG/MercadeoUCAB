@@ -2,8 +2,9 @@ package ucab.dsw.servicio;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.eclipse.persistence.exceptions.DatabaseException;
+import ucab.dsw.comando.Usuario.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
-import ucab.dsw.response.UsuarioResponse;
+import ucab.dsw.fabrica.Fabrica;
 import ucab.dsw.accesodatos.DaoRol;
 import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.directorioactivo.DirectorioActivo;
@@ -19,8 +20,6 @@ import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path( "/usuario" )
 @Produces( MediaType.APPLICATION_JSON )
@@ -38,12 +37,14 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarUsuarios() {
 
-        DaoUsuario daoUsuario = new DaoUsuario();
         JsonObject dataObject;
 
         try {
-            List<Usuario> listaUsuarios = daoUsuario.findAll(Usuario.class);
-            return Response.status(Response.Status.OK).entity(listaUsuarios).build();
+
+            ListarUsuariosComando comando = Fabrica.crear(ListarUsuariosComando.class);
+            comando.execute();
+
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -68,20 +69,45 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarAnalistas() {
 
-        DaoUsuario daoUsuario = new DaoUsuario();
         JsonObject dataObject;
 
         try {
 
-            List<Object[]> listaAnalistas = daoUsuario.listarAnalistas();
-            List<UsuarioResponse> listaAnalistaResponse = new ArrayList<>();
+            ListarAnalistasComando comando = Fabrica.crear(ListarAnalistasComando.class);
+            comando.execute();
 
-            for (Object[] ana: listaAnalistas){
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
-                listaAnalistaResponse.add(new UsuarioResponse((long)ana[0], (String)ana[1], (String)ana[2], (String)ana[3], (String)ana[4]));
-            }
+        } catch (Exception ex) {
 
-            return Response.status(Response.Status.OK).entity(listaAnalistaResponse).build();
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+    }
+
+    /**
+     * Este método permite obtener todos los encuestados.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de los usuarios encuestados y en tal caso obtener una excepción si aplica.
+     */
+    @GET
+    @Path("/allEncuestados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarEncuestadosInformacion(){
+
+        JsonObject dataObject;
+
+        try {
+
+            ListarEncuestadosComando comando = Fabrica.crear(ListarEncuestadosComando.class);
+            comando.execute();
+
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -106,19 +132,13 @@ public class UsuarioServicio extends AplicacionBase {
     public Response consultarUsuarioCorreo(@PathParam("email") String email) {
 
         JsonObject dataObject;
-        DaoUsuario daoUsuario = new DaoUsuario();
 
         try {
 
-            List<Object[]> usuarioCorreo = daoUsuario.usuarioCorreo(email);
-            List<UsuarioResponse> listaUsuarioDefinitiva = new ArrayList<>(usuarioCorreo.size());
+            ConsultarUsuarioCorreoComando comando = Fabrica.crearComandoCorreo(ConsultarUsuarioCorreoComando.class, email);
+            comando.execute();
 
-            for (Object[] us: usuarioCorreo){
-
-                listaUsuarioDefinitiva.add(new UsuarioResponse((long)us[0], (String)us[1], (String)us[2], (String)us[3], (String)us[4]));
-            }
-
-            return Response.status(Response.Status.OK).entity(listaUsuarioDefinitiva).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -146,20 +166,21 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     public Response consultarUsuario(@PathParam("id") long id) {
 
-        DaoUsuario daoUsuario = new DaoUsuario();
         JsonObject dataObject;
 
         try {
-            Usuario usuario_consultado = daoUsuario.find(id, Usuario.class);
 
-            return Response.status(Response.Status.OK).entity(usuario_consultado).build();
+            ConsultarUsuarioComando comando = Fabrica.crearComandoConId(ConsultarUsuarioComando.class, id);
+            comando.execute();
+
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el usuario: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 

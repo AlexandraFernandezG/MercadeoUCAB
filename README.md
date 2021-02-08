@@ -17,6 +17,5 @@ Dirigirse a la carpeta DSW_EmpresaB\MercadeoUCAB-frontend y ejecutar el siguient
 
 - Emanuel Di Cristofaro  
 - Alexandra Fernández 
-- Valentina Figueroa
 - Carlos Ortiz
 - Gregg Spinetti

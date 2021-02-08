@@ -22,7 +22,7 @@ public class MostrarEstudiosActivosComando extends ComandoBase {
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
         List<Estudio> listaEstudios = daoEstudio.findAll(Estudio.class);
         List<Estudio> listaEstudiosActivos = new ArrayList<Estudio>();
-        ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
         JsonObject estudio;
 
         for (Estudio estudios : listaEstudios) {
@@ -67,8 +67,7 @@ public class MostrarEstudiosActivosComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todos los estudios activos")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Estudios", estudios).build();
 
         return resultado;

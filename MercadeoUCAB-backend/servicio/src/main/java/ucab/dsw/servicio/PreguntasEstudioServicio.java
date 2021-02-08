@@ -8,14 +8,13 @@ import ucab.dsw.dtos.PreguntaEstudioDto;
 import ucab.dsw.entidades.Estudio;
 import ucab.dsw.entidades.PreguntaEncuesta;
 import ucab.dsw.entidades.PreguntaEstudio;
-import ucab.dsw.response.PreguntasResponse;
+import ucab.dsw.Response.PreguntasResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -24,36 +23,6 @@ import javax.ws.rs.core.MediaType;
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class PreguntasEstudioServicio extends AplicacionBase {
-
-    /**
-     * Este método permite insertar las preguntas al estudio sin dtos
-     * @author Emanuel Di Cristofaro
-     * @throws Exception Captura cualquier excepcion encontrada.
-     * @param idPR el id de la pregunta que se quiere insertar.
-     * @param idE el id del estudio que se le asignaran las preguntas.
-     */
-    public void insertarPreguntasEstudioRecomendado(long idPR, long idE){
-
-        try {
-
-            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-            PreguntaEstudio preguntaEstudio = new PreguntaEstudio();
-            DaoEstudio daoEstudio = new DaoEstudio();
-            DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-
-            preguntaEstudio.set_estatus("Activo");
-            Estudio estudio = daoEstudio.find(idE, Estudio.class);
-            preguntaEstudio.set_estudio(estudio);
-            PreguntaEncuesta preguntaEncuesta = daoPreguntaEncuesta.find(idPR, PreguntaEncuesta.class);
-            preguntaEstudio.set_preguntaEncuesta(preguntaEncuesta);
-            daoPreguntaEstudio.insert(preguntaEstudio);
-
-        } catch (Exception ex){
-
-            ex.getMessage();
-        }
-
-    }
 
     /**
      * Este método permite obtener todas las preguntas de un estudio.

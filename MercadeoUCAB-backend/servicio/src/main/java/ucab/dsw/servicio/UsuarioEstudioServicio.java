@@ -9,8 +9,8 @@ import ucab.dsw.entidades.Estudio;
 import ucab.dsw.entidades.UsuarioEstudio;
 import ucab.dsw.entidades.Usuario;
 import ucab.dsw.excepciones.PruebaExcepcion;
-import ucab.dsw.response.EstudiosResponse;
-import ucab.dsw.response.UsuarioResponse;
+import ucab.dsw.Response.EstudiosResponse;
+import ucab.dsw.Response.UsuarioResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

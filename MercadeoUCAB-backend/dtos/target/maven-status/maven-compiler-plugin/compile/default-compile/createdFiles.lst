@@ -2,9 +2,9 @@ ucab\dsw\dtos\MarcaDto.class
 ucab\dsw\dtos\OcupacionDto.class
 ucab\dsw\dtos\SolicitudEstudioLugarDto.class
 ucab\dsw\dtos\TipoDto.class
+ucab\dsw\dtos\UsuarioEstudioDto.class
 ucab\dsw\dtos\PreguntaEncuestaDto.class
 ucab\dsw\dtos\DtoBase.class
-ucab\dsw\dtos\HistoricoEstadoDto.class
 ucab\dsw\dtos\SubcategoriaDto.class
 ucab\dsw\dtos\CategoriaDto.class
 ucab\dsw\dtos\RolDto.class

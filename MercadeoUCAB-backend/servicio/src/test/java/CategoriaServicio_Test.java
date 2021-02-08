@@ -12,7 +12,6 @@ import ucab.dsw.servicio.CategoriaServicio;
 import javax.ws.rs.core.Response;
 
 public class CategoriaServicio_Test {
-
     /**
      * Prueba unitaria para verificar el funcionamiento del método ListarCategorias
      * @author Emanuel Di Cristofaro

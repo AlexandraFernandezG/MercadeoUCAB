@@ -45,8 +45,7 @@ public class MostrarCategoriasActivasComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todas las categorias activas")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Categorias", categorias).build();
 
         return resultado;

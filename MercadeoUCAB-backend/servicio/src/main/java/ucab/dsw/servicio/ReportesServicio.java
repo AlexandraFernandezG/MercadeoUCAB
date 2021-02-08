@@ -4,13 +4,8 @@ import ucab.dsw.comando.Reportes.ListarCantidadesPreguntasComando;
 import ucab.dsw.comando.Reportes.ListarPorcentajesGeneroComando;
 import ucab.dsw.comando.Reportes.ListarRespuestasAbiertasComando;
 import ucab.dsw.fabrica.Fabrica;
-import ucab.dsw.response.*;
-import ucab.dsw.accesodatos.*;
-import ucab.dsw.entidades.*;
 
-import java.util.*;
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -76,8 +71,8 @@ public class ReportesServicio extends AplicacionBase {
 
              dataObject = Json.createObjectBuilder()
                      .add("estado", "Error")
-                     .add("excepcion", "No se ha podido ejecutar el análisis " + ex.getMessage())
-                     .add("codigo", 400).build();
+                     .add("excepcion", ex.getMessage())
+                     .add("codigo", 401).build();
 
              return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -118,8 +113,8 @@ public class ReportesServicio extends AplicacionBase {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha podido ejecutar el análisis " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 

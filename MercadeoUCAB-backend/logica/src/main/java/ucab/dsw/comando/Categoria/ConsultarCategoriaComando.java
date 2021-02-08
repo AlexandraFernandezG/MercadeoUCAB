@@ -34,8 +34,6 @@ public class ConsultarCategoriaComando extends ComandoBase {
     public JsonObject getResult() {
 
         JsonObject resultado= Json.createObjectBuilder()
-                .add("estado",200)
-                .add("mensaje","Categoria encontrada")
                 .add("Categoria", categoriaObj).build();
 
         return resultado;

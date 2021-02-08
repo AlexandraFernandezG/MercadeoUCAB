@@ -38,8 +38,7 @@ public class ListarSubCategoriasComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todas las subcategorias listadas")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Subcategorias", subcategorias).build();
 
         return resultado;

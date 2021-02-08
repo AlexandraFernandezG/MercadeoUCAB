@@ -2,19 +2,22 @@ package ucab.dsw.servicio;
 
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
+import ucab.dsw.comando.Producto.AddProductoComando;
+import ucab.dsw.comando.Producto.ConsultarProductosClienteComando;
 import ucab.dsw.dtos.ProductoDto;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
-import ucab.dsw.response.ProductoResponse;
+import ucab.dsw.Response.ProductoResponse;
+import ucab.dsw.fabrica.Fabrica;
+import ucab.dsw.mappers.MapperProducto;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -66,20 +69,13 @@ public class ProductoServicio extends AplicacionBase{
     public Response consultarProductosCliente(@PathParam("id") long id){
 
         JsonObject dataObject;
-        DaoProducto daoProducto = new DaoProducto();
 
         try {
 
-            List<Object[]> listaProductos = daoProducto.listarProductosCliente(id);
+            ConsultarProductosClienteComando comando = Fabrica.crearComandoConId(ConsultarProductosClienteComando.class, id);
+            comando.execute();
 
-            List<ProductoResponse> listaProductosCliente = new ArrayList<>(listaProductos.size());
-
-            for (Object[] pc: listaProductos){
-
-                listaProductosCliente.add(new ProductoResponse((long)pc[0], (String)pc[1], (String)pc[2], (String)pc[3]));
-            }
-
-            return Response.status(Response.Status.OK).entity(listaProductosCliente).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
@@ -190,31 +186,17 @@ public class ProductoServicio extends AplicacionBase{
     @Path("/addProducto")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response addProducto(ProductoDto productoDto){
+    public Response addProducto(ProductoDto productoDto) throws Exception {
 
         JsonObject dataObject;
-        ProductoDto resultado = new ProductoDto();
 
         try {
 
-            DaoProducto daoProducto = new DaoProducto();
-            Producto producto = new Producto();
-            DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
-            DaoMarca daoMarca = new DaoMarca();
+            Producto producto = MapperProducto.mapDtoToEntityInsert(productoDto);
+            AddProductoComando comando = Fabrica.crearComandoConEntity(AddProductoComando.class, producto);
+            comando.execute();
 
-            producto.set_nombre(productoDto.getNombre());
-            producto.set_descripcion(productoDto.getDescripcion());
-            producto.set_estatus(productoDto.getEstatus());
-            Usuario usuario = new Usuario(productoDto.getUsuarioDto().getId());
-            Subcategoria subcategoria = daoSubcategoria.find(productoDto.getSubcategoriaDto().getId(),Subcategoria.class);
-            Marca marca = daoMarca.find(productoDto.getMarcaDto().getId(),Marca.class);
-            producto.set_usuario(usuario);
-            producto.set_subcategoria(subcategoria);
-            producto.set_marca(marca);
-            Producto resul = daoProducto.insert(producto);
-            resultado.setId(resul.get_id());
-
-            return Response.status(Response.Status.OK).entity(resultado).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -230,7 +212,7 @@ public class ProductoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -239,10 +221,40 @@ public class ProductoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+        } catch (IllegalAccessException ex) {
+
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 600).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 601).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InvocationTargetException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 602).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
         }
     }
 

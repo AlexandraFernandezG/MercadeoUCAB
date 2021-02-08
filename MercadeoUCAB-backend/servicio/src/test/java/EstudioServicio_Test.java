@@ -1,25 +1,15 @@
 import org.junit.*;
 import org.junit.jupiter.api.Assertions;
-import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
-import ucab.dsw.accesodatos.DaoUsuario;
 import ucab.dsw.dtos.EstudioDto;
 import ucab.dsw.dtos.SolicitudEstudioDto;
 import ucab.dsw.dtos.UsuarioDto;
-import ucab.dsw.entidades.Estudio;
-import ucab.dsw.entidades.PreguntaEncuesta;
-import ucab.dsw.entidades.Usuario;
-import ucab.dsw.response.PreguntasResponse;
-import ucab.dsw.response.UsuarioResponse;
 import ucab.dsw.servicio.EstudioServicio;
 
 import javax.ws.rs.core.Response;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class EstudioServicio_Test {
 

@@ -3,7 +3,7 @@ package ucab.dsw.comando.Sugerencias;
 import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.comando.ComandoBase;
 import ucab.dsw.fabrica.Fabrica;
-import ucab.dsw.response.PreguntasResponse;
+import ucab.dsw.Response.PreguntasResponse;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -51,8 +51,7 @@ public class ListarPreguntasEstudioRecomendadasComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Listado de preguntas recomendadas")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Preguntas", preguntas).build();
 
         return resultado;

@@ -21,7 +21,7 @@ public class ModificarEstadoEstudioComando extends ComandoBase {
     public void execute() throws Exception {
 
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
-        ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
 
         Estudio estudio_modificar = daoEstudio.find(id, Estudio.class);
 
@@ -34,14 +34,7 @@ public class ModificarEstadoEstudioComando extends ComandoBase {
 
         daoEstudio.update(estudio_modificar);
 
-        estudioObj = Json.createObjectBuilder().add("id",estudio_modificar.get_id())
-                .add("nombre", estudio_modificar.get_nombre())
-                .add("tipoInstrumento", estudio_modificar.get_tipoInstrumento())
-                .add("observaciones", estudio_modificar.get_observaciones())
-                .add("fechaInicio", servicio.devolverFecha(estudio_modificar.get_fechaInicio()))
-                .add("fechaFin", servicio.devolverFecha(estudio_modificar.get_fechaFin()))
-                .add("estado", estudio_modificar.get_estado())
-                .add("estatus", estudio_modificar.get_estatus()).build();
+        estudioObj = Json.createObjectBuilder().add("id",estudio_modificar.get_id()).build();
 
     }
 
@@ -51,7 +44,7 @@ public class ModificarEstadoEstudioComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Modificado el estado del estudio escogido")
-                .add("Estudio", estudioObj).build();
+                .add("Id del estuddio modificado", estudioObj).build();
 
         return resultado;
 
