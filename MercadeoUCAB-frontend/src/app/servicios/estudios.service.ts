@@ -38,7 +38,7 @@ export class EstudiosService {
   addEncuestadosEstudio(id: number, encuestados: Usuario3[]): Observable<any>{
     return this.http.post<any>(this.url + 'estudio/estudioEncuestados/' + id, JSON.stringify(encuestados) , this.httpOptions ).
     pipe(
-      tap((dataObject: any) => console.log(`added estudio w/ id=${dataObject.estado}`)),
+      tap((dataObject: any) => console.log(`added estudio w/ id=${dataObject}`)),
       catchError(this.handleError)
     );
   }

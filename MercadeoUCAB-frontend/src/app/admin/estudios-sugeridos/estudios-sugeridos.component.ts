@@ -52,6 +52,7 @@ export class EstudiosSugeridosComponent implements OnInit {
   cloneEstudio(idSugerido: number){
     this.servicePreguntas.getPreguntasEstudio(idSugerido).subscribe(
       dataPreguntas => {
+        console.log(dataPreguntas)
         for (var i=0; i < dataPreguntas.length; i++ ){
           this.preguntasEst = dataPreguntas[i];
           console.log(this.preguntasEst);
@@ -61,11 +62,12 @@ export class EstudiosSugeridosComponent implements OnInit {
           this.preguntasAgregadas.push(this.preguntasEst);
           console.log('agregar: ', this.preguntasAgregadas);
           localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntasAgregadas))
+          
         }
       }
     );
-    
-    //this.dialogRef.close();
+    localStorage.setItem('flagClone', '1')
+    this.dialogRef.close();
   }
 
 }

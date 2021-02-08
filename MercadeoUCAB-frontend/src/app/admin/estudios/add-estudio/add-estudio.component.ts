@@ -30,6 +30,8 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   analistas: Usuario3[];
   encuestados: Usuario3[];
   idEstudioCreado: number;
+  position: number;
+  flagClone: string
 
   displayedColumns: string[] = ['nombre', 'correo', 'acciones'];
   dataSource: MatTableDataSource<Usuario3>;
@@ -37,7 +39,7 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
 
   preguntas: Pregunta3[] = [];
-  displayedColumns2: string[] = ['descripcionPregunta', 'tipoPregunta','subcategoria'];
+  displayedColumns2: string[] = ['descripcionPregunta', 'tipoPregunta','subcategoria', 'acciones'];
   dataSource2: MatTableDataSource<Pregunta3>;
   @ViewChild(MatPaginator) paginator2: MatPaginator;
 
@@ -78,20 +80,33 @@ export class AddEstudioComponent implements OnInit, OnChanges {
 
     this.encuestadosService.getEncuestadosEstudio(JSON.parse(localStorage.getItem('solicitudId'))).subscribe( encuestadosData =>
       {
-
-        this.dataSource = new MatTableDataSource<Usuario3>(encuestadosData);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        localStorage.setItem('encuestados', JSON.stringify(encuestadosData))
+        
+        if(localStorage.getItem('flag') != '1'){
+          this.dataSource = new MatTableDataSource<Usuario3>(encuestadosData.Encuestados);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          console.log(encuestadosData.Encuestados)
+          localStorage.setItem('flag', '1')
+          localStorage.setItem('flagClone', '0')
+          localStorage.setItem('encuestados', JSON.stringify(encuestadosData))
+          console.log('if')
+        }else{
+          this.dataSource = new MatTableDataSource<Usuario3>(JSON.parse(localStorage.getItem('encuestados')));
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          console.log('else')
+        }
+        
       } 
     );
 
     this.dataSource2 = new MatTableDataSource<Pregunta3>(
       JSON.parse(localStorage.getItem('preguntasEst'))
     );
-    this.dataSource2.paginator = this.paginator;
+    this.dataSource2.paginator = this.paginator2;
     this.dataSource2.sort = this.sort;
-
+    
+    this.flagClone = localStorage.getItem('flagClone')
   }
 
   onSucess(message){
@@ -154,9 +169,21 @@ export class AddEstudioComponent implements OnInit, OnChanges {
         this.router.navigate(['/admin']);
         localStorage.setItem('encuestados', JSON.stringify([]));
         localStorage.setItem('preguntasEst', JSON.stringify([]));
+        localStorage.setItem('flag', '0');
+        localStorage.setItem('flagClone', '0')
       },3000);
     }
     
+  }
+
+  cancelar(){
+    setTimeout(() => {
+      this.router.navigate(['/admin']);
+      localStorage.setItem('encuestados', JSON.stringify([]));
+      localStorage.setItem('preguntasEst', JSON.stringify([]));
+      localStorage.setItem('flag', '0');
+      localStorage.setItem('flagClone', '0')
+    },1000);
   }
 
 
@@ -184,6 +211,26 @@ export class AddEstudioComponent implements OnInit, OnChanges {
       }
     );
     
+  }
+
+  deleteEncuestado(encuestado: Usuario3){
+    const encAgregados: Usuario3[] = JSON.parse(localStorage.getItem('encuestados'));
+    this.position = null;
+    console.log('antes:', encAgregados);
+    console.log(this.position = encAgregados.findIndex(function(encuestado){return encuestado}));
+    encAgregados.splice(encAgregados.findIndex(function(encuestado){return encuestado}),1)
+    console.log('traer: ', encAgregados);
+    localStorage.setItem('encuestados',  JSON.stringify (encAgregados))
+  }
+
+  deletePregunta(pregunta: Pregunta3){
+    const pregAgregadas: Usuario3[] = JSON.parse(localStorage.getItem('preguntasEst'));
+    this.position = null;
+    console.log('antes:', pregAgregadas);
+    console.log(this.position = pregAgregadas.findIndex(function(pregunta){return pregunta}));
+    pregAgregadas.splice(pregAgregadas.findIndex(function(pregunta){return pregunta}),1)
+    console.log('traer: ', pregAgregadas);
+    localStorage.setItem('preguntasEst',  JSON.stringify (pregAgregadas))
   }
 }
 
