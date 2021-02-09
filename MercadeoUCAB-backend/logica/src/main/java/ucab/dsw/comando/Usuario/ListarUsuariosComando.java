@@ -26,7 +26,7 @@ public class ListarUsuariosComando extends ComandoBase {
 
                 JsonObject usuario = Json.createObjectBuilder().add("id", obj.get_id())
                         .add("nombre", obj.get_nombre())
-                        .add("codigoRecuperacion", obj.get_token())
+                        .add("token", obj.get_token())
                         .add("correo", obj.get_correoelectronico())
                         .add("estatus", obj.get_estatus()).build();
 
@@ -36,7 +36,7 @@ public class ListarUsuariosComando extends ComandoBase {
 
                 JsonObject usuario = Json.createObjectBuilder().add("id", obj.get_id())
                         .add("nombre", obj.get_nombre())
-                        .add("codigoRecuperacion", "null")
+                        .add("token", "null")
                         .add("correo", obj.get_correoelectronico())
                         .add("estatus", obj.get_estatus()).build();
 

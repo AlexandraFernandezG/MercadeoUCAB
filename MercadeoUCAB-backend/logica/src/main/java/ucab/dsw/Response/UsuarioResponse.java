@@ -9,7 +9,7 @@ public class UsuarioResponse {
 
     private long id;
     private String nombre;
-    private String codigoRecuperacion;
+    private String token;
     private String correo;
     private String estatus;
 
@@ -20,7 +20,7 @@ public class UsuarioResponse {
     public UsuarioResponse(long id, String nombre, String codigoRecuperacion, String correo, String estatus) {
         this.id = id;
         this.nombre = nombre;
-        this.codigoRecuperacion = codigoRecuperacion;
+        this.token = codigoRecuperacion;
         this.correo = correo;
         this.estatus = estatus;
     }
@@ -41,12 +41,12 @@ public class UsuarioResponse {
         this.nombre = nombre;
     }
 
-    public String getCodigoRecuperacion() {
-        return codigoRecuperacion;
+    public String getToken() {
+        return token;
     }
 
-    public void setCodigoRecuperacion(String codigoRecuperacion) {
-        this.codigoRecuperacion = codigoRecuperacion;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getCorreo() {
