@@ -39,7 +39,7 @@ public class EliminarSubCategoriaComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Eliminada la subcategoria escogida")
-                .add("Categoria", subcategoriaObj).build();
+                .add("Subcategoria", subcategoriaObj).build();
 
         return resultado;
     }

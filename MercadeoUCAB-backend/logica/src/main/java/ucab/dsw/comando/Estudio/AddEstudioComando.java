@@ -58,7 +58,7 @@ public class AddEstudioComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Estudio creado exitosamente")
-                .add("id del estudio insertado", estudioObj).build();
+                .add("id", estudioObj).build();
 
         return resultado;
     }

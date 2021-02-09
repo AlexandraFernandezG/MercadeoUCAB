@@ -139,6 +139,6 @@ public class DetallesEncuestadosComando extends ComandoBase {
     public JsonObject getResult() {
 
         return dataObject = Json.createObjectBuilder()
-                .add("Lista de detalles", detalles).build();
+                .add("ListaDetalles", detalles).build();
     }
 }

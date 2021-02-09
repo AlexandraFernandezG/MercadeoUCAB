@@ -43,7 +43,7 @@ public class EliminarEstudioComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Eliminado el estudio escogido")
-                .add("Elemento eliminado", estudioObj).build();
+                .add("Eliminado", estudioObj).build();
 
         return resultado;
     }

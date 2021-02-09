@@ -47,7 +47,7 @@ public class ModificarEstudioComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Modificado el estudio escogido")
-                .add("Id del estudio modificado", estudioObj).build();
+                .add("id", estudioObj).build();
 
         return resultado;
     }
