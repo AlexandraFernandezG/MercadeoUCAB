@@ -51,6 +51,7 @@ export class EstudiosSugeridosComponent implements OnInit {
   }
 
   cloneEstudio(idSugerido: number){
+    console.log('est sug: ', idSugerido)
     this.servicePreguntas.getPreguntasEstudio(idSugerido).subscribe(
       dataPreguntas => {
         console.log(dataPreguntas)

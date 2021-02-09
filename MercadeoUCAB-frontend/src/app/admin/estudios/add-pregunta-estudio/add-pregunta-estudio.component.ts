@@ -7,6 +7,8 @@ import { Pregunta2, Pregunta3 } from 'src/app/modelos/pregunta';
 import { Subcategoria } from 'src/app/modelos/subcategoria';
 import { Usuario } from 'src/app/modelos/usuario';
 import { PreguntasService } from 'src/app/servicios/preguntas.service';
+import { PreguntasEstudioService } from 'src/app/servicios/preguntasestudios.service';
+import { SolicitudEstudiosService } from 'src/app/servicios/solicitud-estudios.service';
 import { SubcategoriasService } from 'src/app/servicios/subcategorias.service';
 import { PreguntaComponent } from '../../pregunta/pregunta.component';
 
@@ -22,8 +24,10 @@ export class AddPreguntaEstudioComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private service: PreguntasService,
+    private service2: PreguntasEstudioService,
     private serviceSubcategoria: SubcategoriasService,
     private preguntasService: PreguntasService,
+    private SolicitudService: SolicitudEstudiosService,
     public actRoute: ActivatedRoute,
     public dialogRef: MatDialogRef<PreguntaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Estudio2,
@@ -31,7 +35,6 @@ export class AddPreguntaEstudioComponent implements OnInit {
 
   preguntaForm = this.fb.group({
     descripcion: new FormControl( '', [ Validators.required, Validators.maxLength(200)]),
-    subcategoriaDto: new FormControl('', [Validators.required]),
     tipoPregunta: new FormControl('', [Validators.required]),
     respuestas: this.fb.array([
       this.addRespuesta()
@@ -57,9 +60,9 @@ export class AddPreguntaEstudioComponent implements OnInit {
     .subscribe(data => {this.preguntas = data;
     } );
     console.log(this.data)
-    this.serviceSubcategoria.getSubcategorias()
-    .subscribe(catego => {this.subcategorias = catego;
-    } );
+    // this.serviceSubcategoria.getSubcategorias()
+    // .subscribe(catego => {this.subcategorias = catego;
+    // } );
   }
 
   addRespuesta(){
@@ -84,6 +87,9 @@ export class AddPreguntaEstudioComponent implements OnInit {
   }
 
   addPreguntaEstudio(): void{
+    this.SolicitudService.getSolicitud(this.data.id).subscribe(
+      data => {localStorage.setItem('idSubCat', JSON.stringify(data._producto._id))}
+    )
     // let id = 1;
     // const estatus = 'Activo';
     // const usuarioDto = 1;
@@ -118,7 +124,7 @@ export class AddPreguntaEstudioComponent implements OnInit {
     tipoPregunta: this.preguntaForm.get('tipoPregunta').value,
     estatus,
     usuarioDto,
-    subcategoriaDto: this.preguntaForm.get('subcategoriaDto').value
+    subcategoriaDto: JSON.parse(localStorage.getItem('idSubCat')),
     } as Pregunta2).subscribe(
 
       response => {

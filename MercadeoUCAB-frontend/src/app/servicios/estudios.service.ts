@@ -30,7 +30,7 @@ export class EstudiosService {
     console.log(estudio)
     return this.http.post<Estudio2>(this.url + 'estudio/addEstudio/', JSON.stringify(estudio) ,  this.httpOptions).
     pipe(
-      tap((newEstudio: any) => console.log(`added estudio w/ id=${newEstudio.mensaje}`)),
+      tap((newEstudio: any) => console.log(`added estudio w/ id=${newEstudio.codigo}`)),
       catchError(this.handleError)
     );
   }

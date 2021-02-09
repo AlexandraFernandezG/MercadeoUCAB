@@ -11,107 +11,70 @@
 		<span class="fill-remaining-space"></span>
 	</mat-toolbar>
 </div>
-<h2>Datos Estudio:</h2>
-<div>
-	<h3>Nombre: {{this.datosEst.nombre}}</h3>
-</div>
-<div>
-	<h3>Edad Mínima: {{this.datosEst.edadMin}}</h3>
-	<h3>Edad Máxima: {{this.datosEst.edadMax}}</h3>
-	<h3>Genero: {{this.datosEst.genero}}</h3>
-	<h3>Producto: {{this.datosEst.producto}}</h3>
-</div>
-<h2>Analista Designado:</h2>
-<div>
-	<form novalidate [formGroup]="estudioForm" name="estudioForm" (ngSubmit)="addEstudio()"> 
+<div class="container">
+	<h2>Datos Estudio:</h2>
+	<div class="datosEstudio">
+		<h3>Nombre: {{this.datosEst.nombre}}</h3>
+		<h3>Edad Mínima: {{this.datosEst.edadMin}}</h3>
+		<h3>Edad Máxima: {{this.datosEst.edadMax}}</h3>
+		<h3>Genero: {{this.datosEst.genero}}</h3>
+		<h3>Producto: {{this.datosEst.producto}}</h3>
+	</div>
+	<h2>Encuestados:</h2>
+	<div>
+		<a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal0()">agregar encuestado
+			<i class="fas fa-plus-circle"></i>
+		</a>
+	</div>
+	<div class="mat-elevation-z8">
+		<table mat-table [dataSource]="dataSource" matSort>
+		  <ng-container matColumnDef="nombre">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+			<td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+		  </ng-container>
 
+		  <ng-container matColumnDef="correo">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+			<td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+		  </ng-container>
 
-		<div class="col1">
+		  <ng-container matColumnDef="acciones">
+			  <th class="accion-header" mat-header-cell *matHeaderCellDef> Acciones </th>
+			  <mat-cell *matCellDef="let row">
+				<button mat-icon-button (click)="deleteEncuestado(row)">
+					<mat-icon class="delete-icon mdl-js-button mdl-js-ripple-effect">
+						delete
+					</mat-icon>
+				</button>
+			  </mat-cell>
+		  </ng-container>	
+
+		  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
+		<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+	</div>
+	<h2>Preguntas:</h2>
+	<div>
+		<a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal1()">agregar pregunta<i
+			class="fas fa-plus-circle"></i></a>
+		<a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal2()">preguntas sugeridas<i
+			class="fas fa-plus-circle"></i></a>
+		<a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal3()" *ngIf="this.flagClone === '0'">utilizar estudio existente<i
+			class="fas fa-plus-circle"></i></a>
+	</div>
+	<div class="mat-elevation-z8">
+	    <table mat-table [dataSource]="dataSource2">
   
-		  <!-- <mat-form-field class="full-width" appearance="fill">
-			  <mat-label>Nombre</mat-label>
-			  <input formControlName="nombre"  matInput/>
-		  </mat-form-field>
-	  
-		  <mat-form-field class="full-width" appearance="fill">
-			<mat-label>Instrumento</mat-label>
-			<input formControlName="instrumento"  matInput/>
-		  </mat-form-field> -->
-  
-		   <mat-form-field appearance="fill">
-			  <mat-label>Estudio Abierto desde:</mat-label>
-			  <input matInput [matDatepicker]="picker1" formControlName="fechaInicio">
-			  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-			  <mat-datepicker #picker1></mat-datepicker>
-		  </mat-form-field> 
-	  <!--
-		  <mat-form-field appearance="fill">
-			  <mat-label>Estudio Abierto Hasta:</mat-label>
-			  <input matInput [matDatepicker]="picker2" formControlName="fechaFin">
-			  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-			  <mat-datepicker #picker2></mat-datepicker>
-		  </mat-form-field> -->
-		 
-		  <mat-form-field class="full-width" appearance="fill">
-			<mat-label>Analista</mat-label>
-			<mat-select formControlName="analista" atInput>
-			  <mat-option *ngFor="let analista of analistas" [value]="analista.id">
-				{{analista.nombre}}
-			  </mat-option>
-			</mat-select>
-		  </mat-form-field>
-  
-		</div>
-  	</form>
-</div>
-<h2>Encuestados:</h2>
-<div class="mat-elevation-z8">
-	<table mat-table [dataSource]="dataSource" matSort>
-	  <ng-container matColumnDef="nombre">
-		<th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-		<td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-	  </ng-container>
-
-	  <ng-container matColumnDef="correo">
-		<th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
-		<td mat-cell *matCellDef="let element"> {{element.correo}} </td>
-	  </ng-container>
-
-	  <ng-container matColumnDef="acciones">
-		  <th class="accion-header" mat-header-cell *matHeaderCellDef> Acciones </th>
-		  <mat-cell *matCellDef="let row">
-			<button mat-icon-button (click)="deleteEncuestado(row)">
-				<mat-icon class="delete-icon mdl-js-button mdl-js-ripple-effect">
-					delete
-				</mat-icon>
-			</button>
-		  </mat-cell>
-	  </ng-container>
-
-	  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-	  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-	</table>
-	<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
-</div>
-<h2>Preguntas:</h2>
-<div>
-	<a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal2()">preguntas sugeridas<i
-		class="fas fa-plus-circle"></i></a>
-	<a href="#" class="btn btn-info ml-2" data-toggle="modal" data-target="#Modal" (click)="openModal3()" *ngIf="this.flagClone === '0'">utilizar estudio existente<i
-		class="fas fa-plus-circle"></i></a>
-</div>
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource2">
-  
-      <ng-container matColumnDef="descripcionPregunta">
-        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
-        <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
-      </ng-container>
+	    	<ng-container matColumnDef="descripcionPregunta">
+   	    		<th mat-header-cell *matHeaderCellDef> Descripcion </th>
+ 	    		<td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+      		</ng-container>
       
-      <ng-container matColumnDef="tipoPregunta">
-        <th mat-header-cell *matHeaderCellDef> Tipo </th>
-        <td mat-cell *matCellDef="let element"> {{element.tipoPregunta}} </td>
-      </ng-container>
+    		<ng-container matColumnDef="tipoPregunta">
+        		<th mat-header-cell *matHeaderCellDef> Tipo </th>
+        		<td mat-cell *matCellDef="let element"> {{element.tipoPregunta}} </td>
+        	</ng-container>
 
       <ng-container matColumnDef="subcategoria">
         <th mat-header-cell *matHeaderCellDef> Subcategoria </th>
@@ -134,12 +97,57 @@
     </table>
 	<mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
 </div>
+<h2>Analista Designado:</h2>
 <div>
-	<simple-notifications></simple-notifications>
-	<button  mat-raised-button color="primary" (click)="addEstudio()" [disabled]="estudioForm.invalid">
-		Enviar
-	</button> 
-	<button  mat-raised-button color="warn" (click)="cancelar()">
-		Cancelar
-	</button> 
+	<form novalidate [formGroup]="estudioForm" name="estudioForm" > 
+
+
+		<div class="col1">
+  
+		  <!-- <mat-form-field class="full-width" appearance="fill">
+			  <mat-label>Nombre</mat-label>
+			  <input formControlName="nombre"  matInput/>
+		  </mat-form-field>
+	  
+		  <mat-form-field class="full-width" appearance="fill">
+			<mat-label>Instrumento</mat-label>
+			<input formControlName="instrumento"  matInput/>
+		  </mat-form-field> 
+  
+		   <mat-form-field appearance="fill">
+			  <mat-label>Estudio Abierto desde:</mat-label>
+			  <input matInput [matDatepicker]="picker1" formControlName="fechaInicio">
+			  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+			  <mat-datepicker #picker1></mat-datepicker>
+		  </mat-form-field> 
+	
+		  <mat-form-field appearance="fill">
+			  <mat-label>Estudio Abierto Hasta:</mat-label>
+			  <input matInput [matDatepicker]="picker2" formControlName="fechaFin">
+			  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+			  <mat-datepicker #picker2></mat-datepicker>
+		  </mat-form-field> -->
+		 
+		  <mat-form-field class="full-width" appearance="fill">
+			<mat-label>Analista</mat-label>
+			<mat-select formControlName="analista" atInput>
+			  <mat-option *ngFor="let analista of analistas" [value]="analista.id">
+				{{analista.nombre}}
+			  </mat-option>
+			</mat-select>
+		  </mat-form-field>
+  
+		</div>
+		<div>
+			<simple-notifications></simple-notifications>
+			<button  mat-raised-button color="primary" (click)="addEstudio()" [disabled]="estudioForm.invalid">
+				Enviar
+			</button> 
+			<button  mat-raised-button color="warn" (click)="cancelar()">
+				Cancelar
+			</button> 
+		</div>
+  	</form>
 </div>
+</div>
+

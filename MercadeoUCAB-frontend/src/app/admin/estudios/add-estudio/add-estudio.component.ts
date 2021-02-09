@@ -17,6 +17,8 @@ import { SolicitudesComponent } from '../../solicitudes/solicitudes.component';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { AddPreguntaEstudioComponent } from '../add-pregunta-estudio/add-pregunta-estudio.component';
+import { AddEncuestadoEstudioComponent } from '../add-encuestado-estudio/add-encuestado-estudio.component';
 
 @Component({
   selector: 'app-add-estudio',
@@ -36,8 +38,8 @@ export class AddEstudioComponent implements OnInit, OnChanges {
     nombre: JSON.parse(localStorage.getItem('solicitudDes')),
     edadMin: localStorage.getItem('solicitudMin'),
     edadMax: localStorage.getItem('solicitudMax'),
-    genero: localStorage.getItem('solicitudGen'),
-    producto: localStorage.getItem('solicitudProducto'),
+    genero: JSON.parse(localStorage.getItem('solicitudGen')),
+    producto: JSON.parse(localStorage.getItem('solicitudProducto')),
   }
 
   displayedColumns: string[] = ['nombre', 'correo', 'acciones'];
@@ -66,9 +68,9 @@ export class AddEstudioComponent implements OnInit, OnChanges {
 
       // nombre: new FormControl( '',[ Validators.maxLength(150)]),
       // instrumento: new FormControl('',[ Validators.maxLength(50)]),
-      fechaInicio: new FormControl('',[  Validators.maxLength(50)]),
+      // fechaInicio: new FormControl('',[  Validators.maxLength(50)]),
       // fechaFin: new FormControl('',[  Validators.maxLength(50)]),
-      analista: new FormControl('',[  Validators.maxLength(50)]),
+      analista: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
     })
   }
 
@@ -144,8 +146,8 @@ export class AddEstudioComponent implements OnInit, OnChanges {
       observaciones: null,
       fechaInicio: this.estudioForm.value.fechaInicio,
       fechaFin: null,
-      estatus: 'activo',
-      estado: 'en espera',
+      estatus: 'Activo',
+      estado: 'En espera',
       usuarioDto: this.estudioForm.value.analista,
       solicitudEstudioDto: JSON.parse(localStorage.getItem('solicitudId')),
     }
@@ -169,8 +171,8 @@ export class AddEstudioComponent implements OnInit, OnChanges {
           if (dataEstudio != undefined){
             console.log(JSON.stringify(this.estudio))
             this.onSucess('Estudio creado correctamente');
-            this.estudiosService.addEncuestadosEstudio(dataEstudio.id,this.encuestados).subscribe();
-            this.estudiosService.addPreguntasEstudio(dataEstudio.id,this.preguntas).subscribe();
+            this.estudiosService.addEncuestadosEstudio(dataEstudio.id.id,this.encuestados).subscribe();
+            this.estudiosService.addPreguntasEstudio(dataEstudio.id.id,this.preguntas).subscribe();
             
           }
         }
@@ -196,6 +198,23 @@ export class AddEstudioComponent implements OnInit, OnChanges {
     },1000);
   }
 
+  openModal0():void{
+    this.dialog.open(AddEncuestadoEstudioComponent,
+      {
+        data: {id: JSON.parse(localStorage.getItem('solicitudId'))}
+      }
+    );
+    
+  }
+
+  openModal1():void{
+    this.dialog.open(AddPreguntaEstudioComponent,
+      {
+        data: {id: JSON.parse(localStorage.getItem('solicitudId'))}
+      }
+    );
+    
+  }
 
   openModal2(){
     const dialogRef = this.dialog.open(PreguntasSugeridasComponent,

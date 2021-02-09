@@ -50,6 +50,10 @@ export class UsuariosService {
     return this.http.get<any>(this.url + 'usuario/allAnalistas');
   }
 
+  getEncuestados(){
+    return this.http.get<any>(this.url + 'usuario/allEncuestados');
+  }
+
   createUsuario(usuario: Usuario2): Observable<Usuario2>{
     console.log(usuario);
     return this.http.post<Usuario2>(this.url + 'usuario/addUsuario', JSON.stringify(usuario), this.httpOptions)
