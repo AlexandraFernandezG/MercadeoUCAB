@@ -31,7 +31,14 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   encuestados: Usuario3[];
   idEstudioCreado: number;
   position: number;
-  flagClone: string
+  flagClone: string;
+  datosEst: any ={
+    nombre: JSON.parse(localStorage.getItem('solicitudDes')),
+    edadMin: localStorage.getItem('solicitudMin'),
+    edadMax: localStorage.getItem('solicitudMax'),
+    genero: localStorage.getItem('solicitudGen'),
+    producto: localStorage.getItem('solicitudProducto'),
+  }
 
   displayedColumns: string[] = ['nombre', 'correo', 'acciones'];
   dataSource: MatTableDataSource<Usuario3>;
@@ -57,10 +64,10 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   ) { 
     this.estudioForm = this.fb.group({
 
-      nombre: new FormControl( '',[ Validators.maxLength(150)]),
-      instrumento: new FormControl('',[ Validators.maxLength(50)]),
+      // nombre: new FormControl( '',[ Validators.maxLength(150)]),
+      // instrumento: new FormControl('',[ Validators.maxLength(50)]),
       fechaInicio: new FormControl('',[  Validators.maxLength(50)]),
-      fechaFin: new FormControl('',[  Validators.maxLength(50)]),
+      // fechaFin: new FormControl('',[  Validators.maxLength(50)]),
       analista: new FormControl('',[  Validators.maxLength(50)]),
     })
   }
@@ -75,12 +82,13 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     // console.log(this.data.id);
     this.analistasService.getAnalistas().subscribe( analistasData =>
-      {this.analistas = analistasData} );
+      {this.analistas = analistasData.Usuarios} );
     console.log(this.analistas);
 
     this.encuestadosService.getEncuestadosEstudio(JSON.parse(localStorage.getItem('solicitudId'))).subscribe( encuestadosData =>
       {
-        
+
+        console.log(encuestadosData.Encuestados);
         if(localStorage.getItem('flag') != '1'){
           this.dataSource = new MatTableDataSource<Usuario3>(encuestadosData.Encuestados);
           this.dataSource.paginator = this.paginator;
@@ -88,7 +96,7 @@ export class AddEstudioComponent implements OnInit, OnChanges {
           console.log(encuestadosData.Encuestados)
           localStorage.setItem('flag', '1')
           localStorage.setItem('flagClone', '0')
-          localStorage.setItem('encuestados', JSON.stringify(encuestadosData))
+          localStorage.setItem('encuestados', JSON.stringify(encuestadosData.Encuestados))
           console.log('if')
         }else{
           this.dataSource = new MatTableDataSource<Usuario3>(JSON.parse(localStorage.getItem('encuestados')));
@@ -131,10 +139,11 @@ export class AddEstudioComponent implements OnInit, OnChanges {
     
     this.estudio = {
       id: 1,
-      nombre: this.estudioForm.value.nombre,
-      tipoInstrumento: this.estudioForm.value.instrumento,
+      nombre: JSON.parse(localStorage.getItem('solicitudDes')),
+      tipoInstrumento: 'Encuesta',
+      observaciones: null,
       fechaInicio: this.estudioForm.value.fechaInicio,
-      fechaFin: this.estudioForm.value.fechaFin,
+      fechaFin: null,
       estatus: 'activo',
       estado: 'en espera',
       usuarioDto: this.estudioForm.value.analista,
@@ -158,6 +167,7 @@ export class AddEstudioComponent implements OnInit, OnChanges {
       ).subscribe( dataEstudio => 
         {
           if (dataEstudio != undefined){
+            console.log(JSON.stringify(this.estudio))
             this.onSucess('Estudio creado correctamente');
             this.estudiosService.addEncuestadosEstudio(dataEstudio.id,this.encuestados).subscribe();
             this.estudiosService.addPreguntasEstudio(dataEstudio.id,this.preguntas).subscribe();

@@ -53,7 +53,8 @@ export class PreguntasSugeridasComponent implements OnInit {
     console.log('id:', this.data.idSolicitud);
     this.servicePreguntaEstudio.getPreguntasSugeridasEstudio(this.data.idSolicitud)
     .subscribe(data => {
-      this.dataSource = new MatTableDataSource<Pregunta3>(data);
+      console.log(data.Preguntas)
+      this.dataSource = new MatTableDataSource<Pregunta3>(data.Preguntas);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     } );

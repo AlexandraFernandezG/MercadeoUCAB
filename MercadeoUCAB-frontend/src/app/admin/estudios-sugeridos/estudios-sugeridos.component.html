@@ -1,72 +1,25 @@
 <div class="container">
 
-  <div class="row text-left mt-5">
-    <div class="col-5">
-      <div class="row">
-        <h2 id="Encabezado">Estudios Sugeridos</h2>
-        <a id="hand" class="btn"><i class="fas fa-retweet fa-lg" style="color:rgba(84, 157, 252, 0.993);"></i></a>
-      </div>
-    </div>
-
-
-    <!-- <div class="container" style="margin-bottom: 30px;">
-      <table id="dataTable" #dataTable class="table table-bordered table-hover" style="background-color: #FDF4E3;">
-        <thead class="thead" style="background-color:rgba(84, 157, 252, 0.993); color: #FFFF;">
-          <tr class="text-center">
-            <th scope="col">id</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Fecha Inicio</th>
-            <th scope="col">Fecha Fin</th>
-            <th scope="col">Estatus</th>
-            <th scope="col">Usuario</th>
-            <th scope="col">Crear estudio</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tbody class="tbody">
-            <tr *ngFor="let estudio of estudios">
-            <th class="text-center" scope="row">{{estudio._id}}</th>
-            <td class="text-center">{{estudio._nombre}}</td>
-            <td class="text-center">{{estudio._fechaInicio | date: "dd/MM/yyyy"}}</td>
-            <td class="text-center">{{estudio._fechaFin | date: "dd/MM/yyyy"}}</td>
-            <td class="text-center">{{estudio._estatus}}</td>  
-            <td class="text-center">{{estudio._usuario._nombre}}</td> 
-            <td>
-            <div align="center" class="col-sm-4">
-                   <button type="submit" class="btn btn-info" ><i class="fas fa-plus"></i></button>
-            </div>
-            </td>
-        </tbody>
-      </table>
-    </div> -->
+  <div class="pageHeader">
+    <mat-toolbar>
+      <span class="fill-remaining-space"></span>
+      <span>Estudios Sugeridos</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
   </div>
+
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
   
       
       <ng-container matColumnDef="nombre">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-        <td mat-cell *matCellDef="let element"> {{element._nombre}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
       </ng-container>
 
       <ng-container matColumnDef="fechaInicio">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Inicio </th>
-        <td mat-cell *matCellDef="let element"> {{element._fechaInicio | date: "dd/MM/yyyy"}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="fechaFin">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Fin </th>
-        <td mat-cell *matCellDef="let element"> {{element._fechaFin | date: "dd/MM/yyyy"}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="usuario">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-        <td mat-cell *matCellDef="let element"> {{element._usuario._nombre}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="estatus">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-        <td mat-cell *matCellDef="let element"> {{element._estatus}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.fechaInicio | date: "dd/MM/yyyy"}} </td>
       </ng-container>
 
       <ng-container matColumnDef="acciones">

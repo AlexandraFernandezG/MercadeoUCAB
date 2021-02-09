@@ -47,7 +47,7 @@ export class UsuariosService {
   }
 
   getAnalistas(){
-    return this.http.get<Usuario3[]>(this.url + 'usuario/allAnalistas');
+    return this.http.get<any>(this.url + 'usuario/allAnalistas');
   }
 
   createUsuario(usuario: Usuario2): Observable<Usuario2>{

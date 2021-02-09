@@ -27,9 +27,8 @@ export class EstudiosSugeridosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public est: Estudio2,
   ) { }
 
-  displayedColumns: string[] = ['nombre', 'fechaInicio', 'fechaFin', 'usuario',
-    'estatus', 'acciones'];
-  dataSource: MatTableDataSource<Estudio>;
+  displayedColumns: string[] = ['nombre', 'fechaInicio', 'acciones'];
+  dataSource: MatTableDataSource<Estudio2>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -40,13 +39,15 @@ export class EstudiosSugeridosComponent implements OnInit {
     //   this.dataSource.paginator = this.paginator;
     //   this.dataSource.sort = this.sort;
     // } );
-
-   this.service.getEstudiosSugeridos(JSON.parse(localStorage.getItem('solicitudId')))
-   .subscribe(data => {
-    this.dataSource = new MatTableDataSource<Estudio>(data);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-   } );
+    this.dialogRef.updateSize('650px', '450px')
+    this.service.getEstudiosSugeridos(JSON.parse(localStorage.getItem('solicitudId')))
+    .subscribe(data => 
+      {
+        this.dataSource = new MatTableDataSource<Estudio2>(data.Estudios);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    );
   }
 
   cloneEstudio(idSugerido: number){

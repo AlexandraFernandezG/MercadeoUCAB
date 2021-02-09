@@ -13,12 +13,22 @@
 </div>
 <h2>Datos Estudio:</h2>
 <div>
+	<h3>Nombre: {{this.datosEst.nombre}}</h3>
+</div>
+<div>
+	<h3>Edad Mínima: {{this.datosEst.edadMin}}</h3>
+	<h3>Edad Máxima: {{this.datosEst.edadMax}}</h3>
+	<h3>Genero: {{this.datosEst.genero}}</h3>
+	<h3>Producto: {{this.datosEst.producto}}</h3>
+</div>
+<h2>Analista Designado:</h2>
+<div>
 	<form novalidate [formGroup]="estudioForm" name="estudioForm" (ngSubmit)="addEstudio()"> 
 
 
 		<div class="col1">
   
-		  <mat-form-field class="full-width" appearance="fill">
+		  <!-- <mat-form-field class="full-width" appearance="fill">
 			  <mat-label>Nombre</mat-label>
 			  <input formControlName="nombre"  matInput/>
 		  </mat-form-field>
@@ -26,21 +36,21 @@
 		  <mat-form-field class="full-width" appearance="fill">
 			<mat-label>Instrumento</mat-label>
 			<input formControlName="instrumento"  matInput/>
-		  </mat-form-field>
+		  </mat-form-field> -->
   
-		  <mat-form-field appearance="fill">
+		   <mat-form-field appearance="fill">
 			  <mat-label>Estudio Abierto desde:</mat-label>
 			  <input matInput [matDatepicker]="picker1" formControlName="fechaInicio">
 			  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
 			  <mat-datepicker #picker1></mat-datepicker>
-		  </mat-form-field>
-	  
+		  </mat-form-field> 
+	  <!--
 		  <mat-form-field appearance="fill">
 			  <mat-label>Estudio Abierto Hasta:</mat-label>
 			  <input matInput [matDatepicker]="picker2" formControlName="fechaFin">
 			  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 			  <mat-datepicker #picker2></mat-datepicker>
-		  </mat-form-field>
+		  </mat-form-field> -->
 		 
 		  <mat-form-field class="full-width" appearance="fill">
 			<mat-label>Analista</mat-label>
@@ -54,7 +64,7 @@
 		</div>
   	</form>
 </div>
-<h2>Muestra:</h2>
+<h2>Encuestados:</h2>
 <div class="mat-elevation-z8">
 	<table mat-table [dataSource]="dataSource" matSort>
 	  <ng-container matColumnDef="nombre">
