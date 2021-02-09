@@ -273,6 +273,7 @@ public class UsuarioServicio extends AplicacionBase {
             usuario.set_token(usuarioDto.getToken());
             Usuario resul = dao.insert(usuario);
             resultado.setId(resul.get_id());
+            usuarioDto.setId(resul.get_id());
             ldap.addEntryToLdap(usuarioDto);
             return Response.status(Response.Status.OK).entity(resultado).build();
 
