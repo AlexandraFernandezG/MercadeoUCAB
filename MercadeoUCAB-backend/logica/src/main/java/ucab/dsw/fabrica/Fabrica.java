@@ -1,5 +1,6 @@
 package ucab.dsw.fabrica;
 
+import ucab.dsw.dtos.DtoBase;
 import ucab.dsw.entidades.EntidadBase;
 import ucab.dsw.Response.PreguntasResponse;
 import ucab.dsw.Response.UsuarioResponse;
@@ -91,5 +92,10 @@ public class Fabrica<T> {
     public static <T> T crearComandoIdString(Class<T> tipo, long id, String parameter) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         return (T) tipo.getConstructors()[0].newInstance(id, parameter);
     }
+
+    public static <T> T crearComandoConDto(Class<T> tipo, DtoBase parametro) throws  IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (T) tipo.getConstructors()[0].newInstance(parametro);
+    }
+
 
 }
