@@ -276,5 +276,43 @@ public class DirectorioActivo
         System.out.println(role);
         return role;
     }
+
+    public String getEntryId(UsuarioDto user)
+    {
+        String id="";
+        try
+        {
+            connectLDAP( _user, _password );
+            SearchControls searcCon = new SearchControls();
+            searcCon.setSearchScope( SearchControls.SUBTREE_SCOPE );
+            NamingEnumeration results =
+                    _ldapContext.search( _directory, String.format(_userDirectory, user.getCorreo()), searcCon );
+
+            if ( results != null )
+            {
+                while ( results.hasMore() )
+                {
+                    SearchResult res = ( SearchResult ) results.next();
+                    Attributes atbs = res.getAttributes();
+                    Attribute atb = atbs.get( "id" );
+                    id = ( String ) atb.get();
+                }
+            }
+            else
+            {
+                System.out.println( "fail" );
+                return null;
+            }
+        }
+        catch ( Exception exception )
+        {
+            exception.printStackTrace();
+        }
+        finally
+        {
+            disconnectLDAP();
+        }
+        return id;
+    }
 }
 
