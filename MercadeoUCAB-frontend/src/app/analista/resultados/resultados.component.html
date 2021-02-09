@@ -4,3 +4,14 @@
     <h1>{{preguntas[i]}}</h1>
      <canvas #myChart id="myChart"></canvas>
 </div>
+
+<h3>Conclusión del Estudio</h3>
+<form class="example-form" form [formGroup]="respuestaForm" novalidate>
+    <mat-form-field class="example-full-width">
+      <mat-label>Escriba aqui la conclusion del estudio para el cliente</mat-label>
+      <input formControlName="respuesta" matInput required/>
+      <textarea matInput placeholder="Este estudio se concluye que..."></textarea>
+    </mat-form-field>
+    <button type="submit"  mat-raised-button color="primary" (click)="enviarRespuesta()" [disabled]="respuestaForm.invalid" >Enviar Conclusión</button>
+  </form>
+  

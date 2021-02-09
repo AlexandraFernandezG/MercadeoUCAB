@@ -3,3 +3,13 @@
     width: 400px;
     height: 400px;
 }
+
+.example-form {
+    min-width: 150px;
+    max-width: 600px;
+    width: 120%;
+  }
+  
+  .example-full-width {
+    width: 120%;
+  }

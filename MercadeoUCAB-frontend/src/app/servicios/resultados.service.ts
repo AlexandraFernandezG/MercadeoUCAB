@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/internal/operators/catchError';
+import { tap } from 'rxjs/internal/operators/tap';
+import { pipe } from 'rxjs/internal/util/pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -18,18 +21,17 @@ export class ResultadosService {
       'Content-Type': 'application/json'
     })
   };
-  getResultados(id: number) {
-    return this.http.get(this.url + 'reportes/cantidadesPregunta/' + id).toPromise().then(data => {
-      console.log(data);
-
-      for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-      this.objeto.push(data[key]);
-        }
-      }
-    });
+  getResultados(id: number): Observable<any[]> {
+    return this.http.get<any>(this.url + 'reportes/cantidadesPregunta/' + id);
   }
 
+ /* sendResultados(respuesta: string, id: number):Observable<any> {
+    return this.http.post<any>(this.url + 'preguntasEncuesta/addPreguntaEncuesta'+id)
+    .pipe(
+      tap((newrespuesta: any) => console.log(`added respuesta w/ id=${newrespuesta.id}`)),
+      catchError(this.handleError)
+    );
+  }*/
 
   /// Error HandleError
   handleError(error): Observable<never> {
