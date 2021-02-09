@@ -1,5 +1,7 @@
 package ucab.dsw.servicio;
 
+import org.eclipse.persistence.exceptions.DatabaseException;
+import ucab.dsw.dtos.EstudioDto;
 import ucab.dsw.response.*;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.entidades.*;
@@ -8,6 +10,7 @@ import java.util.*;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -300,5 +303,52 @@ public class ReportesServicio extends AplicacionBase {
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
+    }
+
+    /**
+     * Este método permite agregar una observación al estudio
+     * @author Emanuel Di Cristofaro y Gregg Spinetti
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * con el objeto modificado y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se inserta un estudio duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     * @param estudioDto el objeto estudio que el sistema desea modificar.
+     * @param id el id del estudio a modificar
+     */
+    @PUT
+    @Path("/agregarObservacion/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    @Consumes( MediaType.APPLICATION_JSON )
+    public Response agregarObservacion(@PathParam("id") long id, EstudioDto estudioDto){
+
+        DaoEstudio daoEstudio = new DaoEstudio();
+        JsonObject dataObject;
+        try {
+            Estudio estudio_modificar = daoEstudio.find(id, Estudio.class);
+
+            estudio_modificar.set_observaciones(estudioDto.getObservaciones());
+
+            return Response.status(Response.Status.OK).entity(estudio_modificar).build();
+
+        } catch (PersistenceException | DatabaseException ex){
+
+            dataObject= Json.createObjectBuilder()
+                    .add("estado","Error")
+                    .add("mensaje", ex.getMessage())
+                    .add("codigo",500).build();
+
+            return Response.status(Response.Status.OK).entity(dataObject).build();
+
+        } catch (NullPointerException ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", "No se ha encontrado el estudio: " + ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        }
     }
 }
