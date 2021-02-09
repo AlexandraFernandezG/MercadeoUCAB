@@ -1,4 +1,5 @@
 ucab\dsw\entidades\NivelEconomico.class
+ucab\dsw\entidades\UsuarioEstudio.class
 ucab\dsw\entidades\MedioComunicacion.class
 ucab\dsw\entidades\Estudio.class
 ucab\dsw\entidades\PreguntaEstudio.class
@@ -19,7 +20,6 @@ ucab\dsw\entidades\Respuesta.class
 ucab\dsw\entidades\Categoria.class
 ucab\dsw\entidades\Presentacion.class
 ucab\dsw\entidades\Subcategoria.class
-ucab\dsw\entidades\HistoricoEstado.class
 ucab\dsw\entidades\Informacion.class
 ucab\dsw\entidades\Tipo.class
 ucab\dsw\entidades\Marca.class

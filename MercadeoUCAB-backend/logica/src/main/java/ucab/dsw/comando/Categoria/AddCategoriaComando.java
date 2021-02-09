@@ -51,7 +51,7 @@ public class AddCategoriaComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Categoria insertada")
-                .add("Id de la categoria", categoriaObj).build();
+                .add("id", categoriaObj).build();
 
         return resultado;
     }

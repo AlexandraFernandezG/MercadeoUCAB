@@ -1,6 +1,5 @@
 package ucab.dsw.servicio;
 
-import lombok.extern.java.Log;
 import ucab.dsw.comando.Sugerencias.*;
 import ucab.dsw.fabrica.Fabrica;
 
@@ -16,28 +15,6 @@ import javax.ws.rs.core.Response;
 @Consumes( MediaType.APPLICATION_JSON )
 public class SugerenciasServicio extends AplicacionBase {
 
-
-    /**
-     * Este método permite transformar la fecha de date a string debido a una exigencia del Json
-     * @author Emanuel Di Cristofaro
-     * @param fecha Parsear la fecha de date a string para poder enviar el Json.
-     */
-    public String devolverFecha(Date fecha){
-
-        String fecha_estudio = "";
-
-            if (fecha != null) {
-
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                fecha_estudio = sdf.format(fecha);
-
-            } else {
-
-                fecha_estudio = "";
-            }
-
-        return fecha_estudio;
-    }
 
     /**
      * Este método permite obtener las preguntas recomendadas en base a un estudio seleccionado
@@ -95,7 +72,7 @@ public class SugerenciasServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -169,7 +146,7 @@ public class SugerenciasServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 

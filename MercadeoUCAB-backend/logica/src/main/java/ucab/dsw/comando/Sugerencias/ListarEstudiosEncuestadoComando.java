@@ -3,10 +3,9 @@ package ucab.dsw.comando.Sugerencias;
 import ucab.dsw.accesodatos.DaoEstudio;
 import ucab.dsw.accesodatos.DaoInformacion;
 import ucab.dsw.comando.ComandoBase;
-import ucab.dsw.entidades.Estudio;
 import ucab.dsw.entidades.Informacion;
 import ucab.dsw.fabrica.Fabrica;
-import ucab.dsw.response.EstudiosResponse;
+import ucab.dsw.Response.EstudiosResponse;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -41,7 +40,7 @@ public class ListarEstudiosEncuestadoComando extends ComandoBase {
         int edad = 0;
 
         List<Informacion> listaInformacion = daoInformacion.findAll(Informacion.class);
-        ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
 
         for (Informacion informacion: listaInformacion) {
 
@@ -118,8 +117,7 @@ public class ListarEstudiosEncuestadoComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todos los estudios recomendados para el encuestado")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Estudios", estudios).build();
 
         return resultado;

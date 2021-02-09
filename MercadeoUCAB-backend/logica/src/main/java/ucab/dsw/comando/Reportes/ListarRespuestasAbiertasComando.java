@@ -3,7 +3,7 @@ package ucab.dsw.comando.Reportes;
 import ucab.dsw.accesodatos.DaoPreguntaEncuesta;
 import ucab.dsw.comando.ComandoBase;
 import ucab.dsw.fabrica.Fabrica;
-import ucab.dsw.response.RespuestasAbiertasResponse;
+import ucab.dsw.Response.RespuestasAbiertasResponse;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -48,8 +48,7 @@ public class ListarRespuestasAbiertasComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todas las respuestas abiertas")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Respuestas", respuestas).build();
 
         return resultado;

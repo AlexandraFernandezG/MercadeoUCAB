@@ -2,10 +2,14 @@ package ucab.dsw.servicio;
 
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
+import ucab.dsw.comando.SolicitudEstudio.AddSolicitudEstudioComando;
 import ucab.dsw.dtos.SolicitudEstudioDto;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.fabrica.Fabrica;
+import ucab.dsw.mappers.MapperSolicitudEstudio;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
@@ -79,8 +83,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -92,6 +96,45 @@ public class SolicitudEstudioServicio extends AplicacionBase{
                     .add("codigo", 400).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+        }
+    }
+
+    /**
+     * Este método permite obtener todas las solicitudes en espera para ser procesadas
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de solicitudes en espera y en tal caso obtener una excepcion si aplica.
+     */
+    @GET
+    @Path("/mostrarSolicitudesEnEspera")
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response mostrarSolicitudesEnEspera() {
+
+        DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
+        List<SolicitudEstudio> listaSolicitud = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
+        List<SolicitudEstudio> listaSolicitudesEnEspera = new ArrayList<SolicitudEstudio>();
+        JsonObject dataObject;
+
+        try {
+
+            for (SolicitudEstudio solicitudEstudio : listaSolicitud) {
+
+                if (solicitudEstudio.get_estado().equals("En espera")) {
+                    listaSolicitudesEnEspera.add(solicitudEstudio);
+                }
+            }
+
+            return Response.status(Response.Status.OK).entity(listaSolicitudesEnEspera).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
         }
     }
 
@@ -151,46 +194,15 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addSolicitudEstudio(SolicitudEstudioDto solicitudEstudioDto){
 
-        SolicitudEstudioDto resultado = new SolicitudEstudioDto();
         JsonObject dataObject;
 
         try {
 
-            DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
-            SolicitudEstudio solicitudEstudio = new SolicitudEstudio();
-            DaoNivelEconomico daoNivelEconomico = new DaoNivelEconomico();
-            DaoUsuario daoUsuario = new DaoUsuario();
-            DaoProducto daoProducto = new DaoProducto();
-            DaoOcupacion daoOcupacion = new DaoOcupacion();
-            DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
+            SolicitudEstudio solicitudEstudio = MapperSolicitudEstudio.mapDtoToEntityInsert(solicitudEstudioDto);
+            AddSolicitudEstudioComando comando = Fabrica.crearComandoConEntity(AddSolicitudEstudioComando.class, solicitudEstudio);
+            comando.execute();
 
-            solicitudEstudio.set_descripcion(solicitudEstudioDto.getDescripcion());
-            solicitudEstudio.set_genero(solicitudEstudioDto.getGenero());
-            solicitudEstudio.set_edadMaxima(solicitudEstudioDto.getEdadMaxima());
-            solicitudEstudio.set_edadMinima(solicitudEstudioDto.getEdadMinima());
-            solicitudEstudio.set_estadoCivil(solicitudEstudioDto.getEstadoCivil());
-            solicitudEstudio.set_disponibilidadEnLinea(solicitudEstudioDto.getDisponibilidadEnLinea());
-            solicitudEstudio.set_cantidadPersonas(solicitudEstudioDto.getCantidadPersonas());
-            solicitudEstudio.set_cantidadHijos(solicitudEstudioDto.getCantidadHijos());
-            solicitudEstudio.set_generoHijos(solicitudEstudioDto.getGeneroHijos());
-            solicitudEstudio.set_edadMinimaHijos(solicitudEstudioDto.getEdadMinimaHijos());
-            solicitudEstudio.set_edadMaximaHijos(solicitudEstudioDto.getEdadMaximaHijos());
-            solicitudEstudio.set_estado(solicitudEstudioDto.getEstado());
-            solicitudEstudio.set_estatus(solicitudEstudioDto.getEstatus());
-            NivelEconomico nivelEconomico = daoNivelEconomico.find(solicitudEstudioDto.getNivelEconomicoDto().getId(), NivelEconomico.class);
-            Usuario usuario = daoUsuario.find(solicitudEstudioDto.getUsuarioDto().getId(), Usuario.class);
-            Producto producto = daoProducto.find(solicitudEstudioDto.getProductoDto().getId(), Producto.class);
-            Ocupacion ocupacion = daoOcupacion.find(solicitudEstudioDto.getOcupacionDto().getId(), Ocupacion.class);
-            NivelAcademico nivelAcademico = daoNivelAcademico.find(solicitudEstudioDto.getNivelAcademicoDto().getId(), NivelAcademico.class);
-            solicitudEstudio.set_nivelEconomico(nivelEconomico);
-            solicitudEstudio.set_usuario(usuario);
-            solicitudEstudio.set_producto(producto);
-            solicitudEstudio.set_ocupacion(ocupacion);
-            solicitudEstudio.set_nivelAcademico(nivelAcademico);
-            SolicitudEstudio resul = daoSolicitudEstudio.insert(solicitudEstudio);
-            resultado.setId(resul.get_id());
-
-            return Response.status(Response.Status.OK).entity(resultado).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -205,8 +217,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -215,10 +227,50 @@ public class SolicitudEstudioServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+        } catch (IllegalAccessException ex) {
+
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 601).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 602).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InvocationTargetException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 603).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
@@ -288,8 +340,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -350,8 +402,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -397,7 +449,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la solicitud: " + ex.getMessage())
+                        .add("excepcion", ex.getMessage())
                         .add("codigo", 400).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();

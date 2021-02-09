@@ -1,10 +1,8 @@
 package ucab.dsw.comando.Estudio;
 
 import ucab.dsw.comando.ComandoBase;
-import ucab.dsw.dtos.EstudioDto;
-import ucab.dsw.dtos.PreguntaEncuestaDto;
-import ucab.dsw.dtos.PreguntaEstudioDto;
-import ucab.dsw.response.PreguntasResponse;
+import ucab.dsw.fabrica.Fabrica;
+import ucab.dsw.Response.PreguntasResponse;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -24,19 +22,11 @@ public class InsertarPreguntasEstudioComando extends ComandoBase {
     @Override
     public void execute() throws Exception {
 
-        ucab.dsw.servicio.PreguntasEstudioServicio servicio = new ucab.dsw.servicio.PreguntasEstudioServicio();
-
-        //Recorremos e insertamos las preguntas con el estudio
-        PreguntaEstudioDto preguntaEstudioDto = new PreguntaEstudioDto();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
 
         for(PreguntasResponse preguntaEncuesta: listaPreguntas){
 
-            preguntaEstudioDto.setEstatus("Activo");
-            EstudioDto idEstudio2 = new EstudioDto(id);
-            preguntaEstudioDto.setEstudioDto(idEstudio2);
-            PreguntaEncuestaDto idPregunta = new PreguntaEncuestaDto(preguntaEncuesta.getId());
-            preguntaEstudioDto.setPreguntaEncuestaDto(idPregunta);
-            servicio.addPreguntaEstudio(preguntaEstudioDto);
+            servicio.addPreguntaEstudio(id, preguntaEncuesta.getId());
         }
 
         dataObject = Json.createObjectBuilder()

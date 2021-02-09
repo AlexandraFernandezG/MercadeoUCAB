@@ -1,10 +1,8 @@
 package ucab.dsw.fabrica;
 
-import ucab.dsw.dtos.DtoBase;
 import ucab.dsw.entidades.EntidadBase;
-import ucab.dsw.response.PreguntasResponse;
-import ucab.dsw.response.RespuestasAbiertasResponse;
-import ucab.dsw.response.UsuarioResponse;
+import ucab.dsw.Response.PreguntasResponse;
+import ucab.dsw.Response.UsuarioResponse;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -80,6 +78,18 @@ public class Fabrica<T> {
      */
     public static <T> T crearComandoDosId(Class<T> tipo, long idER, long idE) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         return (T) tipo.getConstructors()[0].newInstance(idER, idE);
+    }
+
+    /**
+     * Este metodo particular para el funcionamiento de un metodo en usuario
+     * @author Emanuel Di Cristofaro
+     */
+    public static <T> T crearComandoCorreo(Class<T> tipo, String parameter) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (T) tipo.getConstructors()[0].newInstance(parameter);
+    }
+
+    public static <T> T crearComandoIdString(Class<T> tipo, long id, String parameter) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (T) tipo.getConstructors()[0].newInstance(id, parameter);
     }
 
 }

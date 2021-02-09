@@ -21,7 +21,7 @@ public class EliminarEstudioComando extends ComandoBase {
     public void execute() throws Exception {
 
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
-        ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
 
         Estudio estudio_eliminar = daoEstudio.find(id, Estudio.class);
         daoEstudio.delete(estudio_eliminar);
@@ -43,7 +43,7 @@ public class EliminarEstudioComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Eliminado el estudio escogido")
-                .add("Elemento eliminado", estudioObj).build();
+                .add("Eliminado", estudioObj).build();
 
         return resultado;
     }

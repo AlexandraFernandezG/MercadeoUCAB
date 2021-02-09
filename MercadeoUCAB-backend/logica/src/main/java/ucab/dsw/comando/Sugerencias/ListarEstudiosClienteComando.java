@@ -3,7 +3,7 @@ package ucab.dsw.comando.Sugerencias;
 import ucab.dsw.accesodatos.DaoEstudio;
 import ucab.dsw.comando.ComandoBase;
 import ucab.dsw.fabrica.Fabrica;
-import ucab.dsw.response.EstudiosResponse;
+import ucab.dsw.Response.EstudiosResponse;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -25,7 +25,7 @@ public class ListarEstudiosClienteComando extends ComandoBase {
     public void execute() throws Exception {
 
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
-        ucab.dsw.servicio.SugerenciasServicio servicio = new ucab.dsw.servicio.SugerenciasServicio();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
         JsonObject estudioJson;
 
         List<Object[]> listaEstudios = daoEstudio.listarEstudiosClientes(id);
@@ -72,8 +72,7 @@ public class ListarEstudiosClienteComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder().add("mensaje","Todos los estudios del cliente")
-                .add("estado",200)
+        JsonObject resultado = Json.createObjectBuilder()
                 .add("Estudios", estudios).build();
 
         return resultado;
