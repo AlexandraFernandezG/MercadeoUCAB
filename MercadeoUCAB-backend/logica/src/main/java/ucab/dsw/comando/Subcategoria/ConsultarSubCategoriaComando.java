@@ -35,7 +35,7 @@ public class ConsultarSubCategoriaComando extends ComandoBase {
     public JsonObject getResult() {
 
         JsonObject resultado= Json.createObjectBuilder()
-                .add("Categoria", subcategoriaObj).build();
+                .add("Subcategoria", subcategoriaObj).build();
 
         return resultado;
     }

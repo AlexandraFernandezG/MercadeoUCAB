@@ -11,7 +11,7 @@ public class Telefono extends EntidadBase{
     //Columnas
     
     @Column( name = "numero" )
-    private int _numero;
+    private String _numero;
     
     //Relaciones
     
@@ -30,11 +30,11 @@ public class Telefono extends EntidadBase{
         this._informacion = _informacion;
     }
 
-    public int get_numero() {
+    public String get_numero() {
         return _numero;
     }
 
-    public void set_numero(int _numero) {
+    public void set_numero(String _numero) {
         this._numero = _numero;
     }
 

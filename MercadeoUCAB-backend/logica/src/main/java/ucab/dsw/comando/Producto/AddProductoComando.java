@@ -53,7 +53,7 @@ public class AddProductoComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Producto registrado exitosamente")
-                .add("Id del producto", productoObj).build();
+                .add("id", productoObj).build();
 
         return resultado;
     }

@@ -46,7 +46,7 @@ public class AddTelefonoComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","Telefono insertado exitosamente")
-                .add("Id del telefono", telefonoObj).build();
+                .add("id", telefonoObj).build();
 
         return resultado;
     }

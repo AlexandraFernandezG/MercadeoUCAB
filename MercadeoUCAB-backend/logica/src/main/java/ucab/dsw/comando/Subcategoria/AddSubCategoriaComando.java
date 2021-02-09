@@ -47,7 +47,7 @@ public class AddSubCategoriaComando extends ComandoBase {
         JsonObject resultado= Json.createObjectBuilder()
                 .add("estado",200)
                 .add("mensaje","SubCategoria insertada")
-                .add("Id de la subcategoria", subcategoriaObj).build();
+                .add("id", subcategoriaObj).build();
 
         return resultado;
     }

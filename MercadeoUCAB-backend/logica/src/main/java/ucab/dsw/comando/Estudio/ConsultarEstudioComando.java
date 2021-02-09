@@ -55,7 +55,7 @@ public class ConsultarEstudioComando extends ComandoBase {
     public JsonObject getResult() {
 
         JsonObject resultado = Json.createObjectBuilder()
-                .add("Estudio consultado", estudioObj).build();
+                .add("EstudioConsultado", estudioObj).build();
 
         return resultado;
     }
