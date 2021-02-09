@@ -3,7 +3,7 @@ package ucab.dsw.dtos;
 public class UsuarioDto extends DtoBase{
     private String _nombreUsuario;
     private String _correo;
-    private String _codigoRecuperacion;
+    private String _token;
     private RolDto _rol;
     private String _contrasena;
 
@@ -23,12 +23,12 @@ public class UsuarioDto extends DtoBase{
         this._rol = _rol;
     }
 
-    public String getCodigoRecuperacion() {
-        return _codigoRecuperacion;
+    public String getToken() {
+        return _token;
     }
 
-    public void setCodigoRecuperacion(String _codigoRecuperacion) {
-        this._codigoRecuperacion = _codigoRecuperacion;
+    public void setToken(String _token) {
+        this._token = _token;
     }
 
     public String getCorreo() {

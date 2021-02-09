@@ -77,6 +77,7 @@ public class DirectorioActivo
             entry.put( new BasicAttribute( "userPassword", user.getContrasena()) );
             entry.put( new BasicAttribute( "pwdLastSuccess", format.format( new Date() ) + "Z" ) );
             entry.put( new BasicAttribute( "description", user.getNombreRol()));
+            entry.put( new BasicAttribute( "id", user.getId()) );
             _ldapContext.createSubcontext( String.format( _userDirectory + "," + _directory, user.getCorreo()), entry );
 
         }

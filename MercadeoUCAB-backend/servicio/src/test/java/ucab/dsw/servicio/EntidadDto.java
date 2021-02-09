@@ -61,7 +61,7 @@ public class EntidadDto {
 			usuarioDto.setId(usuario.get_id());
 			usuarioDto.setNombreUsuario(usuario.get_nombre());
 			usuarioDto.setCorreo(usuario.get_correoelectronico());
-			usuarioDto.setCodigoRecuperacion(usuario.get_codigoRecuperacion());
+			usuarioDto.setToken(usuario.get_token());
 			usuarioDto.setEstatus(usuario.get_estatus());
 //			usuarioDto.setContrasena();
 			usuarioDto.setRol(this.getRolDto(usuario.get_rol().get_id()));

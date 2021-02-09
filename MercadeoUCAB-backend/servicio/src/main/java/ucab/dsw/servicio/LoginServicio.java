@@ -33,7 +33,7 @@ public class LoginServicio extends AplicacionBase {
             if(resultado==1){
 
                 Jwt jwt=new Jwt();
-                token= jwt.generarToken(usuarioDto);
+                token= jwt.generarToken(usuarioDto.getId());
                 data= Json.createObjectBuilder()
                         .add("estado","success")
                         .add("codigo",200)

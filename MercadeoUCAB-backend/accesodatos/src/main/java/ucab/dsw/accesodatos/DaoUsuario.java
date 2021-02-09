@@ -42,7 +42,7 @@ public class DaoUsuario extends Dao<Usuario>
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
-        String sqlQuery = "SELECT DISTINCT u._id, u._nombre, u._codigoRecuperacion, u._correoelectronico, u._estatus " +
+        String sqlQuery = "SELECT DISTINCT u._id, u._nombre, u._token, u._correoelectronico, u._estatus " +
                 "FROM Usuario as u, Rol as r " +
                 "WHERE u._rol._id = r._id and r._nombre = 'Analista'";
 
@@ -60,7 +60,7 @@ public class DaoUsuario extends Dao<Usuario>
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
-        SQL = "SELECT u._id as idUsuario, u._nombre as nombre, u._codigoRecuperacion as codigoRecuperacion, u._correoelectronico as correo, u._estatus as estatus " +
+        SQL = "SELECT u._id as idUsuario, u._nombre as nombre, u._token as codigoRecuperacion, u._correoelectronico as correo, u._estatus as estatus " +
                 "FROM Usuario as u " +
                 "WHERE u._correoelectronico = :email";
 
@@ -77,7 +77,7 @@ public class DaoUsuario extends Dao<Usuario>
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
-        String sqlQuery = "SELECT DISTINCT u._id, u._nombre, u._codigoRecuperacion, u._correoelectronico, u._estatus " +
+        String sqlQuery = "SELECT DISTINCT u._id, u._nombre, u._token, u._correoelectronico, u._estatus " +
                 "FROM Usuario as u, Rol as r " +
                 "WHERE u._rol._id = r._id and r._nombre = 'Encuestado'";
 

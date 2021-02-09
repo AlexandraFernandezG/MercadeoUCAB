@@ -40,7 +40,7 @@ public class DaoUsuarioEstudio extends Dao<UsuarioEstudio>{
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
-        String sqlQuery = "SELECT DISTINCT u._id, u._nombre, u._codigoRecuperacion, u._correoelectronico, u._estatus " +
+        String sqlQuery = "SELECT DISTINCT u._id, u._nombre, u._token, u._correoelectronico, u._estatus " +
                 "FROM Usuario as u, Estudio as e, UsuarioEstudio as ue " +
                 "WHERE u._id = ue._usuario._id and ue._estudio._id = e._id and e._id = :id";
 

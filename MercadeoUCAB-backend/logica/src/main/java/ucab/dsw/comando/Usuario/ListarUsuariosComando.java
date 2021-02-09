@@ -22,11 +22,11 @@ public class ListarUsuariosComando extends ComandoBase {
 
         for(Usuario obj: listaUsuarios){
 
-            if(obj.get_codigoRecuperacion() != null) {
+            if(obj.get_token() != null) {
 
                 JsonObject usuario = Json.createObjectBuilder().add("id", obj.get_id())
                         .add("nombre", obj.get_nombre())
-                        .add("codigoRecuperacion", obj.get_codigoRecuperacion())
+                        .add("codigoRecuperacion", obj.get_token())
                         .add("correo", obj.get_correoelectronico())
                         .add("estatus", obj.get_estatus()).build();
 

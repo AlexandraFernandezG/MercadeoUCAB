@@ -270,7 +270,7 @@ public class UsuarioServicio extends AplicacionBase {
             rolDto.setEstatus(rol.get_estatus());
             usuarioDto.setRol(rolDto);
             usuario.set_rol(rol);
-            usuario.set_codigoRecuperacion(usuarioDto.getCodigoRecuperacion());
+            usuario.set_token(usuarioDto.getToken());
             Usuario resul = dao.insert(usuario);
             resultado.setId(resul.get_id());
             ldap.addEntryToLdap(usuarioDto);
