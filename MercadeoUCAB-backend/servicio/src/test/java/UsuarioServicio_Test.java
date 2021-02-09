@@ -22,7 +22,6 @@ public class UsuarioServicio_Test {
             usuarioDto.setCorreo("greggspinetti@gmail.com");
             usuarioDto.setEstatus("Activo");
             usuarioDto.setContrasena("hola123");
-            // Recuerden que deben ver los id de los registros en la BD
             RolDto rolDto = new RolDto(1);
             usuarioDto.setRol(rolDto);
             usuarioDto.setToken(null);

@@ -69,15 +69,17 @@ public class DirectorioActivo
             Attribute oc = new BasicAttribute( "objectClass" );
             oc.add( "top" );
             oc.add( "person" );
+            oc.add( "organizationalPerson" );
+            oc.add( "inetOrgPerson" );
             SimpleDateFormat format = new SimpleDateFormat( "yyyyMMddHHmm" );
             BasicAttributes entry = new BasicAttributes();
             entry.put( oc );
             entry.put( new BasicAttribute( "cn", user.getCorreo()) );
             entry.put( new BasicAttribute( "sn", user.getNombreUsuario() ) );
+            entry.put( new BasicAttribute( "uid", String.valueOf(user.getId()) ) );
             entry.put( new BasicAttribute( "userPassword", user.getContrasena()) );
             entry.put( new BasicAttribute( "pwdLastSuccess", format.format( new Date() ) + "Z" ) );
             entry.put( new BasicAttribute( "description", user.getNombreRol()));
-            entry.put( new BasicAttribute( "id", user.getId()) );
             _ldapContext.createSubcontext( String.format( _userDirectory + "," + _directory, user.getCorreo()), entry );
 
         }
@@ -294,7 +296,7 @@ public class DirectorioActivo
                 {
                     SearchResult res = ( SearchResult ) results.next();
                     Attributes atbs = res.getAttributes();
-                    Attribute atb = atbs.get( "id" );
+                    Attribute atb = atbs.get( "uid" );
                     id = ( String ) atb.get();
                 }
             }
