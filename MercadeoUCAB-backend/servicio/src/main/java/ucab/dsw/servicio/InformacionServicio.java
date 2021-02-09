@@ -2,10 +2,13 @@ package ucab.dsw.servicio;
 
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
+import ucab.dsw.comando.Informacion.AddInformacionComando;
 import ucab.dsw.dtos.InformacionDto;
 import ucab.dsw.dtos.LugarDto;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
+import ucab.dsw.fabrica.Fabrica;
+import ucab.dsw.mappers.MapperInformacion;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -13,6 +16,7 @@ import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,52 +149,15 @@ public class InformacionServicio extends AplicacionBase {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addInformacion(InformacionDto informacionDto) {
 
-        InformacionDto resultado = new InformacionDto();
         JsonObject dataObject;
 
         try {
 
-            DaoInformacion daoInformacion = new DaoInformacion();
-            Informacion informacion = new Informacion();
-            DaoUsuario daoUsuario = new DaoUsuario();
-            DaoOcupacion daoOcupacion = new DaoOcupacion();
-            DaoNivelEconomico daoNivelEconomico = new DaoNivelEconomico();
-            DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
-            DaoLugar daoLugar = new DaoLugar();
+            Informacion informacion = MapperInformacion.mapDtoToEntityInsert(informacionDto);
+            AddInformacionComando comando = Fabrica.crearComandoConEntity(AddInformacionComando.class, informacion);
+            comando.execute();
 
-            informacion.set_cedula(informacionDto.getCedula());
-            informacion.set_primerNombre(informacionDto.getPrimerNombre());
-            informacion.set_segundoNombre(informacionDto.getSegundoNombre());
-            informacion.set_primerApellido(informacionDto.getPrimerApellido());
-            informacion.set_segundoApellido(informacionDto.getSegundoApellido());
-            informacion.set_genero(informacionDto.getGenero());
-            informacion.set_fechaNacimiento(informacionDto.getFechaNacimiento());
-            informacion.set_estadoCivil(informacionDto.getEstadoCivil());
-            informacion.set_disponibilidadEnLinea(informacionDto.getDisponibilidadEnLinea());
-            informacion.set_cantidadPersonas(informacionDto.getCantidadPersonas());
-            informacion.set_estatus(informacionDto.getEstatus());
-
-            //FKS
-
-            Lugar lugar = daoLugar.find(informacionDto.getLugarDto().getId(), Lugar.class);
-            informacion.set_lugar(lugar);
-
-            NivelEconomico nivelEconomico = daoNivelEconomico.find(informacionDto.getNivelEconomicoDto().getId(), NivelEconomico.class);
-            informacion.set_nivelEconomico(nivelEconomico);
-
-            NivelAcademico nivelAcademico = daoNivelAcademico.find(informacionDto.getNivelAcademicoDto().getId(), NivelAcademico.class);
-            informacion.set_nivelAcademico(nivelAcademico);
-
-            Ocupacion ocupacion = daoOcupacion.find(informacionDto.getOcupacionDto().getId(), Ocupacion.class);
-            informacion.set_ocupacion(ocupacion);
-
-            Usuario usuario = daoUsuario.find(informacionDto.getUsuarioDto().getId(), Usuario.class);
-            informacion.set_usuario(usuario);
-
-            Informacion resul = daoInformacion.insert(informacion);
-            resultado.setId(resul.get_id());
-
-            return Response.status(Response.Status.OK).entity(resultado).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -205,8 +172,8 @@ public class InformacionServicio extends AplicacionBase {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha insertado la información: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -215,10 +182,50 @@ public class InformacionServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
+        } catch (IllegalAccessException ex) {
+
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 601).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InstantiationException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 602).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (InvocationTargetException ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 603).build();
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
     }
