@@ -24,7 +24,6 @@ public class UsuarioServicio_Test {
             usuarioDto.setContrasena("hola123");
             RolDto rolDto = new RolDto(1);
             usuarioDto.setRol(rolDto);
-            usuarioDto.setToken(null);
             Response resultado = servicio.addUsuario(usuarioDto);
             Assert.assertEquals(resultado.getStatus(), Response.Status.OK.getStatusCode());
 

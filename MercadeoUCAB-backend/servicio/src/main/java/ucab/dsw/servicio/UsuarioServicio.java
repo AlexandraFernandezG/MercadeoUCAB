@@ -280,7 +280,7 @@ public class UsuarioServicio extends AplicacionBase {
         } catch (PersistenceException | DatabaseException ex){
 
             dataObject= Json.createObjectBuilder()
-                    .add("estado","error")
+                    .add("estado","Error")
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
@@ -341,6 +341,7 @@ public class UsuarioServicio extends AplicacionBase {
             usuario_modificar.set_nombre(usuarioDto.getNombreUsuario());
             Rol rol = new Rol(usuarioDto.getRol().getId());
             usuario_modificar.set_rol(rol);
+            usuario_modificar.set_token(usuarioDto.getToken());
             daoUsuario.update(usuario_modificar);
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.updateEntry(usuarioDto);

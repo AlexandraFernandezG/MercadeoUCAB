@@ -9,10 +9,7 @@ public class LoginServicio_Test {
     public void loginTest(){
         UsuarioDto usuarioDto = new UsuarioDto();
         usuarioDto.setCorreo( "greggspinetti@gmail.com" );
-        usuarioDto.setContrasena( "otraclave" );
-        usuarioDto.setEstatus("Activo");
-        RolDto rol = new RolDto();
-        rol.setNombre("Administrador");
+        usuarioDto.setContrasena( "hola123");
         LoginServicio login = new LoginServicio();
         login.login(usuarioDto);
     }
