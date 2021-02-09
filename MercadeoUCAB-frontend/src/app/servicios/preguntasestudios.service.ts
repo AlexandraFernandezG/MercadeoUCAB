@@ -35,7 +35,7 @@ export class PreguntasEstudioService {
 
   getPreguntasSugeridasEstudio(id:number){
     console.log('sugerencias');
-    return this.http.get<Pregunta3[]>(this.url + 'sugerencias/preguntasEstudio/' +  id);
+    return this.http.get<any>(this.url + 'sugerencias/preguntasEstudio/' +  id);
   }
 
   createPreguntaEstudio(preguntaEstudio: PreguntaEstudio2): Observable<PreguntaEstudio2>{

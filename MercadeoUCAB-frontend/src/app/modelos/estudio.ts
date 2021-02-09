@@ -16,6 +16,7 @@ export class Estudio2 {
     id: number;
     nombre: string;
     tipoInstrumento: string;
+    observaciones: string;
     fechaInicio: Date;
     fechaFin: Date;
     estatus: string;
