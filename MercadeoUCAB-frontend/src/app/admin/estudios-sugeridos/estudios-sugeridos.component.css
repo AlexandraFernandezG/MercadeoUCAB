@@ -6,3 +6,9 @@ table {
     width: 80%;
     margin: 20px auto;
 }
+div.pageHeader{
+    margin: 0px 40px;
+}
+.fill-remaining-space{
+    flex: 1 1 auto;
+}

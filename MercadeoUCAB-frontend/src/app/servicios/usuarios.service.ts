@@ -47,7 +47,11 @@ export class UsuariosService {
   }
 
   getAnalistas(){
-    return this.http.get<Usuario3[]>(this.url + 'usuario/allAnalistas');
+    return this.http.get<any>(this.url + 'usuario/allAnalistas');
+  }
+
+  getEncuestados(){
+    return this.http.get<any>(this.url + 'usuario/allEncuestados');
   }
 
   createUsuario(usuario: Usuario2): Observable<Usuario2>{
@@ -68,11 +72,11 @@ export class UsuariosService {
     );
   }
 
-  getEncuestadosEstudio(id: number): Observable<Usuario3[]>{
+  getEncuestadosEstudio(id: number): Observable<any>{
     console.log(id);
-    return this.http.get<Usuario3[]>(this.url + 'estudio/solicitudEncuestados/' + id)
+    return this.http.get<any>(this.url + 'estudio/solicitudEncuestados/' + id)
     .pipe(
-      tap(_ => console.log(`fetched usuario id=${id}`)),
+      tap((dataObject: any)=> console.log(`fetched usuario encuestados=${dataObject.mensaje}`)),
       catchError(this.handleError)
     );
   }

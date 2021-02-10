@@ -61,11 +61,11 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
 
         for(UsuarioResponse obj: listaEncuestadosSolicitud){
 
-            if(obj.getCodigoRecuperacion() != null) {
+            if(obj.getToken() != null) {
 
                 usuario = Json.createObjectBuilder().add("id", obj.getId())
                         .add("nombre", obj.getNombre())
-                        .add("codigoRecuperacion", obj.getCodigoRecuperacion())
+                        .add("token", obj.getToken())
                         .add("correo", obj.getCorreo())
                         .add("estatus", obj.getEstatus()).build();
 
@@ -76,7 +76,7 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
 
                 usuario = Json.createObjectBuilder().add("id", obj.getId())
                         .add("nombre", obj.getNombre())
-                        .add("codigoRecuperacion", "")
+                        .add("token", "")
                         .add("correo", obj.getCorreo())
                         .add("estatus", obj.getEstatus()).build();
 

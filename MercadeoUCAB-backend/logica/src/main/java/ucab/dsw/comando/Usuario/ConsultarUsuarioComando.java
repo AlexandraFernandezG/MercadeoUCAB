@@ -23,11 +23,11 @@ public class ConsultarUsuarioComando extends ComandoBase {
         DaoUsuario daoUsuario = Fabrica.crear(DaoUsuario.class);
         Usuario usuario_consultado = daoUsuario.find(id, Usuario.class);
 
-        if(usuario_consultado.get_codigoRecuperacion() != null) {
+        if(usuario_consultado.get_token() != null) {
 
             usuarioObj = Json.createObjectBuilder().add("id", usuario_consultado.get_id())
                     .add("nombre", usuario_consultado.get_nombre())
-                    .add("codigoRecuperacion", usuario_consultado.get_codigoRecuperacion())
+                    .add("token", usuario_consultado.get_token())
                     .add("correo", usuario_consultado.get_correoelectronico())
                     .add("estatus", usuario_consultado.get_estatus()).build();
 
@@ -35,7 +35,7 @@ public class ConsultarUsuarioComando extends ComandoBase {
 
             usuarioObj = Json.createObjectBuilder().add("id", usuario_consultado.get_id())
                     .add("nombre", usuario_consultado.get_nombre())
-                    .add("codigoRecuperacion", "null")
+                    .add("token", "null")
                     .add("correo", usuario_consultado.get_correoelectronico())
                     .add("estatus", usuario_consultado.get_estatus()).build();
 

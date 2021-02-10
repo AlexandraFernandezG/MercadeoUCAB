@@ -2,19 +2,20 @@ import org.junit.Test;
 import ucab.dsw.directorioactivo.DirectorioActivo;
 import ucab.dsw.dtos.RolDto;
 import ucab.dsw.dtos.UsuarioDto;
+import ucab.dsw.excepciones.PruebaExcepcion;
 
 public class DirectorioActivo_Test {
     @Test
-    public void createUserLDAP()
-    {
+    public void createUserLDAP() throws PruebaExcepcion {
         UsuarioDto user = new UsuarioDto();
         user.setNombreUsuario("EmanuelDriver");
-        user.setCorreo( "emadicris@hotmail.com" );
+        user.setCorreo( "emadicristo@hotmail.com" );
         user.setContrasena( "juventus1234" );
         user.setEstatus("Activo");
         RolDto rol = new RolDto();
         rol.setNombre("Administrador");
         user.setRol(rol);
+        user.setId(1);
         DirectorioActivo ldap = new DirectorioActivo();
         ldap.addEntryToLdap( user );
     }

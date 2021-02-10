@@ -69,11 +69,14 @@ public class DirectorioActivo
             Attribute oc = new BasicAttribute( "objectClass" );
             oc.add( "top" );
             oc.add( "person" );
+            oc.add( "organizationalPerson" );
+            oc.add( "inetOrgPerson" );
             SimpleDateFormat format = new SimpleDateFormat( "yyyyMMddHHmm" );
             BasicAttributes entry = new BasicAttributes();
             entry.put( oc );
             entry.put( new BasicAttribute( "cn", user.getCorreo()) );
             entry.put( new BasicAttribute( "sn", user.getNombreUsuario() ) );
+            entry.put( new BasicAttribute( "uid", String.valueOf(user.getId()) ) );
             entry.put( new BasicAttribute( "userPassword", user.getContrasena()) );
             entry.put( new BasicAttribute( "pwdLastSuccess", format.format( new Date() ) + "Z" ) );
             entry.put( new BasicAttribute( "description", user.getNombreRol()));
@@ -274,6 +277,44 @@ public class DirectorioActivo
         }
         System.out.println(role);
         return role;
+    }
+
+    public String getEntryId(UsuarioDto user)
+    {
+        String id="";
+        try
+        {
+            connectLDAP( _user, _password );
+            SearchControls searcCon = new SearchControls();
+            searcCon.setSearchScope( SearchControls.SUBTREE_SCOPE );
+            NamingEnumeration results =
+                    _ldapContext.search( _directory, String.format(_userDirectory, user.getCorreo()), searcCon );
+
+            if ( results != null )
+            {
+                while ( results.hasMore() )
+                {
+                    SearchResult res = ( SearchResult ) results.next();
+                    Attributes atbs = res.getAttributes();
+                    Attribute atb = atbs.get( "uid" );
+                    id = ( String ) atb.get();
+                }
+            }
+            else
+            {
+                System.out.println( "fail" );
+                return null;
+            }
+        }
+        catch ( Exception exception )
+        {
+            exception.printStackTrace();
+        }
+        finally
+        {
+            disconnectLDAP();
+        }
+        return id;
     }
 }
 

@@ -17,6 +17,8 @@ import { SolicitudesComponent } from '../../solicitudes/solicitudes.component';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { AddPreguntaEstudioComponent } from '../add-pregunta-estudio/add-pregunta-estudio.component';
+import { AddEncuestadoEstudioComponent } from '../add-encuestado-estudio/add-encuestado-estudio.component';
 
 @Component({
   selector: 'app-add-estudio',
@@ -30,6 +32,15 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   analistas: Usuario3[];
   encuestados: Usuario3[];
   idEstudioCreado: number;
+  position: number;
+  flagClone: string;
+  datosEst: any ={
+    nombre: JSON.parse(localStorage.getItem('solicitudDes')),
+    edadMin: localStorage.getItem('solicitudMin'),
+    edadMax: localStorage.getItem('solicitudMax'),
+    genero: JSON.parse(localStorage.getItem('solicitudGen')),
+    producto: JSON.parse(localStorage.getItem('solicitudProducto')),
+  }
 
   displayedColumns: string[] = ['nombre', 'correo', 'acciones'];
   dataSource: MatTableDataSource<Usuario3>;
@@ -37,7 +48,7 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
 
   preguntas: Pregunta3[] = [];
-  displayedColumns2: string[] = ['descripcionPregunta', 'tipoPregunta','subcategoria'];
+  displayedColumns2: string[] = ['descripcionPregunta', 'tipoPregunta','subcategoria', 'acciones'];
   dataSource2: MatTableDataSource<Pregunta3>;
   @ViewChild(MatPaginator) paginator2: MatPaginator;
 
@@ -55,11 +66,11 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   ) { 
     this.estudioForm = this.fb.group({
 
-      nombre: new FormControl( '',[ Validators.maxLength(150)]),
-      instrumento: new FormControl('',[ Validators.maxLength(50)]),
-      fechaInicio: new FormControl('',[  Validators.maxLength(50)]),
-      fechaFin: new FormControl('',[  Validators.maxLength(50)]),
-      analista: new FormControl('',[  Validators.maxLength(50)]),
+      // nombre: new FormControl( '',[ Validators.maxLength(150)]),
+      // instrumento: new FormControl('',[ Validators.maxLength(50)]),
+      // fechaInicio: new FormControl('',[  Validators.maxLength(50)]),
+      // fechaFin: new FormControl('',[  Validators.maxLength(50)]),
+      analista: new FormControl('',[ Validators.required, Validators.maxLength(50)]),
     })
   }
 
@@ -73,25 +84,39 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     // console.log(this.data.id);
     this.analistasService.getAnalistas().subscribe( analistasData =>
-      {this.analistas = analistasData} );
+      {this.analistas = analistasData.Usuarios} );
     console.log(this.analistas);
 
     this.encuestadosService.getEncuestadosEstudio(JSON.parse(localStorage.getItem('solicitudId'))).subscribe( encuestadosData =>
       {
 
-        this.dataSource = new MatTableDataSource<Usuario3>(encuestadosData);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        localStorage.setItem('encuestados', JSON.stringify(encuestadosData))
+        console.log(encuestadosData.Encuestados);
+        if(localStorage.getItem('flag') != '1'){
+          this.dataSource = new MatTableDataSource<Usuario3>(encuestadosData.Encuestados);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          console.log(encuestadosData.Encuestados)
+          localStorage.setItem('flag', '1')
+          localStorage.setItem('flagClone', '0')
+          localStorage.setItem('encuestados', JSON.stringify(encuestadosData.Encuestados))
+          console.log('if')
+        }else{
+          this.dataSource = new MatTableDataSource<Usuario3>(JSON.parse(localStorage.getItem('encuestados')));
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          console.log('else')
+        }
+        
       } 
     );
 
     this.dataSource2 = new MatTableDataSource<Pregunta3>(
       JSON.parse(localStorage.getItem('preguntasEst'))
     );
-    this.dataSource2.paginator = this.paginator;
+    this.dataSource2.paginator = this.paginator2;
     this.dataSource2.sort = this.sort;
-
+    
+    this.flagClone = localStorage.getItem('flagClone')
   }
 
   onSucess(message){
@@ -116,12 +141,13 @@ export class AddEstudioComponent implements OnInit, OnChanges {
     
     this.estudio = {
       id: 1,
-      nombre: this.estudioForm.value.nombre,
-      tipoInstrumento: this.estudioForm.value.instrumento,
+      nombre: JSON.parse(localStorage.getItem('solicitudDes')),
+      tipoInstrumento: 'Encuesta',
+      observaciones: null,
       fechaInicio: this.estudioForm.value.fechaInicio,
-      fechaFin: this.estudioForm.value.fechaFin,
-      estatus: 'activo',
-      estado: 'en espera',
+      fechaFin: null,
+      estatus: 'Activo',
+      estado: 'En espera',
       usuarioDto: this.estudioForm.value.analista,
       solicitudEstudioDto: JSON.parse(localStorage.getItem('solicitudId')),
     }
@@ -143,9 +169,10 @@ export class AddEstudioComponent implements OnInit, OnChanges {
       ).subscribe( dataEstudio => 
         {
           if (dataEstudio != undefined){
+            console.log(JSON.stringify(this.estudio))
             this.onSucess('Estudio creado correctamente');
-            this.estudiosService.addEncuestadosEstudio(dataEstudio.id,this.encuestados).subscribe();
-            this.estudiosService.addPreguntasEstudio(dataEstudio.id,this.preguntas).subscribe();
+            this.estudiosService.addEncuestadosEstudio(dataEstudio.id.id,this.encuestados).subscribe();
+            this.estudiosService.addPreguntasEstudio(dataEstudio.id.id,this.preguntas).subscribe();
             
           }
         }
@@ -154,11 +181,40 @@ export class AddEstudioComponent implements OnInit, OnChanges {
         this.router.navigate(['/admin']);
         localStorage.setItem('encuestados', JSON.stringify([]));
         localStorage.setItem('preguntasEst', JSON.stringify([]));
+        localStorage.setItem('flag', '0');
+        localStorage.setItem('flagClone', '0')
       },3000);
     }
     
   }
 
+  cancelar(){
+    setTimeout(() => {
+      this.router.navigate(['/admin']);
+      localStorage.setItem('encuestados', JSON.stringify([]));
+      localStorage.setItem('preguntasEst', JSON.stringify([]));
+      localStorage.setItem('flag', '0');
+      localStorage.setItem('flagClone', '0')
+    },1000);
+  }
+
+  openModal0():void{
+    this.dialog.open(AddEncuestadoEstudioComponent,
+      {
+        data: {id: JSON.parse(localStorage.getItem('solicitudId'))}
+      }
+    );
+    
+  }
+
+  openModal1():void{
+    this.dialog.open(AddPreguntaEstudioComponent,
+      {
+        data: {id: JSON.parse(localStorage.getItem('solicitudId'))}
+      }
+    );
+    
+  }
 
   openModal2(){
     const dialogRef = this.dialog.open(PreguntasSugeridasComponent,
@@ -184,6 +240,26 @@ export class AddEstudioComponent implements OnInit, OnChanges {
       }
     );
     
+  }
+
+  deleteEncuestado(encuestado: Usuario3){
+    const encAgregados: Usuario3[] = JSON.parse(localStorage.getItem('encuestados'));
+    this.position = null;
+    console.log('antes:', encAgregados);
+    console.log(this.position = encAgregados.findIndex(function(encuestado){return encuestado}));
+    encAgregados.splice(encAgregados.findIndex(function(encuestado){return encuestado}),1)
+    console.log('traer: ', encAgregados);
+    localStorage.setItem('encuestados',  JSON.stringify (encAgregados))
+  }
+
+  deletePregunta(pregunta: Pregunta3){
+    const pregAgregadas: Usuario3[] = JSON.parse(localStorage.getItem('preguntasEst'));
+    this.position = null;
+    console.log('antes:', pregAgregadas);
+    console.log(this.position = pregAgregadas.findIndex(function(pregunta){return pregunta}));
+    pregAgregadas.splice(pregAgregadas.findIndex(function(pregunta){return pregunta}),1)
+    console.log('traer: ', pregAgregadas);
+    localStorage.setItem('preguntasEst',  JSON.stringify (pregAgregadas))
   }
 }
 

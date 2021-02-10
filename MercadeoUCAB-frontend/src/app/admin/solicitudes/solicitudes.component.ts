@@ -42,8 +42,13 @@ export class SolicitudesComponent implements OnInit {
     } );
   }
 
-  createEstudio(id: number):void{
-    localStorage.setItem('solicitudId',  JSON.stringify (id));
+  createEstudio(solicitud: Solicitud):void{
+    localStorage.setItem('solicitudId',  JSON.stringify (solicitud._id));
+    localStorage.setItem('solicitudDes',  JSON.stringify (solicitud._descripcion));
+    localStorage.setItem('solicitudMin',  JSON.stringify (solicitud._edadMinima));
+    localStorage.setItem('solicitudMax',  JSON.stringify (solicitud._edadMaxima));
+    localStorage.setItem('solicitudGen',  JSON.stringify (solicitud._genero));
+    localStorage.setItem('solicitudProducto',  JSON.stringify (solicitud._producto._nombre));
     localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntas))
   }
 

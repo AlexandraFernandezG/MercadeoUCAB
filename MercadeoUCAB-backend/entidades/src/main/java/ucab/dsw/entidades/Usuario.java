@@ -23,8 +23,8 @@ public class Usuario extends EntidadBase {
     @Column( name = "correo" )
     private String _correoelectronico;
 
-    @Column( name = "codigoRecuperacion" )
-    private String _codigoRecuperacion;
+    @Column( name = "token" )
+    private String _token;
 
     //Relaciones
    
@@ -43,12 +43,12 @@ public class Usuario extends EntidadBase {
         this._rol = _rol;
     }
 
-    public String get_codigoRecuperacion() {
-        return _codigoRecuperacion;
+    public String get_token() {
+        return _token;
     }
 
-    public void set_codigoRecuperacion(String _codigoRecuperacion) {
-        this._codigoRecuperacion = _codigoRecuperacion;
+    public void set_token(String _token) {
+        this._token = _token;
     }
 
     public String get_correoelectronico() {
@@ -86,7 +86,7 @@ public class Usuario extends EntidadBase {
         return "Usuario{" +
                 "_nombre='" + _nombre + '\'' +
                 ", _correoelectronico='" + _correoelectronico + '\'' +
-                ", _codigoRecuperacion='" + _codigoRecuperacion + '\'' +
+                ", _token='" + _token + '\'' +
                 ", _rol=" + _rol +
                 '}';
     }

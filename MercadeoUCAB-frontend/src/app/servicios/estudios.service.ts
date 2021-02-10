@@ -26,11 +26,11 @@ export class EstudiosService {
     })
   };
 
-  createEstudio(estudio: Estudio2):Observable<Estudio2>{
+  createEstudio(estudio: Estudio2):Observable<any>{
     console.log(estudio)
     return this.http.post<Estudio2>(this.url + 'estudio/addEstudio/', JSON.stringify(estudio) ,  this.httpOptions).
     pipe(
-      tap((newEstudio: Estudio2) => console.log(`added estudio w/ id=${newEstudio.id}`)),
+      tap((newEstudio: any) => console.log(`added estudio w/ id=${newEstudio.codigo}`)),
       catchError(this.handleError)
     );
   }
@@ -38,7 +38,7 @@ export class EstudiosService {
   addEncuestadosEstudio(id: number, encuestados: Usuario3[]): Observable<any>{
     return this.http.post<any>(this.url + 'estudio/estudioEncuestados/' + id, JSON.stringify(encuestados) , this.httpOptions ).
     pipe(
-      tap((dataObject: any) => console.log(`added estudio w/ id=${dataObject.estado}`)),
+      tap((dataObject: any) => console.log(`added estudio w/ id=${dataObject}`)),
       catchError(this.handleError)
     );
   }
@@ -72,8 +72,8 @@ export class EstudiosService {
     return this.http.get<Estudio[]>(this.url + 'sugerencias/estudiosAnalista/' + id);
   }
 
-  getEstudiosSugeridos(id:number):Observable<Estudio[]>{
-    return this.http.get<Estudio[]>(this.url + 'sugerencias/solicitudEstudio/' + id);
+  getEstudiosSugeridos(id:number):Observable<any>{
+    return this.http.get<any>(this.url + 'sugerencias/solicitudEstudio/' + id);
   }
 
   getEstudio(id: number): Observable<Estudio> {

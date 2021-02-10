@@ -53,7 +53,7 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
             usuario.set_estatus(usuarioDto.getEstatus());
             Rol rol = new Rol(4);
             usuario.set_rol(rol);
-            usuario.set_codigoRecuperacion(usuarioDto.getCodigoRecuperacion());
+            usuario.set_token(usuarioDto.getToken());
             Usuario resul = dao.insert(usuario);
             long idUsuario = resul.get_id();
             resultado.setId(resul.get_id());

@@ -22,10 +22,8 @@ public class UsuarioServicio_Test {
             usuarioDto.setCorreo("greggspinetti@gmail.com");
             usuarioDto.setEstatus("Activo");
             usuarioDto.setContrasena("hola123");
-            // Recuerden que deben ver los id de los registros en la BD
             RolDto rolDto = new RolDto(1);
             usuarioDto.setRol(rolDto);
-            usuarioDto.setCodigoRecuperacion(null);
             Response resultado = servicio.addUsuario(usuarioDto);
             Assert.assertEquals(resultado.getStatus(), Response.Status.OK.getStatusCode());
 
@@ -49,7 +47,7 @@ public class UsuarioServicio_Test {
             // Recuerden que deben ver los id de los registros en la BD
             RolDto rolDto = new RolDto(1);
             usuarioDto.setRol(rolDto);
-            usuarioDto.setCodigoRecuperacion(null);
+            usuarioDto.setToken(null);
             servicio.updateUsuario(1, usuarioDto);
 
         } catch (Exception e) {
