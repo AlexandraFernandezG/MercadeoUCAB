@@ -22,6 +22,10 @@ public class DetallesEncuestadosComando extends ComandoBase {
     public JsonObject dataObject;
     public JsonArrayBuilder detalles = Json.createArrayBuilder();
 
+    public DetallesEncuestadosComando(long id) {
+        this.id = id;
+    }
+
     @Override
     public void execute() throws Exception {
 
