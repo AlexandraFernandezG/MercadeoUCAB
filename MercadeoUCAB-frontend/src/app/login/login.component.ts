@@ -69,12 +69,14 @@ export class LoginComponent implements OnInit {
       console.log('entre1');
       this.service.login(this.usuario).subscribe( data  => {
         this.user = data;
+        console.log(data)
         if (this.user.estado === 'success') {
           this.serviceUsuario.getUsuarioCorreo(this.usuario.correo)
             .subscribe( userData => {this.usuarioLog = userData;
-              localStorage.setItem('usuarioID', JSON.stringify(this.usuarioLog[0].id));
+              localStorage.setItem('usuarioID', JSON.stringify(this.user.id));
               localStorage.setItem('rol',  JSON.stringify (this.user.rol));
-              localStorage.setItem('nombre', JSON.stringify(this.usuarioLog[0].nombre));
+              console.log(this.user.rol);
+            //  localStorage.setItem('nombre', JSON.stringify(this.usuarioLog[0].nombre));
   
             } );
           if (this.user.rol === 'Administrador'){
@@ -109,7 +111,7 @@ export class LoginComponent implements OnInit {
           }
 
         }else {
-         // window.alert('Usuario no registrado o Informacion Incorrecta');
+          window.alert('Usuario no registrado o Informacion Incorrecta');
         }
       });
 

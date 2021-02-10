@@ -41,7 +41,7 @@ export class AddUsuarioComponent implements OnInit {
     _id: 1 ,
     _nombre: '',
     _correoelectronico: '',
-    _codigoRecuperacion: '',
+    _token: '',
     _estatus: 'Activo',
     _rol: {
       _id: 0,
@@ -67,17 +67,17 @@ export class AddUsuarioComponent implements OnInit {
   addUsuario( correo: string, nombreUsuario: string): void{
     const id = 1;
     const estatus = 'Activo';
-    const codigoRecuperacion = '';
+    const token = '';
     this.service.createUsuario({
      id,
     nombreUsuario,
     correo,
-    codigoRecuperacion,
+    token,
     estatus,
     contrasena: this.usuarioForm.get("contrasena").value,
     rol: this.usuarioForm.get("rol").value
     } as Usuario2).subscribe();
-    console.log(id, nombreUsuario, correo, codigoRecuperacion, estatus);
+    console.log(id, nombreUsuario, correo, token, estatus);
     this.dialogRef.close();
   }
 }

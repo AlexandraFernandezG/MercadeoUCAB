@@ -72,7 +72,7 @@ export class UsuarioComponent implements OnInit {
      id: usuario._id,
      nombreUsuario: usuario._nombre,
      correo: usuario._correoelectronico,
-     codigoRecuperacion: usuario._codigoRecuperacion,
+     token: usuario._token,
      estatus: usuario._estatus,
      contrasena: '',
      rol: usuario._rol._id

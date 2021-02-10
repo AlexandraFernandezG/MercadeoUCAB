@@ -38,7 +38,7 @@ export class EditUsuarioComponent implements OnInit {
       _id: 1 ,
       _nombre: '',
       _correoelectronico: '',
-      _codigoRecuperacion: '',
+      _token: '',
       _estatus: 'Activo',
       _rol: {
         _id: 0,
@@ -76,7 +76,7 @@ export class EditUsuarioComponent implements OnInit {
     id: this.data.id,
     nombreUsuario: this.usuarioForm.get("nombreUsuario").value,
     correo: this.usuarioForm.get("correo").value,
-    codigoRecuperacion: '',
+    token: '',
     estatus: this.usuario._estatus,
     contrasena: this.usuarioForm.get("contrasena").value,
     rol: this.usuarioForm.get("rol").value

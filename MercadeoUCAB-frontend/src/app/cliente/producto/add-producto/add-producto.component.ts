@@ -56,7 +56,7 @@ export class AddProductoComponent implements OnInit {
       _id: 1 ,
       _nombre: '',
       _correoelectronico: '',
-      _codigoRecuperacion: '',
+      _token: '',
       _estatus: 'Activo',
       _rol: {
         _id: 0,

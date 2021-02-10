@@ -5,7 +5,7 @@ export class Usuario {
        public _id: number,
        public _nombre: string,
        public _correoelectronico: string,
-       public _codigoRecuperacion: string,
+       public _token: string,
        public _estatus: string,
        public _rol: Rol
      ){}
@@ -16,7 +16,7 @@ export class Usuario2 {
            public id: number,
            public nombreUsuario: string,
            public correo: string,
-           public codigoRecuperacion: string,
+           public token: string,
            public estatus: string,
            public contrasena: string,
            public rol: number
@@ -28,7 +28,7 @@ export class UsuarioLDAP {
         public id: number,
         public nombreUsuario: string,
         public correo: string,
-        public codigoRecuperacion: string,
+        public token: string,
         public estatus: string,
         public contrasena: string,
         public rol: number
@@ -37,7 +37,8 @@ export class UsuarioLDAP {
 export class UsuarioCorreo {
   constructor(
     public id: number,
-    public codigoRecuperacion: string,
+    public nombre: string,
+    public token: string,
     public correo: string,
     public estatus: string
   ){}
@@ -47,7 +48,7 @@ export class Usuario3{
      public id: number,
      public nombre: string,
      public correo: string,
-     public codigoRecuperacion: string,
+     public token: string,
      public estatus: string,
    ){}
 }

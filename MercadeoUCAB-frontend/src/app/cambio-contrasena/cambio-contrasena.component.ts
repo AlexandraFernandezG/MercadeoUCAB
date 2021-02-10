@@ -36,7 +36,7 @@ usuario: Usuario = {
   _id: 1 ,
   _nombre: '',
   _correoelectronico: '',
-  _codigoRecuperacion: '',
+  _token: '',
   _estatus: 'Activo',
   _rol: {
     _id: 0,
@@ -72,7 +72,7 @@ usuarioForm: FormGroup;
     id: this.usuario._id,
     nombreUsuario: this.usuario._nombre,
     correo: this.usuario._correoelectronico,
-    codigoRecuperacion: '',
+    token: '',
     contrasena: this.usuarioForm.get('contrasena2').value,
     estatus: 'Activo',
     rol: usuario._rol._id
