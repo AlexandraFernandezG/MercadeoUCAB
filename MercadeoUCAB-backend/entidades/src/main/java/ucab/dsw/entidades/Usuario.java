@@ -86,7 +86,7 @@ public class Usuario extends EntidadBase {
         return "Usuario{" +
                 "_nombre='" + _nombre + '\'' +
                 ", _correoelectronico='" + _correoelectronico + '\'' +
-                ", _codigoRecuperacion='" + _token + '\'' +
+                ", _token='" + _token + '\'' +
                 ", _rol=" + _rol +
                 '}';
     }

@@ -273,13 +273,14 @@ public class UsuarioServicio extends AplicacionBase {
             usuario.set_token(usuarioDto.getToken());
             Usuario resul = dao.insert(usuario);
             resultado.setId(resul.get_id());
+            usuarioDto.setId(resul.get_id());
             ldap.addEntryToLdap(usuarioDto);
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
             dataObject= Json.createObjectBuilder()
-                    .add("estado","error")
+                    .add("estado","Error")
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
@@ -340,6 +341,7 @@ public class UsuarioServicio extends AplicacionBase {
             usuario_modificar.set_nombre(usuarioDto.getNombreUsuario());
             Rol rol = new Rol(usuarioDto.getRol().getId());
             usuario_modificar.set_rol(rol);
+            usuario_modificar.set_token(usuarioDto.getToken());
             daoUsuario.update(usuario_modificar);
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.updateEntry(usuarioDto);
