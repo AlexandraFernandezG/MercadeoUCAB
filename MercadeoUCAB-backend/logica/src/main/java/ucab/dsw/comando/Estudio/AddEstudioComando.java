@@ -48,6 +48,11 @@ public class AddEstudioComando extends ComandoBase {
 
         EstudioDto resultado = MapperEstudio.mapEntityToDto(resul);
 
+        //Actualizar estado de la solicitud de estudio:
+        SolicitudEstudio solicitudEstudioModificar = daoSolicitudEstudio.find(estudio.get_solicitudEstudio().get_id(), SolicitudEstudio.class);
+        solicitudEstudioModificar.set_estado("Procesado");
+        daoSolicitudEstudio.update(solicitudEstudioModificar);
+
         estudioObj = Json.createObjectBuilder().add("id", resultado.getId()).build();
 
     }
