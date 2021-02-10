@@ -24,15 +24,15 @@ export class ResultadosService {
   getResultados(id: number): Observable<any[]> {
     return this.http.get<any>(this.url + 'reportes/cantidadesPregunta/' + id);
   }
-
- /* sendResultados(respuesta: string, id: number):Observable<any> {
+/*
+  sendResultados(respuesta: string, id: number):Observable<any> {
     return this.http.post<any>(this.url + 'preguntasEncuesta/addPreguntaEncuesta'+id)
     .pipe(
       tap((newrespuesta: any) => console.log(`added respuesta w/ id=${newrespuesta.id}`)),
       catchError(this.handleError)
     );
-  }*/
-
+  }
+*/
   /// Error HandleError
   handleError(error): Observable<never> {
     let errorMessage = '';
