@@ -735,7 +735,7 @@ public class EstudioServicio extends AplicacionBase {
     }
 
 
-    public void update(long encuestado){
+    /*public void update(long encuestado){
 
         DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
 
@@ -744,16 +744,6 @@ public class EstudioServicio extends AplicacionBase {
         daoUsuarioEstudio.update(usuarioEstudio_modificar);
     }
 
-
-    /**
-     * Este método permite verificar si todos los encuestados respondieron las encuestas de un estudio
-     * @author Emanuel Di Cristofaro
-     * @return Este metodo retorna un objeto de tipo Json con el
-     * arreglo de resultado exitoso y en tal caso obtener una excepcion si aplica.
-     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
-     * @throws PersistenceException si se modifica un estudio duplicado.
-     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
-     */
     @GET
     @Path("/pruebaEstatusEncuestado/{id}")
     @Produces( MediaType.APPLICATION_JSON )
@@ -799,8 +789,8 @@ public class EstudioServicio extends AplicacionBase {
 
                 if(cantidadPreguntas == cantidadRespuestaTotal) {
 
+                    //daoUsuarioEstudio.updateEstadoEstudio(encuestados.get_id());
                     update(encuestados.get_id());
-
                 }
 
             }
@@ -850,5 +840,5 @@ public class EstudioServicio extends AplicacionBase {
         }
 
 
-    }
+    }*/
 }

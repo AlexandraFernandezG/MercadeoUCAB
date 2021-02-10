@@ -71,4 +71,17 @@ public class DaoUsuarioEstudio extends Dao<UsuarioEstudio>{
         return respuestas;
     }
 
+    public void updateEstadoEstudio (long id){
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+        EntityManager entitymanager = factory.createEntityManager();
+
+        String sqlQuery = "UPDATE UsuarioEstudio as ue SET ue._estatus = 'Respondido' " +
+                "WHERE ue._id = :id";
+
+        Query query = entitymanager.createQuery(sqlQuery);
+        query.setParameter("id", id);
+
+    }
+
 }

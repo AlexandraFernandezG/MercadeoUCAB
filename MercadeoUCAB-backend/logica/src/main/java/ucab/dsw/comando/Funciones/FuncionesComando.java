@@ -11,7 +11,9 @@ import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class FuncionesComando {
 
@@ -97,5 +99,85 @@ public class FuncionesComando {
             ex.getMessage();
         }
 
+    }
+
+    public void update(long encuestado){
+
+        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
+
+        UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(encuestado, UsuarioEstudio.class);
+        usuarioEstudio_modificar.set_estatus("Respondido");
+        daoUsuarioEstudio.update(usuarioEstudio_modificar);
+    }
+
+    public void cambiarEstadoEstudio(long id){
+
+        int cantidadRespuestaTotal = 0;
+        int cantidadEncuestadosRespondido = 0;
+        DaoEstudio daoEstudio = new DaoEstudio();
+
+        try {
+
+            DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
+            //Obtener los encuestados de un estudio
+            List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
+            List<UsuarioEstudio> encuestadosEstudio = new ArrayList<>();
+
+            for (UsuarioEstudio encuestado : listaUsuarioEstudio) {
+
+                if (encuestado.get_estudio().get_id() == id)
+                    encuestadosEstudio.add(encuestado);
+            }
+
+            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+            //Obtener las preguntas del estudio
+            List<PreguntaEstudio> listaPreguntas = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
+            List<PreguntaEstudio> listaPreguntasEstudio = new ArrayList<>();
+
+            for (PreguntaEstudio pregunta : listaPreguntas) {
+
+                if (pregunta.get_estudio().get_id() == id)
+                    listaPreguntasEstudio.add(pregunta);
+            }
+
+            //Operacion para cambiar el estatus
+            int cantidadPreguntas = listaPreguntasEstudio.size();
+            List<Long> cantidadRespuestas = new ArrayList<>();
+
+            for (UsuarioEstudio encuestados : encuestadosEstudio) {
+
+                cantidadRespuestas = daoUsuarioEstudio.cantidadRespuestas(encuestados.get_usuario().get_id(), id);
+                cantidadRespuestaTotal = cantidadRespuestas.size();
+
+                if (cantidadPreguntas == cantidadRespuestaTotal) {
+
+                    //daoUsuarioEstudio.updateEstadoEstudio(encuestados.get_id());
+                    update(encuestados.get_id());
+                }
+
+            }
+
+            //Verificar que todos los encuestados respondieron la encuesta en el estudio
+            for (UsuarioEstudio verificarRespondido : listaUsuarioEstudio) {
+
+                if (verificarRespondido.get_estatus().equals("Respondido") && verificarRespondido.get_estudio().get_id() == id) {
+                    cantidadEncuestadosRespondido = cantidadEncuestadosRespondido + 1;
+                }
+
+            }
+
+            if(encuestadosEstudio.size() != 0) {
+                //Finalmente cambiamos el estado del estudio acorde al conteo
+                if (encuestadosEstudio.size() == cantidadEncuestadosRespondido) {
+                    Estudio estudio = daoEstudio.find(id, Estudio.class);
+                    estudio.set_estado("Finalizado");
+                    daoEstudio.update(estudio);
+                }
+            }
+
+        } catch (Exception ex){
+
+            ex.getMessage();
+        }
     }
 }
