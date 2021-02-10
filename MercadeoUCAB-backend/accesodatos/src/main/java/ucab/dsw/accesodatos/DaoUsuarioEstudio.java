@@ -52,4 +52,23 @@ public class DaoUsuarioEstudio extends Dao<UsuarioEstudio>{
         return estudioUsuarioResponseList;
     }
 
+    public List<Long> cantidadRespuestas (long idEN, long idE){
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
+        EntityManager entitymanager = factory.createEntityManager();
+
+        String sqlQuery = "SELECT DISTINCT res._preguntaEstudio._id " +
+                "FROM Respuesta as res, PreguntaEstudio as pe, Estudio as est, UsuarioEstudio as ue " +
+                "WHERE (res._usuario._id = :idEN) and (res._preguntaEstudio._id = pe._id) and (pe._estudio._id = est._id) and " +
+                "(est._id = ue._estudio._id) and (ue._estudio._id = :idE)";
+
+        Query query = entitymanager.createQuery(sqlQuery);
+        query.setParameter("idEN", idEN);
+        query.setParameter("idE", idE);
+
+        List<Long> respuestas = query.getResultList();
+
+        return respuestas;
+    }
+
 }

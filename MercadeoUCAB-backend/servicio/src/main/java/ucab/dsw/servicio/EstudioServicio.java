@@ -11,6 +11,7 @@ import ucab.dsw.Response.PreguntasResponse;
 import ucab.dsw.Response.UsuarioResponse;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -734,6 +735,16 @@ public class EstudioServicio extends AplicacionBase {
     }
 
 
+    public void update(long encuestado){
+
+        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
+
+        UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(encuestado, UsuarioEstudio.class);
+        usuarioEstudio_modificar.set_estatus("Respondido");
+        daoUsuarioEstudio.update(usuarioEstudio_modificar);
+    }
+
+
     /**
      * Este método permite verificar si todos los encuestados respondieron las encuestas de un estudio
      * @author Emanuel Di Cristofaro
@@ -743,93 +754,54 @@ public class EstudioServicio extends AplicacionBase {
      * @throws PersistenceException si se modifica un estudio duplicado.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
      */
-    @PUT
-    @Path("/updateUsuarioEstudio/{id}")
+    @GET
+    @Path("/pruebaEstatusEncuestado/{id}")
     @Produces( MediaType.APPLICATION_JSON )
-    @Consumes( MediaType.APPLICATION_JSON )
     public Response cambiarEstatusUsuarioEstudio(@PathParam("id") long id){
 
         JsonObject dataObject;
-        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
-        DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-        DaoRespuesta daoRespuesta = new DaoRespuesta();
-        DaoEstudio daoEstudio = new DaoEstudio();
-        List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
-        List<PreguntaEstudio> listaPreguntas = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-        List<Respuesta> listaRespuestas = daoRespuesta.findAll(Respuesta.class);
-        int cantidadPreguntas = 0;
-        int cantidadRespuesta = 0;
-        int cantidadMultiples = 0;
-        int cantidadEncuestados = 0;
+        int cantidadRespuestaTotal = 0;
         int cantidadEncuestadosRespondido = 0;
-        long fkB = 0;
+        DaoEstudio daoEstudio = new DaoEstudio();
 
         try {
 
-            //Calcular cantidad de preguntas del estudio
-            for(PreguntaEstudio preguntaEstudio: listaPreguntas){
+            DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
+            //Obtener los encuestados de un estudio
+            List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
+            List<UsuarioEstudio> encuestadosEstudio = new ArrayList<>();
 
-                if(preguntaEstudio.get_estudio().get_id() == id){
+            for (UsuarioEstudio encuestado: listaUsuarioEstudio){
 
-                    cantidadPreguntas = cantidadPreguntas + 1;
-                }
+                if(encuestado.get_estudio().get_id() == id)
+                    encuestadosEstudio.add(encuestado);
             }
 
-            for(UsuarioEstudio usuarioEstudio: listaUsuarioEstudio){
+            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+            //Obtener las preguntas del estudio
+            List<PreguntaEstudio> listaPreguntas = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
+            List<PreguntaEstudio> listaPreguntasEstudio = new ArrayList<>();
 
-                if(usuarioEstudio.get_estudio().get_id() == id){
+            for(PreguntaEstudio pregunta: listaPreguntas){
 
-                    cantidadEncuestados = cantidadEncuestados + 1;
-                }
+                if(pregunta.get_estudio().get_id() == id)
+                    listaPreguntasEstudio.add(pregunta);
             }
 
-            //Calcular la cantidad de encuestados de un estudio
+            //Operacion para cambiar el estatus
+            int cantidadPreguntas = listaPreguntasEstudio.size();
+            List<Long> cantidadRespuestas = new ArrayList<>();
 
+            for (UsuarioEstudio encuestados: encuestadosEstudio){
 
-            for (UsuarioEstudio usuarioEncuestado: listaUsuarioEstudio){
+                cantidadRespuestas = daoUsuarioEstudio.cantidadRespuestas(encuestados.get_usuario().get_id(), id);
+                cantidadRespuestaTotal = cantidadRespuestas.size();
 
-                if(usuarioEncuestado.get_estudio().get_id() == id){
+                if(cantidadPreguntas == cantidadRespuestaTotal) {
 
-                    for(Respuesta respuesta: listaRespuestas){
+                    update(encuestados.get_id());
 
-                        if(respuesta.get_usuario().get_id() == usuarioEncuestado.get_usuario().get_id()){
-
-                            for(PreguntaEstudio preguntaEstudioR: listaPreguntas){
-
-                                if(preguntaEstudioR.get_id() == respuesta.get_preguntaEstudio().get_id() && preguntaEstudioR.get_estudio().get_id() == id){
-
-                                    if(respuesta.get_respuestaMultiple() != null) {
-
-                                        if(respuesta.get_preguntaEstudio().get_id() != fkB) {
-
-                                            cantidadMultiples = cantidadMultiples + 1;
-                                            fkB = respuesta.get_preguntaEstudio().get_id();
-                                        }
-
-                                    } else {
-
-                                        cantidadRespuesta = cantidadRespuesta + 1;
-                                    }
-                                }
-                            }
-
-                        }
-                    }
                 }
-
-            if(cantidadPreguntas == (cantidadRespuesta+cantidadMultiples)) {
-
-                cantidadRespuesta = 0;
-                cantidadMultiples = 0;
-                UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(usuarioEncuestado.get_id(), UsuarioEstudio.class);
-                usuarioEstudio_modificar.set_estatus("Respondido");
-                daoUsuarioEstudio.update(usuarioEstudio_modificar);
-
-            } else {
-
-                cantidadRespuesta = 0;
-                cantidadMultiples = 0;
-            }
 
             }
 
@@ -843,15 +815,16 @@ public class EstudioServicio extends AplicacionBase {
             }
 
             //Finalmente cambiamos el estado del estudio acorde al conteo
-            if(cantidadEncuestados == cantidadEncuestadosRespondido) {
+            if(encuestadosEstudio.size() == cantidadEncuestadosRespondido) {
                 Estudio estudio = daoEstudio.find(id, Estudio.class);
                 estudio.set_estado("Finalizado");
                 daoEstudio.update(estudio);
             }
 
-
             dataObject = Json.createObjectBuilder()
                     .add("estado", 200)
+                    .add("cantidadPreguntas", cantidadPreguntas)
+                    .add("cantidadRespuestas", cantidadRespuestas.size())
                     .add("Mensaje", "Operacion realizada con exito").build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
