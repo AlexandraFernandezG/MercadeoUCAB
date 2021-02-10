@@ -27,7 +27,7 @@ public class LoginComando extends ComandoBase {
         try
         {
             DirectorioActivo ldap = new DirectorioActivo();
-            long resultado=ldap.userAuthentication( this.usuarioDto );
+            long resultado = ldap.userAuthentication( this.usuarioDto );
 
             if(resultado==1){
                 DaoUsuario daoUsuario = Fabrica.crear(DaoUsuario.class);
@@ -45,7 +45,7 @@ public class LoginComando extends ComandoBase {
                         .add("codigo",200)
                         .add("token",this.token)
                         .add("rol", ldap.getEntryRole(this.usuarioDto))
-                        .add("id", ldap.getEntryId(this.usuarioDto)).build();
+                        .add("id", Long.parseLong(ldap.getEntryId(this.usuarioDto))).build();
 
                 System.out.println(data);
 
