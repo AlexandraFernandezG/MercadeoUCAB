@@ -44,7 +44,7 @@ public class ListarEstudiosAnalistaComando extends ComandoBase {
 
         for (EstudiosResponse obj : listaEstudiosAnalista) {
 
-            if(obj.getObservacionesEstudio() != null) {
+            if (obj.getObservacionesEstudio() != null && obj.getFechaFinEstudio() != null) {
 
                 estudioJson = Json.createObjectBuilder().add("id", obj.getIdEstudio())
                         .add("nombre", obj.getNombreEstudio())
@@ -57,7 +57,33 @@ public class ListarEstudiosAnalistaComando extends ComandoBase {
 
                 estudios.add(estudioJson);
 
-            } else {
+            } else if (obj.getObservacionesEstudio() == null && obj.getFechaFinEstudio() == null) {
+
+                estudioJson = Json.createObjectBuilder().add("id", obj.getIdEstudio())
+                        .add("nombre", obj.getNombreEstudio())
+                        .add("tipoInstrumento", obj.getTipoInstrumentoEstudio())
+                        .add("observaciones", "")
+                        .add("fechaInicio", obj.getFechaInicioEstudio())
+                        .add("fechaFin", "")
+                        .add("estado", obj.getEstadoEstudio())
+                        .add("estatus", obj.getEstatusEstudio()).build();
+
+                estudios.add(estudioJson);
+
+            } else if (obj.getObservacionesEstudio() != null && obj.getFechaFinEstudio() == null) {
+
+                estudioJson = Json.createObjectBuilder().add("id", obj.getIdEstudio())
+                        .add("nombre", obj.getNombreEstudio())
+                        .add("tipoInstrumento", obj.getTipoInstrumentoEstudio())
+                        .add("observaciones", obj.getObservacionesEstudio())
+                        .add("fechaInicio", obj.getFechaInicioEstudio())
+                        .add("fechaFin", "")
+                        .add("estado", obj.getEstadoEstudio())
+                        .add("estatus", obj.getEstatusEstudio()).build();
+
+                estudios.add(estudioJson);
+
+            } else if (obj.getObservacionesEstudio() == null && obj.getFechaFinEstudio() != null) {
 
                 estudioJson = Json.createObjectBuilder().add("id", obj.getIdEstudio())
                         .add("nombre", obj.getNombreEstudio())
@@ -69,6 +95,7 @@ public class ListarEstudiosAnalistaComando extends ComandoBase {
                         .add("estatus", obj.getEstatusEstudio()).build();
 
                 estudios.add(estudioJson);
+
             }
 
         }
