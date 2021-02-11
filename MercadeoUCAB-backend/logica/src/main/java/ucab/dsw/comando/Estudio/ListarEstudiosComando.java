@@ -15,6 +15,7 @@ import java.util.List;
 
 public class ListarEstudiosComando extends ComandoBase {
 
+    public JsonObject estudioJson;
     public JsonArrayBuilder estudios = Json.createArrayBuilder();
 
     @Override
@@ -27,9 +28,9 @@ public class ListarEstudiosComando extends ComandoBase {
 
         for(Estudio obj: listaEstudios){
 
-            if (obj.get_observaciones() != null) {
+            if (obj.get_observaciones() != null && obj.get_fechaFin() != null) {
 
-                estudio = Json.createObjectBuilder().add("id", obj.get_id())
+                estudioJson = Json.createObjectBuilder().add("id", obj.get_id())
                         .add("nombre", obj.get_nombre())
                         .add("tipoInstrumento", obj.get_tipoInstrumento())
                         .add("observaciones", obj.get_observaciones())
@@ -38,11 +39,37 @@ public class ListarEstudiosComando extends ComandoBase {
                         .add("estado", obj.get_estado())
                         .add("estatus", obj.get_estatus()).build();
 
-                estudios.add(estudio);
+                estudios.add(estudioJson);
 
-            } else {
+            } else if (obj.get_observaciones() == null && obj.get_fechaFin() == null) {
 
-                estudio = Json.createObjectBuilder().add("id", obj.get_id())
+                estudioJson = Json.createObjectBuilder().add("id", obj.get_id())
+                        .add("nombre", obj.get_nombre())
+                        .add("tipoInstrumento", "")
+                        .add("observaciones", obj.get_observaciones())
+                        .add("fechaInicio", servicio.devolverFecha(obj.get_fechaInicio()))
+                        .add("fechaFin", "")
+                        .add("estado", obj.get_estado())
+                        .add("estatus", obj.get_estatus()).build();
+
+                estudios.add(estudioJson);
+
+            } else if (obj.get_observaciones() != null && obj.get_fechaFin() == null) {
+
+                estudioJson = Json.createObjectBuilder().add("id", obj.get_id())
+                        .add("nombre", obj.get_nombre())
+                        .add("tipoInstrumento", obj.get_tipoInstrumento())
+                        .add("observaciones", obj.get_observaciones())
+                        .add("fechaInicio", servicio.devolverFecha(obj.get_fechaInicio()))
+                        .add("fechaFin", "")
+                        .add("estado", obj.get_estado())
+                        .add("estatus", obj.get_estatus()).build();
+
+                estudios.add(estudioJson);
+
+            } else if (obj.get_observaciones() == null && obj.get_fechaFin() != null) {
+
+                estudioJson = Json.createObjectBuilder().add("id", obj.get_id())
                         .add("nombre", obj.get_nombre())
                         .add("tipoInstrumento", obj.get_tipoInstrumento())
                         .add("observaciones", "")
@@ -51,7 +78,7 @@ public class ListarEstudiosComando extends ComandoBase {
                         .add("estado", obj.get_estado())
                         .add("estatus", obj.get_estatus()).build();
 
-                estudios.add(estudio);
+                estudios.add(estudioJson);
 
             }
         }
