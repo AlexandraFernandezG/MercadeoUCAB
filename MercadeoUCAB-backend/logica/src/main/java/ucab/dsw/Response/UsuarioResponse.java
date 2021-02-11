@@ -17,10 +17,10 @@ public class UsuarioResponse {
         super();
     }
 
-    public UsuarioResponse(long id, String nombre, String codigoRecuperacion, String correo, String estatus) {
+    public UsuarioResponse(long id, String nombre, String token, String correo, String estatus) {
         this.id = id;
         this.nombre = nombre;
-        this.token = codigoRecuperacion;
+        this.token = token;
         this.correo = correo;
         this.estatus = estatus;
     }
