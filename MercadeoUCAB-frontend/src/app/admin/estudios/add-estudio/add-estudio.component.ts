@@ -28,7 +28,7 @@ import { AddEncuestadoEstudioComponent } from '../add-encuestado-estudio/add-enc
 export class AddEstudioComponent implements OnInit, OnChanges {
 
   estudioForm: FormGroup;
-  estudio: Estudio2;
+  estudio: any;
   analistas: Usuario3[];
   encuestados: Usuario3[];
   idEstudioCreado: number;
@@ -87,6 +87,7 @@ export class AddEstudioComponent implements OnInit, OnChanges {
       {this.analistas = analistasData.Usuarios} );
     console.log(this.analistas);
 
+    this.curday();
     this.encuestadosService.getEncuestadosEstudio(JSON.parse(localStorage.getItem('solicitudId'))).subscribe( encuestadosData =>
       {
 
@@ -137,6 +138,20 @@ export class AddEstudioComponent implements OnInit, OnChanges {
       });
   }
 
+  curday = function(){
+    var today: Date;
+    today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //As January is 0.
+    var yyyy = today.getFullYear();
+    console.log('dia:',dd)
+    if(dd<10) var dd2='0'+dd;else{var dd2= dd.toString()}
+    if(mm<10) var mm2='0'+mm;
+    console.log('dia:',dd2)
+    console.log((yyyy+'-'+mm2+'-'+dd2))
+    return (yyyy+'-'+mm2+'-'+dd2);
+  };
+
   addEstudio(){
     
     this.estudio = {
@@ -144,7 +159,7 @@ export class AddEstudioComponent implements OnInit, OnChanges {
       nombre: JSON.parse(localStorage.getItem('solicitudDes')),
       tipoInstrumento: 'Encuesta',
       observaciones: null,
-      fechaInicio: this.estudioForm.value.fechaInicio,
+      fechaInicio: this.curday(),
       fechaFin: null,
       estatus: 'Activo',
       estado: 'En espera',
@@ -165,11 +180,11 @@ export class AddEstudioComponent implements OnInit, OnChanges {
       this.onError('El estudio debe tener preguntas asignadas');
     }else{
       this.estudiosService.createEstudio(
-        this.estudio as Estudio2
+        this.estudio
       ).subscribe( dataEstudio => 
         {
           if (dataEstudio != undefined){
-            console.log(JSON.stringify(this.estudio))
+            console.log(JSON.stringify(dataEstudio))
             this.onSucess('Estudio creado correctamente');
             this.estudiosService.addEncuestadosEstudio(dataEstudio.id.id,this.encuestados).subscribe();
             this.estudiosService.addPreguntasEstudio(dataEstudio.id.id,this.preguntas).subscribe();
