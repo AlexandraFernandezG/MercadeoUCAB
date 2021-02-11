@@ -7,13 +7,14 @@ import { ResultadosService } from 'src/app/servicios/resultados.service';
 import { isLabeledStatement } from 'typescript';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-resultados',
   templateUrl: './resultados.component.html',
   styleUrls: ['./resultados.component.css']
 })
-export class ResultadosComponent implements OnInit, AfterViewInit {
+export class ResultadosComponent implements OnInit {
 
   @ViewChildren('myChart') ctx: QueryList<ElementRef>;
 
@@ -31,19 +32,36 @@ export class ResultadosComponent implements OnInit, AfterViewInit {
   myctx: any;
   canva: any;
   data: JSON;
-  objeto :JSON;
+  objeto = [];
 
 
   constructor(
     private service: ResultadosService,
-    public actRoute: ActivatedRoute
-  ) { }
+    public actRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) { 
 
+
+  this.respuestaForm = this.fb.group({
+    respuesta: new FormControl('',[ Validators.required, Validators.maxLength(500)])
+  });
+  }
+
+  respuestaForm: FormGroup;
+  respuesta: string;
   ngOnInit() {
     this.idEstudio = +this.actRoute.snapshot.paramMap.get("id");
     this.Resultados();
+    //  setTimeout(() => {
+    //      this.Graficas();
+    //   },3000);
+
+    // this.Resultados();
+    this.Graficas();
 
   }
+
+  /*Para probar desde front
   getResultados() {
     var data = {
       "Preguntas": [
@@ -147,40 +165,47 @@ export class ResultadosComponent implements OnInit, AfterViewInit {
     }
     return data;
 
-  }
+  }*/
 
 
   Resultados() {
-    console.log(this.objeto);
 
-    var k = 0, l = 0;
-    this.inicio.push(l);
-    this.objeto["Preguntas"].forEach(function callback(element, i) {
-     element["resultado"].forEach(function result(opcion, j) {
-     opcion.forEach(function item(resp) {
-          if (typeof resp === 'string') {
-
-            this.labels.push(resp);
-            k++;
-            l++;
-          }
-          else {
-            this.respuestas.push(resp);
-          }
-        }, this);
-      }, this);
-      this.cantidad.push(k);
+    this.service.getResultados(this.idEstudio).subscribe(Pregunta => {
+      console.log("Data:", Pregunta);
+      this.objeto = Pregunta;
+      console.log(this.objeto["Preguntas"]);
+      var k = 0, l = 0;
       this.inicio.push(l);
-      k = 0;
-      this.preguntas.push(element.pregunta);
-      // this.Graficas(this.labels, this.data);
-      console.log(this.preguntas);
+      this.objeto["Preguntas"].forEach(function callback(element, i) {
+        console.log(element["resultado"]);
+        element["resultado"].forEach(function result(opcion, j) {
+          opcion.forEach(function item(resp) {
+            if (typeof resp === 'string') {
 
-    }, this);
-    console.log(this.labels);
-    console.log(this.respuestas);
-    console.log(this.cantidad);
-    console.log(this.inicio);
+              this.labels.push(resp);
+              k++;
+              l++;
+            }
+            else {
+              this.respuestas.push(resp);
+            }
+          }, this);
+        }, this);
+        this.cantidad.push(k);
+        this.inicio.push(l);
+        k = 0;
+        this.preguntas.push(element.pregunta);
+        // this.Graficas(this.labels, this.data);
+        console.log(this.preguntas);
+
+      }, this);
+      console.log(this.labels);
+      console.log(this.respuestas);
+      console.log(this.cantidad);
+      console.log(this.inicio);
+
+
+    });
   }
 
   ConstruirLabel(numPre: number, cant: number, inicio: number) {
@@ -204,10 +229,11 @@ export class ResultadosComponent implements OnInit, AfterViewInit {
     console.log(res);
     return res;
   }
-  ngAfterViewInit() {
+  Graficas() {
     //  var i = 2;
     // console.log('labels', this.labels[i]);
     // console.log('respuestas', this.respuestas[i]);
+    console.log("entree");
     var cont = 0;
     var ctx = 'myChart';
     this.ctx.forEach((e, i) => {
@@ -248,6 +274,11 @@ export class ResultadosComponent implements OnInit, AfterViewInit {
         }
       });
     });
+  }
+
+  enviarRespuesta(){
+    console.log(this.respuestaForm.value.respuesta);
+    
   }
 
 }
