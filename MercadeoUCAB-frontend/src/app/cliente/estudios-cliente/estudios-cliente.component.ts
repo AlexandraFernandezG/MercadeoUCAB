@@ -30,7 +30,8 @@ export class EstudiosClienteComponent implements OnInit {
   ngOnInit(): void {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.estudiosService.getEstudiosCliente(id).subscribe(
-      estudios => { 
+      estudios => {
+        console.log(estudios) 
         console.log(estudios)
         this.dataSource = new MatTableDataSource<Estudio>(estudios);
         this.dataSource.paginator = this.paginator;
@@ -38,7 +39,7 @@ export class EstudiosClienteComponent implements OnInit {
       });
     
 
-    this.estudiosService.getEstudios().subscribe(estudios => console.log(estudios));
+    //this.estudiosService.getEstudios().subscribe(estudios => console.log(estudios));
   }
   solicitarEstudio(): void {
     this._router.navigate(['/cliente/solicitar_estudio']);

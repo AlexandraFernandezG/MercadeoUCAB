@@ -41,7 +41,7 @@ export class UsuariosService {
     console.log(correo);
     return this.http.get<any>(this.url + 'usuario/consultarUsuarioCorreo/' + correo)
     .pipe(
-      tap(usuario => console.log(`fetched usuario id=${usuario.Usuario[0].id}`)),
+      tap(usuario => console.log(`fetched usuario id=${usuario.Usuario.id}`)),
       catchError(this.handleError)
     );
   }
