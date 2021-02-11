@@ -11,6 +11,7 @@ import ucab.dsw.mappers.MapperSolicitudEstudio;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -125,6 +126,45 @@ public class SolicitudEstudioServicio extends AplicacionBase{
             }
 
             return Response.status(Response.Status.OK).entity(listaSolicitudesEnEspera).build();
+
+        } catch (Exception ex) {
+
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+        }
+    }
+
+    /**
+     * Este método permite obtener todas las solicitudes de un cliente
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de solicitudes en espera y en tal caso obtener una excepcion si aplica.
+     */
+    @GET
+    @Path("/mostrarSolicitudesCliente/{id}")
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response mostrarSolicitudesCliente(@PathParam("id") long id) {
+
+        DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
+        List<SolicitudEstudio> listaSolicitud = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
+        List<SolicitudEstudio> listaSolicitudesCliente = new ArrayList<SolicitudEstudio>();
+        JsonObject dataObject;
+
+        try {
+
+            for (SolicitudEstudio solicitudEstudio : listaSolicitud) {
+
+                if (solicitudEstudio.get_estado().equals("En espera") && solicitudEstudio.get_usuario().get_id() == id) {
+                    listaSolicitudesCliente.add(solicitudEstudio);
+                }
+            }
+
+            return Response.status(Response.Status.OK).entity(listaSolicitudesCliente).build();
 
         } catch (Exception ex) {
 
