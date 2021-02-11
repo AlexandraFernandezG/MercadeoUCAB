@@ -37,6 +37,10 @@ export class SolicitudEstudiosService {
     return this.http.get<Solicitud[]>(this.url + 'solicitudEstudio/allSolicitudEstudio');
   }
 
+  getSolicitudesCliente(id: number):Observable<Solicitud[]>{
+    return this.http.get<Solicitud[]>(this.url + 'solicitudEstudio/mostrarSolicitudesCliente/' + id);
+  }
+
   createSolicitud(solicitud: Solicitud2): Observable<any>{
     console.log(solicitud);
     return this.http.post<Solicitud2>(this.url + 'solicitudEstudio/addSolicitudEstudio', JSON.stringify(solicitud), this.httpOptions).
