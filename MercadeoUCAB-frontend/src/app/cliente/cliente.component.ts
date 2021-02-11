@@ -10,6 +10,8 @@ declare var $;
 })
 export class ClienteComponent implements OnInit {
 
+  nombreUsuario: string = JSON.parse(localStorage.getItem('nombre'));
+
   constructor(private _router: Router) { }
 
   ngOnInit(): void {

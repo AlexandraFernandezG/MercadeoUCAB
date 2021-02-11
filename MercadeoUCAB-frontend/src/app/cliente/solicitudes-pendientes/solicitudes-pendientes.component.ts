@@ -25,7 +25,7 @@ export class SolicitudesPendientesComponent implements OnInit {
   ) { }
 
   displayedColumns: string[] = ['descripcion', 'genero', 'edadMinima', 'edadMaxima',
-     'estadoCivil', 'producto', 'acciones'];
+     'estadoCivil', 'producto', 'estado'];
   dataSource: MatTableDataSource<Solicitud>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -42,12 +42,12 @@ export class SolicitudesPendientesComponent implements OnInit {
   solicitarEstudio(): void {
     this._router.navigate(['/cliente/solicitar_estudio']);
   }
-  openModal(id: number):void{
-    this.dialog.open(AddEstudioComponent,
-      {
-        data: {id: id}
-      }
-      );
-  }
+  // openModal(id: number):void{
+  //   this.dialog.open(AddEstudioComponent,
+  //     {
+  //       data: {id: id}
+  //     }
+  //     );
+  // }
 
 }

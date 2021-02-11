@@ -22,7 +22,7 @@ export class EstudiosClienteComponent implements OnInit {
     ) { }
 
   estudios: Estudio[];  
-  displayedColumns: string[] = ['_id', 'nombre', '_fechaInicio','_fechaFin', '_estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', '_fechaInicio','_fechaFin', '_estatus', 'acciones'];
   dataSource: MatTableDataSource<Estudio>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -30,10 +30,8 @@ export class EstudiosClienteComponent implements OnInit {
   ngOnInit(): void {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.estudiosService.getEstudiosCliente(id).subscribe(
-      estudios => {
-        console.log(estudios) 
-        console.log(estudios)
-        this.dataSource = new MatTableDataSource<Estudio>(estudios);
+      dataEstudios => {
+        this.dataSource = new MatTableDataSource<Estudio>(dataEstudios.Estudios);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });

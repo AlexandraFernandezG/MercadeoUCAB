@@ -9,6 +9,8 @@ declare var $;
 })
 export class AdminComponent implements OnInit {
 
+  nombreUsuario: string = JSON.parse(localStorage.getItem('nombre'));
+
   constructor() { }
 
   ngOnInit(): void {

@@ -8,6 +8,8 @@ declare var $;
   styleUrls: ['./analista.component.css']
 })
 export class AnalistaComponent implements OnInit {
+  
+  nombreUsuario: string = JSON.parse(localStorage.getItem('nombre'));
 
   constructor() { }
 
