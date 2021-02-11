@@ -15,7 +15,6 @@ public class ConsultarUsuarioCorreoComando extends ComandoBase {
 
     public String email;
     public JsonObject usuarioObj;
-    public JsonArrayBuilder usuariosCorreo = Json.createArrayBuilder();
 
     public ConsultarUsuarioCorreoComando(String email) {
         this.email = email;
@@ -38,23 +37,20 @@ public class ConsultarUsuarioCorreoComando extends ComandoBase {
 
             if(obj.getCodigoRecuperacion() != null) {
 
-                JsonObject usuario = Json.createObjectBuilder().add("id", obj.getId())
+                usuarioObj = Json.createObjectBuilder().add("id", obj.getId())
                         .add("nombre", obj.getNombre())
                         .add("codigoRecuperacion", obj.getCodigoRecuperacion())
                         .add("correo", obj.getCorreo())
                         .add("estatus", obj.getEstatus()).build();
 
-                usuariosCorreo.add(usuario);
-
             } else {
 
-                JsonObject usuario = Json.createObjectBuilder().add("id", obj.getId())
+                usuarioObj = Json.createObjectBuilder().add("id", obj.getId())
                         .add("nombre", obj.getNombre())
                         .add("codigoRecuperacion", "null")
                         .add("correo", obj.getCorreo())
                         .add("estatus", obj.getEstatus()).build();
 
-                usuariosCorreo.add(usuario);
             }
 
         }
@@ -65,7 +61,7 @@ public class ConsultarUsuarioCorreoComando extends ComandoBase {
     public JsonObject getResult() {
 
         JsonObject resultado = Json.createObjectBuilder()
-                .add("Usuario", usuariosCorreo).build();
+                .add("Usuario", usuarioObj).build();
 
         return resultado;
     }
