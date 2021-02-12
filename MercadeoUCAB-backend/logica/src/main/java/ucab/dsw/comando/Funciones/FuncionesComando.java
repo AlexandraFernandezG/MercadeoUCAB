@@ -40,6 +40,16 @@ public class FuncionesComando {
         return fecha_estudio;
     }
 
+    public String devolverDisponibilidadEnLinea(long idSE){
+
+        DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
+        SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(idSE, SolicitudEstudio.class);
+
+        String disponibilidadEnLinea = solicitudEstudio.get_disponibilidadEnLinea();
+
+        return  disponibilidadEnLinea;
+    }
+
     /**
      * Este método permite insertar los usuarios a un estudio sin dto
      * @author Emanuel Di Cristofaro
