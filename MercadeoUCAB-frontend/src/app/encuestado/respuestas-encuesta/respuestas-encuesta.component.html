@@ -12,7 +12,7 @@
             <div class="form-row row-cols-2 flex-row flex-grow-0 justify-content-center">
 
               <div class="col col-contact">
-                <p>Pregunta {{in+1}}</p>
+                <p>Pregunta {{i+1}}</p>
                 <p>{{pregunta.descripcion+' '}}</p>
                 <mat-form-field *ngIf="pregunta.tipoPregunta == 'Abierta'">
                   <textarea matInput placeholder="Ej. Esto me hace sentir..." name="respuestas[i]"

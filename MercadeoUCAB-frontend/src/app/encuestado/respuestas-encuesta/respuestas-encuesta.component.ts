@@ -32,15 +32,18 @@ export class RespuestasEncuestaComponent implements OnInit {
   respuestasAso: respuestaPregunta[];
   respuestasAso2: respuestaPregunta3[];
   idEstudio: number;
+  idUsuario: number;
+  
   
   ngOnInit(): void {
-    this.idEstudio = +this.actRoute.snapshot.paramMap.get("id");
-    this.service.getPreguntasEncuesta(this.idEstudio)
+    this.idEstudio = +this.actRoute.snapshot.paramMap.get("idEstudio");
+    this.idUsuario = +this.actRoute.snapshot.paramMap.get("idUsuario");
+    this.service.getPreguntasEncuesta(this.idEstudio, this.idUsuario)
     .subscribe(data => {this.preguntas2 = data;
       console.log(this.preguntas2);
       this.preguntas2[0].visible=true;
     } );
-    this.service.getRespuestasAsociadas(this.idEstudio)
+    this.service.getRespuestasAsociadas(this.idEstudio )
     .subscribe(data => {this.respuestasAso2 = data;
       console.log(this.respuestasAso);
     } );
@@ -51,6 +54,7 @@ export class RespuestasEncuestaComponent implements OnInit {
 
     this.preguntas2[index].visible = false;
     this.preguntas2[index + 1].visible = true;
+    this.enviarRespuestas(index);
 
 
   }
@@ -60,13 +64,14 @@ export class RespuestasEncuestaComponent implements OnInit {
 
   async enviarRespuestas(index: number) {
 
+    console.log('hola');
+
     if (this.preguntas2[index].tipoPregunta === 'Abierta') {
 
         let r: Respuesta2 = {
-          pregunta: this.preguntas2[index].descripcion,
           estatus: 'Activo',
           respuestaAbierta: this.respuestas[index],
-          usuarioDto:  JSON.parse(localStorage.getItem('usuarioID')),
+          usuarioDto: this.idUsuario,
           preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
 
@@ -76,13 +81,12 @@ export class RespuestasEncuestaComponent implements OnInit {
         /* this.resps = []; */
       }
 
-    if (this.preguntas2[index].tipoPregunta === 'Seleccion Simple') {
+    if (this.preguntas2[index].tipoPregunta === 'Selección Simple') {
 
         let r: Respuesta2 = {
-          pregunta: this.preguntas2[index].descripcion,
           estatus: 'Activo',
           respuestaSimple: this.respuestas[index],
-          usuarioDto:   JSON.parse(localStorage.getItem('usuarioID')),
+          usuarioDto: this.idUsuario,
           preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
 
@@ -95,10 +99,9 @@ export class RespuestasEncuestaComponent implements OnInit {
     if (this.preguntas2[index].tipoPregunta === 'Verdadero o Falso') {
 
         let r: Respuesta2 = {
-          pregunta: this.preguntas2[index].descripcion,
           estatus: 'Activo',
           verdaderoFalso: this.respuestas[index],
-          usuarioDto: JSON.parse(localStorage.getItem('usuarioID')),
+          usuarioDto:  this.idUsuario,
           preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
         this.service.addRespuesta(r);
@@ -107,31 +110,28 @@ export class RespuestasEncuestaComponent implements OnInit {
     if ( this.preguntas2[index].tipoPregunta === 'Escala') {
 
         let r: Respuesta2 = {
-          pregunta: this.preguntas2[index].descripcion,
           estatus: 'Activo',
           escala: this.respuestas[index],
-          usuarioDto: JSON.parse(localStorage.getItem('usuarioID')),
+          usuarioDto: this.idUsuario,
           preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
         this.service.addRespuesta(r);
    
       }
 
-    if (this.preguntas2[index].tipoPregunta === 'Seleccion Multiple'){
+    if (this.preguntas2[index].tipoPregunta === 'Selección Múltiple'){
+      console.log('entree');
           for (let i =0; i < this.respuestas.length; i++){
            //for (let j = 0; j < this.preguntas2.length; j++){
             if ((this.respuestas[i].fkPregunta === this.preguntas2[index].idPreguntaEncuesta)
             && this.respuestas[i].completado === true){
-
               let r: Respuesta2 = {
-                pregunta: this.preguntas2[index].descripcion,
                 estatus: 'Activo',
                 respuestaMultiple: this.respuestas[i].pregunta,
-                usuarioDto:  JSON.parse(localStorage.getItem('usuarioID')),
+                usuarioDto: this.idUsuario,
                 preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
               };
 
-              await this.Delay(1000);
               this.service.addRespuesta(r);
               console.log(r);
               console.log(this.respuestas[i].pregunta);

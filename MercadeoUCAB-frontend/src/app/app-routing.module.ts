@@ -75,7 +75,7 @@ const routes: Routes = [
     children: [
       { path: 'estudios', component: EstudiosEncuestadoComponent },
       { path: 'registro-encuestado', component: RegistroEncuestadoComponent },
-      { path: 'respuestas-encuesta/:id', component: RespuestasEncuestaComponent },
+      { path: 'respuestas-encuesta/:idEstudio/:idUsuario', component: RespuestasEncuestaComponent },
       { path: '', pathMatch: 'prefix', redirectTo: 'estudios'},
     ]
   },
