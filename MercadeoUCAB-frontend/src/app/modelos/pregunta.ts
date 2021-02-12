@@ -38,6 +38,7 @@ export class  PreguntaEncuesta{
       public estado?: string,
       public subcategoriaDto?: number,
       public usuarioDto?: number,
+      public visible?:boolean,
       public idPreguntaEstudio?: number,
       ){}
     }
