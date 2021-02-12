@@ -31,7 +31,7 @@ export class EstudiosAnalistaComponent implements OnInit {
   ngOnInit(): void {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.service.getEstudiosAnalista(id).subscribe(
-      estudiosData => { this.estudios = estudiosData.Estudios ,
+      estudiosData => { this.estudios = estudiosData.Estudios.reverse() ,
         console.log(this.estudios)},
       );
     

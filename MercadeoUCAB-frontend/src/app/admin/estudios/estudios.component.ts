@@ -46,7 +46,7 @@ export class EstudiosComponent implements OnInit {
   ngOnInit(): void {
     this.service.getEstudios()
     .subscribe(data => {
-      this.dataSource = new MatTableDataSource<Estudio>(data);
+      this.dataSource = new MatTableDataSource<Estudio>(data.Estudios);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     } );

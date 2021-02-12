@@ -27,7 +27,7 @@ export class EstudiosEncuestadoComponent implements OnInit {
   
   id: number;
   otro: number;
-  estudios: Estudio[];
+  estudios:any[];
   infoEncuestado: RegistroEncuestado;
   displayedColumns: string[] = ['nombre', 'fechaInicio', 'fechaFin','estatus', 'acciones'];
   dataSource: MatTableDataSource<Estudio>;
@@ -37,10 +37,9 @@ export class EstudiosEncuestadoComponent implements OnInit {
   ngOnInit(): void {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.estudiosService.getEstudiosEncuestado(id)
-      .subscribe(data => {
-        this.dataSource = new MatTableDataSource<Estudio>(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+      .subscribe(data => { this.estudios = data.Estudios.reverse()
+        console.log(data)
+        
       console.log(this.estudios);
     });
       // console.log(this.infoEncuestado);
