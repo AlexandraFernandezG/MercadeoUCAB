@@ -1,6 +1,7 @@
 package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
-import ucab.dsw.accesodatos.*;
+import ucab.dsw.accesodatos.DaoEstudio;
+import ucab.dsw.accesodatos.DaoUsuarioEstudio;
 import ucab.dsw.comando.Estudio.*;
 import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.*;
@@ -14,19 +15,20 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path( "/estudio" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class EstudioServicio extends AplicacionBase {
 
-
+    private static Logger logger = LoggerFactory.getLogger(EstudioServicio.class);
     /**
      * Este método permite obtener todas los estudios.
      * @author Emanuel Di Cristofaro y Gregg Spinetti
@@ -38,6 +40,7 @@ public class EstudioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudios() {
 
+        logger.debug("Ingresando al método que muestra todos los estudios");
         JsonObject dataObject;
 
         try {
@@ -45,6 +48,7 @@ public class EstudioServicio extends AplicacionBase {
             ListarEstudiosComando comando = Fabrica.crear(ListarEstudiosComando.class);
             comando.execute();
 
+            logger.debug("Saliendo del método que muestra todos los estudios");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
 
@@ -53,8 +57,9 @@ public class EstudioServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 404).build();
 
+            logger.error("Código de error: " + 404 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -72,7 +77,7 @@ public class EstudioServicio extends AplicacionBase {
     @Path("/consultarEstudio/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarEstudio(@PathParam("id") long id) {
-
+        logger.debug("Ingresando al método que consulta un estudio");
         JsonObject dataObject;
 
         try {
@@ -89,6 +94,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -96,8 +102,9 @@ public class EstudioServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 404).build();
 
+            logger.error("Código de error: " + 404 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
         
@@ -114,6 +121,7 @@ public class EstudioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response estudiosActivos() {
 
+        logger.debug("Ingresando al método que muestra los estudios activos");
         JsonObject dataObject;
         
         try {
@@ -121,6 +129,7 @@ public class EstudioServicio extends AplicacionBase {
             MostrarEstudiosActivosComando comando = Fabrica.crear(MostrarEstudiosActivosComando.class);
             comando.execute();
 
+            logger.debug("Saliendo del método que muestra todos los estudios activos");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
@@ -128,8 +137,9 @@ public class EstudioServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 404).build();
 
+            logger.error("Código de error: " + 404 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -146,6 +156,7 @@ public class EstudioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response estudiosEnEspera() {
 
+        logger.debug("Ingresando al método que muestra los estudios en espera");
         JsonObject dataObject;
 
         try {
@@ -153,6 +164,7 @@ public class EstudioServicio extends AplicacionBase {
             MostrarEstudiosEnEsperaComando comando = Fabrica.crear(MostrarEstudiosEnEsperaComando.class);
             comando.execute();
 
+            logger.debug("Saliendo del método que muestra los estudios en espera");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
@@ -162,6 +174,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -179,6 +192,7 @@ public class EstudioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEncuestadosSolicitud(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que permite obtener a los encuestados en base a una solicitud");
         JsonObject dataObject;
 
         try {
@@ -186,6 +200,7 @@ public class EstudioServicio extends AplicacionBase {
             ListarSolicitudEncuestadosComando comando = Fabrica.crearComandoConId(ListarSolicitudEncuestadosComando.class, id);
             comando.execute();
 
+            logger.debug("Saliendo del método que permite obtener a los encuestados en base a una solicitud");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         }  catch (NullPointerException ex) {
@@ -195,6 +210,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -203,7 +219,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
-
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -220,6 +236,7 @@ public class EstudioServicio extends AplicacionBase {
      @Produces( MediaType.APPLICATION_JSON )
      public Response insertarEncuestadosEstudio(@PathParam("id") long id, List<UsuarioResponse> listaEncuestados){
 
+         logger.debug("Ingresando al método que muestra a los encuestados en base a un estudio");
          JsonObject dataObject;
 
          try {
@@ -227,6 +244,7 @@ public class EstudioServicio extends AplicacionBase {
              InsertarEncuestadosEstudioComando comando = Fabrica.crearComandoListIdUsuarioResponse(InsertarEncuestadosEstudioComando.class, id, listaEncuestados);
              comando.execute();
 
+             logger.debug("Saliendo del método que muestra a los encuestados en base a un estudio");
              return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
          } catch (Exception ex) {
@@ -235,7 +253,7 @@ public class EstudioServicio extends AplicacionBase {
                      .add("estado", "Error")
                      .add("excepcion", ex.getMessage())
                      .add("codigo", 400).build();
-
+             logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
              return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
          }
      }
@@ -252,6 +270,7 @@ public class EstudioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response insertarPreguntasEstudio(@PathParam("id") long id, List<PreguntasResponse> listaPreguntas){
 
+        logger.debug("Ingresando al método que permite insertar preguntas a un estudio");
         JsonObject dataObject;
 
         try {
@@ -259,6 +278,7 @@ public class EstudioServicio extends AplicacionBase {
             InsertarPreguntasEstudioComando comando = Fabrica.crearComandoListIdPreguntasResponse(InsertarPreguntasEstudioComando.class, id, listaPreguntas);
             comando.execute();
 
+            logger.debug("Saliendo del método que permite insertar preguntas a un estudio");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PruebaExcepcion ex) {
@@ -268,6 +288,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 402).build();
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -277,6 +298,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -298,6 +320,7 @@ public class EstudioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response addEstudios(EstudioDto estudioDto) {
 
+        logger.debug("Ingresando al método que agrega un estudio");
         JsonObject dataObject;
 
         try {
@@ -306,6 +329,7 @@ public class EstudioServicio extends AplicacionBase {
             AddEstudioComando comando = Fabrica.crearComandoConEntity(AddEstudioComando.class, estudio);
             comando.execute();
 
+            logger.debug("Saliendo del método que agrega un estudio");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -315,6 +339,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -324,6 +349,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }  catch (PruebaExcepcion ex) {
@@ -333,6 +359,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 402).build();
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -342,6 +369,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -365,7 +393,7 @@ public class EstudioServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstudio(@PathParam("id") long id, EstudioDto estudioDto){
 
-
+        logger.debug("Ingresando al método que actualiza un estudio");
         JsonObject dataObject;
 
             try {
@@ -374,6 +402,7 @@ public class EstudioServicio extends AplicacionBase {
                 ModificarEstudioComando comando = Fabrica.crearComandoBoth(ModificarEstudioComando.class, id, estudio);
                 comando.execute();
 
+                logger.debug("Saliendo del método que actualiza un estudio");
                 return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -383,6 +412,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -392,6 +422,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             } catch (IllegalAccessException | PruebaExcepcion ex) {
@@ -403,6 +434,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 604).build();
 
+                logger.error("Código de error: " + 604 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (InstantiationException ex) {
@@ -413,6 +445,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 602).build();
 
+                logger.error("Código de error: " + 602 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (InvocationTargetException ex) {
@@ -423,6 +456,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 603).build();
 
+                logger.error("Código de error: " + 603 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (Exception ex) {
@@ -433,6 +467,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 400).build();
 
+                logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
             }
     }
@@ -453,7 +488,7 @@ public class EstudioServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstadoEstudio(@PathParam("id") long id){
 
-
+        logger.debug("Ingresando al método que actualiza el estado de un estudio");
         JsonObject dataObject;
 
         try {
@@ -461,6 +496,7 @@ public class EstudioServicio extends AplicacionBase {
             ModificarEstadoEstudioComando comando = Fabrica.crearComandoConId(ModificarEstadoEstudioComando.class, id);
             comando.execute();
 
+            logger.debug("Saliendo del método que actualiza el estado de un estudio");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -470,6 +506,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -479,6 +516,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (IllegalAccessException | PruebaExcepcion ex) {
@@ -490,6 +528,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 604).build();
 
+            logger.error("Código de error: " + 604 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InstantiationException ex) {
@@ -500,6 +539,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 602).build();
 
+            logger.error("Código de error: " + 602 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InvocationTargetException ex) {
@@ -510,6 +550,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 603).build();
 
+            logger.error("Código de error: " + 603 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -520,6 +561,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -537,13 +579,14 @@ public class EstudioServicio extends AplicacionBase {
     @Path("/deleteEstudio/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarEstudio(@PathParam("id") long id){
-
+        logger.debug("Ingresando al método que permite eliminar un estudio");
         JsonObject dataObject;
             try {
 
                 EliminarEstudioComando comando = Fabrica.crearComandoConId(EliminarEstudioComando.class, id);
                 comando.execute();
 
+                logger.debug("Saliendo del método que permite eliminar un estudio");
                 return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -562,6 +605,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             } catch (IllegalAccessException | PruebaExcepcion ex) {
@@ -573,6 +617,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 604).build();
 
+                logger.error("Código de error: " + 604 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (InstantiationException ex) {
@@ -583,6 +628,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 602).build();
 
+                logger.error("Código de error: " + 602 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (InvocationTargetException ex) {
@@ -593,6 +639,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 603).build();
 
+                logger.error("Código de error: " + 603 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (Exception ex) {
@@ -603,6 +650,7 @@ public class EstudioServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 400).build();
 
+                logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
             }
 
@@ -620,6 +668,7 @@ public class EstudioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response detallesEstudio(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que permite obtener los detalles de un estudio");
         JsonObject dataObject;
 
         try {
@@ -627,6 +676,7 @@ public class EstudioServicio extends AplicacionBase {
             DetallesEstudioComando comando = Fabrica.crearComandoConId(DetallesEstudioComando.class, id);
             comando.execute();
 
+            logger.debug("Saliendo del método que permite obtener los detalles de un estudio");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
@@ -636,6 +686,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -645,6 +696,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -664,6 +716,7 @@ public class EstudioServicio extends AplicacionBase {
     @Consumes( MediaType.TEXT_PLAIN )
     public Response colocarObservacionAnalista(@PathParam("id") long id, String observacion){
 
+        logger.debug("Ingresando al método que permite al analista añadir una observación");
         JsonObject dataObject;
 
         try {
@@ -671,6 +724,7 @@ public class EstudioServicio extends AplicacionBase {
             ColocarObservacionAnalistaComando comando = Fabrica.crearComandoIdString(ColocarObservacionAnalistaComando.class, id, observacion);
             comando.execute();
 
+            logger.debug("Saliendo del método que permite al analista añadir una observación");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -680,6 +734,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -689,6 +744,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (IllegalAccessException | PruebaExcepcion ex) {
@@ -700,6 +756,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 604).build();
 
+            logger.error("Código de error: " + 604 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InstantiationException ex) {
@@ -710,6 +767,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 602).build();
 
+            logger.error("Código de error: " + 602 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InvocationTargetException ex) {
@@ -720,6 +778,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 603).build();
 
+            logger.error("Código de error: " + 603 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -730,69 +789,50 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
 
-
-    /*public void update(long encuestado){
-
-        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
-
-        UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(encuestado, UsuarioEstudio.class);
-        usuarioEstudio_modificar.set_estatus("Respondido");
-        daoUsuarioEstudio.update(usuarioEstudio_modificar);
-    }
-
-    @GET
-    @Path("/pruebaEstatusEncuestado/{id}")
+    /**
+     * Este método permite cambiar el estatus del encuestado.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de resultado exitoso y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se modifica un estudio duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     */
+    @PUT
+    @Path("/cambiarEstatusEncuestado/{idE}/{idU}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response cambiarEstatusUsuarioEstudio(@PathParam("id") long id){
+    public Response cambiarEstatusUsuarioEstudio(@PathParam("idE") long idE, @PathParam("idU") long idU){
 
         JsonObject dataObject;
-        int cantidadRespuestaTotal = 0;
         int cantidadEncuestadosRespondido = 0;
-        DaoEstudio daoEstudio = new DaoEstudio();
+        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
+        DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
+        List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
 
         try {
 
-            DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
             //Obtener los encuestados de un estudio
-            List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
             List<UsuarioEstudio> encuestadosEstudio = new ArrayList<>();
 
-            for (UsuarioEstudio encuestado: listaUsuarioEstudio){
+            for (UsuarioEstudio encuestado : listaUsuarioEstudio) {
 
-                if(encuestado.get_estudio().get_id() == id)
+                if (encuestado.get_estudio().get_id() == idE)
                     encuestadosEstudio.add(encuestado);
             }
 
-            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-            //Obtener las preguntas del estudio
-            List<PreguntaEstudio> listaPreguntas = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-            List<PreguntaEstudio> listaPreguntasEstudio = new ArrayList<>();
+            for(UsuarioEstudio user: listaUsuarioEstudio){
 
-            for(PreguntaEstudio pregunta: listaPreguntas){
+                if(user.get_estudio().get_id() == idE && user.get_usuario().get_id() == idU){
 
-                if(pregunta.get_estudio().get_id() == id)
-                    listaPreguntasEstudio.add(pregunta);
-            }
-
-            //Operacion para cambiar el estatus
-            int cantidadPreguntas = listaPreguntasEstudio.size();
-            List<Long> cantidadRespuestas = new ArrayList<>();
-
-            for (UsuarioEstudio encuestados: encuestadosEstudio){
-
-                cantidadRespuestas = daoUsuarioEstudio.cantidadRespuestas(encuestados.get_usuario().get_id(), id);
-                cantidadRespuestaTotal = cantidadRespuestas.size();
-
-                if(cantidadPreguntas == cantidadRespuestaTotal) {
-
-                    //daoUsuarioEstudio.updateEstadoEstudio(encuestados.get_id());
-                    update(encuestados.get_id());
+                    UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(user.get_id(), UsuarioEstudio.class);
+                    usuarioEstudio_modificar.set_estatus("Respondido");
+                    daoUsuarioEstudio.update(usuarioEstudio_modificar);
                 }
-
             }
 
             //Verificar que todos los encuestados respondieron la encuesta en el estudio
@@ -806,15 +846,13 @@ public class EstudioServicio extends AplicacionBase {
 
             //Finalmente cambiamos el estado del estudio acorde al conteo
             if(encuestadosEstudio.size() == cantidadEncuestadosRespondido) {
-                Estudio estudio = daoEstudio.find(id, Estudio.class);
+                Estudio estudio = daoEstudio.find(idE, Estudio.class);
                 estudio.set_estado("Finalizado");
                 daoEstudio.update(estudio);
             }
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", 200)
-                    .add("cantidadPreguntas", cantidadPreguntas)
-                    .add("cantidadRespuestas", cantidadRespuestas.size())
                     .add("Mensaje", "Operacion realizada con exito").build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
@@ -840,5 +878,5 @@ public class EstudioServicio extends AplicacionBase {
         }
 
 
-    }*/
+    }
 }

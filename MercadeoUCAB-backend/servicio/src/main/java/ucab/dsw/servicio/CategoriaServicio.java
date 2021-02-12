@@ -15,11 +15,17 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.InvocationTargetException;
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 @Path( "/categoria" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class CategoriaServicio extends AplicacionBase {
+
+    private static Logger logger = LoggerFactory.getLogger(CategoriaServicio.class);
 
     /**
      * Este método permite obtener todas las categorias.
@@ -32,12 +38,16 @@ public class CategoriaServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarCategorias() {
 
+        logger.debug("Ingresando al método que consulta todas las categorías");
         JsonObject dataObject;
 
         try {
 
+
             ListarCategoriasComando comando = Fabrica.crear(ListarCategoriasComando.class);
             comando.execute();
+
+            logger.debug("Saliendo del método que consulta todas las categorías");
 
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
@@ -48,6 +58,7 @@ public class CategoriaServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -67,6 +78,7 @@ public class CategoriaServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarCategoria(@PathParam("id") long id) {
 
+        logger.debug("Ingresando al método que consulta una categoría");
         JsonObject dataObject;
 
         try {
@@ -74,6 +86,7 @@ public class CategoriaServicio extends AplicacionBase {
             ConsultarCategoriaComando comando = Fabrica.crearComandoConId(ConsultarCategoriaComando.class, id);
             comando.execute();
 
+            logger.debug("Saliendo del método que consulta una categoría");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
@@ -83,6 +96,7 @@ public class CategoriaServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -92,6 +106,7 @@ public class CategoriaServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -107,7 +122,7 @@ public class CategoriaServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response categoriasActivas()  {
 
-
+        logger.debug("Ingresando al método que muestra las categorías activas");
         JsonObject dataObject;
 
         try {
@@ -115,6 +130,7 @@ public class CategoriaServicio extends AplicacionBase {
             MostrarCategoriasActivasComando comando = Fabrica.crear(MostrarCategoriasActivasComando.class);
             comando.execute();
 
+            logger.debug("Saliendo del método que muestra las categorías activas");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
@@ -124,6 +140,7 @@ public class CategoriaServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -140,6 +157,7 @@ public class CategoriaServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarSubcategoriasDeCategoria(@PathParam("id") long id) {
 
+        logger.debug("Ingresando al método que lista las subcategorías de una categoría");
         JsonObject dataObject;
 
         try {
@@ -147,6 +165,7 @@ public class CategoriaServicio extends AplicacionBase {
             MostrarSubcategoriasCategoriasComando comando = Fabrica.crearComandoConId(MostrarSubcategoriasCategoriasComando.class, id);
             comando.execute();
 
+            logger.debug("Saliendo método que lista las subcategorías de una categoría");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
@@ -156,6 +175,7 @@ public class CategoriaServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -178,7 +198,7 @@ public class CategoriaServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addCategoria(CategoriaDto categoriaDto)
     {
-
+        logger.debug("Ingresando al método que agrega una categoría");
         JsonObject dataObject;
 
         try {
@@ -187,15 +207,17 @@ public class CategoriaServicio extends AplicacionBase {
             AddCategoriaComando comando = Fabrica.crearComandoConEntity(AddCategoriaComando.class, categoria);
             comando.execute();
 
+            logger.debug("Saliendo del método que agrega una categoría");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
             dataObject= Json.createObjectBuilder()
-                    .add("estado","error")
+                    .add("estado","Error")
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -205,6 +227,7 @@ public class CategoriaServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (IllegalAccessException ex) {
@@ -216,6 +239,7 @@ public class CategoriaServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 600).build();
 
+            logger.error("Código de error: " + 600 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InstantiationException ex) {
@@ -226,6 +250,7 @@ public class CategoriaServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 601).build();
 
+            logger.error("Código de error: " + 601 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InvocationTargetException ex) {
@@ -236,6 +261,7 @@ public class CategoriaServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 602).build();
 
+            logger.error("Código de error: " + 602 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
         }
     }
@@ -257,6 +283,7 @@ public class CategoriaServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstatusCategoria(@PathParam("id") long id, CategoriaDto categoriaDto){
 
+        logger.debug("Ingresando al método que cambia el estatus de una categoría");
         JsonObject dataObject;
 
             try {
@@ -265,6 +292,7 @@ public class CategoriaServicio extends AplicacionBase {
                 ModificarEstatusCategoriaComando comando = Fabrica.crearComandoBoth(ModificarEstatusCategoriaComando.class, id, categoria);
                 comando.execute();
 
+                logger.debug("Saliendo del método que cambia el estatus de una categoría");
                 return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -274,6 +302,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException | IllegalAccessException | InvocationTargetException | InstantiationException | PruebaExcepcion ex) {
@@ -283,6 +312,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 700).build();
 
+                logger.error("Código de error: " + 700 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             }
@@ -305,6 +335,7 @@ public class CategoriaServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarCategoria(@PathParam("id") long id, CategoriaDto categoriaDto){
 
+        logger.debug("Ingresando al método que actualiza una categoría");
         JsonObject dataObject;
 
             try {
@@ -313,6 +344,7 @@ public class CategoriaServicio extends AplicacionBase {
                 ModificarCategoriaComando comando = Fabrica.crearComandoBoth(ModificarCategoriaComando.class, id, categoria);
                 comando.execute();
 
+                logger.debug("Saliendo del método que modifica una categoría");
                 return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -322,6 +354,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -331,6 +364,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             } catch (IllegalAccessException | PruebaExcepcion ex) {
@@ -342,6 +376,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 604).build();
 
+                logger.error("Código de error: " + 604 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (InstantiationException ex) {
@@ -352,6 +387,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 602).build();
 
+                logger.error("Código de error: " + 602 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (InvocationTargetException ex) {
@@ -362,6 +398,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 603).build();
 
+                logger.error("Código de error: " + 603 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
             }
     }
@@ -381,6 +418,7 @@ public class CategoriaServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarCategoria(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que elimina una categoría");
         JsonObject dataObject;
 
             try {
@@ -388,6 +426,7 @@ public class CategoriaServicio extends AplicacionBase {
                 EliminarCategoriaComando comando = Fabrica.crearComandoConId(EliminarCategoriaComando.class, id);
                 comando.execute();
 
+                logger.debug("Saliendo del método que elimina una categoría");
                 return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -397,6 +436,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -406,6 +446,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
                         .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             } catch (IllegalAccessException | PruebaExcepcion ex) {
@@ -417,6 +458,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 604).build();
 
+                logger.error("Código de error: " + 604 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (InstantiationException ex) {
@@ -427,6 +469,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 602).build();
 
+                logger.error("Código de error: " + 602 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
             } catch (InvocationTargetException ex) {
@@ -437,6 +480,7 @@ public class CategoriaServicio extends AplicacionBase {
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 603).build();
 
+                logger.error("Código de error: " + 603 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
             }
 
