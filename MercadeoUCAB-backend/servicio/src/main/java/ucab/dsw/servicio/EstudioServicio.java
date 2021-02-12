@@ -1,5 +1,7 @@
 package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
+import ucab.dsw.accesodatos.DaoEstudio;
+import ucab.dsw.accesodatos.DaoUsuarioEstudio;
 import ucab.dsw.comando.Estudio.*;
 import ucab.dsw.dtos.*;
 import ucab.dsw.entidades.*;
@@ -10,6 +12,7 @@ import ucab.dsw.Response.PreguntasResponse;
 import ucab.dsw.Response.UsuarioResponse;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
