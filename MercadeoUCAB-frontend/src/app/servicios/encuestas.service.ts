@@ -30,9 +30,10 @@ export class EncuestasService {
     })
   };
 
-  getPreguntasEncuesta(id:number){
+  getPreguntasEncuesta(id: number, idUsuario: number): Observable<any>{
     console.log("entre1");
-    return this.http.get<PreguntaEncuesta[]>(this.url + 'encuesta/preguntas/' +  id);
+    console.log(id, idUsuario);
+    return this.http.get<any>(this.url + 'encuesta/preguntas/'+id + '/'+idUsuario);
   }
 
   getRespuestasAsociadas(id:number){
@@ -40,9 +41,10 @@ export class EncuestasService {
     return this.http.get<respuestaPregunta3[]>(this.url + 'encuesta/respuestas/' +  id);
   }
 
-  addRespuesta(respuesta:Respuesta2[]){
+  addRespuesta(respuesta:Respuesta2){
     console.log('entre');
-    return this.http.post(this.url +'encuesta/responder' , respuesta)
+    console.log (respuesta);
+    return this.http.post(this.url +'respuesta/addRespuesta' , respuesta)
     .subscribe(
       response => {
         console.log('guardar respuestas' + response);

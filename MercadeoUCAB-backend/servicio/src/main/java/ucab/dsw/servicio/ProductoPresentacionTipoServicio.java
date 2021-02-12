@@ -12,6 +12,9 @@ import ucab.dsw.entidades.ProductoPresentacionTipo;
 import ucab.dsw.entidades.Tipo;
 import ucab.dsw.excepciones.PruebaExcepcion;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
@@ -27,6 +30,8 @@ import javax.ws.rs.core.MediaType;
 @Consumes( MediaType.APPLICATION_JSON )
 public class ProductoPresentacionTipoServicio extends AplicacionBase{
 
+    private static Logger logger = LoggerFactory.getLogger(ProductoPresentacionTipoServicio.class);
+
     /**
      * Este método permite obtener los tipos de un producto.
      * @author Emanuel Di Cristofaro
@@ -41,6 +46,8 @@ public class ProductoPresentacionTipoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarTiposProducto(@PathParam("id") long id)  {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los tipos de un producto");
         DaoProductoPresentacionTipo dao = new DaoProductoPresentacionTipo();
         List<ProductoPresentacionTipo> listaProductoPT = dao.findAll(ProductoPresentacionTipo.class);
         List<Tipo> listaTiposProducto = new ArrayList<Tipo>();
@@ -59,19 +66,22 @@ public class ProductoPresentacionTipoServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que lista todos los tipos de un producto");
             return Response.status(Response.Status.OK).entity(listaTiposProducto).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -96,6 +106,9 @@ public class ProductoPresentacionTipoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarPresentacionesProducto(@PathParam("id") long id) {
 
+
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todas las presentaciones de un producto");
         DaoProductoPresentacionTipo dao = new DaoProductoPresentacionTipo();
         List<ProductoPresentacionTipo> listaProductoPT = dao.findAll(ProductoPresentacionTipo.class);
         List<Presentacion> listaPresentacionProducto = new ArrayList<Presentacion>();

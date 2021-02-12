@@ -122,44 +122,6 @@ public class UsuarioEstudioServicio extends AplicacionBase{
     }
 
     /**
-     * Este método permite obtener todos los usuarioEstudio activos.
-     * @author Emanuel Di Cristofaro y Gregg Spinetti
-     * @return Este metodo retorna un objeto de tipo Json con el
-     * arreglo de los usuarioEstudio y en tal caso obtener una excepcion si aplica.
-     */
-    @GET
-    @Path("/usuarioEstudiosActivos")
-    @Produces( MediaType.APPLICATION_JSON )
-    public Response usuarioEstudioActivos() {
-
-        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
-        List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
-        List<UsuarioEstudio> listaUsuarioEstudioActivos = new ArrayList<UsuarioEstudio>();
-        JsonObject dataObject;
-
-        try {
-
-            for (UsuarioEstudio usuarioEstudio : listaUsuarioEstudio) {
-
-                if (usuarioEstudio.get_estatus().equals("Activo")) {
-                    listaUsuarioEstudioActivos.add(usuarioEstudio);
-                }
-            }
-            return Response.status(Response.Status.OK).entity(listaUsuarioEstudioActivos).build();
-
-        } catch (Exception ex) {
-
-            dataObject = Json.createObjectBuilder()
-                    .add("estado", "Error")
-                    .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
-
-            return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
-
-        }
-    }
-
-    /**
      * Este método permite insertar un estudio con un encuestado
      * @author Emanuel Di Cristofaro y Gregg Spinetti
      * @return Este metodo retorna un objeto de tipo Json con el
@@ -234,25 +196,37 @@ public class UsuarioEstudioServicio extends AplicacionBase{
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
      * @throws PersistenceException si se inserta un usuarioEstudio duplicado.
      * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
-     * @param usuarioEstudioDto el objeto usuarioEstudio que el sistema desea modificar.
-     * @param id el id del usuarioEstudio a modificar
+     * @param idE el id del estudio
+     * @patam idU el id del usuario
      */
     @PUT
-    @Path("/estatusUsuarioEstudio/{id}")
+    @Path("/estatusUsuarioProgreso/{idE}/{idU}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response modificarEstatusUsuarioEstudio(@PathParam("id") long id, UsuarioEstudioDto usuarioEstudioDto){
+    public Response modificarEstatusProgreso(@PathParam("idE") long idE, @PathParam("idU") long idU){
 
         DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
         JsonObject dataObject;
 
             try {
 
-                UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(id, UsuarioEstudio.class);
-                usuarioEstudioDto.setEstatus(usuarioEstudioDto.getEstatus());
-                daoUsuarioEstudio.update(usuarioEstudio_modificar);
+                List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
 
-                return Response.status(Response.Status.OK).entity(usuarioEstudio_modificar).build();
+                for(UsuarioEstudio user: listaUsuarioEstudio){
+
+                    if(user.get_estudio().get_id() == idE && user.get_usuario().get_id() == idU){
+
+                        UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(user.get_id(), UsuarioEstudio.class);
+                        usuarioEstudio_modificar.set_estatus("En progreso");
+                        daoUsuarioEstudio.update(usuarioEstudio_modificar);
+                    }
+                }
+
+                dataObject = Json.createObjectBuilder()
+                        .add("estado", 200)
+                        .add("Mensaje", "Operacion realizada con exito").build();
+
+                return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
