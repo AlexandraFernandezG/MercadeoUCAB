@@ -38,7 +38,7 @@ export class EstudiosEncuestadoComponent implements OnInit {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.estudiosService.getEstudiosEncuestado(id)
       .subscribe(data => { this.estudios = data.Estudios.reverse()
-        console.log(data)
+        console.log(data.Estudios)
         
       console.log(this.estudios);
     });
