@@ -30,14 +30,14 @@ public class EncuestaServicio {
     @Path("/preguntas/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response obtenerPreguntaEncuesta(@PathParam("id") long id) {
+    public Response obtenerPreguntaEncuesta(@PathParam("id") long id, long idUsuario) {
 
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         JsonObject dataObject;
 
         try {
 
-            List<Object[]> preguntasRespuestas = daoPreguntaEncuesta.listarPreguntas(id);
+            List<Object[]> preguntasRespuestas = daoPreguntaEncuesta.mostrarPreguntasNoRespondidas(id,idUsuario);
 
             List<EncuestaResponse> ResponseListUpdate = new ArrayList<>(preguntasRespuestas.size());
 
@@ -194,12 +194,68 @@ public class EncuestaServicio {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha podido ejecutar la operación " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
     }
+
+    /**
+     * Este método permite validar el estatus de la encuesta
+     * @author Emanuel Di Cristofaro
+     */
+     @GET
+     @Path("/validarEstatusEncuesta/{idE}/{idU}")
+     public Response validarEstatusEncuestas(@PathParam("idE") long idE, @PathParam("idU") long idU) {
+
+         JsonObject dataObject;
+         Object validar;
+
+         try {
+                DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
+
+                DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
+                //Obtener las preguntas del estudio
+                List<PreguntaEstudio> listaPreguntas = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
+                List<PreguntaEstudio> listaPreguntasEstudio = new ArrayList<>();
+
+                for (PreguntaEstudio pregunta : listaPreguntas) {
+
+                    if (pregunta.get_estudio().get_id() == idE)
+                        listaPreguntasEstudio.add(pregunta);
+                 }
+
+                int cantidadPreguntas = listaPreguntasEstudio.size();
+                List<Long> cantidadRespuestas = daoUsuarioEstudio.cantidadRespuestas(idU,idE);
+                int cantidadRespuestaTotal = cantidadRespuestas.size();
+
+                if(cantidadRespuestaTotal == 0) {
+                    validar = "En espera";
+
+                } else if (cantidadPreguntas == cantidadRespuestaTotal) {
+
+                    validar = "Finalizado";
+
+                } else {
+
+                    validar = "En proceso";
+
+                }
+
+             return Response.status(Response.Status.OK).entity(validar).build();
+
+         } catch (Exception ex) {
+
+             dataObject = Json.createObjectBuilder()
+                     .add("estado", "Error")
+                     .add("excepcion", ex.getMessage())
+                     .add("codigo", 400).build();
+
+             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
+
+         }
+     }
 }
 

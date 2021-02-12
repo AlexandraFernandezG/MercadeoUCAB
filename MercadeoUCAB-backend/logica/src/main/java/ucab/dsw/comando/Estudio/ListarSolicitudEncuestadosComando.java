@@ -47,11 +47,11 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
         }
 
         //Recorremos la lista de encuestados y hacemos el match
-        for (UsuarioResponse usuarioEncuestado: listaUsuariosEncuestadosResult) {
+        for (UsuarioResponse usuarioEncuestado : listaUsuariosEncuestadosResult) {
 
             for (Informacion informacion : listaInformacion) {
 
-                if(solicitudEstudio.get_genero().equals(informacion.get_genero()) && solicitudEstudio.get_estadoCivil().equals(informacion.get_estadoCivil()) &&
+                if (solicitudEstudio.get_genero().equals(informacion.get_genero()) && solicitudEstudio.get_estadoCivil().equals(informacion.get_estadoCivil()) &&
                         solicitudEstudio.get_cantidadPersonas() == informacion.get_cantidadPersonas() && informacion.get_usuario().get_id() == usuarioEncuestado.getId()) {
 
                     listaEncuestadosSolicitud.add(usuarioEncuestado);
@@ -59,9 +59,10 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
             }
         }
 
-        for(UsuarioResponse obj: listaEncuestadosSolicitud){
+        for (UsuarioResponse obj : listaEncuestadosSolicitud) {
 
-            if(obj.getCodigoRecuperacion() != null) {
+            if (obj.getCodigoRecuperacion() != null && obj.getNombre() != null &&
+                    obj.getCorreo() != null && obj.getEstatus() != null) {
 
                 usuario = Json.createObjectBuilder().add("id", obj.getId())
                         .add("nombre", obj.getNombre())
@@ -72,7 +73,8 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
 
                 encuestados.add(usuario);
 
-            } else {
+            } else if (obj.getCodigoRecuperacion() == null && obj.getNombre() != null &&
+                    obj.getCorreo() != null && obj.getEstatus() != null) {
 
                 usuario = Json.createObjectBuilder().add("id", obj.getId())
                         .add("nombre", obj.getNombre())
@@ -83,9 +85,32 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
 
                 encuestados.add(usuario);
 
-            }
-        }
+            } else if (obj.getCodigoRecuperacion() != null && obj.getNombre() == null &&
+                    obj.getCorreo() != null && obj.getEstatus() != null) {
 
+                usuario = Json.createObjectBuilder().add("id", obj.getId())
+                        .add("nombre", "")
+                        .add("codigoRecuperacion", obj.getCodigoRecuperacion())
+                        .add("correo", obj.getCorreo())
+                        .add("estatus", obj.getEstatus()).build();
+
+
+                encuestados.add(usuario);
+
+            } else if (obj.getCodigoRecuperacion() != null && obj.getNombre() != null &&
+                    obj.getCorreo() == null && obj.getEstatus() != null) {
+
+                usuario = Json.createObjectBuilder().add("id", obj.getId())
+                        .add("nombre", obj.getNombre())
+                        .add("codigoRecuperacion", obj.getCodigoRecuperacion())
+                        .add("correo", "")
+                        .add("estatus", obj.getEstatus()).build();
+
+
+                encuestados.add(usuario);
+            }
+
+        }
     }
 
     @Override
