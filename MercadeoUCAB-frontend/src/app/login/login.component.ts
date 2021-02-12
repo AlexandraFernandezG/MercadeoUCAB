@@ -73,7 +73,6 @@ export class LoginComponent implements OnInit {
         if (this.user.estado === 'success') {
           this.serviceUsuario.getUsuarioCorreo(this.usuario.correo)
             .subscribe( userData => {this.usuarioLog = userData;
-              console.log('Usuario: ',userData.Usuario.id);
               localStorage.setItem('usuarioID', JSON.stringify(this.usuarioLog.Usuario.id));
               localStorage.setItem('rol',  JSON.stringify (this.user.rol));
               localStorage.setItem('nombre', JSON.stringify(this.usuarioLog.Usuario.nombre));

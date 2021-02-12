@@ -4,7 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router , ActivatedRoute} from '@angular/router';
 import { PreguntasService } from 'src/app/servicios/preguntas.service';
-import { Pregunta } from 'src/app/modelos/pregunta';
+import { Pregunta, Pregunta3 } from 'src/app/modelos/pregunta';
 import { Pregunta2 } from 'src/app/modelos/pregunta';
 import { respuestaPregunta, respuestaPregunta2 } from 'src/app/modelos/respuestaPregunta';
 import { PreguntaComponent } from 'src/app/admin/pregunta/pregunta.component';
@@ -35,9 +35,9 @@ export class AddPreguntaComponent implements OnInit {
         this.addRespuesta()
        ])
    });
-    subcategorias: Subcategoria[] = [
+    subcategorias: any = [
     ];
-
+    preguntasAgregadas: Pregunta3[] = [];
     preguntas: any;
     pregunta: Pregunta2 = {
       id: 0,
@@ -53,7 +53,9 @@ export class AddPreguntaComponent implements OnInit {
     .subscribe(data => {this.preguntas = data;
     } );
     this.serviceSubcategoria.getSubcategorias()
-    .subscribe(catego => {this.subcategorias = catego;
+    .subscribe(catego => {
+      console.log(catego.Subcategorias)
+      this.subcategorias = catego.Subcategorias;
     } );
   }
     addRespuesta(){
@@ -86,8 +88,13 @@ export class AddPreguntaComponent implements OnInit {
     usuarioDto,
     subcategoriaDto: this.preguntaForm.get('subcategoriaDto').value
     } as Pregunta2).subscribe(
-
       response => {
+      console.log('antes:', this.preguntasAgregadas)
+      this.preguntasAgregadas = JSON.parse(localStorage.getItem('preguntasEst'));
+      console.log('traer: ',this.preguntasAgregadas);
+      this.preguntasAgregadas.push(response.Pregunta);
+      console.log('agregar: ', this.preguntasAgregadas);
+      localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntasAgregadas))
       console.log(response);
       console.log(respuestas);
       if (this.preguntaForm.get('tipoPregunta').value == 'Selección Simple' || this.preguntaForm.get('tipoPregunta').value == 'Selección Múltiple'){

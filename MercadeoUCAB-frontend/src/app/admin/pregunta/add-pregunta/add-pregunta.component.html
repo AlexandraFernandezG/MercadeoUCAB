@@ -6,8 +6,8 @@
     <mat-form-field appearance="fill">
       <mat-label>--Subcategoría--</mat-label>
       <mat-select formControlName="subcategoriaDto">
-        <mat-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria._id">
-          {{ subcategoria._nombre }}
+        <mat-option *ngFor="let subcategoria of subcategorias" [value]="subcategoria.id">
+          {{ subcategoria.nombre }}
         </mat-option>
       </mat-select>
     </mat-form-field>

@@ -19,6 +19,7 @@ import { OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddPreguntaEstudioComponent } from '../add-pregunta-estudio/add-pregunta-estudio.component';
 import { AddEncuestadoEstudioComponent } from '../add-encuestado-estudio/add-encuestado-estudio.component';
+import { AddPreguntaComponent } from '../../pregunta/add-pregunta/add-pregunta.component';
 
 @Component({
   selector: 'app-add-estudio',
@@ -223,7 +224,7 @@ export class AddEstudioComponent implements OnInit, OnChanges {
   }
 
   openModal1():void{
-    this.dialog.open(AddPreguntaEstudioComponent,
+    this.dialog.open(AddPreguntaComponent,
       {
         data: {id: JSON.parse(localStorage.getItem('solicitudId'))}
       }

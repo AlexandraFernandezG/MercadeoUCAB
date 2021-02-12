@@ -125,7 +125,7 @@ export class AddPreguntaEstudioComponent implements OnInit {
     estatus,
     usuarioDto,
     subcategoriaDto: JSON.parse(localStorage.getItem('idSubCat')),
-    } as Pregunta2).subscribe(
+    }).subscribe(
 
       response => {
       console.log(response);
