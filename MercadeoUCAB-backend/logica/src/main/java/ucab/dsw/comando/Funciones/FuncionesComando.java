@@ -67,7 +67,7 @@ public class FuncionesComando {
         DaoUsuario daoUsuario = new DaoUsuario();
         DaoEstudio daoEstudio = new DaoEstudio();
 
-        usuarioEstudio.set_estatus("En proceso");
+        usuarioEstudio.set_estatus("En espera");
         Usuario usuario = daoUsuario.find(idEnc, Usuario.class);
         usuarioEstudio.set_usuario(usuario);
         Estudio estudio = daoEstudio.find(idE, Estudio.class);
