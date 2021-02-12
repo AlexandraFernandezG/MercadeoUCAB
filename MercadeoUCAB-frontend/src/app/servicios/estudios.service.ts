@@ -30,7 +30,7 @@ export class EstudiosService {
     console.log(estudio)
     return this.http.post<Estudio2>(this.url + 'estudio/addEstudio/', JSON.stringify(estudio) ,  this.httpOptions).
     pipe(
-      tap((newEstudio: any) => console.log(`added estudio w/ id=${newEstudio.codigo}`)),
+      tap((newEstudio: any) => console.log(`added estudio w/ id=${newEstudio.id.id}`)),
       catchError(this.handleError)
     );
   }
@@ -64,8 +64,8 @@ export class EstudiosService {
     return this.http.get<Estudio[]>(this.url + 'sugerencias/estudiosEncuestado/' + id);
   }
 
-  getEstudiosCliente(id: number):Observable<Estudio[]>{
-    return this.http.get<Estudio[]>(this.url + 'sugerencias/estudiosCliente/' + id);
+  getEstudiosCliente(id: number):Observable<any>{
+    return this.http.get<any>(this.url + 'sugerencias/estudiosCliente/' + id);
   }
 
   getEstudiosAnalista(id: number):Observable<Estudio[]>{

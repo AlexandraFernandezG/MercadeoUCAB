@@ -17,7 +17,7 @@ import { NotificationsService } from 'angular2-notifications'
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  usuarioLog: UsuarioCorreo;
+  usuarioLog: any;
   submitted = false;
   returnUrl: string;
   error: {};
@@ -68,13 +68,14 @@ export class LoginComponent implements OnInit {
   if (this.loginForm.valid) {
       console.log('entre1');
       this.service.login(this.usuario).subscribe( data  => {
+
         this.user = data;
         if (this.user.estado === 'success') {
           this.serviceUsuario.getUsuarioCorreo(this.usuario.correo)
             .subscribe( userData => {this.usuarioLog = userData;
-              localStorage.setItem('usuarioID', JSON.stringify(this.usuarioLog[0].id));
+              localStorage.setItem('usuarioID', JSON.stringify(this.usuarioLog.Usuario.id));
               localStorage.setItem('rol',  JSON.stringify (this.user.rol));
-              localStorage.setItem('nombre', JSON.stringify(this.usuarioLog[0].nombre));
+              localStorage.setItem('nombre', JSON.stringify(this.usuarioLog.Usuario.nombre));
   
             } );
           if (this.user.rol === 'Administrador'){

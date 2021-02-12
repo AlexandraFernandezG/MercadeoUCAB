@@ -36,9 +36,8 @@ export class PreguntasService {
     );
   }
 
-  createPregunta(pregunta: Pregunta2): Observable<Pregunta2>{
-    console.log(pregunta);
-    console.log('entre');
+  createPregunta(pregunta: Pregunta2): Observable<any>{
+    console.log(JSON.stringify(pregunta));
     return this.http.post<Pregunta2>(this.url + 'preguntasEncuesta/addPreguntaEncuesta', JSON.stringify(pregunta), this.httpOptions)
     .pipe(
       tap((newpregunta: Pregunta2) => console.log(`added pregunta w/ id=${newpregunta.id}`)),

@@ -13,6 +13,7 @@ import { VariosService } from 'src/app/servicios/varios.service';
 import { NivelAcademico, NivelAcademico2, NivelEconomico } from 'src/app/modelos/varios';
 import { Usuario2 } from 'src/app/modelos/usuario';
 import { Rol } from 'src/app/modelos/rol';
+import { NotificationsService } from 'angular2-notifications';
 
 
 @Component({
@@ -53,6 +54,7 @@ export class SolicitudEstudioComponent implements OnInit {
     private lugarService: LugarService,
     private solicitudEstudiosService: SolicitudEstudiosService,
     private variosService: VariosService,
+    private servicenotifications: NotificationsService,
     ) 
     
     {
@@ -78,7 +80,16 @@ export class SolicitudEstudioComponent implements OnInit {
       nivelAcademicoDto: new FormControl('',[Validators.maxLength(100)]),
     });
    }
-
+  
+   onSucess(message){
+    this.servicenotifications.success('Exito', message, {
+      position: ['bottom', 'right'],
+      timeOut: 2000,
+      animate: 'fade',
+      showProgressBar: true,
+      })
+  }
+  
   ngOnInit(): void {
     //Productos de la BD para el select
     this.productoService.getProductos()
@@ -139,19 +150,27 @@ export class SolicitudEstudioComponent implements OnInit {
       edadMinimaHijos: this.solicitudForm.value.edadMinimaHijos,
       edadMaximaHijos: this.solicitudForm.value.edadMaximaHijos,
       estatus: 'Activo',
-      estado: 'en espera',
+      estado: 'En espera',
       nivelEconomicoDto: this.solicitudForm.value.nivelEconomicoDto._id,
-      usuarioDto: 1,
+      usuarioDto: JSON.parse(localStorage.getItem('usuarioID')),
       productoDto: this.solicitudForm.value.productoDto._id,
       ocupacionDto: this.solicitudForm.value.ocupacionDto._id,
       nivelAcademicoDto: this.solicitudForm.value.nivelAcademicoDto._id
     };
+    
     this.solicitudEstudiosService.createSolicitud(
       this.solicitud2 as Solicitud2
-     ).subscribe();
-     console.log(Solicitud2);
-     this.router.navigate(['/cliente/estudios']);
-   }
-   
-
+      ).subscribe( dataSolicitud =>
+        {
+          if (dataSolicitud.estado == 200){
+            console.log(dataSolicitud.mensaje)
+            this.onSucess(dataSolicitud.mensaje);
+            setTimeout(() => {
+              this.router.navigate(['/cliente/solicitudes']);
+            },3000);
+          }
+        }
+      );
+      console.log(Solicitud2);
+  }
 }

@@ -25,7 +25,7 @@ export class SubcategoriasService {
   };
 
   getSubcategorias(){
-    return this.http.get<Subcategoria[]>(this.url + 'subcategoria/allSubcategoria');
+    return this.http.get<any>(this.url + 'subcategoria/allSubcategoria');
   }
 
   getSubcategoria(id: number): Observable<Subcategoria> {
