@@ -68,7 +68,7 @@ export class EstudiosService {
     return this.http.get<any>(this.url + 'sugerencias/estudiosCliente/' + id);
   }
 
-  getEstudiosAnalista(id: number):Observable<Estudio[]>{
+  getEstudiosAnalista(id: number):Observable<any>{
     return this.http.get<Estudio[]>(this.url + 'sugerencias/estudiosAnalista/' + id);
   }
 

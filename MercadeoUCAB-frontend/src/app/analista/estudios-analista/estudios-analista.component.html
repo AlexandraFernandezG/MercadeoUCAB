@@ -10,25 +10,23 @@
   <div fxFlex="33%" fxFlex.xs="100%" *ngFor="let estudio of estudios; let rowIndex = index">
     <mat-card class="mat-elevation-z4" >
       <mat-card-header>
-        <mat-card-title>{{estudio.nombreEstudio}}</mat-card-title>
-        <mat-card-subtitle>{{estudio.estadoEstudio}}</mat-card-subtitle>
+        <mat-card-title>{{estudio.nombre}}</mat-card-title>
+        <mat-card-subtitle>{{estudio.estado}}</mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image src="/../assets/img/survey.png">
       <mat-card-content>
-        <p>
-          descripcion de estudio 
-        </p>
+        
       </mat-card-content>
 
       <mat-card-actions >
-        <button mat-button color="primary" (click)="openModal(estudio.idEstudio, estudio.nombreEstudio)" >Ver Muestra</button>
-        <button mat-button color="primary" [routerLink]="['/analista/resultados/', estudio.idEstudio]">Ver Resultados</button>
-        <button mat-button color="primary" *ngIf="estudio.estadoEstudio === 'en espera' " 
-          (click)="updateEstado(estudio.idEstudio)">
+        <button mat-button color="primary" (click)="openModal(estudio.id, estudio.nombre, estudio.DisponibilidadEnLinea)" >Ver Muestra</button>
+        <button mat-button color="primary" *ngIf="estudio.estado === 'Finalizado' "  [routerLink]="['/analista/resultados/', estudio.id]">Ver Resultados</button>
+        <button mat-button color="primary" *ngIf="estudio.estado === 'En espera' " 
+          (click)="updateEstado(estudio.id)">
           Iniciar
         </button>
-        <button mat-button color="primary" *ngIf="estudio.estadoEstudio === 'en proceso' " 
-          (click)="updateEstado(estudio.idEstudio)">
+        <button mat-button color="primary" *ngIf="estudio.estado === 'En proceso' " 
+          (click)="updateEstado(estudio.id)">
           Terminar
         </button>        
       </mat-card-actions>

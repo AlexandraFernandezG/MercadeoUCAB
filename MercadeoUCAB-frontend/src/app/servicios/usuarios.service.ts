@@ -74,7 +74,7 @@ export class UsuariosService {
 
   getEncuestadosEstudio(id: number): Observable<any>{
     console.log(id);
-    return this.http.get<any>(this.url + 'estudio/solicitudEncuestados/' + id)
+    return this.http.get<any>(this.url + 'usuarioEstudio/encuestadosEstudio/' + id)
     .pipe(
       tap((dataObject: any)=> console.log(`fetched usuario encuestados=${dataObject.mensaje}`)),
       catchError(this.handleError)
