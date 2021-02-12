@@ -7,11 +7,17 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class CorreoServicio {
 
+    private static Logger logger = LoggerFactory.getLogger(CorreoServicio.class);
+
     public static void enviarCorreoElectronico(String destinatario, String asunto, String contenido) throws MessagingException {
 
+        logger.debug("Ingresando al método que envía un correo electrónico");
         // sets SMTP server properties
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -47,5 +53,7 @@ public class CorreoServicio {
 
         // sends the e-mail
         Transport.send(msg);
+
+        logger.debug("Saliendo del método que envía un correo electrónico");
     }
 }

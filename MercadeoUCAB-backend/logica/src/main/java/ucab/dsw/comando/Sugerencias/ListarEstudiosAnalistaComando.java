@@ -40,10 +40,10 @@ public class ListarEstudiosAnalistaComando extends ComandoBase {
             listaEstudiosAnalista.add(new EstudioAnalistaResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], servicio.devolverFecha((Date)est[4]), servicio.devolverFecha((Date)est[5]), (String)est[6], (String)est[7], (long)est[8]));
         }
 
-        for(EstudioAnalistaResponse estudios: listaEstudiosAnalista){
+        /*for(EstudioAnalistaResponse estudios: listaEstudiosAnalista){
 
             servicio.cambiarEstadoEstudio(estudios.getIdEstudio());
-        }
+        }*/
 
         for (EstudioAnalistaResponse obj : listaEstudiosAnalista) {
 

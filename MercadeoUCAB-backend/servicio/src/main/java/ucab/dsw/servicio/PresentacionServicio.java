@@ -7,6 +7,11 @@ import ucab.dsw.entidades.Presentacion;
 import ucab.dsw.entidades.Producto;
 import ucab.dsw.excepciones.PruebaExcepcion;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ucab.dsw.fabrica.Fabrica;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
@@ -22,6 +27,8 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class PresentacionServicio extends AplicacionBase{
 
+    private static Logger logger = LoggerFactory.getLogger(PresentacionServicio.class);
+
     /**
      * Este método permite obtener todas las presentaciones.
      * @author Emanuel Di Cristofaro
@@ -33,16 +40,20 @@ public class PresentacionServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarPresentaciones()  {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todas las presentaciones");
         JsonObject dataObject;
-        DaoPresentacion daoPresentacion = new DaoPresentacion();
+        DaoPresentacion daoPresentacion = Fabrica.crear(DaoPresentacion.class);
+
 
         try {
             List<Presentacion> listaPresentaciones = daoPresentacion.findAll(Presentacion.class);
-
+            logger.debug("Saliendo del método que lista todas las presentaciones");
             return Response.status(Response.Status.OK).entity(listaPresentaciones).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -67,26 +78,30 @@ public class PresentacionServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarPresentacion(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que te permite consultar una presentación");
         DaoPresentacion daoPresentacion = new DaoPresentacion();
         JsonObject dataObject;
 
         try {
 
             Presentacion presentacion = daoPresentacion.find(id, Presentacion.class);
-
+            logger.debug("Saliendo del método que te permite consultar una presentación");
             return Response.status(Response.Status.OK).entity(presentacion).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la presentacion: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -107,6 +122,8 @@ public class PresentacionServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response presentacionesActivas() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todas las presentaciones activas");
         DaoPresentacion daoPresentacion = new DaoPresentacion();
         List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
         List<Presentacion> listaPresentacionActivas = new ArrayList<Presentacion>();
@@ -121,10 +138,12 @@ public class PresentacionServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que lista todas las presentaciones activas");
             return Response.status(Response.Status.OK).entity(listaPresentacionActivas).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
