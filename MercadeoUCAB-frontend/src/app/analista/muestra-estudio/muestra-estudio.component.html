@@ -28,16 +28,10 @@
             <th class="accion-header" mat-header-cell *matHeaderCellDef> Acciones </th>
             <mat-cell *matCellDef="let row">
 
-              <button mat-icon-button [routerLink]="['/encuestado/respuestas-encuesta', data.id]" (click)="closeModal()">
+              <button mat-icon-button *ngIf ="data.enLinea === 'no' " [routerLink]="['/encuestado/respuestas-encuesta', data.id]" (click)="closeModal()">
                 <mat-icon>note_add</mat-icon>
               </button>
 
-              <button mat-icon-button >
-                  <mat-icon class="delete-icon mdl-js-button mdl-js-ripple-effect">
-                      delete
-                  </mat-icon>
-              </button>
-                
             </mat-cell>
         </ng-container>
   
