@@ -31,7 +31,7 @@ export class EstudiosAnalistaComponent implements OnInit {
   ngOnInit(): void {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.service.getEstudiosAnalista(id).subscribe(
-      estudiosData => { this.estudios = estudiosData ,
+      estudiosData => { this.estudios = estudiosData.Estudios ,
         console.log(this.estudios)},
       );
     
@@ -39,6 +39,8 @@ export class EstudiosAnalistaComponent implements OnInit {
   }
 
   openModal( id: number, nombre: string): void{
+    console.log('id:',id)
+    console.log('nombre:',nombre)
     this.dialog.open(MuestraEstudioComponent,
       {
         data: {

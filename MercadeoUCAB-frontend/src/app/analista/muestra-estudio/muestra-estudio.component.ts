@@ -29,6 +29,7 @@ export class MuestraEstudioComponent implements OnInit {
 
   ngOnInit(): void {
     this.dialogRef.updateSize('650px', '500px');
+    console.log(this.data)
     this.encuestadosService.getEncuestadosEstudio(this.data.id).subscribe( encuestadosData =>
       {
         this.dataSource = new MatTableDataSource<Usuario3>(encuestadosData);
