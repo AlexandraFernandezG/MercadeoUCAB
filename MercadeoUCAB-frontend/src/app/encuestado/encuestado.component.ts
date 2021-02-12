@@ -9,6 +9,8 @@ declare var $;
 })
 export class EncuestadoComponent implements OnInit {
 
+  nombreUsuario: string = JSON.parse(localStorage.getItem('nombre'));
+
   constructor() { }
 
   ngOnInit(): void {

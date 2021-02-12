@@ -37,11 +37,11 @@ export class UsuariosService {
     );
   }
 
-  getUsuarioCorreo(correo: string): Observable<UsuarioCorreo> {
+  getUsuarioCorreo(correo: string): Observable<any> {
     console.log(correo);
-    return this.http.get<UsuarioCorreo>(this.url + 'usuario/consultarUsuarioCorreo/' + correo)
+    return this.http.get<any>(this.url + 'usuario/consultarUsuarioCorreo/' + correo)
     .pipe(
-      tap(_ => console.log(`fetched usuario id=${correo}`)),
+      tap(usuario => console.log(`fetched usuario id=${usuario.Usuario.id}`)),
       catchError(this.handleError)
     );
   }
