@@ -38,14 +38,16 @@ export class EstudiosAnalistaComponent implements OnInit {
     
   }
 
-  openModal( id: number, nombre: string): void{
+  openModal( id: number, nombre: string, enLinea: string): void{
     console.log('id:',id)
     console.log('nombre:',nombre)
+    console.log('enLinea:',enLinea)
     this.dialog.open(MuestraEstudioComponent,
       {
         data: {
           id,
-          nombre
+          nombre,
+          enLinea
         }
       }
     );
