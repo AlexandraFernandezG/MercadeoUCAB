@@ -14,11 +14,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path( "/lugar" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class LugarServicio extends AplicacionBase{
+    private static Logger logger = LoggerFactory.getLogger(LugarServicio.class);
 
     /**
      * Este método permite obtener todas los lugares.
@@ -31,11 +34,13 @@ public class LugarServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarLugares() throws NullPointerException{
 
+        logger.debug("Ingresando al método que muestra todos los lugares");
         DaoLugar daoLugar = new DaoLugar();
         JsonObject dataObject;
 
         try {
             List<Lugar> listaLugares = daoLugar.findAll(Lugar.class);
+            logger.debug("Saliendo del método que muestra todos los lugares");
             return Response.status(Response.Status.OK).entity(listaLugares).build();
 
         } catch (Exception ex) {
@@ -45,6 +50,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -64,12 +70,14 @@ public class LugarServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarLugar(@PathParam("id") long id) throws NullPointerException {
 
+        logger.debug("Ingresando al método que permite consultar un lugar dado un id");
         DaoLugar daoLugar = new DaoLugar();
         JsonObject dataObject;
 
         try {
             Lugar lugar_consultado = daoLugar.find(id, Lugar.class);
 
+            logger.debug("Saliendo del método que permite consultar un lugar dado un id");
             return Response.status(Response.Status.OK).entity(lugar_consultado).build();
 
         } catch (NullPointerException ex) {
@@ -77,8 +85,9 @@ public class LugarServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el lugar: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -88,6 +97,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
@@ -104,6 +114,7 @@ public class LugarServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarPaises()  {
 
+        logger.debug("Ingresando al método que muestra todos los países");
         DaoLugar daoLugar = new DaoLugar();
         JsonObject dataObject;
         List<Lugar> listaLugares = daoLugar.findAll(Lugar.class);
@@ -119,6 +130,7 @@ public class LugarServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que muestra todos los países");
             return Response.status(Response.Status.OK).entity(listaPaises).build();
 
         } catch (NullPointerException ex) {
@@ -126,8 +138,9 @@ public class LugarServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el país: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -137,6 +150,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -152,6 +166,7 @@ public class LugarServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstados() {
 
+        logger.debug("Ingresando al método que muestra todos los estados");
         DaoLugar daoLugar = new DaoLugar();
         JsonObject dataObject;
         List<Lugar> listaLugares = daoLugar.findAll(Lugar.class);
@@ -167,6 +182,7 @@ public class LugarServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que muestra todos los estados");
             return Response.status(Response.Status.OK).entity(listaEstados).build();
 
         } catch (NullPointerException ex) {
@@ -174,8 +190,9 @@ public class LugarServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado ningún estado: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -185,6 +202,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -200,6 +218,7 @@ public class LugarServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarUrbanizaciones() {
 
+        logger.debug("Ingresando al método que muestra todas las urbanizaciones");
         DaoLugar daoLugar = new DaoLugar();
         JsonObject dataObject;
         List<Lugar> listaLugares = daoLugar.findAll(Lugar.class);
@@ -215,6 +234,7 @@ public class LugarServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que muestra todas las urbanizaciones");
             return Response.status(Response.Status.OK).entity(listaUrbanizaciones).build();
 
         } catch (NullPointerException ex) {
@@ -222,8 +242,9 @@ public class LugarServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el país: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -233,6 +254,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -248,6 +270,7 @@ public class LugarServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response jerarquiaLugar(@PathParam("id") long id) {
 
+        logger.debug("Ingresando al método que muestras todos los registros dado un lugar");
         DaoLugar daoLugar = new DaoLugar();
         JsonObject dataObject;
         List<Lugar> listaLugares = daoLugar.findAll(Lugar.class);
@@ -278,6 +301,7 @@ public class LugarServicio extends AplicacionBase{
 
             }
 
+            logger.debug("Saliendo del método que muestras todos los registros dado un lugar");
             return Response.status(Response.Status.OK).entity(listaJerarquia).build();
 
         } catch (NullPointerException ex) {
@@ -285,8 +309,9 @@ public class LugarServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se han encontrado lugares: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -296,6 +321,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -316,6 +342,7 @@ public class LugarServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addLugar(LugarDto lugarDto){
 
+        logger.debug("Ingresando al método que permite agregar un lugar");
         LugarDto resultado = new LugarDto();
         JsonObject dataObject;
 
@@ -331,6 +358,8 @@ public class LugarServicio extends AplicacionBase{
             lugar.set_lugar(lugar_fk);
             Lugar resul = daoLugar.insert(lugar);
             resultado.setId(resul.get_id());
+
+            logger.debug("Saliendo del método que permite agregar un lugar");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -340,6 +369,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -347,8 +377,9 @@ public class LugarServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha agregado el lugar: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
@@ -358,6 +389,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -380,6 +412,7 @@ public class LugarServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateLugar(@PathParam("id") long id, LugarDto lugarDto){
 
+        logger.debug("Ingresando al método que permite actualizar un lugar");
         DaoLugar daoLugar = new DaoLugar();
         JsonObject dataObject;
 
@@ -391,6 +424,7 @@ public class LugarServicio extends AplicacionBase{
             lugar_modificar.set_estatus(lugarDto.getEstatus());
             daoLugar.update(lugar_modificar);
 
+            logger.debug("Saliendo del método que permite actualizar un lugar");
             return Response.status(Response.Status.OK).entity(lugar_modificar).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -400,6 +434,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -407,8 +442,9 @@ public class LugarServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el lugar a modificar: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -429,12 +465,14 @@ public class LugarServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response deleteLugar(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que permite eliminar un lugar");
         DaoLugar daoLugar = new DaoLugar();
         JsonObject dataObject;
 
         try {
             Lugar lugar_eliminar = daoLugar.find(id, Lugar.class);
             daoLugar.delete(lugar_eliminar);
+            logger.debug("Saliendo del método que permite eliminar un lugar");
             return Response.status(Response.Status.OK).entity(lugar_eliminar).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -444,6 +482,7 @@ public class LugarServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -451,8 +490,9 @@ public class LugarServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el lugar: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }

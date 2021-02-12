@@ -15,14 +15,17 @@ import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path( "/hijo" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class HijoServicio extends AplicacionBase{
+
+    private static Logger logger = LoggerFactory.getLogger(HijoServicio.class);
 
     /**
      * Este método permite obtener todos los hijos.
@@ -36,12 +39,14 @@ public class HijoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarHijos() throws NullPointerException {
 
+        logger.debug("Ingresando al método que muestra todos los hijos");
         DaoHijo daoHijo = new DaoHijo();
         JsonObject dataObject;
 
         try {
             List<Hijo> listaHijos = daoHijo.findAll(Hijo.class);
 
+            logger.debug("Saliendo del método que muestra todos los hijos");
             return Response.status(Response.Status.OK).entity(listaHijos).build();
 
         } catch (NullPointerException ex) {
@@ -49,8 +54,9 @@ public class HijoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado ningún hijo: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -58,8 +64,9 @@ public class HijoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 404).build();
+                    .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -76,11 +83,14 @@ public class HijoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarHijo(@PathParam("id") long id) throws NullPointerException {
 
+        logger.debug("Ingresando al método que permite consultar un hijo");
         DaoHijo daoHijo = new DaoHijo();
         JsonObject dataObject;
 
         try {
             Hijo hijoConsultado = daoHijo.find(id, Hijo.class);
+
+            logger.debug("Saliendo del método que permite consultar un hijo");
             return Response.status(Response.Status.OK).entity(hijoConsultado).build();
 
         } catch (NullPointerException ex){
@@ -88,16 +98,18 @@ public class HijoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado ningún hijo: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         } catch (Exception ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 404).build();
+                    .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -113,6 +125,7 @@ public class HijoServicio extends AplicacionBase{
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addHijo(HijoDto hijoDto) {
 
+        logger.debug("Ingresando al método que permite agregar un hijo");
         JsonObject dataObject;
         HijoDto resultado = new HijoDto();
 
@@ -132,6 +145,7 @@ public class HijoServicio extends AplicacionBase{
             Hijo resul = dao.insert(hijo);
             resultado.setId(resul.get_id());
 
+            logger.debug("Saliendo del método que permite consultar un hijo");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -141,6 +155,7 @@ public class HijoServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -148,8 +163,9 @@ public class HijoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el hijo: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
@@ -159,6 +175,7 @@ public class HijoServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -178,8 +195,9 @@ public class HijoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
     public List<Response> addVariosHijos(List<HijoDto> listaHijoDto){
+        logger.debug("Ingresando al método que permite agregar varios hijos");
         List<Response> listaHijo = new ArrayList<Response>();
-
+        JsonObject dataObject;
         try {
             int n = 1;
             System.out.println("Hijo n° " + n);
@@ -189,11 +207,15 @@ public class HijoServicio extends AplicacionBase{
 
         } catch (Exception ex){
 
-            String mensaje = ex.getMessage();
-            System.out.print(mensaje);
+            dataObject = Json.createObjectBuilder()
+                    .add("estado", "Error")
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 400).build();
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
 
         }
 
+        logger.debug("Saliendo del método que permite agregar varios hijos");
         return listaHijo;
     }
 
@@ -214,6 +236,7 @@ public class HijoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateHijo(@PathParam("id") long id, HijoDto hijoDto){
 
+        logger.debug("Ingresando al método que permite actualizar un hijo");
         DaoHijo daoHijo = new DaoHijo();
         JsonObject dataObject;
 
@@ -232,6 +255,7 @@ public class HijoServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.debug("Saliendo del método que permite actualizar un hijo");
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -241,6 +265,7 @@ public class HijoServicio extends AplicacionBase{
                     .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -262,12 +287,15 @@ public class HijoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response deleteHijo(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que permite eliminar un hijo");
         JsonObject dataObject;
         DaoHijo daoHijo = new DaoHijo();
 
         try {
             Hijo hijo_eliminar = daoHijo.find(id, Hijo.class);
             daoHijo.delete(hijo_eliminar);
+
+            logger.debug("Saliendo del método que permite eliminar un hijo");
             return Response.status(Response.Status.OK).entity(hijo_eliminar).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -286,6 +314,7 @@ public class HijoServicio extends AplicacionBase{
                     .add("excepcion", "No se ha encontrado el hijo: " + ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }

@@ -54,9 +54,9 @@ public class EstudioServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 404).build();
+                    .add("codigo", 400).build();
 
-            logger.error("Código de error: " + 404 +  ", Mensaje de error: " + ex.getMessage());
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -82,6 +82,7 @@ public class EstudioServicio extends AplicacionBase {
             ConsultarEstudioComando comando = Fabrica.crearComandoConId(ConsultarEstudioComando.class, id);
             comando.execute();
 
+            logger.debug("Saliendo del método que consulta un estudio");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
@@ -99,9 +100,9 @@ public class EstudioServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 404).build();
+                    .add("codigo", 400).build();
 
-            logger.error("Código de error: " + 404 +  ", Mensaje de error: " + ex.getMessage());
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
         

@@ -15,12 +15,14 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path( "/marca" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class MarcaServicio extends AplicacionBase{
-
+    private static Logger logger = LoggerFactory.getLogger(MarcaServicio.class);
     /**
      * Este método permite obtener todas las marcas.
      * @author Emanuel Di Cristofaro y Gregg Spinetti
