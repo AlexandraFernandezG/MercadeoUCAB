@@ -27,10 +27,10 @@ public class EncuestaServicio {
      * @param id
      */
     @GET
-    @Path("/preguntas/{id}")
+    @Path("/preguntas/{id}/{idUsuario}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response obtenerPreguntaEncuesta(@PathParam("id") long id, long idUsuario) {
+    public Response obtenerPreguntaEncuesta (@PathParam("id") long id,@PathParam("idUsuario") long idUsuario) {
 
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         JsonObject dataObject;
