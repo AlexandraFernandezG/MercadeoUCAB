@@ -1,7 +1,10 @@
 package ucab.dsw.comando.Sugerencias;
 
+import ucab.dsw.Response.EstudioAnalistaResponse;
 import ucab.dsw.accesodatos.DaoEstudio;
+import ucab.dsw.accesodatos.DaoSolicitudEstudio;
 import ucab.dsw.comando.ComandoBase;
+import ucab.dsw.entidades.SolicitudEstudio;
 import ucab.dsw.fabrica.Fabrica;
 import ucab.dsw.Response.EstudiosResponse;
 
@@ -30,19 +33,19 @@ public class ListarEstudiosAnalistaComando extends ComandoBase {
 
         List<Object[]> listaEstudios = daoEstudio.listarEstudiosAnalista(id);
 
-        List<EstudiosResponse> listaEstudiosAnalista = new ArrayList<>(listaEstudios.size());
+        List<EstudioAnalistaResponse> listaEstudiosAnalista = new ArrayList<>(listaEstudios.size());
 
         for (Object[] est: listaEstudios){
 
-            listaEstudiosAnalista.add(new EstudiosResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], servicio.devolverFecha((Date)est[4]), servicio.devolverFecha((Date)est[5]), (String)est[6], (String)est[7]));
+            listaEstudiosAnalista.add(new EstudioAnalistaResponse((long)est[0], (String)est[1], (String)est[2], (String)est[3], servicio.devolverFecha((Date)est[4]), servicio.devolverFecha((Date)est[5]), (String)est[6], (String)est[7], (long)est[8]));
         }
 
-        for(EstudiosResponse estudios: listaEstudiosAnalista){
+        for(EstudioAnalistaResponse estudios: listaEstudiosAnalista){
 
             servicio.cambiarEstadoEstudio(estudios.getIdEstudio());
         }
 
-        for (EstudiosResponse obj : listaEstudiosAnalista) {
+        for (EstudioAnalistaResponse obj : listaEstudiosAnalista) {
 
             if (obj.getObservacionesEstudio() != null && obj.getFechaFinEstudio() != null) {
 
@@ -53,7 +56,8 @@ public class ListarEstudiosAnalistaComando extends ComandoBase {
                         .add("fechaInicio", obj.getFechaInicioEstudio())
                         .add("fechaFin", obj.getFechaFinEstudio())
                         .add("estado", obj.getEstadoEstudio())
-                        .add("estatus", obj.getEstatusEstudio()).build();
+                        .add("estatus", obj.getEstatusEstudio())
+                        .add("DisponibilidadEnLinea", servicio.devolverDisponibilidadEnLinea(obj.getIdSolicitudEstudio())).build();
 
                 estudios.add(estudioJson);
 
@@ -66,7 +70,8 @@ public class ListarEstudiosAnalistaComando extends ComandoBase {
                         .add("fechaInicio", obj.getFechaInicioEstudio())
                         .add("fechaFin", "")
                         .add("estado", obj.getEstadoEstudio())
-                        .add("estatus", obj.getEstatusEstudio()).build();
+                        .add("estatus", obj.getEstatusEstudio())
+                        .add("DisponibilidadEnLinea", servicio.devolverDisponibilidadEnLinea(obj.getIdSolicitudEstudio())).build();
 
                 estudios.add(estudioJson);
 
@@ -79,7 +84,8 @@ public class ListarEstudiosAnalistaComando extends ComandoBase {
                         .add("fechaInicio", obj.getFechaInicioEstudio())
                         .add("fechaFin", "")
                         .add("estado", obj.getEstadoEstudio())
-                        .add("estatus", obj.getEstatusEstudio()).build();
+                        .add("estatus", obj.getEstatusEstudio())
+                        .add("DisponibilidadEnLinea", servicio.devolverDisponibilidadEnLinea(obj.getIdSolicitudEstudio())).build();
 
                 estudios.add(estudioJson);
 
@@ -92,7 +98,8 @@ public class ListarEstudiosAnalistaComando extends ComandoBase {
                         .add("fechaInicio", obj.getFechaInicioEstudio())
                         .add("fechaFin", obj.getFechaFinEstudio())
                         .add("estado", obj.getEstadoEstudio())
-                        .add("estatus", obj.getEstatusEstudio()).build();
+                        .add("estatus", obj.getEstatusEstudio())
+                        .add("DisponibilidadEnLinea", servicio.devolverDisponibilidadEnLinea(obj.getIdSolicitudEstudio())).build();
 
                 estudios.add(estudioJson);
 
