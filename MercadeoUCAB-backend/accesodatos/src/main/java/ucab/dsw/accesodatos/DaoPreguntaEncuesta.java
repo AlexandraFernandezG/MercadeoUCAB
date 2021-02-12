@@ -96,16 +96,17 @@ public class DaoPreguntaEncuesta extends Dao<PreguntaEncuesta>{
     }
 
     public List<Object[]> mostrarPreguntasNoRespondidas(long id, long idUsuario) {
+
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
         String sqlQuery = "SELECT pe._id AS idPreguntaEncuesta, pe._descripcion AS descripcion, pe._tipoPregunta AS tipoPregunta," +
                 " pt._id AS idPreguntaEstudio FROM PreguntaEncuesta AS pe, PreguntaEstudio AS pt WHERE pe._id = pt._preguntaEncuesta._id" +
-                " AND pt._estudio._id =: id AND pt._id NOT IN (SELECT r._preguntaEstudio._id FROM Respuesta AS r WHERE" +
-                " r._usuario._id =:idUsuario) " +
+                " AND pt._estudio._id = :id AND pt._id NOT IN (SELECT r._preguntaEstudio._id FROM Respuesta AS r WHERE" +
+                " r._usuario._id = :idUsuario) " +
                 "ORDER BY pe._id ";
 
-        Query query = _em.createQuery(sqlQuery);
+        Query query = entitymanager.createQuery(sqlQuery);
         query.setParameter("id", id);
         query.setParameter("idUsuario", idUsuario);
         List<Object[]> preguntasRespuestas = query.getResultList();
