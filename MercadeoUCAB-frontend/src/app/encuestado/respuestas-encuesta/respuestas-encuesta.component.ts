@@ -32,14 +32,24 @@ export class RespuestasEncuestaComponent implements OnInit {
   respuestasAso2: respuestaPregunta3[];
   
   ngOnInit(): void {
-    this.service.getPreguntasEncuesta(2)
+    this.service.getPreguntasEncuesta(1)
     .subscribe(data => {this.preguntas2 = data;
-      console.log(this.preguntas);
+      console.log(this.preguntas2);
+      this.preguntas2[0].visible=true;
     } );
-    this.service.getRespuestasAsociadas(2)
+    this.service.getRespuestasAsociadas(1)
     .subscribe(data => {this.respuestasAso2 = data;
       console.log(this.respuestasAso);
     } );
+  }
+
+  siguiente(index: number) {
+   // this.mandarRespuestas(index);
+
+    this.preguntas2[index].visible = false;
+    this.preguntas2[index + 1].visible = true;
+
+
   }
 
 
