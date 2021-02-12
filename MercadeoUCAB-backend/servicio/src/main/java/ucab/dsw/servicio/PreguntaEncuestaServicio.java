@@ -1,9 +1,12 @@
 package ucab.dsw.servicio;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
+import ucab.dsw.comando.PreguntasEncuesta.AddPreguntaEncuestaComando;
 import ucab.dsw.dtos.PreguntaEncuestaDto;
 import ucab.dsw.dtos.PreguntaEstudioDto;
 import ucab.dsw.entidades.*;
+import ucab.dsw.fabrica.Fabrica;
+import ucab.dsw.mappers.MapperPreguntaEncuesta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,27 +144,15 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addPreguntaEncuesta(PreguntaEncuestaDto preguntaEncuestaDto){
 
-        PreguntaEncuestaDto resultado = new PreguntaEncuestaDto();
         JsonObject dataObject;
 
         try {
 
-            DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
-            PreguntaEncuesta preguntaEncuesta = new PreguntaEncuesta();
-            DaoUsuario daoUsuario = new DaoUsuario();
-            DaoSubcategoria daoSubcategoria = new DaoSubcategoria();
+            PreguntaEncuesta preguntaEncuesta = MapperPreguntaEncuesta.mapDtoToEntityInsert(preguntaEncuestaDto);
+            AddPreguntaEncuestaComando comando = Fabrica.crearComandoConEntity(AddPreguntaEncuestaComando.class, preguntaEncuesta);
+            comando.execute();
 
-            preguntaEncuesta.set_descripcion(preguntaEncuestaDto.getDescripcion());
-            preguntaEncuesta.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
-            preguntaEncuesta.set_estatus(preguntaEncuestaDto.getEstatus());
-            Usuario usuario = daoUsuario.find(preguntaEncuestaDto.getUsuarioDto().getId(), Usuario.class);
-            preguntaEncuesta.set_usuario(usuario);
-            Subcategoria subcategoria = daoSubcategoria.find(preguntaEncuestaDto.getSubcategoriaDto().getId(), Subcategoria.class);
-            preguntaEncuesta.set_subcategoria(subcategoria);
-            PreguntaEncuesta resul = daoPreguntaEncuesta.insert(preguntaEncuesta);
-            resultado.setId(resul.get_id());
-
-            return Response.status(Response.Status.OK).entity(resultado).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
@@ -176,8 +167,8 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha realizado la operacion con éxito: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
