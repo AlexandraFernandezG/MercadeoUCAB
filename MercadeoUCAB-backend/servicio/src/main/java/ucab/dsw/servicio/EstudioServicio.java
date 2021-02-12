@@ -734,65 +734,45 @@ public class EstudioServicio extends AplicacionBase {
         }
     }
 
-
-    /*public void update(long encuestado){
-
-        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
-
-        UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(encuestado, UsuarioEstudio.class);
-        usuarioEstudio_modificar.set_estatus("Respondido");
-        daoUsuarioEstudio.update(usuarioEstudio_modificar);
-    }
-
-    @GET
-    @Path("/pruebaEstatusEncuestado/{id}")
+    /**
+     * Este método permite cambiar el estatus del encuestado.
+     * @author Emanuel Di Cristofaro
+     * @return Este metodo retorna un objeto de tipo Json con el
+     * arreglo de resultado exitoso y en tal caso obtener una excepcion si aplica.
+     * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe.
+     * @throws PersistenceException si se modifica un estudio duplicado.
+     * @throws DatabaseException Si existe algun problema con la conexion de la base de datos.
+     */
+    @PUT
+    @Path("/cambiarEstatusEncuestado/{idE}/{idU}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response cambiarEstatusUsuarioEstudio(@PathParam("id") long id){
+    public Response cambiarEstatusUsuarioEstudio(@PathParam("idE") long idE, @PathParam("idU") long idU){
 
         JsonObject dataObject;
-        int cantidadRespuestaTotal = 0;
         int cantidadEncuestadosRespondido = 0;
-        DaoEstudio daoEstudio = new DaoEstudio();
+        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
+        DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
+        List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
 
         try {
 
-            DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
             //Obtener los encuestados de un estudio
-            List<UsuarioEstudio> listaUsuarioEstudio = daoUsuarioEstudio.findAll(UsuarioEstudio.class);
             List<UsuarioEstudio> encuestadosEstudio = new ArrayList<>();
 
-            for (UsuarioEstudio encuestado: listaUsuarioEstudio){
+            for (UsuarioEstudio encuestado : listaUsuarioEstudio) {
 
-                if(encuestado.get_estudio().get_id() == id)
+                if (encuestado.get_estudio().get_id() == idE)
                     encuestadosEstudio.add(encuestado);
             }
 
-            DaoPreguntaEstudio daoPreguntaEstudio = new DaoPreguntaEstudio();
-            //Obtener las preguntas del estudio
-            List<PreguntaEstudio> listaPreguntas = daoPreguntaEstudio.findAll(PreguntaEstudio.class);
-            List<PreguntaEstudio> listaPreguntasEstudio = new ArrayList<>();
+            for(UsuarioEstudio user: listaUsuarioEstudio){
 
-            for(PreguntaEstudio pregunta: listaPreguntas){
+                if(user.get_estudio().get_id() == idE && user.get_usuario().get_id() == idU){
 
-                if(pregunta.get_estudio().get_id() == id)
-                    listaPreguntasEstudio.add(pregunta);
-            }
-
-            //Operacion para cambiar el estatus
-            int cantidadPreguntas = listaPreguntasEstudio.size();
-            List<Long> cantidadRespuestas = new ArrayList<>();
-
-            for (UsuarioEstudio encuestados: encuestadosEstudio){
-
-                cantidadRespuestas = daoUsuarioEstudio.cantidadRespuestas(encuestados.get_usuario().get_id(), id);
-                cantidadRespuestaTotal = cantidadRespuestas.size();
-
-                if(cantidadPreguntas == cantidadRespuestaTotal) {
-
-                    //daoUsuarioEstudio.updateEstadoEstudio(encuestados.get_id());
-                    update(encuestados.get_id());
+                    UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(user.get_id(), UsuarioEstudio.class);
+                    usuarioEstudio_modificar.set_estatus("Respondido");
+                    daoUsuarioEstudio.update(usuarioEstudio_modificar);
                 }
-
             }
 
             //Verificar que todos los encuestados respondieron la encuesta en el estudio
@@ -806,15 +786,13 @@ public class EstudioServicio extends AplicacionBase {
 
             //Finalmente cambiamos el estado del estudio acorde al conteo
             if(encuestadosEstudio.size() == cantidadEncuestadosRespondido) {
-                Estudio estudio = daoEstudio.find(id, Estudio.class);
+                Estudio estudio = daoEstudio.find(idE, Estudio.class);
                 estudio.set_estado("Finalizado");
                 daoEstudio.update(estudio);
             }
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", 200)
-                    .add("cantidadPreguntas", cantidadPreguntas)
-                    .add("cantidadRespuestas", cantidadRespuestas.size())
                     .add("Mensaje", "Operacion realizada con exito").build();
 
             return Response.status(Response.Status.OK).entity(dataObject).build();
@@ -840,5 +818,5 @@ public class EstudioServicio extends AplicacionBase {
         }
 
 
-    }*/
+    }
 }
