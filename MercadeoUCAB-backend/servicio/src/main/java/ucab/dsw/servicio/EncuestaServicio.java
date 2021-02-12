@@ -30,14 +30,14 @@ public class EncuestaServicio {
     @Path("/preguntas/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public Response obtenerPreguntaEncuesta(@PathParam("id") long id) {
+    public Response obtenerPreguntaEncuesta(@PathParam("id") long id, long idUsuario) {
 
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         JsonObject dataObject;
 
         try {
 
-            List<Object[]> preguntasRespuestas = daoPreguntaEncuesta.listarPreguntas(id);
+            List<Object[]> preguntasRespuestas = daoPreguntaEncuesta.mostrarPreguntasNoRespondidas(id,idUsuario);
 
             List<EncuestaResponse> ResponseListUpdate = new ArrayList<>(preguntasRespuestas.size());
 
