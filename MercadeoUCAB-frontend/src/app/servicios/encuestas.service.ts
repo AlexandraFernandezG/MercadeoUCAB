@@ -40,9 +40,9 @@ export class EncuestasService {
     return this.http.get<respuestaPregunta3[]>(this.url + 'encuesta/respuestas/' +  id);
   }
 
-  addRespuesta(respuesta:Respuesta2[]){
+  addRespuesta(respuesta:Respuesta2){
     console.log('entre');
-    return this.http.post(this.url +'encuesta/responder' , respuesta)
+    return this.http.post(this.url +'respuesta/addRespuesta' , respuesta)
     .subscribe(
       response => {
         console.log('guardar respuestas' + response);

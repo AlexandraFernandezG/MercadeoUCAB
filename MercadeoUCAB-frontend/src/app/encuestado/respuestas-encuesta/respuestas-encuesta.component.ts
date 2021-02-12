@@ -20,7 +20,8 @@ export class RespuestasEncuestaComponent implements OnInit {
   preguntas2: PreguntaEncuesta[];
 
   constructor(
-    private service: EncuestasService
+    private service: EncuestasService,
+    public actRoute: ActivatedRoute
   ) { }
   
   respuestas = <any>[];
@@ -30,20 +31,22 @@ export class RespuestasEncuestaComponent implements OnInit {
   opcionesVF: string[] = ['Verdadero' , 'Falso'];
   respuestasAso: respuestaPregunta[];
   respuestasAso2: respuestaPregunta3[];
+  idEstudio: number;
   
   ngOnInit(): void {
-    this.service.getPreguntasEncuesta(1)
+    this.idEstudio = +this.actRoute.snapshot.paramMap.get("id");
+    this.service.getPreguntasEncuesta(this.idEstudio)
     .subscribe(data => {this.preguntas2 = data;
       console.log(this.preguntas2);
       this.preguntas2[0].visible=true;
     } );
-    this.service.getRespuestasAsociadas(1)
+    this.service.getRespuestasAsociadas(this.idEstudio)
     .subscribe(data => {this.respuestasAso2 = data;
       console.log(this.respuestasAso);
     } );
   }
 
-  siguiente(index: number) {
+  Siguiente(index: number) {
    // this.mandarRespuestas(index);
 
     this.preguntas2[index].visible = false;
@@ -51,106 +54,90 @@ export class RespuestasEncuestaComponent implements OnInit {
 
 
   }
+  Delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
 
+  async enviarRespuestas(index: number) {
 
-  enviarRespuestas() {
-    let respuestas2: Respuesta2[] = [];
-    let h = 0;
-    for(let j = 0; j < this.respuestas.length; j++){
-      if (this.respuestas[j] === undefined){
-        this.respuestas.splice(j, 1);
-      }
-    }
+    if (this.preguntas2[index].tipoPregunta === 'Abierta') {
 
-    for(let k = 0; k < this.preguntas2.length; k++){
-
-      if (this.preguntas2[k].tipoPregunta === 'Abierta') {
-
-        let resp: Respuesta2 = {
+        let r: Respuesta2 = {
+          pregunta: this.preguntas2[index].descripcion,
           estatus: 'Activo',
-          respuestaAbierta: this.respuestas[h],
-          usuarioDto: 1,
-          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+          respuestaAbierta: this.respuestas[index],
+          usuarioDto:  JSON.parse(localStorage.getItem('usuarioID')),
+          preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
-        h++;
 
-        respuestas2.push(resp);
-        console.log('respuestaabierta h:', h);
-        console.log('respuestaabierta k:', k);
-        console.log('respuestaabierta:', resp);
+
+        /* respuestas2.push(r); */
+        this.service.addRespuesta(r);
+        /* this.resps = []; */
       }
 
+    if (this.preguntas2[index].tipoPregunta === 'Seleccion Simple') {
 
-      if (this.preguntas2[k].tipoPregunta === 'Verdadero o Falso') {
-
-        let resp: Respuesta2 = {
+        let r: Respuesta2 = {
+          pregunta: this.preguntas2[index].descripcion,
           estatus: 'Activo',
-          verdaderoFalso: this.respuestas[h],
-          usuarioDto: 1,
-          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+          respuestaSimple: this.respuestas[index],
+          usuarioDto:   JSON.parse(localStorage.getItem('usuarioID')),
+          preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
-        console.log('respuestavf h:', h);
-        console.log('respuestavf k:', k);
-        console.log('respuestavf:', resp);
-        h++;
 
-        respuestas2.push(resp);
+
+        /* respuestas2.push(r); */
+        this.service.addRespuesta(r);
+        /* this.resps = []; */
       }
 
-      if ( this.preguntas2[k].tipoPregunta === 'Escala') {
+    if (this.preguntas2[index].tipoPregunta === 'Verdadero o Falso') {
 
-        let resp: Respuesta2 = {
+        let r: Respuesta2 = {
+          pregunta: this.preguntas2[index].descripcion,
           estatus: 'Activo',
-          escala: this.respuestas[h],
-          usuarioDto: 1,
-          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+          verdaderoFalso: this.respuestas[index],
+          usuarioDto: JSON.parse(localStorage.getItem('usuarioID')),
+          preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
-        console.log('respuestaescala h:', h);
-        console.log('respuestaescala k:', k);
-        console.log('respuestaescala:', resp);
-        h++;
-
-        respuestas2.push(resp);
+        this.service.addRespuesta(r);
       }
 
-      if (this.preguntas2[k].tipoPregunta === 'Selección Simple') {
+    if ( this.preguntas2[index].tipoPregunta === 'Escala') {
 
-        let resp: Respuesta2 = {
+        let r: Respuesta2 = {
+          pregunta: this.preguntas2[index].descripcion,
           estatus: 'Activo',
-          respuestaSimple: this.respuestas[h],
-          usuarioDto: 1,
-          preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+          escala: this.respuestas[index],
+          usuarioDto: JSON.parse(localStorage.getItem('usuarioID')),
+          preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
-        console.log('respuestaseleccions h:', h);
-        console.log('respuestaseleccions k:', k);
-        console.log('respuestaseleccions:', resp);
-        h++;
-
-        respuestas2.push(resp);
+        this.service.addRespuesta(r);
+   
       }
 
-      if (this.preguntas2[k].tipoPregunta === 'Selección Múltiple'){
-          for (let i =0; i < this.respuestasAso2.length; i++){
-            if ((this.respuestasAso2[i].fkPregunta === this.preguntas2[k].idPreguntaEncuesta)
-               &&(this.respuestasAso2[i].completado === true)){
+    if (this.preguntas2[index].tipoPregunta === 'Seleccion Multiple'){
+          for (let i =0; i < this.respuestas.length; i++){
+           //for (let j = 0; j < this.preguntas2.length; j++){
+            if ((this.respuestas[i].fkPregunta === this.preguntas2[index].idPreguntaEncuesta)
+            && this.respuestas[i].completado === true){
 
-               let resp: Respuesta2 = {
+              let r: Respuesta2 = {
+                pregunta: this.preguntas2[index].descripcion,
                 estatus: 'Activo',
-                respuestaMultiple: this.respuestasAso2[i].pregunta,
-                usuarioDto: 1,
-                preguntaEstudioDto: this.preguntas2[k].idPreguntaEstudio
+                respuestaMultiple: this.respuestas[i].pregunta,
+                usuarioDto:  JSON.parse(localStorage.getItem('usuarioID')),
+                preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
               };
-              respuestas2.push(resp);
-              console.log('respuestamultiple h:', h);
-              console.log('respuestamultiple k:', k);
-              console.log('respuestamultiple:', resp);
+
+              await this.Delay(1000);
+              this.service.addRespuesta(r);
+              console.log(r);
+              console.log(this.respuestas[i].pregunta);
+
             }
           }
-        }
     }
-    console.log(this.respuestas);
-    console.log(respuestas2);
-    this.service.addRespuesta(respuestas2);
-    }
-
+  }
 }

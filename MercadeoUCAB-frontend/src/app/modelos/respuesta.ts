@@ -17,6 +17,7 @@ export class Respuesta {
    }
 export class Respuesta2{
      constructor(
+       public pregunta: string,
        public estatus: string,
        public usuarioDto: number,
        public preguntaEstudioDto: number,
