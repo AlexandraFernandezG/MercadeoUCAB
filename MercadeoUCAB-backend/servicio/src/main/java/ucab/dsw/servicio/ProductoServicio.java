@@ -11,6 +11,9 @@ import ucab.dsw.Response.ProductoResponse;
 import ucab.dsw.fabrica.Fabrica;
 import ucab.dsw.mappers.MapperProducto;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,8 @@ import javax.ws.rs.core.MediaType;
 @Consumes( MediaType.APPLICATION_JSON )
 public class ProductoServicio extends AplicacionBase{
 
+    private static Logger logger = LoggerFactory.getLogger(ProductoServicio.class);
+
     /**
      * Este método permite obtener todos los productos.
      * @author Emanuel Di Cristofaro
@@ -37,17 +42,20 @@ public class ProductoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarProductos() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los productos");
         JsonObject dataObject;
-        DaoProducto daoProducto = new DaoProducto();
+        DaoProducto daoProducto = Fabrica.crear(DaoProducto.class);
 
         try {
 
             List<Producto> listaProductos = daoProducto.findAll(Producto.class);
-
+            logger.debug("Saliendo del método que lista todos los productos");
             return Response.status(Response.Status.OK).entity(listaProductos).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -68,17 +76,20 @@ public class ProductoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarProductosCliente(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que consulta todos los productos de un cliente");
         JsonObject dataObject;
 
         try {
 
             ConsultarProductosClienteComando comando = Fabrica.crearComandoConId(ConsultarProductosClienteComando.class, id);
             comando.execute();
-
+            logger.debug("Saliendo del método que consulta todos los productos de un cliente");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -102,26 +113,30 @@ public class ProductoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarProducto(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que consulta un producto");
         JsonObject dataObject;
-        DaoProducto daoProducto = new DaoProducto();
+        DaoProducto daoProducto = Fabrica.crear(DaoProducto.class);
 
         try {
 
             Producto producto_consultado = daoProducto.find(id, Producto.class);
-
+            logger.debug("Saliendo del método que consulta un producto");
             return Response.status(Response.Status.OK).entity(producto_consultado).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -142,7 +157,9 @@ public class ProductoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response productosActivos() {
 
-        DaoProducto daoProducto = new DaoProducto();
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que te lista productos activos");
+        DaoProducto daoProducto = Fabrica.crear(DaoProducto.class);
         List<Producto> listaProducto = daoProducto.findAll(Producto.class);
         List<Producto> listaProductosActivos = new ArrayList<Producto>();
         JsonObject dataObject;
@@ -156,10 +173,12 @@ public class ProductoServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que te lista productos activos");
             return Response.status(Response.Status.OK).entity(listaProductosActivos).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -188,6 +207,8 @@ public class ProductoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addProducto(ProductoDto productoDto) throws Exception {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que insertar un producto");
         JsonObject dataObject;
 
         try {
@@ -196,10 +217,12 @@ public class ProductoServicio extends AplicacionBase{
             AddProductoComando comando = Fabrica.crearComandoConEntity(AddProductoComando.class, producto);
             comando.execute();
 
+            logger.debug("Saliendo del método que insertar un producto");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -209,15 +232,17 @@ public class ProductoServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
+                    .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -227,6 +252,7 @@ public class ProductoServicio extends AplicacionBase{
 
         } catch (IllegalAccessException ex) {
 
+            logger.error("Código de error: " + 600 +  ", Mensaje de error: " + ex.getMessage());
             ex.printStackTrace();
 
             dataObject = Json.createObjectBuilder()
@@ -237,6 +263,7 @@ public class ProductoServicio extends AplicacionBase{
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InstantiationException ex) {
+            logger.error("Código de error: " + 601 +  ", Mensaje de error: " + ex.getMessage());
             ex.printStackTrace();
 
             dataObject = Json.createObjectBuilder()
@@ -247,6 +274,7 @@ public class ProductoServicio extends AplicacionBase{
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InvocationTargetException ex) {
+            logger.error("Código de error: " + 602 +  ", Mensaje de error: " + ex.getMessage());
             ex.printStackTrace();
 
             dataObject = Json.createObjectBuilder()
@@ -275,6 +303,8 @@ public class ProductoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarProducto(@PathParam("id") long id, ProductoDto productoDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que actualiza un producto");
         JsonObject dataObject;
         DaoProducto daoProducto = new DaoProducto();
 
@@ -287,10 +317,12 @@ public class ProductoServicio extends AplicacionBase{
                 producto_modificar.set_estatus(productoDto.getEstatus());
                 daoProducto.update(producto_modificar);
 
+                logger.debug("Saliendo del método que actualiza un producto");
                 return Response.status(Response.Status.OK).entity(producto_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -300,10 +332,11 @@ public class ProductoServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -326,6 +359,8 @@ public class ProductoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response deleteProducto(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que elimina un producto");
         JsonObject dataObject;
         DaoProducto daoProducto = new DaoProducto();
 
@@ -333,11 +368,12 @@ public class ProductoServicio extends AplicacionBase{
 
                 Producto producto_eliminar = daoProducto.find(id, Producto.class);
                 daoProducto.delete(producto_eliminar);
-
+                logger.debug("Saliendo del método que elimina un producto");
                 return Response.status(Response.Status.OK).entity(producto_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -347,10 +383,11 @@ public class ProductoServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado el producto: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 

@@ -13,11 +13,14 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path( "/nivelEconomico" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class NivelEconomicoServicio extends AplicacionBase{
+    private static Logger logger = LoggerFactory.getLogger(NivelEconomicoServicio.class);
 
     /**
      * Este método permite obtener todas los niveles económicos.

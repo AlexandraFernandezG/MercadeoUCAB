@@ -10,17 +10,18 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path( "/marca" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class MarcaServicio extends AplicacionBase{
-
+    private static Logger logger = LoggerFactory.getLogger(MarcaServicio.class);
     /**
      * Este método permite obtener todas las marcas.
      * @author Emanuel Di Cristofaro y Gregg Spinetti
@@ -31,11 +32,14 @@ public class MarcaServicio extends AplicacionBase{
     @Path("/allMarca")
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarMarcas() {
+
+        logger.debug("Ingresando al método que consulta todas las marcas");
         DaoMarca daoMarca = new DaoMarca();
         JsonObject dataObject;
 
         try {
             List<Marca> listaMarcas = daoMarca.findAll(Marca.class);
+            logger.debug("Saliendo del método que consulta todas las marcas");
             return Response.status(Response.Status.OK).entity(listaMarcas).build();
 
         } catch (Exception ex) {
@@ -45,6 +49,7 @@ public class MarcaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -63,11 +68,15 @@ public class MarcaServicio extends AplicacionBase{
     @Path("/consultarMarca/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarMarca(@PathParam("id") long id) {
+
+        logger.debug("Ingresando al método que permite consultar una marca");
         DaoMarca daoMarca = new DaoMarca();
         JsonObject dataObject;
 
         try {
             Marca marca_consultada = daoMarca.find(id, Marca.class);
+
+            logger.debug("Saliendo del método que permite consultar una marca");
             return Response.status(Response.Status.OK).entity(marca_consultada).build();
 
         } catch (NullPointerException ex) {
@@ -75,8 +84,9 @@ public class MarcaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -86,6 +96,7 @@ public class MarcaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
@@ -105,6 +116,7 @@ public class MarcaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response marcasActivas() {
 
+        logger.debug("Ingresando al método que permite consultar todas las marcas activas");
         DaoMarca daoMarca = new DaoMarca();
         JsonObject dataObject;
         List<Marca> listaMarca = daoMarca.findAll(Marca.class);
@@ -119,6 +131,7 @@ public class MarcaServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que permite consultar todas las marcas activas");
             return Response.status(Response.Status.OK).entity(listaMarca).build();
 
         } catch (NullPointerException ex) {
@@ -126,8 +139,9 @@ public class MarcaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado ninguna marca activa: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -137,6 +151,7 @@ public class MarcaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -158,6 +173,7 @@ public class MarcaServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addMarca(MarcaDto marcaDto){
 
+        logger.debug("Ingresando al método que permite agregar una marca");
         MarcaDto resultado = new MarcaDto();
         JsonObject dataObject;
 
@@ -172,6 +188,8 @@ public class MarcaServicio extends AplicacionBase{
             daoMarca.insert(marca);
             Marca resul = daoMarca.insert(marca);
             resultado.setId(resul.get_id());
+
+            logger.debug("Saliendo del método que permite agregar una marca");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
 
@@ -182,6 +200,7 @@ public class MarcaServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -189,8 +208,9 @@ public class MarcaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
@@ -198,8 +218,9 @@ public class MarcaServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -221,6 +242,7 @@ public class MarcaServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateMarca(@PathParam("id") long id, MarcaDto marcaDto){
 
+        logger.debug("Ingresando al método que permite actualizar una marca");
         DaoMarca daoMarca = new DaoMarca();
         Marca marca_modificar = daoMarca.find(id, Marca.class);
         JsonObject dataObject;
@@ -231,6 +253,8 @@ public class MarcaServicio extends AplicacionBase{
                 marca_modificar.set_descripcion(marcaDto.getDescripcion());
                 marca_modificar.set_estatus(marcaDto.getEstatus());
                 daoMarca.update(marca_modificar);
+
+                logger.debug("Saliendo del método que permite actualizar una marca");
                 return Response.status(Response.Status.OK).entity(marca_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -240,6 +264,7 @@ public class MarcaServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -249,6 +274,7 @@ public class MarcaServicio extends AplicacionBase{
                         .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
                         .add("codigo", 400).build();
 
+                logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
@@ -269,12 +295,14 @@ public class MarcaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response deleteMarca(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que permite eliminar una marca");
         DaoMarca daoMarca = new DaoMarca();
         Marca marca_eliminar = daoMarca.find(id, Marca.class);
         JsonObject dataObject;
 
             try {
                 daoMarca.delete(marca_eliminar);
+                logger.debug("Saliendo del método que permite eliminar una marca");
                 return Response.status(Response.Status.OK).entity(marca_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -284,6 +312,7 @@ public class MarcaServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -293,6 +322,7 @@ public class MarcaServicio extends AplicacionBase{
                         .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
                         .add("codigo", 400).build();
 
+                logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }

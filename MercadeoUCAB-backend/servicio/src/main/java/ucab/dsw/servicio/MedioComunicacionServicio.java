@@ -18,11 +18,14 @@ import javax.ws.rs.core.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path( "/medioComunicacion" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class MedioComunicacionServicio extends AplicacionBase{
+    private static Logger logger = LoggerFactory.getLogger(MedioComunicacionServicio.class);
 
     /**
      * Este método permite obtener todos los medios de comunicación.

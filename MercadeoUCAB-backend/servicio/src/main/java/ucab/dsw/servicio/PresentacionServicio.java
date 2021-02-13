@@ -80,7 +80,7 @@ public class PresentacionServicio extends AplicacionBase{
 
         BasicConfigurator.configure();
         logger.debug("Ingresando al método que te permite consultar una presentación");
-        DaoPresentacion daoPresentacion = new DaoPresentacion();
+        DaoPresentacion daoPresentacion = Fabrica.crear(DaoPresentacion.class);
         JsonObject dataObject;
 
         try {
@@ -124,7 +124,7 @@ public class PresentacionServicio extends AplicacionBase{
 
         BasicConfigurator.configure();
         logger.debug("Ingresando al método que lista todas las presentaciones activas");
-        DaoPresentacion daoPresentacion = new DaoPresentacion();
+        DaoPresentacion daoPresentacion = Fabrica.crear(DaoPresentacion.class);
         List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
         List<Presentacion> listaPresentacionActivas = new ArrayList<Presentacion>();
         JsonObject dataObject;
@@ -171,7 +171,9 @@ public class PresentacionServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addPresentacion(PresentacionDto presentacionDto){
 
-        PresentacionDto resultado = new PresentacionDto();
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al metodo para insertar una presentacion");
+        PresentacionDto resultado = Fabrica.crear(PresentacionDto.class);
         JsonObject dataObject;
 
         try {
@@ -185,10 +187,12 @@ public class PresentacionServicio extends AplicacionBase{
             Presentacion resul = daoPresentacion.insert(presentacion);
             resultado.setId(resul.get_id());
 
+            logger.debug("Saliendo del método que inserta una presentacion");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -198,19 +202,21 @@ public class PresentacionServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la presentacion: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -235,7 +241,9 @@ public class PresentacionServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updatePresentacion(@PathParam("id") long id, PresentacionDto presentacionDto) {
 
-        DaoPresentacion daoPresentacion = new DaoPresentacion();
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que te permite actualizar una presentacion");
+        DaoPresentacion daoPresentacion = Fabrica.crear(DaoPresentacion.class);
         Presentacion presentacion_modificar = daoPresentacion.find(id, Presentacion.class);
         JsonObject dataObject;
 
@@ -246,10 +254,12 @@ public class PresentacionServicio extends AplicacionBase{
             presentacion_modificar.set_estatus(presentacionDto.getEstatus());
             daoPresentacion.update(presentacion_modificar);
 
+            logger.debug("Saliendo del método que te permite actualizar una presentacion");
             return Response.status(Response.Status.OK).entity(presentacion_modificar).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -259,10 +269,11 @@ public class PresentacionServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la presentacion: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -285,18 +296,22 @@ public class PresentacionServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarPresentacion(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que elimina una presentacion");
         JsonObject dataObject;
-        DaoPresentacion daoPresentacion = new DaoPresentacion();
+        DaoPresentacion daoPresentacion = Fabrica.crear(DaoPresentacion.class);
         Presentacion presentacion_eliminar = daoPresentacion.find(id, Presentacion.class);
 
 
             try {
 
                 daoPresentacion.delete(presentacion_eliminar);
+                logger.debug("Saliendo del método que elimina una presentacion");
                 return Response.status(Response.Status.OK).entity(presentacion_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -306,10 +321,11 @@ public class PresentacionServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la presentacion: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 

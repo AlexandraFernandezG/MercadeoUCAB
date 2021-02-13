@@ -25,7 +25,7 @@ public class DaoUsuarioEstudio extends Dao<UsuarioEstudio>{
 
         SQL = "SELECT DISTINCT e._id as idEstudio, e._nombre as nombre, e._tipoInstrumento as tipoInstrumento, e._observaciones as observaciones, e._fechaInicio as fechaInicio, e._fechaFin as fechaFin, e._estado as estado, e._estatus as estatus, ue._estatus" +
                 " FROM Estudio as e, Usuario as u, UsuarioEstudio as ue " +
-                "WHERE e._id = ue._estudio._id and ue._usuario._id = u._id and u._id = :id";
+                "WHERE e._id = ue._estudio._id and ue._usuario._id = u._id and u._id = :id and ue._estatus <> 'Respondido'";
 
         Query query = entitymanager.createQuery(SQL);
         query.setParameter("id", id);
