@@ -32,10 +32,14 @@ public class NivelEconomicoServicio extends AplicacionBase{
     @Path("/allNivelEconomico")
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarNivelEconomico() {
+
+        logger.debug("Ingresando al método que lista todos los niveles económicos");
         DaoNivelEconomico daoNivelEconomico = new DaoNivelEconomico();
         JsonObject dataObject;
         try {
             List<NivelEconomico> listaNivelEconomico = daoNivelEconomico.findAll(NivelEconomico.class);
+
+            logger.debug("Saliendo del método que lista todos los niveles económicos");
             return Response.status(Response.Status.OK).entity(listaNivelEconomico).build();
         } catch (Exception ex) {
 
@@ -44,6 +48,7 @@ public class NivelEconomicoServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -62,19 +67,24 @@ public class NivelEconomicoServicio extends AplicacionBase{
     @Path("/consultarNivelEconomico/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarNivelEconomico(@PathParam("id") long id) {
+
+        logger.debug("Ingresando al método que permite consultar un nivel económico");
         DaoNivelEconomico daoNivelEconomico = new DaoNivelEconomico();
         JsonObject dataObject;
 
         try {
             NivelEconomico nivelEconomico_consultado = daoNivelEconomico.find(id, NivelEconomico.class);
+
+            logger.debug("Saliendo del método que permite consultar un nivel económico");
             return Response.status(Response.Status.OK).entity(nivelEconomico_consultado).build();
         } catch (NullPointerException ex) {
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el nivel económico: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -84,6 +94,7 @@ public class NivelEconomicoServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -105,6 +116,7 @@ public class NivelEconomicoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addNivelEconomico(NivelEconomicoDto nivelEconomicoDto){
 
+        logger.debug("Ingresando al método que permite agregar un nivel económico");
         NivelEconomicoDto resultado = new NivelEconomicoDto();
         JsonObject dataObject;
 
@@ -118,6 +130,7 @@ public class NivelEconomicoServicio extends AplicacionBase{
             NivelEconomico resul = daoNivelEconomico.insert(nivelEconomico);
             resultado.setId(resul.get_id());
 
+            logger.debug("Saliendo del método que permite agregar un nivel económico");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -127,6 +140,7 @@ public class NivelEconomicoServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -134,8 +148,9 @@ public class NivelEconomicoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha podido insertar el nivel económico: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
@@ -143,8 +158,9 @@ public class NivelEconomicoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -166,6 +182,7 @@ public class NivelEconomicoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateNivelEconomico(@PathParam("id") long id, NivelEconomicoDto nivelEconomicoDto){
 
+        logger.debug("Ingresando al método que permite actualizar un nivel económico");
         DaoNivelEconomico daoNivelEconomico = new DaoNivelEconomico();
         NivelEconomico nivelEconomico_modificar = daoNivelEconomico.find(id, NivelEconomico.class);
         JsonObject dataObject;
@@ -174,6 +191,8 @@ public class NivelEconomicoServicio extends AplicacionBase{
                 nivelEconomico_modificar.set_descripcion(nivelEconomicoDto.getDescripcion());
                 nivelEconomico_modificar.set_estatus(nivelEconomicoDto.getEstatus());
                 daoNivelEconomico.update(nivelEconomico_modificar);
+
+                logger.debug("Saliendo del método que permite actualizar un nivel económico");
                 return Response.status(Response.Status.OK).entity(nivelEconomico_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -183,6 +202,7 @@ public class NivelEconomicoServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -190,8 +210,9 @@ public class NivelEconomicoServicio extends AplicacionBase{
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", "No se ha encontrado el nivel económico: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
@@ -213,12 +234,15 @@ public class NivelEconomicoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarNivelEconomico(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que permite eliminar un nivel económico");
         DaoNivelEconomico daoNivelEconomico = new DaoNivelEconomico();
         NivelEconomico nivelEconomico_eliminar = daoNivelEconomico.find(id, NivelEconomico.class);
         JsonObject dataObject;
 
             try {
                 daoNivelEconomico.delete(nivelEconomico_eliminar);
+
+                logger.debug("Saliendo del método que permite eliminar un nivel económico");
                 return Response.status(Response.Status.OK).entity(nivelEconomico_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -228,6 +252,7 @@ public class NivelEconomicoServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -235,8 +260,9 @@ public class NivelEconomicoServicio extends AplicacionBase{
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", "No se ha encontrado  el nivel económico: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
