@@ -31,11 +31,13 @@ public class OcupacionServicio extends AplicacionBase {
     @Path("/allOcupacion")
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarOcupacion() {
+        logger.debug("Ingresando al método que consulta todas las ocupaciones");
         DaoOcupacion daoOcupacion = new DaoOcupacion();
         JsonObject dataObject;
 
         try {
             List<Ocupacion> listaOcupaciones = daoOcupacion.findAll(Ocupacion.class);
+            logger.debug("Saliendo del método que consulta todas las ocupaciones");
             return Response.status(Response.Status.OK).entity(listaOcupaciones).build();
 
         } catch (Exception ex) {
@@ -45,6 +47,7 @@ public class OcupacionServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -63,11 +66,14 @@ public class OcupacionServicio extends AplicacionBase {
     @Path("/consultarOcupacion/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarOcupacion(@PathParam("id") long id) {
+        logger.debug("Ingresando al método que permite consultar una ocupación");
         DaoOcupacion daoOcupacion = new DaoOcupacion();
         JsonObject dataObject;
 
         try {
             Ocupacion ocupacion_consultada = daoOcupacion.find(id, Ocupacion.class);
+
+            logger.debug("Saliendo del método que permite consultar una ocupación");
             return Response.status(Response.Status.OK).entity(ocupacion_consultada).build();
 
         } catch (NullPointerException ex) {
@@ -75,8 +81,9 @@ public class OcupacionServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado la ocupación: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -86,6 +93,7 @@ public class OcupacionServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -106,7 +114,7 @@ public class OcupacionServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addOcupacion(OcupacionDto ocupacionDto){
-
+        logger.debug("Ingresando al método que permite agregar una ocupación");
         OcupacionDto resultado = new OcupacionDto();
         JsonObject dataObject;
 
@@ -119,6 +127,8 @@ public class OcupacionServicio extends AplicacionBase {
             ocupacion.set_estatus(ocupacionDto.getEstatus());
             Ocupacion resul = daoOcupacion.insert(ocupacion);
             resultado.setId(resul.get_id());
+
+            logger.debug("Saliendo del método que permite agregar una ocupación");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -128,6 +138,7 @@ public class OcupacionServicio extends AplicacionBase {
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -135,8 +146,9 @@ public class OcupacionServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado la ocupación: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
@@ -144,8 +156,9 @@ public class OcupacionServicio extends AplicacionBase {
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -167,6 +180,7 @@ public class OcupacionServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateOcupacion(@PathParam("id") long id, OcupacionDto ocupacionDto){
 
+        logger.debug("Ingresando al método que permite actualizar una ocupación");
         DaoOcupacion daoOcupacion = new DaoOcupacion();
         Ocupacion ocupacion_modificar = daoOcupacion.find(id, Ocupacion.class);
         JsonObject dataObject;
@@ -177,6 +191,7 @@ public class OcupacionServicio extends AplicacionBase {
                 ocupacion_modificar.set_estatus(ocupacionDto.getEstatus());
                 daoOcupacion.update(ocupacion_modificar);
 
+                logger.debug("Saliendo del método que permite actualizar una ocupación");
                 return Response.status(Response.Status.OK).entity(ocupacion_modificar).build();
 
             } catch (NullPointerException ex) {
@@ -184,8 +199,9 @@ public class OcupacionServicio extends AplicacionBase {
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", "No se ha encontrado la ocupación: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
@@ -206,6 +222,7 @@ public class OcupacionServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarOcupacion(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que permite eliminar una ocupación");
         DaoOcupacion daoOcupacion = new DaoOcupacion();
         Ocupacion ocupacion_eliminar = daoOcupacion.find(id, Ocupacion.class);
         JsonObject dataObject;
@@ -214,6 +231,7 @@ public class OcupacionServicio extends AplicacionBase {
 
                 daoOcupacion.delete(ocupacion_eliminar);
 
+                logger.debug("Saliendo del método que permite eliminar una ocupación");
                 return Response.status(Response.Status.OK).entity(ocupacion_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -223,6 +241,7 @@ public class OcupacionServicio extends AplicacionBase {
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -230,8 +249,9 @@ public class OcupacionServicio extends AplicacionBase {
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", "No se ha encontrado la ocupación: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
