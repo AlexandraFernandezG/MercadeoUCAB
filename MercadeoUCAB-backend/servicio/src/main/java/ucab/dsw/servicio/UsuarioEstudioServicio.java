@@ -4,6 +4,7 @@ import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.DaoEstudio;
 import ucab.dsw.accesodatos.DaoUsuarioEstudio;
 import ucab.dsw.accesodatos.DaoUsuario;
+import ucab.dsw.comando.UsuarioEstudio.EncuestadosEstudioComando;
 import ucab.dsw.comando.UsuarioEstudio.EstudiosEncuestadoComando;
 import ucab.dsw.dtos.UsuarioEstudioDto;
 import ucab.dsw.entidades.Estudio;
@@ -94,22 +95,15 @@ public class UsuarioEstudioServicio extends AplicacionBase{
 
         BasicConfigurator.configure();
         logger.debug("Ingresando al método que lista los encuestados de un estudio");
-        DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
         JsonObject dataObject;
 
         try {
 
-            List<Object[]> listaUsuarioEstudios = daoUsuarioEstudio.listarEncuestadosEstudio(id);
-
-            List<UsuarioResponse> listaEncuestadosEstudio = new ArrayList<>(listaUsuarioEstudios.size());
-
-            for (Object[] user : listaUsuarioEstudios) {
-
-                listaEncuestadosEstudio.add(new UsuarioResponse((long)user[0], (String)user[1], (String)user[2], (String)user[3], (String)user[4]));
-            }
+            EncuestadosEstudioComando comando = Fabrica.crearComandoConId(EncuestadosEstudioComando.class, id);
+            comando.execute();
 
             logger.debug("Saliendo del método que lista los encuestados de un estudio");
-            return Response.status(Response.Status.OK).entity(listaEncuestadosEstudio).build();
+            return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
