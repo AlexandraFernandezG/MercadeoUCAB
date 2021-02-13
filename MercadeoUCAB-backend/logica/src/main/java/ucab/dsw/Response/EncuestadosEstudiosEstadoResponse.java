@@ -17,6 +17,10 @@ public class EncuestadosEstudiosEstadoResponse {
     private String estatusEstudio;
     private String estadoUsuarioEstudio;
 
+    public EncuestadosEstudiosEstadoResponse(){
+        super();
+    }
+
     public EncuestadosEstudiosEstadoResponse(long idEstudio, String nombreEstudio, String tipoInstrumentoEstudio, String observacionesEstudio, String fechaInicioEstudio, String fechaFinEstudio, String estadoEstudio, String estatusEstudio, String estadoUsuarioEstudio) {
         this.idEstudio = idEstudio;
         this.nombreEstudio = nombreEstudio;
