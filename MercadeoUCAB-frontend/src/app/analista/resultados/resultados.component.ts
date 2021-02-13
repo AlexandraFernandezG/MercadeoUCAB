@@ -8,6 +8,8 @@ import { isLabeledStatement } from 'typescript';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Estudio2 } from 'src/app/modelos/estudio';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-resultados',
@@ -33,6 +35,8 @@ export class ResultadosComponent implements OnInit {
   canva: any;
   data: JSON;
   objeto = [];
+  respuesta: string; 
+  estudio: Estudio2[];
 
 
   constructor(
@@ -48,16 +52,15 @@ export class ResultadosComponent implements OnInit {
   }
 
   respuestaForm: FormGroup;
-  respuesta: string;
   ngOnInit() {
     this.idEstudio = +this.actRoute.snapshot.paramMap.get("id");
-    this.Resultados();
-    //  setTimeout(() => {
-    //      this.Graficas();
-    //   },3000);
+    //this.Resultados();
+      setTimeout(() => {
+          this.Graficas();
+       },3000);
 
-    // this.Resultados();
-    this.Graficas();
+     this.Resultados();
+   // this.Graficas();
 
   }
 
@@ -276,9 +279,32 @@ export class ResultadosComponent implements OnInit {
     });
   }
 
-  enviarRespuesta(){
+  /*enviarRespuesta(){
+    this.respuesta=this.respuestaForm.value.respuesta;
+    this.service.sendResultados(this.respuesta,this.idEstudio).subscribe(
+      Data => { this.respuesta = Data ,
+        console.log(this.respuesta)},
+      );
     console.log(this.respuestaForm.value.respuesta);
     
-  }
+  }*/
+  enviarRespuesta(): void{
+    this.respuesta=this.respuestaForm.value.respuesta;
+    let nombre,tipoInstrumento, fechaInicio, fechaFin, estatus, estado, usuarioDto, solicitudEstudioDto
+    const editEdu: Estudio2 = {
+      id:this.idEstudio, 
+      nombre:'',
+      tipoInstrumento:'', 
+      fechaInicio:null, 
+      fechaFin:null, 
+      estatus:'', 
+      estado:'', 
+      observaciones:this.respuesta,
+      usuarioDto:1, 
+      solicitudEstudioDto:1
+    };
+    this.service.sendResultados(editEdu).subscribe();
+      }
+
 
 }
