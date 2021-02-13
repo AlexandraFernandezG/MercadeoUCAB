@@ -31,7 +31,7 @@ export class EstudiosClienteComponent implements OnInit {
     let id = JSON.parse(localStorage.getItem('usuarioID'));
     this.estudiosService.getEstudiosCliente(id).subscribe(
       dataEstudios => {
-        this.dataSource = new MatTableDataSource<Estudio>(dataEstudios.Estudios);
+        this.dataSource = new MatTableDataSource<Estudio>(dataEstudios.Estudios.reverse());
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });

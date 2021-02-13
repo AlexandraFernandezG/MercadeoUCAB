@@ -34,7 +34,7 @@ export class SolicitudesPendientesComponent implements OnInit {
     this.service.getSolicitudesCliente(JSON.parse(localStorage.getItem('usuarioID')))
     .subscribe(data => {
       let id = JSON.parse(localStorage.getItem('usuarioID'));
-      this.dataSource = new MatTableDataSource<Solicitud>(data);
+      this.dataSource = new MatTableDataSource<Solicitud>(data.reverse());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     } );

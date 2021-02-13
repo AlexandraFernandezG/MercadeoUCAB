@@ -15,3 +15,8 @@ table {
 .headerEstudios{
     margin: 30px auto;
 }
+
+.mat-card-avatar{
+    background-image: url('/../assets/img/survey.png');
+    background-size: cover;
+}

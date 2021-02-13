@@ -56,12 +56,12 @@ export class EstudiosService {
     null);
   }
 
-  getEstudios():Observable<Estudio[]>{
+  getEstudios():Observable<any>{
     return this.http.get<Estudio[]>(this.url + 'estudio/allEstudio');
   }
 
-  getEstudiosEncuestado(id: number):Observable<Estudio[]>{
-    return this.http.get<Estudio[]>(this.url + 'sugerencias/estudiosEncuestado/' + id);
+  getEstudiosEncuestado(id: number):Observable<any>{
+    return this.http.get<Estudio[]>(this.url + 'usuarioEstudio/estudiosEncuestado/' + id);
   }
 
   getEstudiosCliente(id: number):Observable<any>{
