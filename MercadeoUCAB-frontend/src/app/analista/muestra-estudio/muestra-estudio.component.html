@@ -28,7 +28,7 @@
             <th class="accion-header" mat-header-cell *matHeaderCellDef> Acciones </th>
             <mat-cell *matCellDef="let row">
 
-              <button mat-icon-button *ngIf ="data.enLinea === 'no' " [routerLink]="['/encuestado/respuestas-encuesta', data.id]" (click)="closeModal()">
+              <button mat-icon-button *ngIf ="data.enLinea === 'No' " [routerLink]="['/encuestado/respuestas-encuesta', data.id]" (click)="closeModal()">
                 <mat-icon>note_add</mat-icon>
               </button>
 
