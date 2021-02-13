@@ -6,10 +6,11 @@ import { Chart } from 'node_modules/chart.js';
 import { ResultadosService } from 'src/app/servicios/resultados.service';
 import { isLabeledStatement } from 'typescript';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Estudio2 } from 'src/app/modelos/estudio';
 import { stringify } from '@angular/compiler/src/util';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-resultados',
@@ -42,7 +43,9 @@ export class ResultadosComponent implements OnInit {
   constructor(
     private service: ResultadosService,
     public actRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    private servicenotifications: NotificationsService,
   ) { 
 
 
@@ -288,6 +291,23 @@ export class ResultadosComponent implements OnInit {
     console.log(this.respuestaForm.value.respuesta);
     
   }*/
+  onSucess(message){
+    this.servicenotifications.success('Exitoso', message, {
+      position: ['bottom', 'right'],
+      timeOut: 5000,
+      animate: 'fade',
+      showProgressBar: true,
+      })
+  }
+
+  onError(message){
+    this.servicenotifications.error('¡Algo falló!', message, {
+      position: ['bottom', 'right'],
+      timeOut: 5000,
+      animate: 'fade',
+      showProgressBar: true,
+      });
+  }
   enviarRespuesta(): void{
     this.respuesta=this.respuestaForm.value.respuesta;
     let nombre,tipoInstrumento, fechaInicio, fechaFin, estatus, estado, usuarioDto, solicitudEstudioDto
@@ -304,6 +324,10 @@ export class ResultadosComponent implements OnInit {
       solicitudEstudioDto:1
     };
     this.service.sendResultados(editEdu).subscribe();
+    this.onSucess('Se ha enviado sus observaciones al cliente...');
+    setTimeout(() => {
+      this.router.navigate(['/analista']);
+    },5000);
       }
 
 
