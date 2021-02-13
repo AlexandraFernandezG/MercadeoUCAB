@@ -85,7 +85,7 @@ export class UsuariosService {
     console.log(id);
     return this.http.get<any>(this.url + 'usuarioEstudio/encuestadosEstudio/' + id)
     .pipe(
-      tap((dataObject: any)=> console.log(`fetched usuario encuestados=${dataObject.mensaje}`)),
+      tap((dataObject: any)=> console.log(`fetched usuario encuestados=${dataObject.Encuestados}`)),
       catchError(this.handleError)
     );
   }
