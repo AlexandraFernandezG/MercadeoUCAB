@@ -33,11 +33,14 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
     @Path("/allPreguntasEncuesta")
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarPreguntas() {
+        logger.debug("Ingresando al método que consulta todas las preguntas");
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         JsonObject dataObject;
 
         try {
             List<PreguntaEncuesta> listaPreguntaEncuesta = daoPreguntaEncuesta.findAll(PreguntaEncuesta.class);
+
+            logger.debug("Saliendo del método que consulta todas las preguntas");
             return Response.status(Response.Status.OK).entity(listaPreguntaEncuesta).build();
 
         } catch (Exception ex) {
@@ -47,6 +50,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -65,11 +69,14 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
     @Path("/consultarPreguntaEncuesta/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response encontrarPreguntaEncuesta(@PathParam("id") long id) throws NullPointerException{
+        logger.debug("Ingresando al método que consulta una pregunta");
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         JsonObject dataObject;
 
         try {
             PreguntaEncuesta preguntaEncuesta_consultada = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
+
+            logger.debug("Saliendo del método que consulta una pregunta");
             return Response.status(Response.Status.OK).entity(preguntaEncuesta_consultada).build();
         } catch (NullPointerException ex) {
 
@@ -78,6 +85,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -87,6 +95,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -101,6 +110,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
     @Path("/mostrarPreguntasActivas")
     @Produces( MediaType.APPLICATION_JSON )
     public Response preguntasActivas() {
+        logger.debug("Ingresando al método que muestra todas las preguntas activas");
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         List<PreguntaEncuesta> listaPreguntas = daoPreguntaEncuesta.findAll(PreguntaEncuesta.class);
         List<PreguntaEncuesta> listaPreguntasActivas = new ArrayList<PreguntaEncuesta>();
@@ -114,6 +124,8 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     listaPreguntasActivas.add(preguntaEncuesta);
                 }
             }
+
+            logger.debug("Saliendo del método que muestra todas las preguntas activas");
             return Response.status(Response.Status.OK).entity(listaPreguntasActivas).build();
 
         } catch (Exception ex) {
@@ -123,6 +135,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -144,6 +157,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addPreguntaEncuesta(PreguntaEncuestaDto preguntaEncuestaDto){
 
+        logger.debug("Ingresando al método que permite añadir una pregunta");
         JsonObject dataObject;
 
         try {
@@ -152,6 +166,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
             AddPreguntaEncuestaComando comando = Fabrica.crearComandoConEntity(AddPreguntaEncuestaComando.class, preguntaEncuesta);
             comando.execute();
 
+            logger.debug("Saliendo del método que permite añadir una pregunta");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -161,6 +176,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -170,6 +186,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -179,6 +196,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
@@ -200,6 +218,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addPreguntaEncuestaEstudio(@PathParam("id") long id, PreguntaEncuestaDto preguntaEncuestaDto){
 
+        logger.debug("Ingresando al método que permite añadir una pregunta a un estudio");
         PreguntaEncuestaDto resultado = new PreguntaEncuestaDto();
         JsonObject dataObject;
 
@@ -231,6 +250,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
             preguntaEstudio.set_estudio(idEstudio);
             daoPreguntaEstudio.insert(preguntaEstudio);
 
+            logger.debug("Saliendo del método que permite añadir una pregunta a un estudio");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -240,6 +260,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -249,6 +270,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -258,6 +280,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
 
@@ -279,6 +302,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstatusPregunta(@PathParam("id") long id, PreguntaEncuestaDto preguntaEncuestaDto){
 
+        logger.debug("Ingresando al método que permite ver el estatus de  una pregunta");
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         PreguntaEncuesta preguntaEncuesta_modificar = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
         JsonObject dataObject;
@@ -313,6 +337,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                     }
                 }
 
+                logger.debug("Saliendo del método que permite ver el estatus de  una pregunta");
                 return Response.status(Response.Status.OK).entity(preguntaEncuesta_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -322,6 +347,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -331,6 +357,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
@@ -354,6 +381,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarPreguntaEncuesta(@PathParam("id") long id, PreguntaEncuestaDto preguntaEncuestaDto){
 
+        logger.debug("Ingresando al método que permite actualizar  una pregunta");
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         PreguntaEncuesta preguntaEncuesta_modificar = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
         JsonObject dataObject;
@@ -363,6 +391,8 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                 preguntaEncuesta_modificar.set_tipoPregunta(preguntaEncuestaDto.getTipoPregunta());
                 preguntaEncuesta_modificar.set_estatus(preguntaEncuestaDto.getEstatus());
                 daoPreguntaEncuesta.update(preguntaEncuesta_modificar);
+
+                logger.debug("Saliendo del método que permite actualizar  una pregunta");
                 return Response.status(Response.Status.OK).entity(preguntaEncuesta_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -372,6 +402,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -381,6 +412,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
@@ -401,12 +433,15 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarPreguntaEncuesta(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que permite eliminar  una pregunta");
         DaoPreguntaEncuesta daoPreguntaEncuesta = new DaoPreguntaEncuesta();
         PreguntaEncuesta preguntaEncuesta_eliminar = daoPreguntaEncuesta.find(id, PreguntaEncuesta.class);
         JsonObject dataObject;
 
             try {
                 daoPreguntaEncuesta.delete(preguntaEncuesta_eliminar);
+
+                logger.debug("Saliendo del método que permite eliminar  una pregunta");
                 return Response.status(Response.Status.OK).entity(preguntaEncuesta_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -416,6 +451,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -425,6 +461,7 @@ public class PreguntaEncuestaServicio extends AplicacionBase{
                         .add("excepcion", ex.getMessage())
                         .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }

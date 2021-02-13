@@ -11,6 +11,9 @@ import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.core.Response;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +41,30 @@ public class FuncionesComando {
         }
 
         return fecha_estudio;
+    }
+
+    public int devolverEdad(Date fechaNacimiento){
+
+        int edad = 0;
+
+        //Primero pasamos la fecha de nacimiento a string
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha_nac = sdf.format(fechaNacimiento);
+
+        //Formato de la fecha para la operacion de la edad
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        //Parseamos la fecha y obtener la fecha actual.
+        LocalDate fechaNac = LocalDate.parse(fecha_nac, fmt);
+        LocalDate ahora = LocalDate.now();
+
+        //Calcular la edad
+        Period periodo = Period.between(fechaNac, ahora);
+
+        //Edad de la persona
+        edad = periodo.getYears();
+
+        return edad;
     }
 
     public String devolverDisponibilidadEnLinea(long idSE){

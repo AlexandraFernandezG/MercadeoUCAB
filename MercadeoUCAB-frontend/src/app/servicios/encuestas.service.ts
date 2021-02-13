@@ -53,6 +53,17 @@ export class EncuestasService {
     );
   }
 
+  cambiarEstatus(idEstudio, idUsuario){
+    console.log('entre');
+    return this.http.post(this.url +'estudio/cambiarEstatusEncuestado/', idEstudio, +'/'+ idUsuario)
+    .subscribe(
+      response => {
+        console.log('guardar respuestas' + response);
+      },
+      error => console.log('Error al guardar respuestas' + error)
+    );
+  }
+
 
     /// Error HandleError
     handleError(error): Observable<never> {
