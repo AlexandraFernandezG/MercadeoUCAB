@@ -15,6 +15,9 @@ import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.Rol;
 import ucab.dsw.entidades.Usuario;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -35,6 +38,7 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class UsuarioServicio extends AplicacionBase {
 
+    private static Logger logger = LoggerFactory.getLogger(UsuarioServicio.class);
     /**
      * Este método permite obtener todos los usuarios.
      * @author Emanuel Di Cristofaro y Gregg Spinetti
@@ -46,17 +50,20 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarUsuarios() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los usuarios");
         JsonObject dataObject;
 
         try {
 
             ListarUsuariosComando comando = Fabrica.crear(ListarUsuariosComando.class);
             comando.execute();
-
+            logger.debug("Saliendo del método que lista todos los usuarios");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -78,17 +85,20 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarAnalistas() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los analistas");
         JsonObject dataObject;
 
         try {
 
             ListarAnalistasComando comando = Fabrica.crear(ListarAnalistasComando.class);
             comando.execute();
-
+            logger.debug("Saliendo del método que lista todos los analistas");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -109,17 +119,20 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarEncuestadosInformacion(){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los encuestados");
         JsonObject dataObject;
 
         try {
 
             ListarEncuestadosComando comando = Fabrica.crear(ListarEncuestadosComando.class);
             comando.execute();
-
+            logger.debug("Saliendo del método que lista todos los encuestados");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -140,17 +153,20 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     public Response consultarUsuarioCorreo(@PathParam("email") String email) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista un usuario por el correo");
         JsonObject dataObject;
 
         try {
 
             ConsultarUsuarioCorreoComando comando = Fabrica.crearComandoCorreo(ConsultarUsuarioCorreoComando.class, email);
             comando.execute();
-
+            logger.debug("Saliendo del método que lista un usuario por el correo");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -175,17 +191,20 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     public Response consultarUsuario(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que consulta un usuario");
         JsonObject dataObject;
 
         try {
 
             ConsultarUsuarioComando comando = Fabrica.crearComandoConId(ConsultarUsuarioComando.class, id);
             comando.execute();
-
+            logger.debug("Saliendo del método que consulta un usuario");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -195,6 +214,7 @@ public class UsuarioServicio extends AplicacionBase {
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -217,17 +237,20 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     public Response detallesEncuestados(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que devuelve los detalles de un encuestado");
         JsonObject dataObject;
 
         try {
 
             DetallesEncuestadosComando comando = Fabrica.crearComandoConId(DetallesEncuestadosComando.class, id);
             comando.execute();
-
+            logger.debug("Saliendo del método que devuelve los detalles de un encuestado");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -237,6 +260,7 @@ public class UsuarioServicio extends AplicacionBase {
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -252,6 +276,9 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUsuario(UsuarioDto usuarioDto) {
+
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que añade un usuario");
         UsuarioDto resultado = new UsuarioDto();
         JsonObject dataObject;
         try {
@@ -274,10 +301,13 @@ public class UsuarioServicio extends AplicacionBase {
             Usuario resul = dao.insert(usuario);
             resultado.setId(resul.get_id());
             ldap.addEntryToLdap(usuarioDto);
+
+            logger.debug("Saliendo del método que añade un usuario");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -287,27 +317,32 @@ public class UsuarioServicio extends AplicacionBase {
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
+
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             ex.printStackTrace();
 
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
+
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la categoria: " + ex.getMessage())
+                    .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -330,10 +365,11 @@ public class UsuarioServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateUsuario(@PathParam("id") long id, UsuarioDto usuarioDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que actualiza un usuario");
         DaoUsuario daoUsuario = new DaoUsuario();
         Usuario usuario_modificar = daoUsuario.find(id, Usuario.class);
         JsonObject dataObject;
-
 
         try {
 
@@ -343,10 +379,13 @@ public class UsuarioServicio extends AplicacionBase {
             daoUsuario.update(usuario_modificar);
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.updateEntry(usuarioDto);
+
+            logger.debug("Saliendo del método que actualiza un usuario");
             return Response.status(Response.Status.OK).entity(usuario_modificar).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","Error")
                     .add("mensaje", ex.getMessage())
@@ -356,10 +395,11 @@ public class UsuarioServicio extends AplicacionBase {
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el usuario a modificar: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -382,20 +422,26 @@ public class UsuarioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response deleteUsuario(@PathParam("id") long id) throws Exception {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que elimina un usuario");
         DaoUsuario daoUsuario = new DaoUsuario();
         Usuario usuario_eliminar = daoUsuario.find(id, Usuario.class);
         JsonObject dataObject;
 
         try {
+
             UsuarioDto usuarioDto = new UsuarioDto();
             usuarioDto.setCorreo(usuario_eliminar.get_correoelectronico());
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.deleteEntry(usuarioDto);
             daoUsuario.delete(usuario_eliminar);
+
+            logger.debug("Saliendo del método que elimina un usuario");
             return Response.status(Response.Status.OK).entity(usuario_eliminar).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.EXPECTATION_FAILED).build();
         }
 
@@ -414,13 +460,18 @@ public class UsuarioServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response changePassword(UsuarioDto usuarioDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que cambia una contraseña");
         try {
             DirectorioActivo ldap = new DirectorioActivo();
             ldap.changePassword(usuarioDto);
+
+            logger.debug("Saliendo del método que cambia una contraseña");
             return Response.status(Response.Status.OK).entity(usuarioDto).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.EXPECTATION_FAILED).build();
         }
 
@@ -443,6 +494,8 @@ public class UsuarioServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response estatusUsuario(@PathParam("id") long id, UsuarioDto usuarioDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que actualiza un usuario");
         DaoUsuario daoUsuario = new DaoUsuario();
         Usuario usuario_modificar = daoUsuario.find(id, Usuario.class);
         JsonObject dataObject;
@@ -458,10 +511,12 @@ public class UsuarioServicio extends AplicacionBase {
                 daoUsuario.update(usuario_modificar);
             }
 
+            logger.debug("Saliendo del método que actualiza un usuario");
             return Response.status(Response.Status.OK).entity(usuario_modificar).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","Error")
                     .add("mensaje", ex.getMessage())
@@ -471,10 +526,11 @@ public class UsuarioServicio extends AplicacionBase {
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el usuario a modificar el estatus: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -494,6 +550,8 @@ public class UsuarioServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public JsonObject recuperarClaveUsuario(UsuarioDto usuarioDto) throws MessagingException {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que recupera una clave");
         Boolean registrado;
         JsonObject respuesta = null;
         String contenido;
@@ -516,10 +574,12 @@ public class UsuarioServicio extends AplicacionBase {
 
             } catch (Exception ex) {
 
+                logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
                 String mensaje = ex.getMessage();
                 System.out.print(mensaje);
             }
 
+        logger.debug("Saliendo del método que recupera una clave");
         return respuesta;
 
     }

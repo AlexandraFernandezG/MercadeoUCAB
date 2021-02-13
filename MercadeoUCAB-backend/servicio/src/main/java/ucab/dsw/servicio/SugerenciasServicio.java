@@ -3,6 +3,9 @@ package ucab.dsw.servicio;
 import ucab.dsw.comando.Sugerencias.*;
 import ucab.dsw.fabrica.Fabrica;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.json.*;
@@ -15,7 +18,7 @@ import javax.ws.rs.core.Response;
 @Consumes( MediaType.APPLICATION_JSON )
 public class SugerenciasServicio extends AplicacionBase {
 
-
+    private static Logger logger = LoggerFactory.getLogger(SugerenciasServicio.class);
     /**
      * Este método permite obtener las preguntas recomendadas en base a un estudio seleccionado
      * @author Emanuel Di Cristofaro
@@ -26,18 +29,21 @@ public class SugerenciasServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarPreguntasEstudioRecomendadas(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista preguntas recomendadas");
         JsonObject dataObject;
 
         try {
 
             ListarPreguntasEstudioRecomendadasComando comando = Fabrica.crearComandoConId(ListarPreguntasEstudioRecomendadasComando.class, id);
             comando.execute();
-
+            logger.debug("Saliendo del método que lista preguntas recomendadas");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -58,17 +64,20 @@ public class SugerenciasServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudiosRecomendados(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista estudios recomendados a partir de una solicitud");
         JsonObject dataObject;
 
         try {
 
             ListarEstudiosRecomendadosComando comando = Fabrica.crearComandoConId(ListarEstudiosRecomendadosComando.class, id);
             comando.execute();
-
+            logger.debug("Saliendo del método que lista estudios recomendados a partir de una solicitud");
                 return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -78,6 +87,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -98,17 +108,20 @@ public class SugerenciasServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudiosEncuestado(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos lo estudios recomendados para un encuestado");
         JsonObject dataObject;
 
         try {
 
             ListarEstudiosEncuestadoComando comando = Fabrica.crearComandoConId(ListarEstudiosEncuestadoComando.class, id);
             comando.execute();
-
+            logger.debug("Saliendo del método que lista todos lo estudios recomendados para un encuestado");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -132,17 +145,20 @@ public class SugerenciasServicio extends AplicacionBase {
     @Consumes( MediaType.APPLICATION_JSON )
     public Response insertarEstudioRecomendado(@PathParam("idER") long idER, @PathParam("idE") long idE) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que inserta preguntas de un estudio recomendado a otro");
         JsonObject dataObject;
 
         try {
 
             InsertarEstudioRecomendadoComando comando = Fabrica.crearComandoDosId(InsertarEstudioRecomendadoComando.class,idER, idE);
             comando.execute();
-
+            logger.debug("Saliendo del método que inserta preguntas de un estudio recomendado a otro");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -152,6 +168,7 @@ public class SugerenciasServicio extends AplicacionBase {
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -172,19 +189,21 @@ public class SugerenciasServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudiosCliente(@PathParam("id") long id) {
 
-
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los estudios de un cliente");
         JsonObject dataObject;
 
         try {
 
             ListarEstudiosClienteComando comando = Fabrica.crearComandoConId(ListarEstudiosClienteComando.class, id);
             comando.execute();
-
+            logger.debug("Ingresando al método que lista todos los estudios de un cliente");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -204,17 +223,20 @@ public class SugerenciasServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudiosAnalista(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los estudios de un analista");
         JsonObject dataObject;
 
         try {
 
             ListarEstudiosAnalistaComando comando = Fabrica.crearComandoConId(ListarEstudiosAnalistaComando.class, id);
             comando.execute();
-
+            logger.debug("Saliendo del método que lista todos los estudios de un analista");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())

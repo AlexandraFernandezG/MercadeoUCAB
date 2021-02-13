@@ -9,6 +9,9 @@ import ucab.dsw.excepciones.PruebaExcepcion;
 import ucab.dsw.fabrica.Fabrica;
 import ucab.dsw.mappers.MapperSolicitudEstudio;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +29,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes( MediaType.APPLICATION_JSON )
 public class SolicitudEstudioServicio extends AplicacionBase{
 
+    private static Logger logger = LoggerFactory.getLogger(SolicitudEstudioServicio.class);
     /**
      * Este método permite obtener todas las solicitudes de estudio.
      * @author Emanuel Di Cristofaro
@@ -37,17 +41,20 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarSolicitudes() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todas las solicitudes");
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
         JsonObject dataObject;
 
         try {
 
             List<SolicitudEstudio> listaSolicitudes =  daoSolicitudEstudio.findAll(SolicitudEstudio.class);
-
+            logger.debug("Saliendo del método que lista todas las solicitudes");
             return Response.status(Response.Status.OK).entity(listaSolicitudes).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -71,17 +78,20 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarSolicitud(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que consulta una solicitud");
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
         JsonObject dataObject;
 
         try {
 
             SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
-
+            logger.debug("Saliendo del método que consulta una solicitud");
             return Response.status(Response.Status.OK).entity(solicitudEstudio).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -91,6 +101,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -111,6 +122,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response mostrarSolicitudesEnEspera() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que muestra solicitudes en espera");
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
         List<SolicitudEstudio> listaSolicitud = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
         List<SolicitudEstudio> listaSolicitudesEnEspera = new ArrayList<SolicitudEstudio>();
@@ -125,10 +138,12 @@ public class SolicitudEstudioServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que muestra solicitudes en espera");
             return Response.status(Response.Status.OK).entity(listaSolicitudesEnEspera).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -150,6 +165,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response mostrarSolicitudesCliente(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todas las solicitudes del cliente");
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
         List<SolicitudEstudio> listaSolicitud = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
         List<SolicitudEstudio> listaSolicitudesCliente = new ArrayList<SolicitudEstudio>();
@@ -164,10 +181,12 @@ public class SolicitudEstudioServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que lista todas las solicitudes del cliente");
             return Response.status(Response.Status.OK).entity(listaSolicitudesCliente).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -189,6 +208,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response mostrarSolicitudesActivas() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todas las solicitudes activas");
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
         List<SolicitudEstudio> listaSolicitud = daoSolicitudEstudio.findAll(SolicitudEstudio.class);
         List<SolicitudEstudio> listaSolicitudesActivas = new ArrayList<SolicitudEstudio>();
@@ -202,11 +223,12 @@ public class SolicitudEstudioServicio extends AplicacionBase{
                     listaSolicitudesActivas.add(solicitudEstudio);
                 }
             }
-
+            logger.debug("Saliendo del método que lista todas las solicitudes activas");
             return Response.status(Response.Status.OK).entity(listaSolicitudesActivas).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -234,6 +256,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addSolicitudEstudio(SolicitudEstudioDto solicitudEstudioDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que añade una solicitud");
         JsonObject dataObject;
 
         try {
@@ -241,11 +265,12 @@ public class SolicitudEstudioServicio extends AplicacionBase{
             SolicitudEstudio solicitudEstudio = MapperSolicitudEstudio.mapDtoToEntityInsert(solicitudEstudioDto);
             AddSolicitudEstudioComando comando = Fabrica.crearComandoConEntity(AddSolicitudEstudioComando.class, solicitudEstudio);
             comando.execute();
-
+            logger.debug("Saliendo del método que añade una solicitud");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -255,6 +280,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -264,6 +290,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
         } catch (PruebaExcepcion ex) {
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -273,6 +300,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
         } catch (IllegalAccessException ex) {
 
+            logger.error("Código de error: " + 601 +  ", Mensaje de error: " + ex.getMessage());
             ex.printStackTrace();
 
             dataObject = Json.createObjectBuilder()
@@ -283,6 +311,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InstantiationException ex) {
+
+            logger.error("Código de error: " + 602 +  ", Mensaje de error: " + ex.getMessage());
             ex.printStackTrace();
 
             dataObject = Json.createObjectBuilder()
@@ -293,6 +323,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (InvocationTargetException ex) {
+            logger.error("Código de error: " + 603 +  ", Mensaje de error: " + ex.getMessage());
             ex.printStackTrace();
 
             dataObject = Json.createObjectBuilder()
@@ -303,6 +334,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(dataObject).build();
 
         } catch (Exception ex) {
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             ex.printStackTrace();
 
             dataObject = Json.createObjectBuilder()
@@ -331,6 +363,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstatusSolicitudEstudio(@PathParam("id") long id, SolicitudEstudioDto solicitudEstudioDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que actualiza el estatus de la solicitud");
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
         SolicitudEstudio solicitudEstudio_modificar = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
         JsonObject dataObject;
@@ -365,10 +399,12 @@ public class SolicitudEstudioServicio extends AplicacionBase{
                     }
                 }
 
+                logger.debug("Saliendo del método que actualiza el estatus de la solicitud");
                 return Response.status(Response.Status.OK).entity(solicitudEstudio_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -378,6 +414,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", ex.getMessage())
@@ -406,6 +443,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarSolicitudEstudio(@PathParam("id") long id, SolicitudEstudioDto solicitudEstudioDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que actualizar una solicitud");
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
         SolicitudEstudio solicitudEstudio_modificar = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
         JsonObject dataObject;
@@ -427,10 +466,12 @@ public class SolicitudEstudioServicio extends AplicacionBase{
                 solicitudEstudio_modificar.set_estatus(solicitudEstudioDto.getEstatus());
                 daoSolicitudEstudio.update(solicitudEstudio_modificar);
 
+                logger.debug("Saliendo del método que actualizar una solicitud");
                 return Response.status(Response.Status.OK).entity(solicitudEstudio_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -440,6 +481,7 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", ex.getMessage())
@@ -466,6 +508,8 @@ public class SolicitudEstudioServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarSolicitudEstudio(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que elimina una solicitud");
         DaoSolicitudEstudio daoSolicitudEstudio = new DaoSolicitudEstudio();
         SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
         JsonObject dataObject;
@@ -473,11 +517,12 @@ public class SolicitudEstudioServicio extends AplicacionBase{
             try {
 
                 daoSolicitudEstudio.delete(solicitudEstudio);
-
+                logger.debug("Saliendo del método que elimina una solicitud");
                 return Response.status(Response.Status.OK).entity(solicitudEstudio).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -487,10 +532,11 @@ public class SolicitudEstudioServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 

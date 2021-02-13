@@ -6,6 +6,9 @@ import ucab.dsw.dtos.RolDto;
 import ucab.dsw.entidades.Rol;
 import ucab.dsw.excepciones.PruebaExcepcion;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
@@ -19,6 +22,8 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class RolServicio extends AplicacionBase{
 
+    private static Logger logger = LoggerFactory.getLogger(RolServicio.class);
+
     /**
      * Este método permite obtener todas los roles.
      * @author Gregg Spinetti y Emanuel Di Cristofaro
@@ -30,17 +35,20 @@ public class RolServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarRoles()  {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los roles");
         DaoRol daoRol = new DaoRol();
         JsonObject dataObject;
 
         try {
 
             List<Rol> listaRoles = daoRol.findAll(Rol.class);
-
+            logger.debug("Saliendo del método que lista todos los roles");
             return Response.status(Response.Status.OK).entity(listaRoles).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -65,26 +73,30 @@ public class RolServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarRol(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que consulta un rol");
         DaoRol daoRol = new DaoRol();
         JsonObject dataObject;
 
         try {
 
             Rol rol = daoRol.find(id, Rol.class);
-
+            logger.debug("Saliendo del método que consulta un rol");
             return Response.status(Response.Status.OK).entity(rol).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el rol: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -111,6 +123,8 @@ public class RolServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addRol(RolDto rolDto)
     {
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que te añade un rol");
         RolDto resultado = new RolDto();
         JsonObject dataObject;
 
@@ -124,10 +138,12 @@ public class RolServicio extends AplicacionBase{
             Rol resul = dao.insert(rol);
             resultado.setId(resul.get_id());
 
+            logger.debug("Saliendo del método que te añade un rol");
             return Response.status(Response.Status.OK).entity(resultado).build();
         }
         catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -137,19 +153,21 @@ public class RolServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el rol: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -173,6 +191,8 @@ public class RolServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateRol(@PathParam("id") long id, RolDto rolDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que actualiza un rol");
         DaoRol daoRol = new DaoRol();
         Rol rol_modificar = daoRol.find(id, Rol.class);
         JsonObject dataObject;
@@ -184,10 +204,12 @@ public class RolServicio extends AplicacionBase{
             rolDto.setEstatus(rolDto.getEstatus());
             daoRol.update(rol_modificar);
 
+            logger.debug("Saliendo del método que actualiza un rol");
             return Response.status(Response.Status.OK).entity(rol_modificar).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -197,10 +219,11 @@ public class RolServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el rol: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -223,6 +246,8 @@ public class RolServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response deleteRol(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que elimina un rol");
         DaoRol daoRol = new DaoRol();
         Rol rol_eliminar = daoRol.find(id, Rol.class);
         JsonObject dataObject;
@@ -230,11 +255,12 @@ public class RolServicio extends AplicacionBase{
         try {
 
             daoRol.delete(rol_eliminar);
-
+            logger.debug("Saliendo del método que elimina un rol");
             return Response.status(Response.Status.OK).entity(rol_eliminar).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -244,10 +270,11 @@ public class RolServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el rol: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 

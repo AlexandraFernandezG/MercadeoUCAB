@@ -80,7 +80,7 @@ public class PresentacionServicio extends AplicacionBase{
 
         BasicConfigurator.configure();
         logger.debug("Ingresando al método que te permite consultar una presentación");
-        DaoPresentacion daoPresentacion = new DaoPresentacion();
+        DaoPresentacion daoPresentacion = Fabrica.crear(DaoPresentacion.class);
         JsonObject dataObject;
 
         try {
@@ -124,7 +124,7 @@ public class PresentacionServicio extends AplicacionBase{
 
         BasicConfigurator.configure();
         logger.debug("Ingresando al método que lista todas las presentaciones activas");
-        DaoPresentacion daoPresentacion = new DaoPresentacion();
+        DaoPresentacion daoPresentacion = Fabrica.crear(DaoPresentacion.class);
         List<Presentacion> listaPresentacion = daoPresentacion.findAll(Presentacion.class);
         List<Presentacion> listaPresentacionActivas = new ArrayList<Presentacion>();
         JsonObject dataObject;
@@ -173,7 +173,7 @@ public class PresentacionServicio extends AplicacionBase{
 
         BasicConfigurator.configure();
         logger.debug("Ingresando al metodo para insertar una presentacion");
-        PresentacionDto resultado = new PresentacionDto();
+        PresentacionDto resultado = Fabrica.crear(PresentacionDto.class);
         JsonObject dataObject;
 
         try {
@@ -243,7 +243,7 @@ public class PresentacionServicio extends AplicacionBase{
 
         BasicConfigurator.configure();
         logger.debug("Ingresando al método que te permite actualizar una presentacion");
-        DaoPresentacion daoPresentacion = new DaoPresentacion();
+        DaoPresentacion daoPresentacion = Fabrica.crear(DaoPresentacion.class);
         Presentacion presentacion_modificar = daoPresentacion.find(id, Presentacion.class);
         JsonObject dataObject;
 
@@ -299,7 +299,7 @@ public class PresentacionServicio extends AplicacionBase{
         BasicConfigurator.configure();
         logger.debug("Ingresando al método que elimina una presentacion");
         JsonObject dataObject;
-        DaoPresentacion daoPresentacion = new DaoPresentacion();
+        DaoPresentacion daoPresentacion = Fabrica.crear(DaoPresentacion.class);
         Presentacion presentacion_eliminar = daoPresentacion.find(id, Presentacion.class);
 
 

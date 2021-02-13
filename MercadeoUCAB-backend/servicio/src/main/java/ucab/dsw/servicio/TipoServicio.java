@@ -7,6 +7,9 @@ import ucab.dsw.entidades.Producto;
 import ucab.dsw.entidades.Tipo;
 import ucab.dsw.excepciones.PruebaExcepcion;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
@@ -23,6 +26,7 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class TipoServicio extends AplicacionBase{
 
+    private static Logger logger = LoggerFactory.getLogger(TipoServicio.class);
     /**
      * Este método permite obtener todas los tipos.
      * @author Emanuel Di Cristofaro
@@ -34,16 +38,19 @@ public class TipoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarTipos() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los tipos");
         DaoTipo daoTipo = new DaoTipo();
         JsonObject dataObject;
 
         try {
             List<Tipo> listaTipos = daoTipo.findAll(Tipo.class);
-
+            logger.debug("Saliendo del método que lista todos los tipos");
             return Response.status(Response.Status.OK).entity(listaTipos).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -67,26 +74,30 @@ public class TipoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarTipo(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que consulta un tipo");
         DaoTipo daoTipo = new DaoTipo();
         JsonObject dataObject;
 
         try {
 
             Tipo tipo = daoTipo.find(id, Tipo.class);
-
+            logger.debug("Saliendo del método que consulta un tipo");
             return Response.status(Response.Status.OK).entity(tipo).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el tipo: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -107,6 +118,8 @@ public class TipoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response tiposActivos() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todos los tipos activos");
         DaoTipo daoTipo = new DaoTipo();
         List<Tipo> listaTipo = daoTipo.findAll(Tipo.class);
         List<Tipo> listaTipoActivo = new ArrayList<Tipo>();
@@ -120,11 +133,12 @@ public class TipoServicio extends AplicacionBase{
                     listaTipoActivo.add(tipo);
                 }
             }
-
+            logger.debug("Saliendo del método que lista todos los tipos activos");
             return Response.status(Response.Status.OK).entity(listaTipoActivo).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -151,6 +165,8 @@ public class TipoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addTipo(TipoDto tipoDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que añade un tipo");
         TipoDto resultado = new TipoDto();
         JsonObject dataObject;
 
@@ -165,10 +181,12 @@ public class TipoServicio extends AplicacionBase{
             Tipo resul = daoTipo.insert(tipo);
             resultado.setId(resul.get_id());
 
+            logger.debug("Saliendo del método que añade un tipo");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -178,19 +196,21 @@ public class TipoServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el tipo: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -214,6 +234,8 @@ public class TipoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateTipo(@PathParam("id") long id, TipoDto tipoDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que actualiza un tipo");
         DaoTipo daoTipo = new DaoTipo();
         Tipo tipo_modificar = daoTipo.find(id, Tipo.class);
         JsonObject dataObject;
@@ -225,10 +247,12 @@ public class TipoServicio extends AplicacionBase{
                 tipo_modificar.set_estatus(tipoDto.getEstatus());
                 daoTipo.update(tipo_modificar);
 
+                logger.debug("Saliendo del método que actualiza un tipo");
                 return Response.status(Response.Status.OK).entity(tipo_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -238,10 +262,11 @@ public class TipoServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado el tipo: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -264,6 +289,8 @@ public class TipoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarTipo(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que elimina un tipo");
         DaoTipo daoTipo = new DaoTipo();
         Tipo tipo_eliminar = daoTipo.find(id, Tipo.class);
         JsonObject dataObject;
@@ -271,11 +298,12 @@ public class TipoServicio extends AplicacionBase{
             try {
 
                 daoTipo.delete(tipo_eliminar);
-
+                logger.debug("Saliendo del método que elimina un tipo");
                 return Response.status(Response.Status.OK).entity(tipo_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -285,10 +313,11 @@ public class TipoServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado el tipo: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
