@@ -14,6 +14,9 @@ import ucab.dsw.Response.EstudiosResponse;
 import ucab.dsw.Response.UsuarioResponse;
 import ucab.dsw.fabrica.Fabrica;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +33,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes( MediaType.APPLICATION_JSON )
 public class UsuarioEstudioServicio extends AplicacionBase{
 
+    private static Logger logger = LoggerFactory.getLogger(UsuarioEstudioServicio.class);
     /**
      * Este método permite obtener los estudios de un encuestado
      * @author Emanuel Di Cristofaro y Gregg Spinetti
@@ -42,17 +46,20 @@ public class UsuarioEstudioServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEstudiosEncuestado(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista estudios de un encuestado");
         JsonObject dataObject;
 
         try {
 
             EstudiosEncuestadoComando comando = Fabrica.crearComandoConId(EstudiosEncuestadoComando.class, id);
             comando.execute();
-
+            logger.debug("Saliendo del método que lista estudios de un encuestado");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -62,6 +69,7 @@ public class UsuarioEstudioServicio extends AplicacionBase{
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -84,6 +92,8 @@ public class UsuarioEstudioServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarEncuestadosEstudio(@PathParam("id") long id) {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista los encuestados de un estudio");
         DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
         JsonObject dataObject;
 
@@ -98,10 +108,12 @@ public class UsuarioEstudioServicio extends AplicacionBase{
                 listaEncuestadosEstudio.add(new UsuarioResponse((long)user[0], (String)user[1], (String)user[2], (String)user[3], (String)user[4]));
             }
 
+            logger.debug("Saliendo del método que lista los encuestados de un estudio");
             return Response.status(Response.Status.OK).entity(listaEncuestadosEstudio).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -111,6 +123,7 @@ public class UsuarioEstudioServicio extends AplicacionBase{
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -138,6 +151,8 @@ public class UsuarioEstudioServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addUsuarioEstudio(UsuarioEstudioDto usuarioEstudioDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que añade un usuario a un estudio");
         UsuarioEstudioDto resultado = new UsuarioEstudioDto();
         JsonObject dataObject;
 
@@ -156,10 +171,12 @@ public class UsuarioEstudioServicio extends AplicacionBase{
             UsuarioEstudio resul = daoUsuarioEstudio.insert(usuarioEstudio);
             resultado.setId(resul.get_id());
 
+            logger.debug("Saliendo del método que añade un usuario a un estudio");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -169,6 +186,7 @@ public class UsuarioEstudioServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -178,10 +196,11 @@ public class UsuarioEstudioServicio extends AplicacionBase{
 
         } catch (PruebaExcepcion ex) {
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -205,6 +224,8 @@ public class UsuarioEstudioServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstatusProgreso(@PathParam("idE") long idE, @PathParam("idU") long idU){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que actualiza el estatus de un usuario a en progreso");
         DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
         JsonObject dataObject;
 
@@ -226,10 +247,12 @@ public class UsuarioEstudioServicio extends AplicacionBase{
                         .add("estado", 200)
                         .add("Mensaje", "Operacion realizada con exito").build();
 
+                logger.debug("Saliendo del método que actualiza el estatus de un usuario a en progreso");
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -239,6 +262,7 @@ public class UsuarioEstudioServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", ex.getMessage())
@@ -263,17 +287,20 @@ public class UsuarioEstudioServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarUsuarioEstudio(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que elimina usuario estudio");
         DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
         UsuarioEstudio usuarioEstudio_eliminar = daoUsuarioEstudio.find(id, UsuarioEstudio.class);
         JsonObject dataObject;
 
             try {
                 daoUsuarioEstudio.delete(usuarioEstudio_eliminar);
-
+                logger.debug("Saliendo del método que elimina usuario estudio");
                 return Response.status(Response.Status.OK).entity(usuarioEstudio_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -283,6 +310,7 @@ public class UsuarioEstudioServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", ex.getMessage())

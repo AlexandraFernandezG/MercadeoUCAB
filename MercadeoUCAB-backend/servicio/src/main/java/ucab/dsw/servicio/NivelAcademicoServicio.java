@@ -14,11 +14,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path( "/nivelAcademico" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class NivelAcademicoServicio extends AplicacionBase{
+    private static Logger logger = LoggerFactory.getLogger(NivelAcademicoServicio.class);
 
     /**
      * Este método permite obtener todas los niveles académicos.
@@ -30,11 +33,15 @@ public class NivelAcademicoServicio extends AplicacionBase{
     @Path("/allNivelAcademico")
     @Produces( MediaType.APPLICATION_JSON )
     public  Response listarNivelAcademico() {
+
+        logger.debug("Ingresando al método que permite listar todos los niveles académicos");
         DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
         JsonObject dataObject;
 
         try {
             List<NivelAcademico> listaNivelAcademico = daoNivelAcademico.findAll(NivelAcademico.class);
+
+            logger.debug("Saliendo del método que permite listar todos los niveles académicos");
             return Response.status(Response.Status.OK).entity(listaNivelAcademico).build();
 
         } catch (Exception ex) {
@@ -44,6 +51,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -62,11 +70,15 @@ public class NivelAcademicoServicio extends AplicacionBase{
     @Path("/consultarNivelAcademico/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarNivelAcademico(@PathParam("id") long id) {
+
+        logger.debug("Ingresando al método que permite consultar un nivel académico");
         DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
         JsonObject dataObject;
 
         try {
             NivelAcademico nivelAcademico_consultado = daoNivelAcademico.find(id, NivelAcademico.class);
+
+            logger.debug("Saliendo del método que permite consultar un nivel académico");
             return Response.status(Response.Status.OK).entity(nivelAcademico_consultado).build();
 
         } catch (NullPointerException ex) {
@@ -74,8 +86,9 @@ public class NivelAcademicoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el nivel académico: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -85,6 +98,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -106,6 +120,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addNivelAcademico(NivelAcademicoDto nivelAcademicoDto){
 
+        logger.debug("Ingresando al método que permite agregar un nivel académico");
         NivelAcademicoDto resultado = new NivelAcademicoDto();
         JsonObject dataObject;
 
@@ -118,6 +133,8 @@ public class NivelAcademicoServicio extends AplicacionBase{
             nivelAcademico.set_estatus(nivelAcademicoDto.getEstatus());
             NivelAcademico resul = daoNivelAcademico.insert(nivelAcademico);
             resultado.setId(resul.get_id());
+
+            logger.debug("Saliendo del método que permite agregar un nivel académico");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -127,6 +144,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -134,8 +152,9 @@ public class NivelAcademicoServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha podido insertar el nivel académico: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
@@ -145,6 +164,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -166,6 +186,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateNivelAcademico(@PathParam("id") long id, NivelAcademicoDto nivelAcademicoDto){
 
+        logger.debug("Ingresando al método que permite actualizar un nivel académico");
         DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
         NivelAcademico nivelAcademico_modificar = daoNivelAcademico.find(id, NivelAcademico.class);
         JsonObject dataObject;
@@ -174,6 +195,8 @@ public class NivelAcademicoServicio extends AplicacionBase{
                     nivelAcademico_modificar.set_descripcion(nivelAcademicoDto.getDescripcion());
                     nivelAcademico_modificar.set_estatus(nivelAcademicoDto.getEstatus());
                     daoNivelAcademico.update(nivelAcademico_modificar);
+
+                    logger.debug("Saliendo del método que permite actualizar un nivel académico");
                     return Response.status(Response.Status.OK).entity(nivelAcademico_modificar).build();
 
                 } catch (PersistenceException | DatabaseException ex){
@@ -183,6 +206,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
                             .add("mensaje", ex.getMessage())
                             .add("codigo",500).build();
 
+                    logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                     return Response.status(Response.Status.OK).entity(dataObject).build();
 
                 } catch (NullPointerException ex) {
@@ -190,8 +214,9 @@ public class NivelAcademicoServicio extends AplicacionBase{
                     dataObject = Json.createObjectBuilder()
                             .add("estado", "Error")
                             .add("excepcion", "No se ha encontrado el nivel académico: " + ex.getMessage())
-                            .add("codigo", 400).build();
+                            .add("codigo", 401).build();
 
+                    logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                     return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
                 }
@@ -213,12 +238,15 @@ public class NivelAcademicoServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarNivelAcademico(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que permite eliminar un nivel académico");
         DaoNivelAcademico daoNivelAcademico = new DaoNivelAcademico();
         NivelAcademico nivelAcademico_eliminar = daoNivelAcademico.find(id, NivelAcademico.class);
         JsonObject dataObject;
 
             try {
                 daoNivelAcademico.delete(nivelAcademico_eliminar);
+
+                logger.debug("Saliendo del método que permite eliminar un nivel académico");
                 return Response.status(Response.Status.OK).entity(nivelAcademico_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -228,6 +256,7 @@ public class NivelAcademicoServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -235,8 +264,9 @@ public class NivelAcademicoServicio extends AplicacionBase{
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", "No se ha encontrado  el nivel académico: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }

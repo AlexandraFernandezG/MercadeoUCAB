@@ -9,6 +9,11 @@ import ucab.dsw.dtos.UsuarioDto;
 import ucab.dsw.entidades.*;
 import ucab.dsw.excepciones.PruebaExcepcion;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ucab.dsw.fabrica.Fabrica;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
@@ -21,6 +26,8 @@ import javax.ws.rs.core.Response;
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class RegistroEncuestadoServicio extends AplicacionBase {
+
+    private static Logger logger = LoggerFactory.getLogger(RegistroEncuestadoServicio.class);
 
     /**
      * Este método permite insertar un encuestado
@@ -40,13 +47,15 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addEncuestado(UsuarioDto usuarioDto, InformacionDto informacionDto) {
 
-        UsuarioDto resultado = new UsuarioDto();
+        BasicConfigurator.configure();
+        logger.debug("Entrando al método que agrega un nuevo usuario");
+        UsuarioDto resultado = Fabrica.crear(UsuarioDto.class);
         JsonObject dataObject;
 
         try {
 
-            DaoUsuario dao = new DaoUsuario();
-            Usuario usuario = new Usuario();
+            DaoUsuario dao = Fabrica.crear(DaoUsuario.class);
+            Usuario usuario = Fabrica.crear(Usuario.class);
 
             usuario.set_nombre(usuarioDto.getNombreUsuario());
             usuario.set_correoelectronico(usuarioDto.getCorreo());
@@ -89,10 +98,12 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
             Informacion resulInformacion = daoInformacion.insert(informacion);
             resultado.setId(resulInformacion.get_id());
 
+            logger.debug("Saliendo del método que agrega un nuevo usuario");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -102,19 +113,21 @@ public class RegistroEncuestadoServicio extends AplicacionBase {
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado el usuario: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 

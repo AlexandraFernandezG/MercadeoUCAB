@@ -10,6 +10,9 @@ import ucab.dsw.entidades.Respuesta;
 import ucab.dsw.entidades.Usuario;
 import ucab.dsw.excepciones.PruebaExcepcion;
 
+import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
@@ -25,6 +28,8 @@ import javax.ws.rs.core.MediaType;
 @Consumes( MediaType.APPLICATION_JSON )
 public class RespuestaServicio extends AplicacionBase{
 
+    private static Logger logger = LoggerFactory.getLogger(RespuestaServicio.class);
+
     /**
      * Este método permite obtener todas las respuestas.
      * @author Emanuel Di Cristofaro
@@ -36,17 +41,20 @@ public class RespuestaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarRespuestas() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todas las respuestas");
         DaoRespuesta daoRespuesta = new DaoRespuesta();
         JsonObject dataObject;
 
         try {
 
             List<Respuesta> listaRespuestas = daoRespuesta.findAll(Respuesta.class);
-
+            logger.debug("Saliendo del método que lista todas las respuestas");
             return Response.status(Response.Status.OK).entity(listaRespuestas).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -71,26 +79,30 @@ public class RespuestaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarRespuesta(@PathParam("id") long id)  {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que consulta una respuesta");
         DaoRespuesta daoRespuesta = new DaoRespuesta();
         JsonObject dataObject;
 
         try {
 
             Respuesta respuesta = daoRespuesta.find(id, Respuesta.class);
-
+            logger.debug("Saliendo del método que consulta una respuesta");
             return Response.status(Response.Status.OK).entity(respuesta).build();
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la respuesta: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -112,6 +124,8 @@ public class RespuestaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response respuestasActivas() {
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que lista todas las respuestas activas");
         DaoRespuesta daoRespuesta = new DaoRespuesta();
         List<Respuesta> listaRespuesta = daoRespuesta.findAll(Respuesta.class);
         List<Respuesta> listaRespuestaActivas = new ArrayList<Respuesta>();
@@ -126,10 +140,12 @@ public class RespuestaServicio extends AplicacionBase{
                 }
             }
 
+            logger.debug("Saliendo del método que lista todas las respuestas activas");
             return Response.status(Response.Status.OK).entity(listaRespuestaActivas).build();
 
         } catch (Exception ex) {
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
@@ -157,6 +173,8 @@ public class RespuestaServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addRespuesta(RespuestaDto respuestaDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que añade una respuesta");
         RespuestaDto resultado = new RespuestaDto();
         JsonObject dataObject;
 
@@ -180,10 +198,12 @@ public class RespuestaServicio extends AplicacionBase{
             Respuesta resul = daoRespuesta.insert(respuesta);
             resultado.setId(resul.get_id());
 
+            logger.debug("Saliendo del método que añade una respuesta");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             dataObject= Json.createObjectBuilder()
                     .add("estado","error")
                     .add("mensaje", ex.getMessage())
@@ -193,19 +213,21 @@ public class RespuestaServicio extends AplicacionBase{
 
         } catch (NullPointerException ex) {
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
-                    .add("excepcion", "No se ha encontrado la respuesta: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("excepcion", ex.getMessage())
+                    .add("codigo", 401).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -229,6 +251,8 @@ public class RespuestaServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateRespuesta(@PathParam("id") long id, RespuestaDto respuestaDto){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método para actualizar una respuesta");
         DaoRespuesta daoRespuesta = new DaoRespuesta();
         Respuesta respuesta_modificar = daoRespuesta.find(id, Respuesta.class);
         JsonObject dataObject;
@@ -243,10 +267,12 @@ public class RespuestaServicio extends AplicacionBase{
                 respuesta_modificar.set_estatus(respuestaDto.getEstatus());
                 daoRespuesta.update(respuesta_modificar);
 
+                logger.debug("Saliendo del método para actualizar una respuesta");
                 return Response.status(Response.Status.OK).entity(respuesta_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -256,10 +282,11 @@ public class RespuestaServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la respuesta: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
@@ -282,6 +309,8 @@ public class RespuestaServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarRespuesta(@PathParam("id") long id){
 
+        BasicConfigurator.configure();
+        logger.debug("Ingresando al método que elimina una respuesta");
         DaoRespuesta daoRespuesta = new DaoRespuesta();
         Respuesta respuesta_eliminar = daoRespuesta.find(id, Respuesta.class);
         JsonObject dataObject;
@@ -289,10 +318,12 @@ public class RespuestaServicio extends AplicacionBase{
             try {
 
                 daoRespuesta.delete(respuesta_eliminar);
+                logger.debug("Saliendo del método que elimina una respuesta");
                 return Response.status(Response.Status.OK).entity(respuesta_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject= Json.createObjectBuilder()
                         .add("estado","error")
                         .add("mensaje", ex.getMessage())
@@ -302,10 +333,11 @@ public class RespuestaServicio extends AplicacionBase{
 
             } catch (NullPointerException ex) {
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
-                        .add("excepcion", "No se ha encontrado la respuesta: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("excepcion", ex.getMessage())
+                        .add("codigo", 401).build();
 
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 

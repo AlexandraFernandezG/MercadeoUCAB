@@ -3,7 +3,6 @@ import org.eclipse.persistence.exceptions.DatabaseException;
 import ucab.dsw.accesodatos.*;
 import ucab.dsw.comando.PreguntasEncuesta.AddPreguntaEncuestaComando;
 import ucab.dsw.dtos.PreguntaEncuestaDto;
-import ucab.dsw.dtos.PreguntaEstudioDto;
 import ucab.dsw.entidades.*;
 import ucab.dsw.fabrica.Fabrica;
 import ucab.dsw.mappers.MapperPreguntaEncuesta;
@@ -13,16 +12,17 @@ import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.PersistenceException;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path( "/preguntasEncuesta" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class PreguntaEncuestaServicio extends AplicacionBase{
-
+    private static Logger logger = LoggerFactory.getLogger(PreguntaEncuestaServicio.class);
     /**
      * Este método permite obtener todas las preguntas.
      * @author Emanuel Di Cristofaro y Gregg Spinetti

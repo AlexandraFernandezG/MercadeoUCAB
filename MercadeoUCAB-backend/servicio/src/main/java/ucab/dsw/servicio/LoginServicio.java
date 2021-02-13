@@ -12,12 +12,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @Path( "/login" )
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class LoginServicio extends AplicacionBase {
+
+    private static Logger logger = LoggerFactory.getLogger(LoginServicio.class);
     @POST
     @Path( "/ldap" )
     public Response login(UsuarioDto usuarioDto)
@@ -46,9 +50,8 @@ public class LoginServicio extends AplicacionBase {
 
             }else{
                 data= Json.createObjectBuilder()
-                        .add("estado","error")
+                        .add("estado","Error")
                         .add("codigo",401).build();
-                System.out.println(data);
 
                 return Response.status(Response.Status.UNAUTHORIZED).entity(data).build();
             }
@@ -56,8 +59,10 @@ public class LoginServicio extends AplicacionBase {
         }
         catch ( Exception ex )
         {
-            System.out.println("Excepcion");
-
+            data= Json.createObjectBuilder()
+                    .add("estado","Error")
+                    .add("codigo",400).build();
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).build();
 
 
