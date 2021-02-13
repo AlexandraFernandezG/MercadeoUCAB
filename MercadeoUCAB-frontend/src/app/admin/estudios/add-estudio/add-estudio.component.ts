@@ -89,7 +89,7 @@ export class AddEstudioComponent implements OnInit, OnChanges {
     console.log(this.analistas);
 
     this.curday();
-    this.encuestadosService.getEncuestadosEstudio(JSON.parse(localStorage.getItem('solicitudId'))).subscribe( encuestadosData =>
+    this.encuestadosService.getEncuestadosSugeridos(JSON.parse(localStorage.getItem('solicitudId'))).subscribe( encuestadosData =>
       {
 
         console.log(encuestadosData.Encuestados);

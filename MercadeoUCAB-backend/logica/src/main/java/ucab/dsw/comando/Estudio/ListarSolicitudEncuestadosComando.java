@@ -32,6 +32,7 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
         DaoSolicitudEstudio daoSolicitudEstudio = Fabrica.crear(DaoSolicitudEstudio.class);
         DaoUsuario daoUsuario = Fabrica.crear(DaoUsuario.class);
         DaoInformacion daoInformacion = Fabrica.crear(DaoInformacion.class);
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = new ucab.dsw.comando.Funciones.FuncionesComando();
 
         SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
 
@@ -52,7 +53,8 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
             for (Informacion informacion : listaInformacion) {
 
                 if (solicitudEstudio.get_genero().equals(informacion.get_genero()) && solicitudEstudio.get_estadoCivil().equals(informacion.get_estadoCivil()) &&
-                        solicitudEstudio.get_cantidadPersonas() == informacion.get_cantidadPersonas() && informacion.get_usuario().get_id() == usuarioEncuestado.getId()) {
+                        solicitudEstudio.get_cantidadPersonas() == informacion.get_cantidadPersonas() && informacion.get_usuario().get_id() == usuarioEncuestado.getId()
+                 && servicio.devolverEdad(informacion.get_fechaNacimiento()) > solicitudEstudio.get_edadMinima() && servicio.devolverEdad(informacion.get_fechaNacimiento()) < solicitudEstudio.get_edadMaxima()) {
 
                     listaEncuestadosSolicitud.add(usuarioEncuestado);
                 }

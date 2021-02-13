@@ -37,11 +37,13 @@ public class MedioComunicacionServicio extends AplicacionBase{
     @Path("/allMedioComunicacion")
     @Produces( MediaType.APPLICATION_JSON )
     public Response listarMedioComunicacion() {
+        logger.debug("Ingresando al método que consulta todos los medios de comunicación");
         DaoMedioComunicacion daoMedioComunicacion = new DaoMedioComunicacion();
         JsonObject dataObject;
 
         try {
             List<MedioComunicacion> listaMediosComunicacion= daoMedioComunicacion.findAll(MedioComunicacion.class);
+            logger.debug("Saliendo del método que consulta todos los medios de comunicación");
             return Response.status(Response.Status.OK).entity(listaMediosComunicacion).build();
 
         } catch (Exception ex) {
@@ -51,6 +53,7 @@ public class MedioComunicacionServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -70,11 +73,13 @@ public class MedioComunicacionServicio extends AplicacionBase{
     @Path("/consultarMedioComunicacion/{id}")
     @Produces( MediaType.APPLICATION_JSON )
     public Response consultarMedioComunicacion(@PathParam("id") long id) {
+        logger.debug("Ingresando al método que consulta un medio de comunicación");
         DaoMedioComunicacion daoMedioComunicacion = new DaoMedioComunicacion();
         JsonObject dataObject;
 
         try {
             MedioComunicacion medioComunicacion = daoMedioComunicacion.find(id, MedioComunicacion.class);
+            logger.debug("Saliendo del método que consulta un medio de comunicación");
             return Response.status(Response.Status.OK).entity(medioComunicacion).build();
 
         } catch (NullPointerException ex) {
@@ -82,8 +87,9 @@ public class MedioComunicacionServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado la marca: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (Exception ex) {
@@ -93,6 +99,7 @@ public class MedioComunicacionServicio extends AplicacionBase{
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 400).build();
 
+            logger.error("Código de error: " + 400 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
         }
     }
@@ -104,6 +111,7 @@ public class MedioComunicacionServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response addMedioComunicacion(MedioComunicacionDto medioComunicacionDto){
 
+        logger.debug("Ingresando al método que agrega un medio de comunicación");
         MedioComunicacionDto resultado = new MedioComunicacionDto();
         JsonObject dataObject;
 
@@ -123,6 +131,8 @@ public class MedioComunicacionServicio extends AplicacionBase{
             medioComunicacion.set_solicitudEstudio(solicitudEstudio);
             MedioComunicacion resul = daoMedioComunicacion.insert(medioComunicacion);
             resultado.setId(resul.get_id());
+
+            logger.debug("Saliendo del método que agrega un medio de comunicación");
             return Response.status(Response.Status.OK).entity(resultado).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -139,8 +149,9 @@ public class MedioComunicacionServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", "No se ha encontrado el medio de comunicación: " + ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         } catch (PruebaExcepcion ex) {
@@ -148,8 +159,9 @@ public class MedioComunicacionServicio extends AplicacionBase{
             dataObject = Json.createObjectBuilder()
                     .add("estado", "Error")
                     .add("excepcion", ex.getMessage())
-                    .add("codigo", 400).build();
+                    .add("codigo", 402).build();
 
+            logger.error("Código de error: " + 402 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }
@@ -173,6 +185,7 @@ public class MedioComunicacionServicio extends AplicacionBase{
     @Consumes( MediaType.APPLICATION_JSON )
     public Response updateMedioComunicacion(@PathParam("id") long id, MedioComunicacionDto medioComunicacionDto){
 
+        logger.debug("Ingresando al método que actualiza un medio de comunicación");
         DaoMedioComunicacion daoMedioComunicacion = new DaoMedioComunicacion();
         MedioComunicacion medioComunicacion_modificar = daoMedioComunicacion.find(id, MedioComunicacion.class);
         JsonObject dataObject;
@@ -182,6 +195,8 @@ public class MedioComunicacionServicio extends AplicacionBase{
                 medioComunicacion_modificar.set_tipoDeMedio(medioComunicacionDto.getTipoDeMedio());
                 medioComunicacion_modificar.set_estatus(medioComunicacionDto.getEstatus());
                 daoMedioComunicacion.update(medioComunicacion_modificar);
+
+                logger.debug("Saliendo del método que actualiza un medio de comunicación");
                 return Response.status(Response.Status.OK).entity(medioComunicacion_modificar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -191,6 +206,7 @@ public class MedioComunicacionServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -198,8 +214,9 @@ public class MedioComunicacionServicio extends AplicacionBase{
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", "No se ha encontrado ningún medio de comunicación: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
@@ -220,11 +237,14 @@ public class MedioComunicacionServicio extends AplicacionBase{
     @Produces( MediaType.APPLICATION_JSON )
     public Response eliminarMedioComunicacion(@PathParam("id") long id){
 
+        logger.debug("Ingresando al método que elimina un medio de comunicación");
         DaoMedioComunicacion daoMedioComunicacion = new DaoMedioComunicacion();
         MedioComunicacion medioComunicacion_eliminar = daoMedioComunicacion.find(id, MedioComunicacion.class);
         JsonObject dataObject;
             try {
                 daoMedioComunicacion.delete(medioComunicacion_eliminar);
+
+                logger.debug("Saliendo del método que elimina un medio de comunicación");
                 return Response.status(Response.Status.OK).entity(medioComunicacion_eliminar).build();
 
             } catch (PersistenceException | DatabaseException ex){
@@ -234,6 +254,7 @@ public class MedioComunicacionServicio extends AplicacionBase{
                         .add("mensaje", ex.getMessage())
                         .add("codigo",500).build();
 
+                logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.OK).entity(dataObject).build();
 
             } catch (NullPointerException ex) {
@@ -241,8 +262,9 @@ public class MedioComunicacionServicio extends AplicacionBase{
                 dataObject = Json.createObjectBuilder()
                         .add("estado", "Error")
                         .add("excepcion", "No se ha encontrado el medio de comunicación: " + ex.getMessage())
-                        .add("codigo", 400).build();
+                        .add("codigo", 401).build();
 
+                logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
