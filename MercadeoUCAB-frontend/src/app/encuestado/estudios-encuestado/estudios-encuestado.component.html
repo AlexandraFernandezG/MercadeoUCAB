@@ -55,7 +55,7 @@
         </mat-card-content>
   
         <mat-card-actions >
-          <button mat-button color="primary" *ngIf="estudio.EstadoEncuestado === 'En espera' " [routerLink]="['/encuestado/respuestas-encuesta/' + estudio.id + '/' + row.id]">
+          <button mat-button color="primary" *ngIf="estudio.EstadoEncuestado === 'En espera' " [routerLink]="['/encuestado/respuestas-encuesta/' + estudio.id + '/' + idEnc]">
             Responder Encuesta
           </button>
           <button mat-button color="primary" *ngIf="estudio.EstadoEncuestado === 'En proceso' " [routerLink]="['/encuestado/respuestas-encuesta/' + estudio.id + '/' + idEnc]">
