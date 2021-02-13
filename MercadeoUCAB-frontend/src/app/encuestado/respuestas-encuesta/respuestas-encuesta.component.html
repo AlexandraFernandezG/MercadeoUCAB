@@ -12,7 +12,6 @@
             <div class="form-row row-cols-2 flex-row flex-grow-0 justify-content-center">
 
               <div class="col col-contact">
-                <p>Pregunta {{i+1}}</p>
                 <p>{{pregunta.descripcion+' '}}</p>
                 <mat-form-field *ngIf="pregunta.tipoPregunta == 'Abierta'">
                   <textarea matInput placeholder="Ej. Esto me hace sentir..." name="respuestas[i]"
@@ -74,7 +73,7 @@
         <button mat-raised-button color="primary"[disabled]="(i + 1)  === preguntas2.length" (click)="Siguiente(i)">Siguiente</button>
       </div>
       <div *ngIf="(i + 1) == preguntas2.length">
-        <button type="submit" mat-raised-button color="primary" [disabled]="(i + 1)  !== preguntas2.length" (click)="enviarRespuestas(i)">Enviar Respuestas</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="(i + 1)  !== preguntas2.length" (click)="enviarRespuestas(i, 1)">Enviar Respuestas</button>
       </div>
     </ng-container>
   </ng-container>
