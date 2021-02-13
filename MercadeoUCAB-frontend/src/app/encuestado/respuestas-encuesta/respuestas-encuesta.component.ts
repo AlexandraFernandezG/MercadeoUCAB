@@ -33,6 +33,7 @@ export class RespuestasEncuestaComponent implements OnInit {
   respuestasAso2: respuestaPregunta3[];
   idEstudio: number;
   idUsuario: number;
+  j: boolean;
   
   
   ngOnInit(): void {
@@ -54,7 +55,7 @@ export class RespuestasEncuestaComponent implements OnInit {
 
     this.preguntas2[index].visible = false;
     this.preguntas2[index + 1].visible = true;
-    this.enviarRespuestas(index);
+    this.enviarRespuestas(index, false);
 
 
   }
@@ -62,7 +63,7 @@ export class RespuestasEncuestaComponent implements OnInit {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  async enviarRespuestas(index: number) {
+  async enviarRespuestas(index: number, j: boolean) {
 
     console.log('hola');
 
@@ -138,6 +139,9 @@ export class RespuestasEncuestaComponent implements OnInit {
 
             }
           }
+    }
+    if(j){
+      this.service.cambiarEstatus(this.idEstudio, this.idUsuario);
     }
   }
 }
