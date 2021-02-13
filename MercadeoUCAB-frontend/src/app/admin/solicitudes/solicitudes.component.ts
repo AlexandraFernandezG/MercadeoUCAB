@@ -36,6 +36,7 @@ export class SolicitudesComponent implements OnInit {
     this.id= +this.actRoute.snapshot.paramMap.get("id");
     this.service.getSolicitudes()
     .subscribe(data => {
+      console.log('ashdjad')
       this.dataSource = new MatTableDataSource<Solicitud>(data.reverse());
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
