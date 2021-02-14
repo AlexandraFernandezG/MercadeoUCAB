@@ -94,6 +94,7 @@ import { ResultadosService } from './servicios/resultados.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MuestraEstudioComponent } from './analista/muestra-estudio/muestra-estudio.component';
 import { AddEncuestadoEstudioComponent } from './admin/estudios/add-encuestado-estudio/add-encuestado-estudio.component';
+import { ResultadosClienteComponent } from './cliente/resultados-cliente/resultados-cliente.component';
 
 @NgModule({
   declarations: [
@@ -153,7 +154,8 @@ import { AddEncuestadoEstudioComponent } from './admin/estudios/add-encuestado-e
     SolicitudesPendientesComponent,
     AddPreguntaEstudioComponent,
     MuestraEstudioComponent,
-    AddEncuestadoEstudioComponent
+    AddEncuestadoEstudioComponent,
+    ResultadosClienteComponent
   ],
   imports: [
     RouterModule,

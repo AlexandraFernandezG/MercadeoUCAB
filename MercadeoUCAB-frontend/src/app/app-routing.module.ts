@@ -34,6 +34,7 @@ import { SolicitudesPendientesComponent } from './cliente/solicitudes-pendientes
 import { ResultadosComponent } from './analista/resultados/resultados.component';
 import { MuestraEstudioComponent } from './analista/muestra-estudio/muestra-estudio.component';
 import { AddEstudioComponent } from './admin/estudios/add-estudio/add-estudio.component';
+import { ResultadosClienteComponent } from './cliente/resultados-cliente/resultados-cliente.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -67,6 +68,8 @@ const routes: Routes = [
       { path: 'solicitar_estudio', component: SolicitudEstudioComponent },
       { path: 'producto', component: ProductoComponent },
       { path: 'solicitudes', component: SolicitudesPendientesComponent },
+      { path: 'resultadoscliente/:idEstudio/:idUsuario', component: ResultadosClienteComponent },
+
       { path: '', pathMatch: 'prefix', redirectTo: 'estudios'},
     ]
   },
