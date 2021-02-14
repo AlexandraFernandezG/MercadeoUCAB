@@ -54,10 +54,11 @@ export class EncuestasService {
   }
 
   cambiarEstatus(idEstudio, idUsuario):Observable<any>{
-    console.log('entre9');
+    console.log('Estudio:', idEstudio);
+    console.log('Encueatado:', idUsuario);
     return this.http.put<any>(this.url +'estudio/cambiarEstatusEncuestado/', idEstudio, +'/'+ idUsuario)
     .pipe(
-      retry(1),
+      tap((dataObject: any) => console.log(`added estudio w/ id=${dataObject}`)),
       catchError(this.handleError)
     );
   }

@@ -79,7 +79,9 @@ export class RespuestasEncuestaComponent implements OnInit {
 
         /* respuestas2.push(r); */
         this.service.addRespuesta(r);
-        /* this.resps = []; */
+        setTimeout(() => {
+          this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe;
+        },2000);
       }
 
     if (this.preguntas2[index].tipoPregunta === 'Selección Simple') {
