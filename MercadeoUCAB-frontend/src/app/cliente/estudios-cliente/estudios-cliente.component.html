@@ -22,11 +22,6 @@
           <td mat-cell *matCellDef="let element"> {{element.fechaInicio | date: "dd/MM/yyyy"}} </td>
         </ng-container>
 
-         <ng-container matColumnDef="_fechaFin">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Fin </th>
-          <td mat-cell *matCellDef="let element"> {{element.fechaFin | date: "dd/MM/yyyy"}} </td>
-        </ng-container> 
-
         <ng-container matColumnDef="_estatus">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
@@ -36,7 +31,7 @@
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef></th>
           <mat-cell *matCellDef="let row">
-            <button mat-icon-button [routerLink]="['/cliente/resultadoscliente/', row.id, id]">Resultados <mat-icon>launch</mat-icon></button>
+            <button mat-icon-button *ngIf="row.estado == 'Finalizado' " [routerLink]="['/cliente/resultadoscliente/', row.id, id]">Ver Resultados <mat-icon></mat-icon></button>
           </mat-cell>
         </ng-container>
     

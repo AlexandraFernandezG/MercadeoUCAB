@@ -60,6 +60,8 @@ export class RespuestasEncuestaComponent implements OnInit {
     this.enviarRespuestas(index, false);
     if (index == 0){
       console.log('control index 0')
+      console.log('estudio:',this.idEstudio)
+      console.log('usuario',this.idUsuario)
       this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe();
     }
 
@@ -84,9 +86,7 @@ export class RespuestasEncuestaComponent implements OnInit {
 
         /* respuestas2.push(r); */
         this.service.addRespuesta(r);
-        setTimeout(() => {
-          this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe();
-        },2000);
+        
       }
 
     if (this.preguntas2[index].tipoPregunta === 'Selección Simple') {
@@ -101,9 +101,6 @@ export class RespuestasEncuestaComponent implements OnInit {
 
         /* respuestas2.push(r); */
         this.service.addRespuesta(r);
-        setTimeout(() => {
-          this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe();
-        },2000);
       }
 
     if (this.preguntas2[index].tipoPregunta === 'Verdadero o Falso') {
@@ -115,9 +112,6 @@ export class RespuestasEncuestaComponent implements OnInit {
           preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
         this.service.addRespuesta(r);
-        setTimeout(() => {
-          this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe();
-        },2000);
       }
 
     if ( this.preguntas2[index].tipoPregunta === 'Escala') {
@@ -129,9 +123,6 @@ export class RespuestasEncuestaComponent implements OnInit {
           preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
         this.service.addRespuesta(r);
-        setTimeout(() => {
-          this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe();
-        },2000);
       }
 
     if (this.preguntas2[index].tipoPregunta === 'Selección Múltiple'){
@@ -154,17 +145,17 @@ export class RespuestasEncuestaComponent implements OnInit {
             }
           }
     }
-    setTimeout(() => {
-      if ( JSON.parse(localStorage.getItem('rol')) == 'Analista' ){
-        this.router.navigate(['/analista']);
-      }else if( JSON.parse(localStorage.getItem('rol')) == 'Encuestado' ){
-        this.router.navigate(['/encuestado']);
-      }
-    },1000);
     
-    // if(j){
-    //   console.log('entre8');
-    //   this.service.cambiarEstatus(this.idEstudio, this.idUsuario);
-    // }
+    
+    if(j){
+      setTimeout(() => {
+        this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe();
+        if ( JSON.parse(localStorage.getItem('rol')) == 'Analista' ){
+          this.router.navigate(['/analista']);
+        }else if( JSON.parse(localStorage.getItem('rol')) == 'Encuestado' ){
+          this.router.navigate(['/encuestado']);
+        }
+      },1000);
+    }
   }
 }

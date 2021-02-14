@@ -73,7 +73,7 @@
         <button mat-raised-button color="primary"[disabled]="(i + 1)  === preguntas2.length" (click)="Siguiente(i)">Siguiente</button>
       </div>
       <div *ngIf="(i + 1) == preguntas2.length">
-        <button type="submit" mat-raised-button color="primary" [disabled]="(i + 1)  !== preguntas2.length" (click)="enviarRespuestas(i, 1)">Enviar Respuestas</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="(i + 1)  !== preguntas2.length" (click)="enviarRespuestas(i, true)">Enviar Respuestas</button>
       </div>
     </ng-container>
   </ng-container>

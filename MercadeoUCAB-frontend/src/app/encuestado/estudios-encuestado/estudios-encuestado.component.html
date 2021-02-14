@@ -58,7 +58,7 @@
           <button mat-button color="primary" *ngIf="estudio.EstadoEncuestado === 'En espera' " [routerLink]="['/encuestado/respuestas-encuesta/' + estudio.id + '/' + idEnc]">
             Responder Encuesta
           </button>
-          <button mat-button color="primary" *ngIf="estudio.EstadoEncuestado === 'En proceso' " [routerLink]="['/encuestado/respuestas-encuesta/' + estudio.id + '/' + idEnc]">
+          <button mat-button color="primary" *ngIf="estudio.EstadoEncuestado === 'En progreso' " [routerLink]="['/encuestado/respuestas-encuesta/' + estudio.id + '/' + idEnc]">
             Continuar Encuesta
           </button>
              
