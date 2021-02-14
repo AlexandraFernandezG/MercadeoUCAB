@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input'; 
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 import { Pregunta, Pregunta2, PreguntaEncuesta } from 'src/app/modelos/pregunta';
 import { Respuesta, Respuesta2 } from 'src/app/modelos/respuesta';
 import { respuestaPregunta, respuestaPregunta2, respuestaPregunta3 } from 'src/app/modelos/respuestaPregunta';
@@ -23,6 +24,7 @@ export class RespuestasEncuestaComponent implements OnInit {
     private service: EncuestasService,
     public actRoute: ActivatedRoute,
     public router: Router,
+    private servicenotifications: NotificationsService,
   ) { }
   
   respuestas = <any>[];
@@ -49,6 +51,15 @@ export class RespuestasEncuestaComponent implements OnInit {
     .subscribe(data => {this.respuestasAso2 = data;
       console.log(this.respuestasAso);
     } );
+  }
+
+  onSucess(message){
+    this.servicenotifications.success('Exito', message, {
+      position: ['bottom', 'right'],
+      timeOut: 2000,
+      animate: 'fade',
+      showProgressBar: true,
+      })
   }
 
   Siguiente(index: number) {
@@ -149,13 +160,17 @@ export class RespuestasEncuestaComponent implements OnInit {
     
     if(j){
       setTimeout(() => {
-        this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe();
-        if ( JSON.parse(localStorage.getItem('rol')) == 'Analista' ){
-          this.router.navigate(['/analista']);
-        }else if( JSON.parse(localStorage.getItem('rol')) == 'Encuestado' ){
-          this.router.navigate(['/encuestado']);
-        }
-      },1000);
+        this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe(
+          result => {this.onSucess(result.mensaje)}
+        );
+      },2000);
+      setTimeout(() => {
+      if ( JSON.parse(localStorage.getItem('rol')) == 'Analista' ){
+        this.router.navigate(['/analista']);
+      }else if( JSON.parse(localStorage.getItem('rol')) == 'Encuestado' ){
+        this.router.navigate(['/encuestado']);
+      }
+    },3000);
     }
   }
 }
