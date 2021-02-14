@@ -832,10 +832,16 @@ public class EstudioServicio extends AplicacionBase {
 
             for(UsuarioEstudio user: listaUsuarioEstudio){
 
-                if(user.get_estudio().get_id() == idE && user.get_usuario().get_id() == idU){
+                if(user.get_estudio().get_id() == idE && user.get_usuario().get_id() == idU && user.get_estatus().equals("En progreso")){
 
                     UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(user.get_id(), UsuarioEstudio.class);
                     usuarioEstudio_modificar.set_estatus("Respondido");
+                    daoUsuarioEstudio.update(usuarioEstudio_modificar);
+
+                } else if(user.get_estudio().get_id() == idE && user.get_usuario().get_id() == idU && user.get_estatus().equals("En espera")){
+
+                    UsuarioEstudio usuarioEstudio_modificar = daoUsuarioEstudio.find(user.get_id(), UsuarioEstudio.class);
+                    usuarioEstudio_modificar.set_estatus("En progreso");
                     daoUsuarioEstudio.update(usuarioEstudio_modificar);
                 }
             }
@@ -843,7 +849,7 @@ public class EstudioServicio extends AplicacionBase {
             //Verificar que todos los encuestados respondieron la encuesta en el estudio
             for (UsuarioEstudio verificarRespondido: listaUsuarioEstudio){
 
-                if(verificarRespondido.get_estatus().equals("Respondido")){
+                if(verificarRespondido.get_estatus().equals("Respondido") && verificarRespondido.get_estudio().get_id() == idE){
                     cantidadEncuestadosRespondido = cantidadEncuestadosRespondido + 1;
                 }
 
