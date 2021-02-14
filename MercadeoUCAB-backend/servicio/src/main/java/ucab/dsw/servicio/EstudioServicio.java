@@ -65,27 +65,29 @@ public class EstudioServicio extends AplicacionBase {
     }
 
     /**
-     * Este método permite obtener un estudio.
+     * Este método permite obtener una observacion en base a un cliente y un estudio.
      * @author Emanuel Di Cristofaro y Gregg Spinetti
      * * @return Este metodo retorna un objeto de tipo Json con el
      * con el estudio consultado y en tal caso obtener una excepcion si aplica.
      * @throws NullPointerException esta excepcion se aplica cuando se pasa un id que no existe
-     * @param id el id del estudio que se quiere consultar.
+     * @param idE el id del estudio que se quiere consultar.
+     * @param idU el id del cliente.
      *
      */
     @GET
-    @Path("/consultarEstudio/{id}")
+    @Path("/consultarObservacionCliente/{idE}/{idU}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response consultarEstudio(@PathParam("id") long id) {
-        logger.debug("Ingresando al método que consulta un estudio");
+    public Response consultarEstudio(@PathParam("idE") long idE, @PathParam("idU") long idU) {
+
+        logger.debug("Ingresando al método que consulta un estudio de un cliente");
         JsonObject dataObject;
 
         try {
 
-            ConsultarEstudioComando comando = Fabrica.crearComandoConId(ConsultarEstudioComando.class, id);
+            ConsultarEstudioComando comando = Fabrica.crearComandoDosId(ConsultarEstudioComando.class, idE, idU);
             comando.execute();
 
-            logger.debug("Saliendo del método que consulta un estudio");
+            logger.debug("Saliendo del método que consulta un estudio de un cliente");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
@@ -110,6 +112,8 @@ public class EstudioServicio extends AplicacionBase {
         }
         
     }
+
+
 
     /**
      * Este método permite obtener todas los estudios activos.

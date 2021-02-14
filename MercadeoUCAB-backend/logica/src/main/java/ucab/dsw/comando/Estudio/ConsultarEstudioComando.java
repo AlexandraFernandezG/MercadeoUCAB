@@ -9,44 +9,37 @@ import ucab.dsw.fabrica.Fabrica;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import java.util.Date;
+import java.util.List;
 
 public class ConsultarEstudioComando extends ComandoBase {
 
     public JsonObject estudioObj;
-    public long id;
+    public long idE;
+    public long idU;
 
-    public ConsultarEstudioComando(long id) {
-        this.id = id;
+    public ConsultarEstudioComando(long idE, long idU) {
+        this.idE = idE;
+        this.idU = idU;
     }
 
     @Override
     public void execute() throws PruebaExcepcion {
 
         DaoEstudio daoEstudio = Fabrica.crear(DaoEstudio.class);
-        Estudio estudio_consultado = daoEstudio.find(id, Estudio.class);
-        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
+        List<Object[]> estudio = daoEstudio.consultarEstudioCliente(idE, idU);
 
-        if(estudio_consultado.get_observaciones() != null) {
+        for(Object[] obj: estudio) {
 
-            estudioObj = Json.createObjectBuilder().add("id", estudio_consultado.get_id())
-                    .add("nombre", estudio_consultado.get_nombre())
-                    .add("tipoInstrumento", estudio_consultado.get_tipoInstrumento())
-                    .add("observaciones", estudio_consultado.get_observaciones())
-                    .add("fechaInicio", servicio.devolverFecha(estudio_consultado.get_fechaInicio()))
-                    .add("fechaFin", servicio.devolverFecha(estudio_consultado.get_fechaFin()))
-                    .add("estado", estudio_consultado.get_estado())
-                    .add("estatus", estudio_consultado.get_estatus()).build();
+            if (obj[3] != null) {
 
-        } else {
+                estudioObj = Json.createObjectBuilder().add("observacion", (String)obj[3]).build();
 
-            estudioObj = Json.createObjectBuilder().add("id", estudio_consultado.get_id())
-                    .add("nombre", estudio_consultado.get_nombre())
-                    .add("tipoInstrumento", estudio_consultado.get_tipoInstrumento())
-                    .add("observaciones", "")
-                    .add("fechaInicio", servicio.devolverFecha(estudio_consultado.get_fechaInicio()))
-                    .add("fechaFin", servicio.devolverFecha(estudio_consultado.get_fechaFin()))
-                    .add("estado", estudio_consultado.get_estado())
-                    .add("estatus", estudio_consultado.get_estatus()).build();
+            } else {
+
+                estudioObj = Json.createObjectBuilder().add("observacion", "").build();
+            }
+
         }
 
     }
@@ -54,9 +47,6 @@ public class ConsultarEstudioComando extends ComandoBase {
     @Override
     public JsonObject getResult() {
 
-        JsonObject resultado = Json.createObjectBuilder()
-                .add("EstudioConsultado", estudioObj).build();
-
-        return resultado;
+        return estudioObj;
     }
 }
