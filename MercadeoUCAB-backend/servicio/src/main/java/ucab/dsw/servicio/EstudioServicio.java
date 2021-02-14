@@ -77,9 +77,9 @@ public class EstudioServicio extends AplicacionBase {
     @GET
     @Path("/consultarObservacionCliente/{idE}/{idU}")
     @Produces( MediaType.APPLICATION_JSON )
-    public Response consultarEstudio(@PathParam("idE") long idE, @PathParam("idU") long idU) {
+    public Response consultarObservacionCliente(@PathParam("idE") long idE, @PathParam("idU") long idU) {
 
-        logger.debug("Ingresando al método que consulta un estudio de un cliente");
+        logger.debug("Ingresando al método que consulta una observacion cliente");
         JsonObject dataObject;
 
         try {
@@ -87,7 +87,7 @@ public class EstudioServicio extends AplicacionBase {
             ConsultarEstudioComando comando = Fabrica.crearComandoDosId(ConsultarEstudioComando.class, idE, idU);
             comando.execute();
 
-            logger.debug("Saliendo del método que consulta un estudio de un cliente");
+            logger.debug("Saliendo del método que consulta una observacion cliente");
             return Response.status(Response.Status.OK).entity(comando.getResult()).build();
 
         } catch (NullPointerException ex) {
