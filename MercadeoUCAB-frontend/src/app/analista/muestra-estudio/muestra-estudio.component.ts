@@ -16,7 +16,7 @@ import { EstudiosAnalistaComponent } from '../estudios-analista/estudios-analist
 export class MuestraEstudioComponent implements OnInit {
 
   encuestados: Usuario3[];
-  displayedColumns: string[] = ['nombre', 'correo', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'correo', 'estado', 'telefono', 'acciones'];
   dataSource: MatTableDataSource<Usuario3>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -28,11 +28,11 @@ export class MuestraEstudioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.dialogRef.updateSize('850px', '500px');
+    this.dialogRef.updateSize('950px', '500px');
     console.log(this.data)
     this.encuestadosService.getEncuestadosEstudio(this.data.id).subscribe( encuestadosData =>
       {
-        this.dataSource = new MatTableDataSource<Usuario3>(encuestadosData);
+        this.dataSource = new MatTableDataSource<Usuario3>(encuestadosData.Encuestados);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       } );
