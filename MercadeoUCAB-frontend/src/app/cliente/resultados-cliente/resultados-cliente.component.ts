@@ -313,4 +313,9 @@ export class ResultadosClienteComponent implements OnInit {
     console.log(this.observacion);
       }
 
+  atras() {
+   this.router.navigate(['cliente/estudios']);
+    }
+    
+
 }

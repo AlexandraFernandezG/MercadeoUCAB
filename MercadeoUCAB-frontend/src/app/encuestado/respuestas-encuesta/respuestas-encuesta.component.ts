@@ -21,7 +21,8 @@ export class RespuestasEncuestaComponent implements OnInit {
 
   constructor(
     private service: EncuestasService,
-    public actRoute: ActivatedRoute
+    public actRoute: ActivatedRoute,
+    private router: Router
   ) { }
   
   respuestas = <any>[];
@@ -144,5 +145,8 @@ export class RespuestasEncuestaComponent implements OnInit {
       console.log('entre8');
       this.service.cambiarEstatus(this.idEstudio, this.idUsuario);
     }
+  }
+  atras(){
+    this.router.navigate(['encuestado/estudios']);
   }
 }
