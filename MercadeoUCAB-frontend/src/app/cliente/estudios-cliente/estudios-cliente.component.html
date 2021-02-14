@@ -36,7 +36,7 @@
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef></th>
           <mat-cell *matCellDef="let row">
-            <button mat-icon-button>Resultados <mat-icon>launch</mat-icon></button>
+            <button mat-icon-button [routerLink]="['/analista/resultados/', row.id]">Resultados <mat-icon>launch</mat-icon></button>
           </mat-cell>
         </ng-container>
     

@@ -32,7 +32,7 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
         DaoSolicitudEstudio daoSolicitudEstudio = Fabrica.crear(DaoSolicitudEstudio.class);
         DaoUsuario daoUsuario = Fabrica.crear(DaoUsuario.class);
         DaoInformacion daoInformacion = Fabrica.crear(DaoInformacion.class);
-        ucab.dsw.comando.Funciones.FuncionesComando servicio = new ucab.dsw.comando.Funciones.FuncionesComando();
+        ucab.dsw.comando.Funciones.FuncionesComando servicio = Fabrica.crear(ucab.dsw.comando.Funciones.FuncionesComando.class);
 
         SolicitudEstudio solicitudEstudio = daoSolicitudEstudio.find(id, SolicitudEstudio.class);
 

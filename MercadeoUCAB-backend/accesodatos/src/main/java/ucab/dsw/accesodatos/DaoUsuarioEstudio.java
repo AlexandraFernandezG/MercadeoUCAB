@@ -40,9 +40,9 @@ public class DaoUsuarioEstudio extends Dao<UsuarioEstudio>{
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
-        String sqlQuery = "SELECT DISTINCT u._id, u._nombre, u._codigoRecuperacion, u._correoelectronico, u._estatus " +
-                "FROM Usuario as u, Estudio as e, UsuarioEstudio as ue " +
-                "WHERE u._id = ue._usuario._id and ue._estudio._id = e._id and e._id = :id";
+        String sqlQuery = "SELECT DISTINCT u._id, u._nombre, u._codigoRecuperacion, u._correoelectronico, u._estatus, ue._estatus " +
+                "FROM Usuario as u, Estudio as e, UsuarioEstudio as ue, Informacion as inf, Telefono as tel " +
+                "WHERE (u._id = ue._usuario._id and ue._estudio._id = e._id and e._id = :id)";
 
         Query query = entitymanager.createQuery(sqlQuery);
         query.setParameter("id", id);
@@ -71,17 +71,20 @@ public class DaoUsuarioEstudio extends Dao<UsuarioEstudio>{
         return respuestas;
     }
 
-    public void updateEstadoEstudio (long id){
+    public List<Object[]> traerTelefono(long id){
 
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("mercadeoUcabPU");
         EntityManager entitymanager = factory.createEntityManager();
 
-        String sqlQuery = "UPDATE UsuarioEstudio as ue SET ue._estatus = 'Respondido' " +
-                "WHERE ue._id = :id";
+        String sqlQuery = "SELECT DISTINCT tel._id, tel._numero FROM Telefono as tel, Informacion as inf " +
+                "WHERE tel._informacion._id = inf._id and inf._usuario._id = :id";
 
         Query query = entitymanager.createQuery(sqlQuery);
         query.setParameter("id", id);
 
+        List<Object[]> telefono = query.getResultList();
+
+        return telefono;
     }
 
 }
