@@ -54,7 +54,8 @@ public class ListarSolicitudEncuestadosComando extends ComandoBase {
 
                 if (solicitudEstudio.get_genero().equals(informacion.get_genero()) && solicitudEstudio.get_estadoCivil().equals(informacion.get_estadoCivil()) &&
                         solicitudEstudio.get_cantidadPersonas() == informacion.get_cantidadPersonas() && informacion.get_usuario().get_id() == usuarioEncuestado.getId()
-                 && servicio.devolverEdad(informacion.get_fechaNacimiento()) > solicitudEstudio.get_edadMinima() && servicio.devolverEdad(informacion.get_fechaNacimiento()) < solicitudEstudio.get_edadMaxima()) {
+                 && servicio.devolverEdad(informacion.get_fechaNacimiento()) > solicitudEstudio.get_edadMinima() && servicio.devolverEdad(informacion.get_fechaNacimiento()) < solicitudEstudio.get_edadMaxima()
+                && solicitudEstudio.get_disponibilidadEnLinea().equals(informacion.get_disponibilidadEnLinea())) {
 
                     listaEncuestadosSolicitud.add(usuarioEncuestado);
                 }
