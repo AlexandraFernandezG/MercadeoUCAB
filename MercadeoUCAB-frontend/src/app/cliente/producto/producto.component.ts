@@ -30,7 +30,7 @@ export class ProductoComponent implements OnInit {
   // Form
   productoForm: FormGroup;
   productoFormTP: any;
-  displayedColumns: string[] = ['nombre', 'descripcion', 'subcategoria', 'marca', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'subcategoria', 'marca', 'acciones'];
   dataSource: MatTableDataSource<Producto>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
