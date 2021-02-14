@@ -141,6 +141,7 @@ export class RespuestasEncuestaComponent implements OnInit {
           }
     }
     if(j){
+      console.log('entre8');
       this.service.cambiarEstatus(this.idEstudio, this.idUsuario);
     }
   }
