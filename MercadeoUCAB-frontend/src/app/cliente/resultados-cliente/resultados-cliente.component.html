@@ -1,0 +1,15 @@
+<br><br>
+<h1>Resultados<h1>
+
+<div class="contentCanvas" *ngFor="let pregunta of preguntas; let i = index ">
+    <h1>{{preguntas[i]}}</h1>
+     <canvas #myChart id="myChart"></canvas>
+</div>
+<br><br><br>
+<h3>Conclusión del Estudio</h3>
+<button type="submit"  mat-raised-button color="primary" (click)="recibirRespuesta()"  >Ver conclusión del analista</button>
+<br><br><br>
+<h1>{{observacion}}</h1>
+
+
+  
