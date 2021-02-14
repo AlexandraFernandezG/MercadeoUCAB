@@ -813,6 +813,7 @@ public class EstudioServicio extends AplicacionBase {
     @Produces( MediaType.APPLICATION_JSON )
     public Response cambiarEstatusUsuarioEstudio(@PathParam("idE") long idE, @PathParam("idU") long idU){
 
+        logger.debug("Ingresando al método que permite cambiar el estatus del encuestado");
         JsonObject dataObject;
         int cantidadEncuestadosRespondido = 0;
         DaoUsuarioEstudio daoUsuarioEstudio = new DaoUsuarioEstudio();
@@ -866,6 +867,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("estado", 200)
                     .add("Mensaje", "Operacion realizada con exito").build();
 
+            logger.debug("Saliendo del método que permite cambiar el estatus del encuestado");
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (PersistenceException | DatabaseException ex){
@@ -875,6 +877,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("mensaje", ex.getMessage())
                     .add("codigo",500).build();
 
+            logger.error("Código de error: " + 500 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.OK).entity(dataObject).build();
 
         } catch (NullPointerException ex) {
@@ -884,6 +887,7 @@ public class EstudioServicio extends AplicacionBase {
                     .add("excepcion", ex.getMessage())
                     .add("codigo", 401).build();
 
+            logger.error("Código de error: " + 401 +  ", Mensaje de error: " + ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
         }

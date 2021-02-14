@@ -39,6 +39,10 @@ export class ResultadosService {
     );
   }
 
+  getObservacion(idEstudio:number, idUsuario: number): Observable<any>{
+    return this.http.get<any>(this.url + 'estudio/consultarObservacionCliente/' + idEstudio +'/'+idUsuario);
+  }
+
   /// Error HandleError
   handleError(error): Observable<never> {
     let errorMessage = '';
