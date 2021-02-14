@@ -25,8 +25,8 @@ public class DaoPreguntaEncuesta extends Dao<PreguntaEncuesta>{
 
         SQL = "SELECT DISTINCT pe._id as idPregunta, pe._descripcion as descripcion, pe._tipoPregunta as tipoPregunta, pe._estatus as estatus, sub._nombre as nombreSub FROM PreguntaEncuesta as pe, Subcategoria" +
                 " as sub WHERE (pe._subcategoria._id = sub._id) and pe._subcategoria._id in " +
-                "(SELECT sc._id FROM Subcategoria as sc, Producto as p, SolicitudEstudio as so, Estudio as e WHERE sc._id = p._subcategoria._id and p._id = so._producto._id and so._id = e._solicitudEstudio._id and e._id = :id and pe._id not in " +
-                "(SELECT pes._preguntaEncuesta._id FROM PreguntaEstudio as pes, Estudio as e WHERE pes._estudio._id = e._id and e._id = :id))";
+                "(SELECT sc._id FROM Subcategoria as sc, Producto as p, SolicitudEstudio as so, Estudio as e WHERE sc._id = p._subcategoria._id and p._id = so._producto._id and so._id = e._solicitudEstudio._id and e._solicitudEstudio._id = :id and pe._id not in " +
+                "(SELECT pes._preguntaEncuesta._id FROM PreguntaEstudio as pes, Estudio as e WHERE pes._estudio._id = e._id and e._solicitudEstudio._id = :id))";
 
         Query query = entitymanager.createQuery(SQL);
         query.setParameter("id", id);
