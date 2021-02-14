@@ -36,7 +36,7 @@ export class ResultadosComponent implements OnInit {
   canva: any;
   data: JSON;
   objeto = [];
-  respuesta: string; 
+  respuesta: string;
   estudio: Estudio2[];
 
 
@@ -46,24 +46,24 @@ export class ResultadosComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private servicenotifications: NotificationsService,
-  ) { 
+  ) {
 
 
-  this.respuestaForm = this.fb.group({
-    respuesta: new FormControl('',[ Validators.required, Validators.maxLength(500)])
-  });
+    this.respuestaForm = this.fb.group({
+      respuesta: new FormControl('', [Validators.required, Validators.maxLength(500)])
+    });
   }
 
   respuestaForm: FormGroup;
   ngOnInit() {
     this.idEstudio = +this.actRoute.snapshot.paramMap.get("id");
     //this.Resultados();
-      setTimeout(() => {
-          this.Graficas();
-       },3000);
+    setTimeout(() => {
+      this.Graficas();
+    }, 3000);
 
-     this.Resultados();
-   // this.Graficas();
+    this.Resultados();
+    // this.Graficas();
 
   }
 
@@ -291,44 +291,47 @@ export class ResultadosComponent implements OnInit {
     console.log(this.respuestaForm.value.respuesta);
     
   }*/
-  onSucess(message){
+  onSucess(message) {
     this.servicenotifications.success('Exitoso', message, {
       position: ['bottom', 'right'],
       timeOut: 5000,
       animate: 'fade',
       showProgressBar: true,
-      })
+    })
   }
 
-  onError(message){
+  onError(message) {
     this.servicenotifications.error('¡Algo falló!', message, {
       position: ['bottom', 'right'],
       timeOut: 5000,
       animate: 'fade',
       showProgressBar: true,
-      });
+    });
   }
-  enviarRespuesta(): void{
-    this.respuesta=this.respuestaForm.value.respuesta;
-    let nombre,tipoInstrumento, fechaInicio, fechaFin, estatus, estado, usuarioDto, solicitudEstudioDto
+  enviarRespuesta(): void {
+    this.respuesta = this.respuestaForm.value.respuesta;
+    let nombre, tipoInstrumento, fechaInicio, fechaFin, estatus, estado, usuarioDto, solicitudEstudioDto
     const editEdu: Estudio2 = {
-      id:this.idEstudio, 
-      nombre:'',
-      tipoInstrumento:'', 
-      fechaInicio:null, 
-      fechaFin:null, 
-      estatus:'', 
-      estado:'', 
-      observaciones:this.respuesta,
-      usuarioDto:1, 
-      solicitudEstudioDto:1
+      id: this.idEstudio,
+      nombre: '',
+      tipoInstrumento: '',
+      fechaInicio: null,
+      fechaFin: null,
+      estatus: '',
+      estado: '',
+      observaciones: this.respuesta,
+      usuarioDto: 1,
+      solicitudEstudioDto: 1
     };
     this.service.sendResultados(editEdu).subscribe();
     this.onSucess('Se ha enviado sus observaciones al cliente...');
     setTimeout(() => {
       this.router.navigate(['/analista']);
-    },5000);
-      }
+    }, 5000);
+  }
 
+  atras() {
+    this.router.navigate(['analista/solicitudes']);
+  }
 
 }

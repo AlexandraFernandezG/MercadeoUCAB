@@ -173,4 +173,7 @@ export class RespuestasEncuestaComponent implements OnInit {
     },3000);
     }
   }
+  atras(){
+    this.router.navigate(['encuestado/estudios']);
+  }
 }
