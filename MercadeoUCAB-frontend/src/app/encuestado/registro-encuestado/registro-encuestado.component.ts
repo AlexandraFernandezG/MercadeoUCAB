@@ -134,4 +134,8 @@ export class RegistroEncuestadoComponent implements OnInit {
     // this.router.navigate(['/cliente/estudios']);
    
   };
+  atras(){
+    this.router.navigate(['encuestado/estudios']);
+  }
+ 
 }

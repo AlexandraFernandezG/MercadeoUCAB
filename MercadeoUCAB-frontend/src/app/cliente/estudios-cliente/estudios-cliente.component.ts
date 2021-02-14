@@ -22,7 +22,7 @@ export class EstudiosClienteComponent implements OnInit {
     ) { }
 
   estudios: Estudio[];  
-  displayedColumns: string[] = ['nombre', '_fechaInicio','_fechaFin', '_estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', '_fechaInicio', '_estatus', 'acciones'];
   dataSource: MatTableDataSource<Estudio>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

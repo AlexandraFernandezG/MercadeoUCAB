@@ -308,9 +308,14 @@ export class ResultadosClienteComponent implements OnInit {
       });
   }
   recibirRespuesta(): void{
-    this.service.getObservacion(this.idEstudio, this.idUsuario).subscribe( observacionData =>
+    this.service.getObservacion(this.idEstudio, JSON.parse(localStorage.getItem('usuarioID'))).subscribe( observacionData =>
       {this.observacion = observacionData.observacion} );
     console.log(this.observacion);
       }
+
+  atras() {
+   this.router.navigate(['cliente/estudios']);
+    }
+    
 
 }

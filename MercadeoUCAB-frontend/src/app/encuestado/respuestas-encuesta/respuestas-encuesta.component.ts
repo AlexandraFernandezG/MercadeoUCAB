@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input'; 
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 import { Pregunta, Pregunta2, PreguntaEncuesta } from 'src/app/modelos/pregunta';
 import { Respuesta, Respuesta2 } from 'src/app/modelos/respuesta';
 import { respuestaPregunta, respuestaPregunta2, respuestaPregunta3 } from 'src/app/modelos/respuestaPregunta';
@@ -21,7 +22,9 @@ export class RespuestasEncuestaComponent implements OnInit {
 
   constructor(
     private service: EncuestasService,
-    public actRoute: ActivatedRoute
+    public actRoute: ActivatedRoute,
+    public router: Router,
+    private servicenotifications: NotificationsService,
   ) { }
   
   respuestas = <any>[];
@@ -50,13 +53,28 @@ export class RespuestasEncuestaComponent implements OnInit {
     } );
   }
 
+  onSucess(message){
+    this.servicenotifications.success('Exito', message, {
+      position: ['bottom', 'right'],
+      timeOut: 2000,
+      animate: 'fade',
+      showProgressBar: true,
+      })
+  }
+
   Siguiente(index: number) {
    // this.mandarRespuestas(index);
 
     this.preguntas2[index].visible = false;
     this.preguntas2[index + 1].visible = true;
+    console.log(index);
     this.enviarRespuestas(index, false);
-
+    if (index == 0){
+      console.log('control index 0')
+      console.log('estudio:',this.idEstudio)
+      console.log('usuario',this.idUsuario)
+      this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe();
+    }
 
   }
   Delay(ms: number) {
@@ -79,7 +97,7 @@ export class RespuestasEncuestaComponent implements OnInit {
 
         /* respuestas2.push(r); */
         this.service.addRespuesta(r);
-        /* this.resps = []; */
+        
       }
 
     if (this.preguntas2[index].tipoPregunta === 'Selección Simple') {
@@ -94,7 +112,6 @@ export class RespuestasEncuestaComponent implements OnInit {
 
         /* respuestas2.push(r); */
         this.service.addRespuesta(r);
-        /* this.resps = []; */
       }
 
     if (this.preguntas2[index].tipoPregunta === 'Verdadero o Falso') {
@@ -117,7 +134,6 @@ export class RespuestasEncuestaComponent implements OnInit {
           preguntaEstudioDto: this.preguntas2[index].idPreguntaEstudio
         };
         this.service.addRespuesta(r);
-   
       }
 
     if (this.preguntas2[index].tipoPregunta === 'Selección Múltiple'){
@@ -140,9 +156,24 @@ export class RespuestasEncuestaComponent implements OnInit {
             }
           }
     }
+    
+    
     if(j){
-      console.log('entre8');
-      this.service.cambiarEstatus(this.idEstudio, this.idUsuario);
+      setTimeout(() => {
+        this.service.cambiarEstatus(this.idEstudio, this.idUsuario).subscribe(
+          result => {this.onSucess(result.mensaje)}
+        );
+      },2000);
+      setTimeout(() => {
+      if ( JSON.parse(localStorage.getItem('rol')) == 'Analista' ){
+        this.router.navigate(['/analista']);
+      }else if( JSON.parse(localStorage.getItem('rol')) == 'Encuestado' ){
+        this.router.navigate(['/encuestado']);
+      }
+    },3000);
     }
+  }
+  atras(){
+    this.router.navigate(['encuestado/estudios']);
   }
 }

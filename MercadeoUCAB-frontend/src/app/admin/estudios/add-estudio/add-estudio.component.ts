@@ -277,6 +277,10 @@ export class AddEstudioComponent implements OnInit, OnChanges {
     console.log('traer: ', pregAgregadas);
     localStorage.setItem('preguntasEst',  JSON.stringify (pregAgregadas))
   }
+
+  atras(){
+    this.router.navigate(['admin/solicitudes']);
+  }
 }
 
 

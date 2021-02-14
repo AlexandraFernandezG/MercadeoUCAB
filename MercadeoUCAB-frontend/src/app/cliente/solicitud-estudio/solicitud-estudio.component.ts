@@ -173,4 +173,8 @@ export class SolicitudEstudioComponent implements OnInit {
       );
       console.log(Solicitud2);
   }
+
+  atras(){
+    this.router.navigate(['cliente/solicitudes']);
+  }
 }

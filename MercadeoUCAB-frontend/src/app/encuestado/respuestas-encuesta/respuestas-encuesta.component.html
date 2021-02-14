@@ -1,4 +1,5 @@
 <br><br><br>
+<i class="btn fas fa-arrow-circle-left fa-4x" style="color:#00c2db" button (click)="atras()" ></i>
 <div class="container modern-form">
   <div class="text-center">
     <h4 style="color: #212529;font-size: 25px;">Responder Encuesta</h4>
@@ -73,8 +74,9 @@
         <button mat-raised-button color="primary"[disabled]="(i + 1)  === preguntas2.length" (click)="Siguiente(i)">Siguiente</button>
       </div>
       <div *ngIf="(i + 1) == preguntas2.length">
-        <button type="submit" mat-raised-button color="primary" [disabled]="(i + 1)  !== preguntas2.length" (click)="enviarRespuestas(i, 1)">Enviar Respuestas</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="(i + 1)  !== preguntas2.length" (click)="enviarRespuestas(i, true)">Enviar Respuestas</button>
       </div>
     </ng-container>
   </ng-container>
 </div>
+<simple-notifications></simple-notifications>
