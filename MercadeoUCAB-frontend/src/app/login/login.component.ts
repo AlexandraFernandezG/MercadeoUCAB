@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
             console.log('Soy un Cliente');
             this.onSucess('Inicio sesión exitoso');
             setTimeout(() => {
-              this.router.navigate(['/cliente']);
+              this.router.navigate(['/cliente/solicitudes']);
             },2000);
           }
 
