@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 import { Usuario } from 'src/app/modelos/usuario';
 import { Usuario2 } from 'src/app/modelos/usuario';
 import { Rol } from '../modelos/rol';
@@ -19,7 +20,8 @@ export class RecuperarContrasenaComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private service: UsuariosService,
-    public actRoute: ActivatedRoute
+    public actRoute: ActivatedRoute,
+    private servicenotifications: NotificationsService
   ) {
 
   this.envioForm = this.fb.group({
@@ -54,6 +56,15 @@ usuarioForm: FormGroup;
     );
   }
 
+  onSucess(message){
+    this.servicenotifications.success('Exito', message, {
+      position: ['bottom', 'right'],
+      timeOut: 2000,
+      animate: 'fade',
+      showProgressBar: true,
+      })
+  }
+
   envioPassword( usuario: Usuario): void {
    
 	 const envioPa: Usuario2 = {
@@ -66,7 +77,15 @@ usuarioForm: FormGroup;
     rol: usuario._rol._id
   };
     this.service.enviarClave(envioPa).subscribe();
+    this.onSucess('Envio de contrasena exitoso, revise su correo...');
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    },2000);
 
+  }
+
+  atras(){
+    this.router.navigate(['/login']);
   }
 
 }
