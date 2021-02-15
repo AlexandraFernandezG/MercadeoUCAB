@@ -24,7 +24,7 @@ export class UsuariosService {
     })
   };
 
-  getUsuarios(){
+  getUsuarios(): Observable<any>{
     return this.http.get<Usuario[]>(this.url + 'usuario/allUsuarios');
   }
 

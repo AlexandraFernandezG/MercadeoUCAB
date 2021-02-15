@@ -45,8 +45,8 @@ public class ListarEstudiosComando extends ComandoBase {
 
                 estudioJson = Json.createObjectBuilder().add("id", obj.get_id())
                         .add("nombre", obj.get_nombre())
-                        .add("tipoInstrumento", "")
-                        .add("observaciones", obj.get_observaciones())
+                        .add("tipoInstrumento", obj.get_tipoInstrumento())
+                        .add("observaciones","")
                         .add("fechaInicio", servicio.devolverFecha(obj.get_fechaInicio()))
                         .add("fechaFin", "")
                         .add("estado", obj.get_estado())

@@ -37,7 +37,7 @@ export class UsuarioComponent implements OnInit {
     private location: Location
   ) { }
   usuarioForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'correo', 'rol','estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'correo', 'acciones'];
   dataSource: MatTableDataSource<Usuario>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -45,7 +45,7 @@ export class UsuarioComponent implements OnInit {
   ngOnInit() {
     this.service.getUsuarios()
     .subscribe(data => {
-      this.dataSource = new MatTableDataSource<Usuario>(data);
+      this.dataSource = new MatTableDataSource<Usuario>(data.Usuarios);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     } );

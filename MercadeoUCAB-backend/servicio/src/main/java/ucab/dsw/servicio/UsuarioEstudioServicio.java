@@ -212,8 +212,8 @@ public class UsuarioEstudioServicio extends AplicacionBase{
      * @param idE el id del estudio
      * @patam idU el id del usuario
      */
-    /*@PUT
-    @Path("/estatusUsuarioProgreso/{idE}/{idU}")
+    @PUT
+    @Path("/estatusEncuestadoProgreso/{idE}/{idU}")
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
     public Response modificarEstatusProgreso(@PathParam("idE") long idE, @PathParam("idU") long idU){
@@ -265,7 +265,7 @@ public class UsuarioEstudioServicio extends AplicacionBase{
                 return Response.status(Response.Status.BAD_REQUEST).entity(dataObject).build();
 
             }
-    }*/
+    }
 
     /**
      * Este método permite eliminar un usuarioEstudio

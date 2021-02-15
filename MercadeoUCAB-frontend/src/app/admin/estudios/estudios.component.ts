@@ -37,8 +37,8 @@ export class EstudiosComponent implements OnInit {
   ) { }
 
   estudioForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'fechaInicio', 'fechaFin', 'usuario',
-    'estatus', 'estado', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'fechaInicio',
+    'estatus', 'observaciones', 'acciones'];
   dataSource: MatTableDataSource<Estudio>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

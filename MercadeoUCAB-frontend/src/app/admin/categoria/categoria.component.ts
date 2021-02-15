@@ -33,14 +33,14 @@ export class CategoriaComponent implements OnInit {
     private location: Location
   ) { }
   categoriaForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'descripcion','estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'acciones'];
   dataSource: MatTableDataSource<Categoria>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   ngOnInit() {
     this.service.getCategorias()
     .subscribe(data => {
-      this.dataSource = new MatTableDataSource<Categoria>(data);
+      this.dataSource = new MatTableDataSource<Categoria>(data.Categorias);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     } );

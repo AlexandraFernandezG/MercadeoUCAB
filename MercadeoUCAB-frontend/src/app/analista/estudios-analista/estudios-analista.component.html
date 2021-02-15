@@ -15,16 +15,16 @@
       </mat-card-header>
       <img mat-card-image src="/../assets/img/survey.png">
       <mat-card-content>
-        
+        En línea: {{estudio.DisponibilidadEnLinea}}
       </mat-card-content>
 
       <mat-card-actions >
         <button mat-button color="primary" (click)="openModal(estudio.id, estudio.nombre, estudio.DisponibilidadEnLinea)" >Ver Muestra</button>
         <button mat-button color="primary" *ngIf="estudio.estado === 'Finalizado' "  [routerLink]="['/analista/resultados/', estudio.id]">Ver Resultados</button>
-        <button mat-button color="primary" *ngIf="estudio.estado === 'En espera' " 
+        <!-- <button mat-button color="primary" *ngIf="estudio.estado === 'En espera' " 
           (click)="updateEstado(estudio.id)">
           Iniciar
-        </button>
+        </button> -->
              
       </mat-card-actions>
     </mat-card>
