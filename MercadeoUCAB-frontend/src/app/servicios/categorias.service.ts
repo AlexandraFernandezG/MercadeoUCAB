@@ -24,7 +24,7 @@ export class CategoriasService {
   };
 
   getCategorias(){
-    return this.http.get<Categoria[]>(this.url + 'categoria/allCategoria');
+    return this.http.get<any>(this.url + 'categoria/allCategoria');
   }
 
   getCategoria(id: number): Observable<Categoria> {
