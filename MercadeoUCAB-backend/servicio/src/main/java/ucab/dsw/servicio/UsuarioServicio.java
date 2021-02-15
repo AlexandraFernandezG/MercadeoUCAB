@@ -568,7 +568,7 @@ public class UsuarioServicio extends AplicacionBase {
                 usuarioDto.setContrasena(randomClave);
                 ldap.changePassword(usuarioDto);
 
-                contenido = "Estimado " + usuarioDto.getNombreUsuario() + " su contraseña ha sido actualizada. Su nueva contraseña es: " + randomClave;
+                contenido = "Estimado usuario su contraseña ha sido actualizada. Su nueva contraseña es: " + randomClave;
                 CorreoServicio.enviarCorreoElectronico(correoElectronico, "Recuperacion de clave", contenido);
                 respuesta = Json.createObjectBuilder().add("estatus", "Correo enviado correctamente").build();
 
