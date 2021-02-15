@@ -103,7 +103,7 @@ export class UsuariosService {
   enviarClave(usuario): Observable<Usuario>{
     console.log(usuario);
     console.log('entre');
-    return this.http.put<Usuario>(this.url + 'usuario/recuperarClave/' +  JSON.stringify(usuario), this.httpOptions)
+    return this.http.post<Usuario>(this.url + 'usuario/recuperarClave' , JSON.stringify(usuario), this.httpOptions)
     .pipe(
       retry(1),
       catchError(this.handleError)
