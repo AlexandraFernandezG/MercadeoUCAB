@@ -35,11 +35,14 @@ import { ResultadosComponent } from './analista/resultados/resultados.component'
 import { MuestraEstudioComponent } from './analista/muestra-estudio/muestra-estudio.component';
 import { AddEstudioComponent } from './admin/estudios/add-estudio/add-estudio.component';
 import { ResultadosClienteComponent } from './cliente/resultados-cliente/resultados-cliente.component';
+import { NuevoencuestadoComponent } from './nuevoencuestado/nuevoencuestado.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'recuperarContrasena', component: RecuperarContrasenaComponent},
   { path: 'cambioContrasena', component:  CambioContrasenaComponent},
+  { path: 'nuevoencuestado', component: NuevoencuestadoComponent },
+  { path: 'registro-encuestado', component: RegistroEncuestadoComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   { path: 'admin', component: AdminComponent,
@@ -77,7 +80,6 @@ const routes: Routes = [
   { path: 'encuestado', component: EncuestadoComponent,
     children: [
       { path: 'estudios', component: EstudiosEncuestadoComponent },
-      { path: 'registro-encuestado', component: RegistroEncuestadoComponent },
       { path: 'respuestas-encuesta/:idEstudio/:idUsuario', component: RespuestasEncuestaComponent },
       { path: '', pathMatch: 'prefix', redirectTo: 'estudios'},
     ]

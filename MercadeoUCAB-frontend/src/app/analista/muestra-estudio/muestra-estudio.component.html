@@ -35,7 +35,7 @@
         </ng-container>
 
         <ng-container matColumnDef="acciones">
-            <th class="accion-header" mat-header-cell *matHeaderCellDef> Acciones </th>
+            <th class="accion-header" mat-header-cell *matHeaderCellDef> Contestar la encuesta </th>
             <mat-cell *matCellDef="let row">
 
               <button mat-icon-button *ngIf ="data.enLinea === 'No' && row.estado != 'Respondido' " [routerLink]="['/encuestado/respuestas-encuesta/' + this.data.id + '/' + row.id]" (click)="closeModal()">

@@ -138,7 +138,7 @@ export class RespuestasEncuestaComponent implements OnInit {
 
     if (this.preguntas2[index].tipoPregunta === 'Selección Múltiple'){
       console.log('entree');
-          for (let i =0; i < this.respuestas.length; i++){
+      for (let i =0; i < this.respuestas.length; i++){
            //for (let j = 0; j < this.preguntas2.length; j++){
             if ((this.respuestas[i].fkPregunta === this.preguntas2[index].idPreguntaEncuesta)
             && this.respuestas[i].completado === true){
