@@ -50,6 +50,7 @@ export class SolicitudesComponent implements OnInit {
     localStorage.setItem('solicitudMax',  JSON.stringify (solicitud._edadMaxima));
     localStorage.setItem('solicitudGen',  JSON.stringify (solicitud._genero));
     localStorage.setItem('solicitudProducto',  JSON.stringify (solicitud._producto._nombre));
+    localStorage.setItem('solicitudEnLinea',  JSON.stringify (solicitud._disponibilidadEnLinea));
     localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntas))
   }
 

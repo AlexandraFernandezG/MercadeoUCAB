@@ -35,7 +35,7 @@ export class SubcategoriaComponent implements OnInit {
     private location: Location
   ) { }
   subcategoriaForm: FormGroup;
-  displayedColumns: string[] = ['nombre', 'descripcion', 'categoria', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'acciones'];
   dataSource: MatTableDataSource<Subcategoria>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -43,7 +43,7 @@ export class SubcategoriaComponent implements OnInit {
   ngOnInit(): void {
     this.service.getSubcategorias()
     .subscribe(data => {
-      this.dataSource = new MatTableDataSource<Subcategoria>(data);
+      this.dataSource = new MatTableDataSource<Subcategoria>(data.Subcategorias);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     } );

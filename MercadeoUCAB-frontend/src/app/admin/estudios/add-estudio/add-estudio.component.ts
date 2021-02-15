@@ -41,6 +41,7 @@ export class AddEstudioComponent implements OnInit, OnChanges {
     edadMax: localStorage.getItem('solicitudMax'),
     genero: JSON.parse(localStorage.getItem('solicitudGen')),
     producto: JSON.parse(localStorage.getItem('solicitudProducto')),
+    enLinea: JSON.parse(localStorage.getItem('solicitudEnLinea')),
   }
 
   displayedColumns: string[] = ['nombre', 'correo', 'acciones'];
