@@ -11,7 +11,7 @@ import { Pregunta3 } from '../modelos/pregunta';
 })
 export class EstudiosService {
 
-  public url = '//localhost:8080/servicio-1.0-SNAPSHOT/api/';
+  public url = '//45.76.60.252:8080/servicio-1.0-SNAPSHOT/api/';
 
   est: string;
   enc: string;

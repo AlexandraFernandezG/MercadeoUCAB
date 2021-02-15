@@ -11,7 +11,7 @@ export class TiposPresentacionService {
   tipo: TipoPresentacion[];
   constructor(public http: HttpClient) {
   }
-  public url = '//localhost:8080/servicio-1.0-SNAPSHOT/api/';
+  public url = '//45.76.60.252:8080/servicio-1.0-SNAPSHOT/api/';
 
   // Http Options
   httpOptions = {
