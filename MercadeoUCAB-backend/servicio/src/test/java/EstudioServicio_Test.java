@@ -131,9 +131,11 @@ public class EstudioServicio_Test {
             DateFormat forma2 = new SimpleDateFormat("yyyy-MM-dd");
             Date myDate2 = forma2.parse(date2);
             estudioDto.setFechaFin(myDate2);
+            estudioDto.setEstado("En proceso");
             estudioDto.setEstatus("Activo");
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.modificarEstudio(1, estudioDto);
+            Response respuesta = servicio.modificarEstudio(1, estudioDto);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());
@@ -151,7 +153,8 @@ public class EstudioServicio_Test {
 
         try {
             // Recuerden que deben ver los id de los registros en la BD
-            servicio.eliminarEstudio(2);
+            Response respuesta = servicio.eliminarEstudio(2);
+            Assert.assertEquals(respuesta.getStatus(),Response.Status.OK.getStatusCode());
 
         } catch (Exception e) {
             Assertions.fail(e.getMessage(), e.getCause());

@@ -13,7 +13,7 @@ class SugerenciasServicioTest {
      */
     @Test
     void testListarPreguntasEstudioRecomendadas() {
-        long id = 2; // ID del estudio para poder recomendar las preguntas (Verificar).
+        long id = 2; // ID de la solicitud de estudio para poder recomendar las preguntas.
 
             SugerenciasServicio servicio = new SugerenciasServicio();
             Response respuesta = servicio.listarPreguntasEstudioRecomendadas(id);
