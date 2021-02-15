@@ -23,7 +23,7 @@ public class DirectorioActivo
     private DirContext _ldapContext;
     private String _url = "ldap://127.0.0.1:10389";
     private String _connType =  "simple";
-    private String _directory =  "ou=users,dc=mercadeoucab,dc=com";
+    private String _directory =  "ou=users,o=empresab";
     private String _userDirectory =  "cn=%s";
     private String _user =  "admin";
     private String _password =  "secret";
