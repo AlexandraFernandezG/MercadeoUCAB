@@ -9,7 +9,7 @@ import { RegistroEncuestado, RegistroEncuestado2 } from '../modelos/registro-enc
 })
 export class RegistroEncuestadoService {
 
-  url: string = '//45.76.60.252:8080/servicio-1.0-SNAPSHOT/api/';
+  url: string = '//45.76.60.252:8080/pruebaORM-1.0-SNAPSHOT/api/';
   
   /// Error HandleError
   handleError(error): Observable<never> {

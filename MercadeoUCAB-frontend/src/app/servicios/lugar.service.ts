@@ -8,7 +8,7 @@ import { Lugar } from '../modelos/lugar';
 })
 export class LugarService {
 
-  url: string = '//45.76.60.252:8080/servicio-1.0-SNAPSHOT/api/';
+  url: string = '//45.76.60.252:8080/pruebaORM-1.0-SNAPSHOT/api/';
   
 
   constructor( private http: HttpClient) { }
