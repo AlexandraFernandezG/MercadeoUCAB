@@ -11,7 +11,7 @@ import { catchError, tap, retry } from 'rxjs/operators';
 })
 export class SolicitudEstudiosService {
 
-  url: string = '//45.76.60.252:8080/pruebaORM-1.0-SNAPSHOT/api/';
+  url: string = '//localhost:8080/servicio-1.0-SNAPSHOT/api/';
   
   /// Error HandleError
   handleError(error): Observable<never> {
