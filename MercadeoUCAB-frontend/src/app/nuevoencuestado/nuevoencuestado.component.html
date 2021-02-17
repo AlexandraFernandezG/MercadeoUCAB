@@ -1,30 +1,37 @@
-<!--<div class="container" style="margin-top: 100px">
+<br><br><br>
+<i class="btn fas fa-arrow-circle-left fa-4x" style="color:#00c2db" button (click)="atras()" ></i>
+<h2 class="headertekst">Bienvenido al sistema de encuestas MercadeoUCAB</h2>
+<div class="container" style="margin-top: 100px">
   <mat-card style="max-width: 720px" class="mx-auto">
-    <mat-card-title>Nuevo Usuario</mat-card-title>
+    <mat-card-title>Registro de nuevo usuario</mat-card-title>
     <form name="envioForm" [formGroup]="envioForm">
       <div class="form-group">
         <mat-form-field class="w-100" appaerance="outline">
-          <mat-label>Ingrese un correo:</mat-label>
-          <input formControlName="correo" matInput required [(ngModel)]="usuario._correoelectronico" />
-          <mat-error *ngIf="envioForm.get('correo').errors?.required">
-            Falta llenar el correo electronico
+          <mat-label>Ingrese un nombre de Usuario:</mat-label>
+          <input formControlName="nombreUsuario" matInput required/>
+          <mat-error *ngIf="envioForm.get('nombreUsuario').errors?.required">
+            Falta llenar el nombre de usuario
           </mat-error>
         </mat-form-field>
-      </div>
-      <div class="form-group">
         <mat-form-field class="w-100" appaerance="outline">
-          <mat-label>Introduzca la contraseña:</mat-label>
-          <input formControlName="contrasena" matInput [type]="'hide' ? 'password': 'text'" matInput required />
-          <mat-error *ngIf="envioForm.get('contrasena').errors?.required">
-            Falta llenar el campo
-          </mat-error>
+            <mat-label>Ingrese un coreo electrónico:</mat-label>
+            <input formControlName="correo" matInput required/>
+            <mat-error *ngIf="envioForm.get('correo').errors?.required">
+              Falta llenar el correo
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-100" appaerance="outline">
+            <mat-label>Contraseña:</mat-label>
+            <input formControlName="contrasena" matInput [type]= "'hide' ? 'password': 'text'" required />
+             <mat-error *ngIf="envioForm.get('contrasena').errors?.required">
+                Introduzca la contraseña
+             </mat-error>
         </mat-form-field>
       </div>
       <div class="d-flex justify-content-center" style="margin-left: auto; margin-right: auto">
-        <button type="submit" mat-raised-button color="primary"
-          (click)="addUsuario(usuario._correoelectronico, usuario._nombre)"
-          [disabled]="envioForm.invalid">Enviar</button>
+        <button class="mx-auto" mat-flat-button color="primary" (click)="registrarUsuario()">Enviar</button>
       </div>
     </form>
   </mat-card>
-</div>-->
+</div>
+<simple-notifications></simple-notifications>

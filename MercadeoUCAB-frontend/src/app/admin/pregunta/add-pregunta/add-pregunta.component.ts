@@ -75,6 +75,10 @@ export class AddPreguntaComponent implements OnInit {
       (this.preguntaForm.controls.respuestas as FormArray).removeAt(indice);
     }
 
+    Delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
     addPregunta(): void{
     let id = 1;
     const estatus = 'Activo';
@@ -88,7 +92,7 @@ export class AddPreguntaComponent implements OnInit {
     usuarioDto,
     subcategoriaDto: this.preguntaForm.get('subcategoriaDto').value
     } as Pregunta2).subscribe(
-      response => {
+      async response => {
       console.log('antes:', this.preguntasAgregadas)
       this.preguntasAgregadas = JSON.parse(localStorage.getItem('preguntasEst'));
       console.log('traer: ',this.preguntasAgregadas);
@@ -97,8 +101,9 @@ export class AddPreguntaComponent implements OnInit {
       localStorage.setItem('preguntasEst',  JSON.stringify (this.preguntasAgregadas))
       console.log(response);
       console.log(respuestas);
+      await this.Delay(2000);
       if (this.preguntaForm.get('tipoPregunta').value == 'Selección Simple' || this.preguntaForm.get('tipoPregunta').value == 'Selección Múltiple'){
-        this.service.createPreguntaRespuesta(response.id,respuestas).subscribe(
+        this.service.createPreguntaRespuesta(response.Pregunta.id,respuestas).subscribe(
           respuesta => {
             console.log(respuesta);
           }
